@@ -4,9 +4,11 @@
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
+文章一覽：[連結](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)
+
 # <span class = "orange">前言</span> <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
-這是一本介紹 Modern C++ 與一些 C++ 深度解析的書，從我的 hackmd 搬運而來，如果您是 C++ 新手，我會建議您先去看 Miner Tutorial 的部分，裡面對初學者會學到的東西做了簡單的介紹，可以幫助大家理解、回憶一些基礎知識，同時可以讓你習慣本書風格。
+這是一本介紹 Modern C++ 與一些 C++ 深度解析的書，從我的 hackmd 搬運而來，你可以從[這裡](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)看見文章一覽。 如果您是 C++ 新手，我會建議您先去看 Miner Tutorial 的部分，裡面對初學者會學到的東西做了簡單的介紹，可以幫助大家理解、回憶一些基礎知識，同時可以讓你習慣本書風格。
 
 讀著讀著便來到了 Modern C++，語法和文法比以往的 C、C++03 複雜很多，而且在找文章閱讀時發現網路上中文的資源其實沒有想像中的多，受到 Jserv 老師「你所不知道的 C 語言系列」啟發，想著那就自己來寫吧! 於是就有了這個礦坑系列~
 
