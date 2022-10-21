@@ -20,7 +20,7 @@ SpacesInParentheses: false
 SpacesBeforeTrailingComments : 4
 SpaceBeforeParens: ControlStatements
 SpaceBeforeAssignmentOperators: true
-SortIncludes: true
+SortIncludes: false
 Cpp11BracedListStyle: false
 ContinuationIndentWidth: 2
 AllowShortLoopsOnASingleLine: false
