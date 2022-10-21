@@ -20,7 +20,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 # 貢獻此書
 
-如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mes900903@gmail.com)，也可以加我 Discord `Mes#0903`。
+如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mailto:mes900903@gmail.com)，也可以加我 Discord `Mes#0903`。
 
 如果發現有錯字，可以到 hackmd 處直接修改，我會收到信件通知，或者你可以直接在 twitter 上 tag 我 `@Mes_0903`，你也可以直接發 PR，從 hackmd 搬過來有些格式可能會跑掉，若你發現格式長得有點奇怪，該換行的地方沒有換行等等的，也歡迎告訴我。
 
