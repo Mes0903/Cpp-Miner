@@ -1,4 +1,4 @@
-<h1 class><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 序<img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
+<h1 class><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 序 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 

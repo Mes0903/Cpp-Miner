@@ -1,4 +1,4 @@
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class</center></h1>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Class <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 
 點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>

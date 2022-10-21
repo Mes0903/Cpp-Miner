@@ -1,4 +1,4 @@
-<center><h1> <img src = "https://i.imgur.com/thmVmX6.png?w=1000"w=1000" height = 50> 礦坑系列 ── 結構化綁定 <img src = "https://i.imgur.com/thmVmX6.png?w=1000"w=1000" height = 50><br> Structured Binding Declaration</h1></center>
+<center><h1> <img src = "https://i.imgur.com/thmVmX6.png?w=1000"w=1000" height = 50> 礦坑系列 ── 結構化綁定 Structured Binding Declaration <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></h1></center>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 

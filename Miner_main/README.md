@@ -1,4 +1,4 @@
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>C++03 ~ C++17 主要變化介紹</center></h1>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── C++03 ~ C++17 主要變化介紹 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
