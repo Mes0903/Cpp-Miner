@@ -21,7 +21,7 @@ C\+\+20 時新增了一個語言特性叫 Concept，它是一種 requires expres
 
 舉個例子，我們想要偵測 template argument 可以進行加法運算，並回傳原本的型態要是一樣的，像是 `5+5` 會回傳 int，那我們可以這樣寫：
 
-```cpp!
+```cpp
 #include <iostream>
 #include <concepts>
 
@@ -481,6 +481,7 @@ int main()
 ```
 
 如此一來編譯器便會給予錯誤訊息，並把 candidate set 給印出來：
+
 ![](https://i.imgur.com/0ENmOeD.png)
 
 可以看見 candidate set 的確有這三個函式。
