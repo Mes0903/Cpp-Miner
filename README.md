@@ -6,7 +6,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 文章一覽：[連結](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)
 
-# <span class = "orange">前言</span> <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+# 前言 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
 這是一本介紹 Modern C++ 與一些 C++ 深度解析的書，從我的 hackmd 搬運而來，你可以從[這裡](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)看見文章一覽。 如果您是 C++ 新手，我會建議您先去看 Miner Tutorial 的部分，裡面對初學者會學到的東西做了簡單的介紹，可以幫助大家理解、回憶一些基礎知識，同時可以讓你習慣本書風格。
 
@@ -20,19 +20,56 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 感謝一路上教我許多東西的老師、朋友與 Stackoverflow、Discord 上那些不認識但十分熱心的人們。
 
-# 貢獻此書
+# Summary 文章一覽 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
-如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mailto:mes900903@gmail.com)，也可以加我 Discord `Mes#0903`。
+## Miner Tutorial 新手教學
 
-如果發現有錯字，可以到 hackmd 處直接修改，我會收到信件通知，或者你可以直接在 twitter 上 tag 我 `@Mes_0903`，你也可以直接發 PR，從 hackmd 搬過來有些格式可能會跑掉，若你發現格式長得有點奇怪，該換行的地方沒有換行等等的，也歡迎告訴我。
+此處為新手教學，可以幫助大家回憶以前的東西，並幫助理解基礎 C++ 與熟悉本書風格。
+
++ [Windows 內的 C++ 與 Vscode 環境建置](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Environment_Building) 
++ [Object、Expression 與 Statement](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Object_Expression_Statement)  
++ [Array 與 Pointer](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Array_Pointer)   
++ [Function 與 Memory](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Function_Memory)   
++ [Class](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Class)
++ [Class 與物件導向](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/OO)
+
+## Cpp Miner 礦坑系列本文
+
+### C++11、14
+
++ [Value Categories 值類別](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Value_Categories)
++ [malloc、new 與 POD Type](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/malloc_new_POD) (部分待補)
++ [std::function](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Std_Function) (source code 解析部分尚未完成)
+
+### C++17
+
++ [Structured Binding 結構化綁定](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Structured_Binding)
+
+### C++20
+
++ [Concept、SFINAE 與 Detection Idiom](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Concept_SFINAE_DetectionIdiom)
+
+## 礦坑內的黑魔法
+
++ [用 "explicit" 來偵測複製](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/Explicit_Detect_Copy)
++ [Small String Optimization](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/SSO)
++ [四個不該用 "const" 的時機](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/NoConst)
+
+# 貢獻此書 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+
+如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mailto:mes900903@gmail.com)，也可以加我 Discord `mes_0903`。
+
+如果發現有錯字，可以到 hackmd 處直接修改，我會收到信件通知，你也可以直接發 PR，從 hackmd 搬過來有些格式可能會跑掉，若你發現格式長得有點奇怪，該換行的地方沒有換行等等的，也歡迎告訴我。
 
 如果由於版本更新導致文章內容已與事實不符，也歡迎進行更新，文章有時內容會過於艱澀導致我無法翻譯，若你有能力且樂意幫忙翻譯，也很歡迎您修改。
 
-# <span class = "orange">關於我</span> <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+# 關於我 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
 我是 Mes，一個喜愛 C++ 的人，寫文的現在(2021/04/02) 就讀中央大學數學系，目前大一，~~成績很差，盡量不要問我數學~~，如果想一起討論程式問題的話可以加我的 Discord、FB 或 IG，我主要用這三個，程式方面的討論我主要都在 Discord 找人問和回答問題：
 
-<img src = "https://i.imgur.com/8VxLB4u.png" height = 50>：Mes#0903 $\quad\quad$ <img src = "https://i.imgur.com/ZhnN1X5.png" height = 50> ：<strong><a href = "https://www.facebook.com/Mes0903/" class = "wheatlink">鄭詠澤</a></strong> $\quad\quad$ <img src = "https://i.imgur.com/u58NApS.png" height = 50> ： <strong><a href = "https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.instagram.com%2Fmes__0903%2F%3Ffbclid%3DIwAR1iQsB_Ut0plLcoX-23ElqMMhco5Rago-OQt1sm_mXf1TXfrACATwDzc9Y&h=AT2N8fONSla4y7H3oQyKVjSt5nbKOQIJlkoamDlDLoRvRNrRkmjsqyUbxkOrpsedsfd3ZMWq3a-4Rrw2-MVSJS1NtrnusXXX9ZIBCcVxKS2Lf6VefzlVrBr7ZKlwf63e79Ankw" class = "wheatlink">mes__0903</a></strong> $\quad\quad$ <img src = "https://i.imgur.com/CENNQ24.png" height = 50> ： <strong><a href = "https://www.youtube.com/channel/UCT3MbveOznWLlxNIdLUUOhg" class = "wheatlink">Mes</a></strong>
+- Discord：`mes_0903`
+- Facebook：[鄭詠澤](https://www.facebook.com/Mes0903/)
+- Youtube：[Mes](https://www.youtube.com/channel/UCT3MbveOznWLlxNIdLUUOhg)
 
 興趣是寫作、Compiler、OS、C++、Assembly，偶爾會去攝影，會在 IG 上寫雜記和分享家裡的貓咪照片，FB 版上全是分享別人動物的貼文，~~愜意的生活~~。
 
@@ -114,13 +151,6 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 ---
 
-最後是這篇的 CSS 在這裡：https://hackmd.io/aPqG0f7uS3CSdeXvHSYQKQ?both
-
-<br>
-
-如果你需要可以拿去，我寫蠻久的 XD，一開始是從官網上找到黑色模板的，然後隨著時間慢慢就變成自己的版本了，你可以把它複製下來改成自己的版本。
-
-<br>
 
 前言差不多就這樣啦，我是 Mes，一個喜愛 C++ 的人，主推 ina (x。
 
