@@ -54,6 +54,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 + [用 "explicit" 來偵測複製](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/Explicit_Detect_Copy)
 + [Small String Optimization](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/SSO)
 + [四個不該用 "const" 的時機](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/NoConst)
++ [Indirect through null pointer 是 UB 嗎?](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/Indirect_through_null_pointer)
 
 # 貢獻此書 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
