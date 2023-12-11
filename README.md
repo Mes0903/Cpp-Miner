@@ -86,7 +86,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 + <strong><a href = "https://discord.gg/7zfsaTnpbT" class = "wheatlink">Together C & C++</a></strong>
 
-+ <strong><a href = "https://discord.gg/ZPErMGW" class = "wheatlink">#include</a></strong>
++ <strong><a href = "https://discord.gg/vSYgpmPrra" class = "wheatlink">#include</a></strong>
 
 + <strong><a href = "https://discord.gg/ypvyFDugM8" class = "wheatlink">中學資訊討論群</a></strong>
 
