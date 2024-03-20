@@ -40,7 +40,7 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
 
     可以是任何合法的宣告器，如果沒有接初始化器，那麼陣列的元素內容會是未知的。如果 Pointer Declarator/Reference 要作用在指標/參考本身，而不是目標的話，那要加上括號把它們括住，例如  
 
-    ```cpp  
+    ```cpp
     int main()  
 	{  
 	  int arr[2] = { 1, 2 };    // 一個有兩個整數元素的陣列型態，其變數名為 arr  
@@ -51,20 +51,20 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
 	  int(&a2)[2] = arr;    // 一個參考 int[2] 型態的別名，其變數名為 a2，參考 arr  
 	  return 0;  
 	}  
-    ```  
+    ```
 
     這個部分基本上就是你陣列的變數名，視情況會再加上其他你需要的東西，讀的方法是從右至左，以 `int *p_arr[2]` 來說，`int` 屬於 type specifier，`*p_arr[2]` 屬於 declarator。  
 
     另外補充一點，Array 無法使用 assignment，也不能 copy，因為 array type 的物件無法一次修改全部的元素，也就是說像這樣是不行的：  
 
-    ```cpp  
+    ```cpp
 	int main()  
 	{  
 	  int a[3] = { 1, 2, 3 }, b[3] = { 4, 5, 6 };  
 	  int c[3] = a;    // error: array must be initialized with a brace-enclosed initializer  
 	  a = b;    // error: invalid array assignment  
 	}  
-    ```  
+    ```
 
 + expr  
 
@@ -72,7 +72,7 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
 
     這個部分基本上是你陣列元素的數目，所以需要大於 0，且如果不是使用動態配置，那麼需要是個<span class = "yellow">編譯時期就能算出的值</span>，所以才會說需要是一個 constant expression，例如：  
 
-    ```cpp  
+    ```cpp
     int main()  
 	{  
 	  int i = 40;    // i 不是 constant expression  
@@ -81,18 +81,18 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
 	  int arr2[ci];    // ok  
 	  return 0;  
 	}  
-    ```  
+    ```
 
     上面這段 code 你可能可以編譯成功，這是因為有些編譯器有幫忙做特殊的處理，像是先在 stack 上分配一些空間之類的，但這種 code 換個編譯器可能就不會過了，這種拿非編譯時期的值拿來當作其大小的陣列叫做 VLA(variable-length array)，有興趣的可以看看。  
 
     如果你沒有寫 expression，那就需要有初始化器，此時編譯器會幫忙從初始化器推算出陣列的元素個數，例如：  
-    ```cpp  
+    ```cpp
     int main()  
 	{  
 	  int arr[] = { 1, 2 };  
 	  return 0;  
 	}  
-    ```  
+    ```
 
     這裡的 `arr` 是個整數的陣列，編譯器會幫忙推算出陣列有兩個元素。  
 
@@ -108,7 +108,7 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
 
 `[]` 並不會對你填入的數字做檢查，也就是說如果你填了 N+1，編譯也會過，但這可能會導致我們訪問一個非法的記憶體位址，導致執行期的錯誤，舉個例子：  
 
-```cpp  
+```cpp
 int main()  
 {  
   int arr[5] = { 1, 2, 3, 4, 5 };  
@@ -118,7 +118,7 @@ int main()
                       // 因為 arr[5] 這個記憶體位址可能不是可以使用的空間  
   return 0;  
 }  
-```  
+```
 
 ## 多維陣列  
 
@@ -126,17 +126,17 @@ int main()
 
 最後一項我特別標成了黃色，因為這代表陣列的元素也可以是陣列，也就是說我們可以有多維陣列這種東西，舉個例子：  
 
-```cpp  
+```cpp
 int main()  
 {  
   int arr[2][3] = { { 1, 2, 3 },  
                     { 4, 5, 6 } };  
 }  
-```  
+```
 
 上面這樣的 `arr` 就是一個二維陣列，`arr` 的有兩個元素，這兩個元素的型態都是`int[3]`，也就是一個有三個整數元素的陣列，我們依樣可以使用 `[]` 來使用陣列中的元素：  
 
-```cpp  
+```cpp
 int main()  
 {  
   int arr[2][3] = { { 1, 2, 3 },  
@@ -145,7 +145,7 @@ int main()
   int i = arr[0][0];    // i == 1  
   int i2 = arr[1][2]; // i == 6  
 }  
-```  
+```
 
 `arr[0][0]` 代表第一個小陣列裡面的第一個元素，而 `arr[1][2]` 則代表第二個小陣列的第三個元素，使用時一樣要注意編號的問題，小的陣列編號一樣是從 0 開始的。  
 
@@ -155,7 +155,7 @@ int main()
 
 char array 是一種特殊的陣列，可以用來表示一組字串，一組字串以 `'\0'` 結尾，因此在使用字元陣列時記得要多加一個位址給 `'\0'`，舉個例子：  
 
-```cpp  
+```cpp
 #include <iostream>  
 int main()  
 {  
@@ -168,7 +168,7 @@ int main()
             << c2 << '\n'  
             << c3 << '\n';  
 }  
-```  
+```
 
 使用 list initialize 字元陣列時我們需要手動加上 `'\0'`，但如果是使用 string literal 來初始化就不用。  
 
@@ -176,7 +176,7 @@ int main()
 
 上週我們教了 for 迴圈，如果我們想要遍歷整個陣列，那搭配 for 迴圈來操作是個很好的選擇，能方便很多：  
 
-```cpp  
+```cpp
 #include <iostream>  
 int main()  
 {  
@@ -190,7 +190,7 @@ int main()
     std::cout << '\n';  
   }  
 }  
-```  
+```
 
 # Pointer 指標  
 
@@ -204,17 +204,17 @@ Pointer 型態的變數存的值有四種：
 無效的值通常指沒有初始化的指標，或是指向一個未知、出界位址的指標。  
 
 而第二項則是專門在處理出界問題的指標，如  
-```cpp  
+```cpp
 int main()  
 {  
   int arr[2] = { 1, 2 };  
   int *p = &arr[2];    // 尾端指標  
 }  
-```  
+```
 
 裡面的 `p`，這東西會衍生出一系列的規則，挺麻煩的，這邊講一個比較重要的影響就好，在對指標進行比較與算術運算時，指向非陣列元素的指標會被視作一個指向「只有一個元素的陣列」的第一個元素的指標，講起來很繞口，直接看例子比較快：  
 
-```cpp  
+```cpp
 int main()  
 {  
   int i = 0;  
@@ -228,11 +228,11 @@ int main()
    */  
   p + 1;  
 }  
-```  
+```
 
 這能幫助嚴謹定義出界的行為，更進一步處理指標加法、減法等等越界的問題，如果你看不懂沒關係，只要記住它衍生出來的重點就好：  
 
-```cpp  
+```cpp
 #include <cassert>  
 int main()  
 {  
@@ -240,7 +240,7 @@ int main()
   int *p = &i;  
   assert(&(p[0]) == &i);    // 理論上要恆為 true  
 }  
-```  
+```
 
 也就是 `&(p[0])` 與 `&i` 理論上永遠是等價的。  
 
@@ -258,7 +258,7 @@ int main()
 
 舉個例子：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 int main()  
@@ -278,7 +278,7 @@ int main()
             << "*p2 = " << *p2 << '\n'  
             << "**p2 = " << **p2;  
 }  
-```  
+```
 
 圖解就會長這樣：  
 
@@ -289,7 +289,7 @@ int main()
 
 我們可以用 `address-of operator` 的回傳值或別的指標來初始化指標變數，舉個例子：  
 
-```cpp  
+```cpp
 int n;  
 int *np = &n;    // pointer to int  
 int *const *npp = &np;    // non-const pointer to const pointer to non-const int  
@@ -302,7 +302,7 @@ struct S {
 };  
 S s = { 1 };  
 int *sp = &s.n;    // pointer to the int that is a member of s  
-```  
+```
 source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Pointers_to_objects)  
 
 ### 指標的運算  
@@ -310,7 +310,7 @@ source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Point
 指標的運算，如 `+`、`-` 等 operator 有自己的定義，這邊簡單講一下 `+`、`-` 與 `==`：  
 
 前兩個合稱為 Additive operators，當他們的運算元為一個指標和一個整數時，會根據指標指向的型態大小來位移，舉個例子：  
-```cpp  
+```cpp
 #include <iostream>  
 
 int main()  
@@ -325,14 +325,14 @@ int main()
 
   return 0;  
 }  
-```  
+```
 source：[C++ Gossip](https://openhome.cc/Gossip/CppGossip/PointerArithmetic.html)  
 
 這個輸出的是記憶體位址，因為這邊是 `int`，在我的電腦上是 4 byte，所以每對指標加一，其值就會加上 4(位移 4)，減法同理；另外 `N + ptr` 與 `ptr + N` 等價，這邊 `N` 為整數，`ptr` 為指標變數名。  
 
 而指標也可以與指標相減，其結果會是兩個記憶體間的差 (difference)：  
 
-```cpp  
+```cpp
 #include <iostream>  
 int main()  
 {  
@@ -343,7 +343,7 @@ int main()
             << "p2 指向:" << p2 << '\n'  
             << "Pointer difference: " << p2 - p << '\n';  
 }  
-```  
+```
 
 source：改自 [cppreference](https://en.cppreference.com/w/cpp/language/operator_arithmetic#Additive_operators)  
 
@@ -355,10 +355,10 @@ source：改自 [cppreference](https://en.cppreference.com/w/cpp/language/operat
 
 一個值為 null 的 pointer 不會指向任何的物件或函式，且對一個 null pointer 做 dereference 是 UB，也就是說：  
 
-```cpp  
+```cpp
 int *p = nullptr;  
 int a = *p;    // undefined behavior  
-```  
+```
 
 這樣是 UB。  
 
@@ -389,7 +389,7 @@ source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Const
 
 可以看見就分三種，不寫法有五種，判斷方法建議大家記一下，接下來我們簡單看個例子：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 int main()  
@@ -407,7 +407,7 @@ int main()
   const int *const c_ptr1_c = &i;    // ok，c_ptr1_c 儲存的值不能再改，且也不能透過指標修改 i 的值  
   const int *const c_ptr1_c = &ci;    // ok，同上  
 }  
-```  
+```
 
 延伸閱讀：[How to interpret complex C/C++ declarations](https://www.codeproject.com/Articles/7042/How-to-interpret-complex-C-C-declarations)  
 
@@ -421,7 +421,7 @@ array 在「需要指標，卻填入 array」的狀況時會發生轉型，轉�
 
 舉個簡單的例子：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 int main()  
@@ -429,7 +429,7 @@ int main()
   int arr[3] = { 1, 2, 3 };  
   int *p = arr;    // 發生轉型，expression arr 的計算結果型態由 int[3] 轉型為 int*，指向陣列第一個元素  
 }  
-```  
+```
 
 上面這個例子第六行的地方就發生了轉型，`arr` 由一個陣列型態轉型為整數的指標了，此時 `p` 指向 `arr` 的第一個元素。  
 
@@ -483,11 +483,11 @@ int main()
 
 也就是說假設有個陣列，由於有 Array to pointer decay，又有指標的加法，因此在拜訪元素時我們可以透過 `*()` 來代替 `[]` 的操作，舉個例子：  
 
-```cpp  
+```cpp
 int arr[3] = { 1, 2, 3 };  
 int i1 = arr[2];  
 int i2 = *(arr + 2);  
-```  
+```
 
 這裡的 `i1` 與 `i2` 是完全相同的，在第三行中，`arr` 先被轉換為一個整數型態的指標，然後再透過指標的加法取得陣列第二個元素的位址，最後再 dereference，結果與 `arr[2]` 完全一樣。  
 

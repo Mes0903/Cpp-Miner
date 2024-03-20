@@ -1,5 +1,5 @@
 ---
-title: 礦坑系列 ── 黑魔法前言
+title: 礦坑系列 ── 四個你不該用 "const" 的時機
 date: 2022-05-21
 tags: C++ Miner-BlackMagic
 categories:

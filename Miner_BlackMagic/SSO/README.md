@@ -38,7 +38,7 @@ int main()
   // so they tend to use char pointer
   const char *name_ptr = "Name";    // Don't forget the `const`
 }
-```
+````
 
 而會選擇去使用 const char pointer 來減少負擔，然而以這個例子來講，因為這個字串長度很短，所以其實根本不會使用到 heap 段，負擔也很小。
 

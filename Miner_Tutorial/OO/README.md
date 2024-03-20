@@ -27,7 +27,7 @@ categories:
 
 要定義一個基類很簡單，基本上跟上章的 Class 定義方法差不多，差別就是基類可能會使用到 `protected` 關鍵字，表示這個成員可讓衍生類使用：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Transportation {  
@@ -40,7 +40,7 @@ protected:
 private:  
   int cnt = 5;  
 };  
-```  
+```
 
 `Transportation` 是一個基類，其有三個成員，且每一個成員的訪問許可權都不一樣。  
 
@@ -53,7 +53,7 @@ private:
 
 接下來我們要寫一個 `Car` 繼承 `Transportation`：  
 
-```cpp  
+```cpp
 class Car : public Transportation {  
 public:  
   int wheal = 4;  
@@ -68,13 +68,13 @@ public:
     // return cnt;    // error.  
   }  
 };  
-```  
+```
 
 繼承時基類會是衍生類的 subobject，因此衍生類可以直接使用基類的成員，但<span class = "yellow">無法直接使用基類的 private 成員</span>，需要基類提供 api 才可以使用基類的 private 成員  
 
 整段 code 長這樣：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Transportation {  
@@ -110,7 +110,7 @@ int main()
   // std::cout << c.position << '\n';    // error  
   std::cout << c.get_pos() << '\n';    // okay  
 }  
-```  
+```
 
 可以看見外部無法直接使用 `protected` 與 `private` 的成員，而衍生類內部無法直接使用基類的 `private` 成員  
 
@@ -118,7 +118,7 @@ int main()
 
 <center><img src="https://hackmd.io/_uploads/H1-XJmxLT.png"></center><br>  
 
-```cpp  
+```cpp
 class B {  
 public:  
   int i1 = 1;  
@@ -188,13 +188,13 @@ void print_member()
 int main()  
 {  
 }  
-```  
+```
 
 # Operator of Derived Class  
 
 如果衍生類有 operator overloading 的需求，那他必須自己寫出來，無法調用基類的 operator overloading：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -213,11 +213,11 @@ int main() {
     D d;  
     d = 5; // error  
 }  
-```  
+```
 
 正確的作法是在衍生類內明確的呼叫基類的 `operator=`：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -242,11 +242,11 @@ int main() {
   d = 5; // ok  
   std::cout << d.i; // 5  
 }  
-```  
+```
 
 同理，copy 與 move constructor 也是，而 copy 與 move assignment operator 也是：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -272,13 +272,13 @@ int main() {
     d2 = d1; // ok  
     std::cout << d2.i; // 5  
 }  
-```  
+```
 
 # friend  
 
 friend 的關係並沒有辦法被繼承，基類的 friend 並不會有衍生類的存取權，衍生類的 friend 也不會有基類的存取權：  
 
-```cpp  
+```cpp
 class B {  
   int i;  
   friend void BaseFriend(B b);  
@@ -309,12 +309,12 @@ void DerivedFriend(D d)
   d.i2 = 10;   
   d.i = 100; // error  
 }  
-```  
+```
 
 # 建構子(Constructor)  
 
 雖然衍生類內含有基類的成員，但衍生類不應該直接初始化那些成員(除非你有特殊設計需求)，需要透過基類的建構子來初始化他們，因此建構時會先呼叫基類的建構子，再呼叫衍生類的建構子：  
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -331,13 +331,13 @@ int main()
 {  
   D d;  
 }  
-```  
+```
 
 上例會先呼叫 `B()` 再呼叫 `D()`。  
 
 我們通常會透過委派建構子來初始化基類的成員，直接在初始化清單內呼叫基類的建構子即可：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -361,7 +361,7 @@ int main()
   D d(1, 2);  
   std::cout << d.i << " " << d.j;    // 1 2  
 }  
-```  
+```
 
 這樣比較好的原因是因為每個 Class 都會有自己的 interface，我們應該透過這些 interface 來跟 Class 互動，即使它是你的基類也是。另外一點就是 Class 有自己的 scope，在繼承底下衍生類的 scope 為巢狀的範疇(nested scope)，如果你使用衍生類的建構子來初始化基類的成員，可能讓 code 變得較為複雜。  
 
@@ -369,7 +369,7 @@ int main()
 
 有時候我們會有禁用基類的 member 需求，然而在 C++ 中我們無法將基類的 member function 刪掉，但是我們能夠透過更改存取權將「單一個」 member 「隱藏」起來，我們有幾種方式可以更改存取權，首先是使用 `using` 關鍵字：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -387,11 +387,11 @@ int main() {
   std::cout << d.i1 << '\n'; // error  
   std::cout << d.i2 << '\n'; // ok  
 }  
-```  
+```
 
 member function 同理：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -409,11 +409,11 @@ int main()
   D d;  
   d.fn();    // error: ‘void B::fn()’ is inaccessible within this context  
 }  
-```  
+```
 
 但要注意，如果有 function overloading，那麼使用 `using` 更改存取權時所有同名的 function 都會被一併改到：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -433,11 +433,11 @@ int main()
   d.fn();    // error: ‘void B::fn()’ is inaccessible within this context  
   d.fn(1);    // error: ‘void B::fn(int)’ is inaccessible within this context  
 }  
-```  
+```
 
 可以看見兩個 `fn` 都被設為 private 了，我們也可以反過來將 `protected` 的成員設為 `public`：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -457,11 +457,11 @@ int main()
   d.fn();    // ok  
   d.fn(1);    // ok  
 }  
-```  
+```
 
 如果你想要的不是更改存取權，而是明確表示不能使用該成員，那可以使用 `delete` 關鍵字：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -479,11 +479,11 @@ int main()
   D d;  
   d.fn();    // error: use of deleted function ‘void D::fn()’  
 }  
-```  
+```
 
 而如果你是想要寫一個同名的 member function，可以透過 function overloading 來將基類的 member function 隱藏起來：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -501,11 +501,11 @@ int main()
   D d;  
   d.fn();    // calls D::fn()  
 }  
-```  
+```
 
 要注意的是利用這些方法來隱藏成員時，我們仍可以透過轉型來存取被隱藏的成員：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -530,7 +530,7 @@ int main()
   static_cast<B&>(d).fn2();    // ok  
   static_cast<B&>(d).fn3();    // calls B::fn3()  
 }  
-```  
+```
 
 # Derived-to-Based Conversion  
 
@@ -540,7 +540,7 @@ int main()
 
 撇除 virtual table pointer 不談，假設一個衍生類 `D` 的定義如下：  
 
-```cpp  
+```cpp
 class B {  
 public:  
   int i1 = 1, i2 = 2;  
@@ -550,7 +550,7 @@ class D : public B {
 public:  
   int i3 = 3, i4 = 4;  
 };  
-```  
+```
 
 則其 memory layout 通常會如下圖：  
 
@@ -562,7 +562,7 @@ public:
 </center>  
 我們可以使用 `reinterpret_cast` 來做簡單的驗證：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -583,7 +583,7 @@ int main()
   std::cout << (reinterpret_cast<int *>(ptr1) + 2) << ' ' << *(reinterpret_cast<int *>(ptr1) + 2) << '\n';    // 3  
   std::cout << (reinterpret_cast<int *>(ptr1) + 3) << ' ' << *(reinterpret_cast<int *>(ptr1) + 3) << '\n';    // 4  
 }  
-```  
+```
 
 對於這個 memory layout，有興趣的話可以到 [malloc、new 與 POD Type](https://hackmd.io/@Mes/Miner_malloc_new_pod) 看更多  
 
@@ -595,7 +595,7 @@ int main()
 
 在做這件事情時，我們通常會使用指標或 reference 來幫助我們操作，利用其將一個基類連結到一個衍生物件的基類部份，由於型態不一樣，因此就有轉型，這個轉型被稱為 derived-to-base conversion  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -614,11 +614,11 @@ int main()
   B *ptrB = &d;    // ok: derived-to-base conversion  
   B &refB = d;    // ok: derived-to-base conversion  
 }  
-```  
+```
 
 要注意由於型態不同，因此對物件的解讀方式也就不同，由於 `B` 內並沒有 `i3` 和 `i4` 這兩個成員，因此以 `B` 這個型態來解讀 `d` 這個物件時，就會無法使用 `i3` 和 `i4` 這兩個成員：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -643,11 +643,11 @@ int main()
   std::cout << ptrB->i3 << '\n';    // error: B has no member named i3  
   std::cout << refB.i3 << '\n';    // error: B has no member named i3  
 }  
-```  
+```
 
 而很直觀的，這兩個型態的實例大小也不一樣：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -669,7 +669,7 @@ int main()
   std::cout << sizeof(refD) << '\n'    // 16  
             << sizeof(refB) << '\n';    // 8  
 }  
-```  
+```
 
 這都是因為物件的「解讀方式」不同  
 
@@ -683,7 +683,7 @@ int main()
 
 因此，使用衍生類物件賦值給基類物件時，<span class = "yellow">衍生類自身的成員會被捨棄掉</span>，導致資料遺失，類似於將 `double` 賦值給 `float`，因為 `double` 比 `float` 大，因此精度會有所損失：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -710,7 +710,7 @@ int main()
   std::cout << b.i1 << '\n';    // 1  
   std::cout << b.i3 << '\n';    // error  
 }  
-```  
+```
 
 > 題外話：這種從大的 type 轉型到小的 type 的轉換被稱為 narrowing conversion  
 
@@ -720,7 +720,7 @@ int main()
 
 舉個例子，在定義交通工具這個基類的時候我們可能會認為交通工具都會需要能夠「前進」，因此我們會在基類宣告一個「前進」的 member function，然而對於汽車、飛機與船，它們「前進」的運作原理可能不一樣，所以它們會需要自己定義這個 member function 的內容：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Transportation {  
@@ -754,11 +754,11 @@ public:
     std::cout << "Airplane foward\n";  
   }  
 };  
-```  
+```
 
 但現在問題來了，我們在設計一個函式界面時可能希望參數只要是個「交通工具」就可以傳進來，例如展示會上我們要展示各式各樣交通工具的運作(我想不到其他例子ㄌXD)：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Transportation {  
@@ -810,7 +810,7 @@ int main()
 
   return 0;  
 }  
-```  
+```
 
 與前面轉型可以呼叫被隱藏的函式同理，由於型態的關係，呼叫到的會是基類的 `foward` 函式  
 
@@ -842,7 +842,7 @@ int main()
 
 當我們透過指標或 reference 來呼叫虛擬函式時，這個呼叫會是使用 dynamic binding 的方式在尋找函式定義，根據物件的型態，可能會執行到基類的成員函式，也有可能式其中一個衍生類中覆寫的版本：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -865,7 +865,7 @@ int main()
   B &bref = d;  
   bref.f();    // calls D::f()  
 }  
-```  
+```
 
 在這裡，我們在 `B` 內的 `void f()` 前方寫上了 `virtual`，因此 `f` 是一個虛擬函式，而在 `D` 中，我們覆寫了 `f`，此時 `D` 中的 `f` 也會是一個虛擬函式，就算前方沒寫 `virtual` 關鍵字  
 
@@ -887,7 +887,7 @@ int main()
 
 在我們要覆寫基類的虛擬函式時，最好可以顯式的將 `override` 寫上去，這會避免我們沒有覆寫到基類的虛擬函式，考慮以下狀況：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -905,7 +905,7 @@ int main() {
     B *b = new D();  
     b->callf();    // B::f()  
 }  
-```  
+```
 
 在基類中有一個虛擬函式 `f` 與一個會去呼叫 `f` 的函式 `callf`，在這麼寫的情況下，我們通常希望 `callf` 會去呼叫到衍生類自己的 `f`，因此在 `D` 裡面，我們嘗試去覆寫了 `f`  
 
@@ -913,7 +913,7 @@ int main() {
 
 為了避免這類意外，我們可以將 `override` 加上去，加在 function body 的前方就可以了：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -931,11 +931,11 @@ int main() {
     B *b = new D();  
     b->callf();  
 }  
-```  
+```
 
 可以看見在第 11 行處跳了 error，成功的幫助我們找出了這個意外，此時我們將 `const` 加上去就可以完成覆寫了：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -953,7 +953,7 @@ int main() {
     B *b = new D();  
     b->callf();    // D::f()  
 }  
-```  
+```
 
 > 額外閱讀： [What are the differences between overriding virtual functions and hiding non-virtual functions?](https://stackoverflow.com/questions/19736281/what-are-the-differences-between-overriding-virtual-functions-and-hiding-non-vir)  
 
@@ -961,14 +961,14 @@ int main() {
 
 在我們不希望、或不確定一個 Class 會不會被其他人繼承的時候，我們可以利用 `final` 這個 keyword 來防止繼承：  
 
-```cpp  
+```cpp
 class B final{};  
 class D : public B {}; // error  
-```  
+```
 
 如果只有針對特定的 virtual function 不想被 override 的話，可以加在那個 function 的後面：  
 
-```cpp  
+```cpp
 class B {  
 public:  
   virtual void fn() {};  
@@ -982,7 +982,7 @@ public:
 class D2 : public D1 {  
   void fn() {} // error: 'virtual void D2::fn()' overriding final function  
 };  
-```  
+```
 
 # Static Type and Dynamic Type  
 
@@ -994,7 +994,7 @@ class D2 : public D1 {
 
 回來看交通工具的例子：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Transportation {  
@@ -1046,7 +1046,7 @@ int main()
 
   return 0;  
 }  
-```  
+```
 
 我們專注看 `show_foward` 這個函式，在執行這個函式前，對於 `t`，我們能確定的是 `t` 的靜態型態為 `Transportation*`，但由於還沒到執行期，所以我們並不知道 `t` 的動態型態為何  
 
@@ -1068,7 +1068,7 @@ int main()
 
 我們可以小改一下前面的例子來體會一下多型的好處，假設我們今天有不確定數量的交通工具要進行展示，一樣是展示往前這個功能，此時我們可以結合 `std::vector` 與多型來實作：  
 
-```cpp  
+```cpp
 #include <iostream>  
 #include <vector>  
 
@@ -1125,7 +1125,7 @@ int main()
 
   return 0;  
 }  
-```  
+```
 
 在 `show_foward` 這個函式內我們遍歷了 `vec`，並且呼叫了 `vec` 中每一個元素的 `foward`，如此一來我們便可以在不知道實際上這個元素是車、船還是飛機的情況下完成我們的目的了  
 
@@ -1159,7 +1159,7 @@ int main()
 
 而擁有純虛擬函式的 class 被稱為「抽象類別(abstract class)」，不能被實例化，一樣用交通工具的例子來看：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Transportation {  
@@ -1200,7 +1200,7 @@ int main()
 
   return 0;  
 }  
-```  
+```
 
 可以看見我們在 `Transportation` 內的 `foward` 的 function body 部分寫上了 `= 0`  
 
@@ -1214,7 +1214,7 @@ int main()
 
 考慮一下下面的例子：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -1243,7 +1243,7 @@ int main() {
   B *d = new D();  
   delete d;    // only call B::~B()  
 }  
-```  
+```
 
 在這個例子中，我們使用 Base Class 的來存一個 `D` 的實例，如同前面講的，這麼做的目的是利用多型來達到統一介面的效果  
 
@@ -1255,7 +1255,7 @@ int main() {
 
 因此我們需要將解構子加上 virtual 關鍵字：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -1284,7 +1284,7 @@ int main() {
   B *d = new D();  
   delete d;    // call D::~D(), then call B::~B()  
 }  
-```  
+```
 
 可以看見呼叫完 `D` 的解構子後其也會再去呼叫 `B` 的解構子  
 
@@ -1316,7 +1316,7 @@ C\+\+ 透過兩個運算子來支援 RTTI：
 
 套用到有虛擬函式的型態的指標或 reference 時，這些 operator 會使用對應物件的動態型態(dynamic type)，首先看 `typeid`：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -1338,11 +1338,11 @@ int main() {
   print_type(d1);    // 1D  
   print_type(d2);    // 2D2  
 }  
-```  
+```
 
 但前面有提到，C++ 的動態型態需要依賴 `virtual` 來驅動，所以如果沒有虛擬函式，輸出就會不一樣了：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {};  
@@ -1361,7 +1361,7 @@ int main() {
   print_type(d1);    // 1B  
   print_type(d2);    // 1B  
 }  
-```  
+```
 
 標準內也有提到這個事情，所以這不是實作上的差異，而是有標準定義的：  
 
@@ -1377,7 +1377,7 @@ downcasting 是有危險性的，因為你基類的指標可以指向其任何�
 
 對於指標，在轉換失敗時，產生的值會是 `nullptr`，因此可以將其放在 if-else 的判斷式內偵測轉換結果：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -1411,11 +1411,11 @@ int main() {
   do_casting(d1);    // cannot do the dynamic cast!  
   do_casting(d2);    // D2  
 }  
-```  
+```
 
 對於 reference，則是會丟出 `std::bad_cast`，需要透過 try-catch 來去捕捉這個例外：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -1452,13 +1452,13 @@ int main() {
   do_casting(d1);    // cannot do the dynamic cast!  
   do_casting(d2);    // D2  
 }  
-```  
+```
 
 > [n4659(8.2.7-9)](https://timsong-cpp.github.io/cppwp/n4659/expr.dynamic.cast#9)：The value of a failed cast to pointer type is the null pointer value of the required result type. A failed cast to reference type throws an exception of a type that would match a handler of type std​::​bad_­cast.  
 
 downcasting 需要被顯式的寫出來，而且基類要是 polymorphic class，否則會報錯：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {};  
@@ -1481,7 +1481,7 @@ int main()
   if (D2 *vd2 = dynamic_cast<D2 *>(b2); vd2 != 0)  
     std::cout << "suceffuly do the downcasting\n";    // ok  
 }  
-```  
+```
 
 在上例中：  
 
@@ -1500,7 +1500,7 @@ polymorphic class 實例的 memory layout 中，會存放一個 virtual table po
 
 我們前方有一個講述衍生類實例的 memory layout 的例子，畫了一張圖來講解沒有虛擬函式的 class 的 memory layout：  
 
-```cpp  
+```cpp
 class B {  
 public:  
   int i1 = 1, i2 = 2;  
@@ -1510,7 +1510,7 @@ class D : public B {
 public:  
   int i3 = 3, i4 = 4;  
 };  
-```  
+```
 <center>  
 
 ![image](https://hackmd.io/_uploads/Hk1OE4e8T.png)  
@@ -1519,7 +1519,7 @@ public:
 
 透過下面這個 code 可以看見 `ptr` 與 `&ptr->i1` 的位址是一樣的：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -1538,7 +1538,7 @@ int main()
   std::cout << reinterpret_cast<int *>(ptr) << ' ' << *reinterpret_cast<int *>(ptr) << '\n';    // 0xb902b0 1  
   std::cout << reinterpret_cast<int *>(&ptr->i1) << ' ' << *reinterpret_cast<int *>(&ptr->i1) << '\n';    // 0xb902b0 1  
 }  
-```  
+```
 
 這裡在做的事情是將 `ptr` 與 `&ptr->i1` 這兩段記憶體上面的值以 `int` 的形式讀出來，因為我們在 `B` 內將 `i1` 初始化為 `1` 了，因此兩個顯示出來的結果都會是 `1`：  
 
@@ -1550,7 +1550,7 @@ int main()
 
 當我們讓這個 class 變為 polymorphic class 後，由於多了一個 vtable pointer，結果就會不一樣了：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class B {  
@@ -1571,7 +1571,7 @@ int main()
   std::cout << reinterpret_cast<int *>(ptr) << ' ' << *reinterpret_cast<int *>(ptr) << '\n';    // 0x20f42b0 4202520  
   std::cout << reinterpret_cast<int *>(&ptr->i1) << ' ' << *reinterpret_cast<int *>(&ptr->i1) << '\n';    // 0x20f42b8 1  
 }  
-```  
+```
 
 這是因為多了一個 vtable pointer，導致 `ptr` 與 `&ptr->i1` 指向的位址不一樣了：  
 
@@ -1617,7 +1617,7 @@ int main()
   d2->func2();    // Derived::func2()  
   d2->nonVirtualFunc();    // Base::nonVirtualFunc()  
 }  
-```  
+```
 
 上例中 `Base` 有兩個虛擬函式 `func1` 與 `func2`，並且有一個一般的成員函式 `nonVirtualFunc`；而 `Derived` 內止覆寫了 `func2`，並有對基類的一般成員函式做了 function overloading  
 

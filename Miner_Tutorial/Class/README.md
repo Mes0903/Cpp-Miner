@@ -37,19 +37,19 @@ Class Declaration 與 Class Definition 都是屬於 Simple Declaration 中的 De
 
 Class Declaration 的意思為我們要引入 Class 的名字，告訴編譯器這是一個我們自己定義的型態，語法很簡單，會在最一開始加上 `class` 關鍵字，後面接上名字：  
 
-```cpp  
+```cpp
 class T;  
-```  
+```
 
 這樣的話 `T` 就是一個 Class，但尚未有 Class 的定義，此時這個 `T` 是個不完整的型態(incomplete type)，如果要使其成為 complete type，就要定義 Class，要定義 Class 的話我們需要在後面接上大括號 `{}`，語法像這樣：  
 
-```cpp  
+```cpp
 class { member-specification(opt) }  
-```  
+```
 
 大括號內填的是 Class 成員的資訊，成員的所有權與 scope 屬於這個 Class，可以有 function、object declaration、using、enum 等([一覽](https://timsong-cpp.github.io/cppwp/n4868/class#nt:member-declaration))，一樣用前面販賣機的例子：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Vending_machine {  
@@ -68,10 +68,10 @@ public:
 private:  
   int price;  
 };  
-```  
+```
 
 這個 Class 叫做 Vending_machine，裡面有兩個 member function 與一個 data member，其中有兩個關鍵字 `public` 與 `private`，`public` 代表可以給使用者使用的成員，`private` 表示只有自己這個 Class type 可以使用的成員，但同一種 Class type 的不同 object 是可以使用 private 成員的：  
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -90,7 +90,7 @@ int main()
   t1.set_other_val(t2);  
   std::cout << t2.get_val();  
 }  
-```  
+```
 
 還有一個關鍵字叫 `protected`，表示繼承的子類和自己可以使用的成員，先記前面兩個就好，第三個在之後講繼承時會提到。  
 
@@ -98,7 +98,7 @@ int main()
 
 在 Vending_machine.h 內：  
 
-```cpp  
+```cpp
 #ifndef VENDING_MACHINE  
 #define VENDING_MACHINE  
 
@@ -112,11 +112,11 @@ private:
 };  
 
 #endif  
-```  
+```
 
 在 Vending_machine.cpp 內：  
 
-```cpp  
+```cpp
 #include "Vending_machine.h"  
 #include <iostream>  
 
@@ -130,13 +130,13 @@ int Vending_machine::money()
 {  
   return price;  
 }  
-```  
+```
 
 要注意的是我們需要透過範圍解析運算子 `::` 來定義成員函式，否則編譯器會以為我們在定義的是一般的函式。  
 
 這樣的話我們就設計好了一張「藍圖」、「設計圖」，我們可以利用這個設計圖去建構物件：  
 
-```cpp  
+```cpp
 int main()  
 {  
   Vending_machine machine1, machine2;  
@@ -144,7 +144,7 @@ int main()
   machine1.ordered_chicken();  
   std::cout << machine1.money();  
 }  
-```  
+```
 
 這裡我們建構了兩個販賣機出來，Class 的物件可以透過成員訪問運算子 `.` 來使用 Class 中存取權限為 `public` 的成員，以上面這個例子，我們使用了第一台機器的 `ordered_chicken()` 這個函式，又再使用了 `money()` 這個函數來確認金錢。  
 
@@ -156,13 +156,13 @@ int main()
 
 建構子的語法和一般的函式不同，其沒有回傳型態，也沒有 function name，並且有一個特殊的組件叫做初始化清單(initialization list)，可以幫助我們初始化物件，速度會比較快，建構子的語法長這樣：  
 
-```  
+```
 Class名() initialization_list(opt) {}  
-```  
+```
 
 舉個例子：  
 
-```cpp  
+```cpp
 class T {  
 public:  
   T() {}  
@@ -175,13 +175,13 @@ public:
 private:  
   int val;  
 };  
-```  
+```
 
 Class `T` 的建構子沒有任何內容，也沒有 initialization list，這種建構子我們稱他為預設建構子(default constructor)。  
 
 而 `T2` 的建構子有 initialization list，將 `val` 初始化為 5，因此如果我們去訪問一個剛建構出來的 `T2` 的 `val`，就會得到 5：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T2 {  
@@ -198,10 +198,10 @@ int main()
   T2 obj;  
   obj.print_val();    // val = 5  
 }  
-```  
+```
 
 但要注意初始化清單並沒有指定成員初始化的順序：  
-```cpp  
+```cpp
 #include <iostream>  
 
 class A {  
@@ -231,7 +231,7 @@ int main()
 {  
   T t1;  
 }  
-```  
+```
 
 初始化的順序不是透過初始化清單來決定，而是透過 non-static data member 被宣告的順序來決定，所以這裡初始化的順序是 A->B->C。  
 
@@ -239,13 +239,13 @@ int main()
 
 而在解構時也有解構子可以使用，例如原本有在 Class 內動態配置記憶體，那解構時就要幫忙呼叫 delete，解構子的語法為：  
 
-```cpp  
+```cpp
 ~Class名(){}  
-```  
+```
 
 舉個例子  
 
-```cpp  
+```cpp
 class T {  
 public:  
   T() : ptr(new int) {}  
@@ -255,11 +255,11 @@ public:
 private:  
   int *ptr;  
 };  
-```  
+```
 
 我們也可以傳遞參數進去建構子，根據傳遞進去的參數不同，有分移動建構子與複製建構子，同樣的我們可以透過 `operator=` 的 overload 來建立複製運算子與移動運算子，這些會在複製、移動 Class 的實例時用到：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -295,7 +295,7 @@ int main()
   T t1;  
   T t2 = t1;  
 }  
-```  
+```
 
 ### Rule of three、Rule of five、Rule of zero  
 
@@ -306,7 +306,7 @@ int main()
 `this` 是一個特殊的指標，基本上會出現在 class 的 non-static member function 內，`this` 會指向呼叫他的 member function 所屬的 class instance。  
 
 舉個例子：  
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -326,7 +326,7 @@ int main()
   std::cout << &t2 << " ";  
   t2.print_this();  
 }  
-```  
+```
 
 這個 class instance，也就是呼叫的物件有個名字叫 implicit object。  
 
@@ -334,7 +334,7 @@ int main()
 
 在 parameter 與 data member 名稱衝突時，我們需要 `this` 來告訴 compiler 說我們使用的是哪個變數：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -354,11 +354,11 @@ int main()
   T t1;  
   t1.print_var(100);  
 }  
-```  
+```
 
 在需要回傳自己或自己的位址時，我們也會透過 `this` 來回傳：  
 
-```cpp  
+```cpp
 class T {  
 public:  
   T &self_obj() { return *this; }  
@@ -368,13 +368,13 @@ public:
 
   int var;  
 };  
-```  
+```
 
 這在前一小節的 `operator=` 也可以看到。  
 
 對於 member function 可以使用 `this` 這件事，有一個 compiler 很常用的實作方式，應該說到現在我只看過這種方式，其會把 `this` 當作第一個參數傳入 member function：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -387,7 +387,7 @@ int main()
   T t1;  
   t1.fn();  
 }  
-```  
+```
 
 在 `t1.fn()` 這裡，通常 compiler 會改寫為 `t1.fn(&t1)`，如此一來就可以實作 `this` 了，但要注意這不是標準，我一開始一直以為這是標準規定的，後來花了很多時間去理解才發現這件事，標準只規定了行為，說了 `this` 是一個 prvalue pointer，值是 implicit object 的位址，並沒有規定如何實作。  
 
@@ -395,7 +395,7 @@ int main()
 
 前面說了權限為 private 的成員只有同一個 class type 的 object 能使用，如果今天有外部的函式或 class 想存取 private 成員時，可以將其設為 friend，使用方法如下：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -420,11 +420,11 @@ int main()
   set_val(t1, 20);  
   std::cout << get_val(t1);  
 }  
-```  
+```
 
 我們需要在外部函式或 class 的前面加上 `friend` 關鍵字，而其一樣可以在 class 內或外定義，要注意的是我們需要在外面宣告它，否則由於 scope 的關係，於 class 外面我們無法存取它，而因為它是外部函式或 class，本身並不屬於 class 的成員，因此也沒辦法透過 `::` 來存取：  
 
-```cpp  
+```cpp
 // void f(); without this line  
 
 class X {  
@@ -436,7 +436,7 @@ public:
 };  
 
 void X::g() { return f(); } // error: 'f' was not declared in this scope  
-```  
+```
 
 主要的重點在於 `friend` 會影響到存取權，但它不是一般意義上的宣告  
 
@@ -446,7 +446,7 @@ void X::g() { return f(); } // error: 'f' was not declared in this scope
 
 當我們要定義一個運算子如何操作自定義的 class 時，我們可以使用運算子重載，在上面建構子的地方我們其實已經用過運算子重載了，那邊重載了 `=`，改變了 `=` 的行為，這邊再多舉一個例子，假設有個 2\*2 矩陣的 class，我們要定義矩陣的加法：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class M {  
@@ -485,7 +485,7 @@ int main()
 
   m1.print_arr();  
 }  
-```  
+```
 
 # const、mutable  
 
@@ -493,7 +493,7 @@ int main()
 
 對 member function 加上 `const` 修飾的方法很簡單，在 function body 與 parameter list 之間加上 `const` 就好，這代表此 member function 無法對其 data member 進行改動，但改別人的 data member 是沒問題的：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -531,12 +531,12 @@ int main()
   t1.get_obj();  
   t1.get_other(t2);  
 }  
-```  
+```
 要注意的是如果有 return `*this` 的，那在回傳的型態上也需要加上 `const`。  
 
 我們可以利用這個特性來實作 overloading：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -568,21 +568,21 @@ int main()
   t1.check_version();    // const version  
   t2.check_version();    // without const version  
 }  
-```  
+```
 
 這個 overload 是利用作用在 member function 的 `const` 來判斷的，也就是說上例中的第二個 `check_version` 的 return type 就算加上 `const` 也是沒問題的：  
-```cpp  
+```cpp
 // can still complete the overloading  
 const T &check_version()  
 {  
   std::cout << "without const version\n";  
   return *this;  
 };  
-```  
+```
 
 然而有些特殊狀況我們會需要在有 `const` 修飾的 member function 內修改某些特殊的變數，此時我們需要在這個特殊的變數上加上 `mutable` 修飾，這種變數不能有 `const` 修飾，因為他的值一定要可以被改：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -600,7 +600,7 @@ int main()
   T t1;  
   t1.set_val(5);  
 }  
-```  
+```
 
 # 自定義的型態轉換 (user-defined conversion)  
 
@@ -612,7 +612,7 @@ int main()
 
 假設我們的 `T` 可以轉換為 `int`，那麼我們可以這樣寫：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -629,12 +629,12 @@ int main()
   T t1;  
   std::cout << t1 + 5;    // 25  
 }  
-```  
+```
 
 可以看見在第 16 行的地方 `t1` 被隱式轉換為 `int` 了，因此輸出 25。  
 
 如果我們不想要有隱式轉換，則需要加上 `explicit` 關鍵字在轉換函式的前方：  
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -654,7 +654,7 @@ int main()
 
   std::cout << static_cast<int>(t1) + 5;    // 25  
 }  
-```  
+```
 
 加上 `explicit` 關鍵字的轉換函式，compiler 不會自動套用它，需要我們加上 cast operator 時才會去套用轉換，像 19 行那樣。  
 
@@ -676,7 +676,7 @@ int main()
 
 test.cpp：  
 
-```cpp  
+```cpp
 static int i = 0;  
 
 void fn();  
@@ -685,30 +685,30 @@ int main()
 {  
   fn();  
 }  
-```  
+```
 
 test2.cpp：  
 
-```cpp  
+```cpp
 extern int i;  
 
 void fn()  
 {  
   ++i;  
 }  
-```  
+```
 
 第一個檔案中有個 `static` 關鍵字修飾的整數 `i`，而我們在第二個檔案中想要使用這個 `i`，我們先把兩個 `.o` 檔編譯出來：  
 
 ```bash  
 g++ -c test1.cpp  
 g++ -c test2.cpp  
-```  
+```
 
 然後去 link 這兩個檔案，生成執行檔：  
-```  
+```
 gcc -o output test.o test2.o  
-```  
+```
 
 此時 linker 就會報錯，告訴你 undefined reference to `i`：  
 
@@ -717,9 +717,9 @@ gcc -o output test.o test2.o
 這是由於當 `test2.o` 要去找 `i` 的定義時他找不到，因為我們把 `i` 限定在 `test.o` 內了。  
 
 這邊可以看一下 ABI 實際上長的樣子，你會發現有些差別，指令是  
-```  
+```
 g++ -S -o output.asm input.cpp  
-```  
+```
 
 這邊我把輸出結果丟到 github 上了：[普通版本](https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Class/normal.asm)、[extern 版本](https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Class/extern.asm)、[static 版本](https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Class/static.asm)。  
 
@@ -731,7 +731,7 @@ g++ -S -o output.asm input.cpp
 
 如果 `static` 出現在 function 內的變數前，表示這個變數為<span class = "yellow">靜態變數</span>，生命週期要到程式結束才會跟著結束：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 void fn()  
@@ -746,7 +746,7 @@ int main()
   fn();    // 2  
   fn();    // 3  
 }  
-```  
+```
 
 因為 `fn` 中的 `i` 變為一個靜態變數，因此離開 `fn` 時 `i` 並不會解構，所以上例輸出的結果為 `1 2 3`。  
 
@@ -754,7 +754,7 @@ int main()
 
 利用 `static` 修飾的 member variable/function 所有權並不屬於任何一個 instance，所有的 class instance 會共用這個 member，因此有 `static` 修飾的 member variable 不能利用建構子來初始化，需要在外部定義它：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -784,13 +784,13 @@ int main()
   t2.fn();    // 2  
   t3.fn();    // 3  
 }  
-```  
+```
 
 由於 static member 不屬於任何一個 class instance，因此我們可以直接使用它，這是一個特例，如上例中的 22、23 行。  
 
 static data member 的生命週期也是靜態的，它被定義後會一直存在到程式結束。另外，static data member 可以做為 default-argument 來使用，但 non-static data member 不行：  
 
-```cpp  
+```cpp
 class T {  
 public:  
   static int i;  
@@ -800,7 +800,7 @@ public:
     std::cout << ++i << '\n';  
   }  
 };  
-```  
+```
 
 > [6.7.2](https://eel.is/c++draft/intro.object#2)：Objects can contain other objects, called subobjects. A subobject can be a member subobject ([class.mem]), a base class subobject ([class.derived]), or an array element.   
 
@@ -810,7 +810,7 @@ public:
 
 在 C++11 後，我們可以使用 default member initializer 來初始化 non-static data member，也有人稱這方法為 in-class initializer 或 non-static data member initializer，寫法很簡單，直接在 data member 的後方加上初始化器就可以了：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class T {  
@@ -823,19 +823,19 @@ int main()
   T t1;  
   std::cout << t1.i;    // 0  
 }  
-```  
+```
 
 如果 static data member 要使用 in-class initializer，則它需要是被 const 修飾的：  
 
-```cpp  
+```cpp
 class T {  
 public:  
   static const int i = 0;    // okay  
 };  
-```  
+```
 
 如果有建構子也去初始化了這個變數，那麼初始化器會被跳過：  
-```cpp  
+```cpp
 class T {  
 public:  
   int i = 0;  
@@ -847,7 +847,7 @@ public:
 int main() {  
   T t;    // t.i is 2  
 }  
-```  
+```
 
 然而這有時會讓邏輯變得有些複雜，尤其是你有多個建構子的時候，因為你會需要不停的判斷它是使用建構子的清單初始化還是預設初始化器的初始化，如果少寫或少看就會造成杯具，所以使用的時候自己要注一下。  
 

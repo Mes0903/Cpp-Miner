@@ -116,7 +116,7 @@ categories:
 
 在 Vscode 裡面點選剛剛創好的檔案，此時右邊會出現讓你編輯文字的畫面，輸入以下這段文字：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 int main()  
@@ -124,7 +124,7 @@ int main()
     std::cout << "test";  
     return 0;  
 }  
-```  
+```
 
 ![](https://i.imgur.com/trtTKqf.png)  
 

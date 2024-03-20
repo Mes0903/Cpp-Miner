@@ -113,7 +113,7 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
     auto & __e = a;    // 等價於 int(&e)[2] = a;
     #define x __e[0]
     #define y __e[1]
-    ```    
+    ```
     而如果 expression 回傳的是 rvalue，則 identifier-list 內的元素會與 `__e` 內的元素連結：
     ```cpp
     using T = int[3];
