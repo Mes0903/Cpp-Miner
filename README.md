@@ -1,3 +1,11 @@
+---
+title: 礦坑系列 ── 序
+date: 2023-12-11
+tags: C++ Miner
+categories:
+- C++ Miner
+---
+
 <h1 class><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 序 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
@@ -94,8 +102,6 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 雖然自己思考問題是很好的進步方式，這樣的方式能讓你的思緒更清晰，對事情和原理的理解也會更透徹，但若到了一定階段你還沒思考出來，最好還是找一些人問一下會比較好，別人可能會從你從沒想過的角度來解釋問題，讓你豁然開朗。
 
----
-
 再來是一些 C++ 的文件：
 
 <strong>
@@ -126,8 +132,6 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 你可以在 <a href = "https://en.cppreference.com/w/cpp/links" class = "wheatlink">Cppreference</a> 看到這些資訊，我的閱讀方式是 Drafts 配 Cppreference 來看，然後上網找例子或自己想一些例子來驗證，如果有不懂的就會到 Google 和 Stackoverflow 搜尋，有時候 CSDN 也會有答案，但就如我前面所說的，比較新的東西通常中文資源很少，不太會有什麼文章。不過據我所知，Drafts 這樣密密麻麻的英文字對許多人來說並不是很友善，所以我的方法可能並不適合你，希望你可以找到自己的方法。
 
-<br>
-
 那如果一直找不到 (可能是比較深或偏向英文方面意思理解有困難等等)，那我就會到 Discord 群裡面發問，發問的方式可以參考 <strong><a href = "https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way" class = "wheatlink">How To Ask Questions The Smart Way</a></strong>，總之不要問那些一到 Google 就馬上可以找到的問題，如果你問完問題別人馬上丟了一個解答的網址給你，你應該要檢討一下XD 
 
 ---
@@ -151,7 +155,6 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 </strong>
 
 ---
-
 
 前言差不多就這樣啦，我是 Mes，一個喜愛 C++ 的人，主推 ina (x。
 
