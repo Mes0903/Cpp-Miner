@@ -1,3 +1,11 @@
+---
+title: 礦坑系列 ── Small String Optimization (SSO)
+date: 2022-05-22
+tags: C++ Miner-BlackMagic
+categories:
+- C++ Miner
+---
+
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── Small String Optimization (SSO) <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
@@ -17,6 +25,7 @@ source：[Small String Optimization in C++](https://www.youtube.com/watch?v=S7oV
 而字串長度具體是多少以下才可以去做優化這就要看你用的 lib 了，在 VS2019 的 msvc 裡是 15 個字，而在我的環境上(mingw-gcc 11.2.0) 也是 15。
 
 很多人可能會覺得 `std::string` 會有 heap allocation 因此不去用他：
+
 ```cpp
 #include <iostream>
 #include <string>
@@ -36,6 +45,7 @@ int main()
 ## 測試 & 實例
 
 避免有人不想看內部 code，就先放例子，這裡我是用 Compiler Explorer gcc 12.1 來測的 ([網址](https://godbolt.org/z/qajh5PeKc))：
+
 ```cpp
 #include <iostream>
 #include <string>
@@ -55,7 +65,9 @@ int main()
   std::string str2 = "1234567890123456";    // 16 words
 }
 ```
+
 輸出：
+
 ```cpp
 str:
 str2:
@@ -84,6 +96,7 @@ using string  = basic_string<char, char_traits<char>, allocator<char>>;
 ```
 
 而當我們去找這裡對應的建構子，會看見這個：
+
 ```cpp
 _CONSTEXPR20 basic_string(_In_reads_(_Count) const _Elem* const _Ptr, _CRT_GUARDOVERFLOW const size_type _Count)
     : _Mypair(_Zero_then_variadic_args_t{}) {
@@ -98,6 +111,7 @@ _CONSTEXPR20 basic_string(_In_reads_(_Count) const _Elem* const _Ptr, _CRT_GUARD
 以 `std::stirng` 來說，就是吃一個 const char pointer，這裡的重點是 `assign(_Ptr, _Count);` 函式，`_Ptr` 指的是實際的 pointer，只像我們的 `"Name"`，而 `_Count` 則是有幾個字，以這裡來說會是 4。
 
 我們再繼續往這個 `assign` 函式看，會看見它長這樣：
+
 ```cpp
 _CONSTEXPR20 basic_string& assign(
     _In_reads_(_Count) const _Elem* const _Ptr, _CRT_GUARDOVERFLOW const size_type _Count) {
@@ -109,7 +123,7 @@ _CONSTEXPR20 basic_string& assign(
         _Traits::assign(_Old_ptr[_Count], _Elem());
         return *this;
     }
-    
+
     return _Reallocate_for(
         _Count,
         [](_Elem* const _New_ptr, const size_type _Count, const _Elem* const _Ptr) {
@@ -123,6 +137,7 @@ _CONSTEXPR20 basic_string& assign(
 你會看見裡面有一個 `if` 判斷式，如果 `_Count` 小於某個值，那就會拿到 stack 段 buffer 的指標 `_Old_ptr`，並直接把我們的字串移動到 buffer 內，然後 return，因此完全<span class = "yellow">沒有多餘的 allocation</span>。
 
 但如果它沒有進到上面那個 if-statement，也就是 `_Count` 比某個值還大，那就會去用到下面那個 `_Reallocate_for` 函式，這個 function 內有一行是這個：
+
 ```cpp
 const pointer _New_ptr = _Al.allocate(_New_capacity + 1); // throws
 ```
@@ -130,6 +145,7 @@ const pointer _New_ptr = _Al.allocate(_New_capacity + 1); // throws
 也就是說去動到了 allocation。
 
 而這個關鍵的值 `_Myres` 在一個叫做 `_String_val` 的 class 裡面，這個 class 的最下面有著這兩行：
+
 ```cpp
 size_type _Mysize = 0; // current length of string
 size_type _Myres  = 0; // current storage reserved for string
@@ -143,7 +159,7 @@ void _Become_small() {
     // pre: *this is in large string mode
     // pre: this is small enough to return to small string mode
     // (not _CONSTEXPR20; SSO should be disabled in a constexpr context)
-    
+
     _Mypair._Myval2._Orphan_all();
     const pointer _Ptr = _Mypair._Myval2._Bx._Ptr;
     auto& _Al          = _Getal();
@@ -155,12 +171,14 @@ void _Become_small() {
 ```
 
 在最下面你可以看見它被設定為 `_BUF_SIZE-1` 的大小，而 `_BUF_SIZE` 的大小則定義在 `basic_stirng` 裡面：
+
 ```cpp
 static constexpr auto _BUF_SIZE   = _Scary_val::_BUF_SIZE;
 static constexpr auto _ALLOC_MASK = _Scary_val::_ALLOC_MASK;
 ```
 
 而 `_Scary_val::_BUF_SIZE` 則定義在 `_String_val` 裡面：
+
 ```cpp
 // length of internal buffer, [1, 16]:
 static constexpr size_type _BUF_SIZE = 16 / sizeof(value_type) < 1 ? 1 : 16 / sizeof(value_type);

@@ -1,3 +1,11 @@
+---
+title: 礦坑系列 ── malloc、new 與 POD Type
+date: 2022-09-19 
+tags: C++ Miner
+categories:
+- C++ Miner
+---
+
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── malloc、new 與 POD Type <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
@@ -21,8 +29,6 @@ Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都
 ## Aggregates
 
 ### 什麼是 Aggregate?
-
-
 一般我們理解的定義來自於 Standard 的定義：
 
 > (C++03 8.5.1 §1)：
@@ -49,8 +55,6 @@ Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都
 + 可以有 user-declared/user-defined 的 copy-assignment operator 或 destructor
 + 就算是 array of non-aggregate class type 也是一個 Aggregate
 + 不具有繼承關係
-
-
 用一個例子來確認一下 ([連結](https://godbolt.org/z/G1W43vcvs))：
 
 ```cpp
@@ -204,8 +208,6 @@ POD 全名叫 Plain Old Data，一般我們理解的 POD 與 C++03 標準內的�
 > [n4659 (12 - 10)](https://timsong-cpp.github.io/cppwp/n4659/class#10)：
 > A POD struct109 is a non-union class that is both a trivial class and a standard-layout class, and has no non-static data members of type non-POD struct, non-POD union (or array of such types). Similarly, a POD union is a union that is both a trivial class and a standard-layout class, and has no non-static data members of type non-POD struct, non-POD union (or array of such types). A POD class is a class that is either a POD struct or a POD union.
 
-
-
 舉一些 POD 的例子：
 ```cpp
 #include <iostream>
@@ -251,33 +253,33 @@ POD 的好處就很多了，這邊舉幾個例子：
 + POD-class 與 C struct 非常接近，但 POD class 可以有 member function、static member，不過這兩者並不會影響 memory layout。 所以如果你想要寫一個給 C 或甚至 .NET 用的 portable dll，你就需要讓你 exported function 的參數和回傳值都使用 POD-type，簡單來說就是 POD 對序列化很有幫助。
 + non-POD class 的生命週期從 constructor 完成開始，到 destructor 完成時結束；POD-class 的生命週期則是從物件占用記憶體開始，不用等到建構子執行完畢，而生命週期也是到其釋放記憶體結束。
 + 對於 POD types 的物件，標準保證其可以直接使用 `memcpy`，當你將 POD-class 的內容使用 `memcpy` 複製到 char/unsinged char array，再對陣列使用 `memcpy` 把內容複製回物件時，物件會維持原先的值，內容不變。 這件事對 non-POD type object 是沒有保證的。
-    
+
     看個[例子](https://godbolt.org/z/YheTjYPeP)：
     ```cpp
     #include <iostream>
 	#include <type_traits>
 	#include <cstring>
-	
+
 	class T {
 	public:
 	  int i, j;
 	  char a, b, c;
 	};
-	
+
 	int main()
 	{
 	  static_assert(std::is_pod_v<T> == true);    // pass
-	
+
 	  std::byte buf[sizeof(T)];    // or char/unsinged char array
-	
+
 	  T obj = { .i = 1, .j = 2, .a = 'a', .b = 'b', .c = 'c' };    // obj initialized to its original value
 	  std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';
-	
+
 	  memcpy(buf, &obj, sizeof(T));    // between these two calls to memcpy,
 	  // obj be modified
 	  obj.i = 0, obj.j = 0, obj.a = '0', obj.b = '0', obj.c = '0';
 	  std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';    // all 0
-	
+
 	  memcpy(&obj, buf, sizeof(T));    // at this point, each subobject of obj of scalar type
 	  // holds its original value
 	  std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';
@@ -291,20 +293,20 @@ POD 的好處就很多了，這邊舉幾個例子：
 	  struct NonPOD {
 	    NonPOD() {}
 	  };
-	
+
 	  goto label;    // error, x haven't been declared
 	  NonPOD x;
 	label:
 	  return 0;
 	}
-	
+
 	int g()
 	{
 	  struct POD {
 	    int i;
 	    char c;
 	  };
-	
+
 	  goto label;    // okay since x is POD
 	  POD x;
 	label:
@@ -316,31 +318,31 @@ POD 的好處就很多了，這邊舉幾個例子：
     ```cpp
 	#include <iostream>
 	#include <cassert>
-	
+
 	class POD {
 	public:
 	  [[noreturn]] int fn1() {}
 	  [[noreturn]] int fn2() {}
 	  int i1, i2;
 	};
-	
+
 	class NonPOD {
 	public:
 	  NonPOD() {}
 	  virtual int fn1() { return 0; }
 	  virtual int fn2() { return 0; }
-	
+
 	  int i3 = 10, i4 = 20;
 	};
-	
+
 	int main()
 	{
 	  POD *ptr1 = new POD{ 1, 2 };
 	  std::cout << *reinterpret_cast<int *>(ptr1) << '\n';    // 1
-	
+
 	  NonPOD *ptr2 = new NonPOD();
 	  std::cout << *reinterpret_cast<int *>(ptr2) << '\n';    // 亂數
-	
+
 	  assert(reinterpret_cast<int *>(ptr1) == &(ptr1->i1));
 	  assert(((void) "Not equal", reinterpret_cast<int *>(ptr2) == &(ptr2->i3)));    // error
 	}
@@ -355,8 +357,6 @@ POD 的好處就很多了，這邊舉幾個例子：
 ### 記憶體分配
 
 記憶體的分配分為動態分配與靜態分配，靜態分配發生在編譯與 linking 時期，而動態分配則是在程式調入和執行的時候發生的。
-
-
 
 # new
 
@@ -378,7 +378,7 @@ Operator new 是一個幫忙配置 raw memory 的「函式」，它可以被 ove
 
 ```cpp
 #include <iostream>
- 
+
 // class-specific allocation functions
 struct X
 {
@@ -387,14 +387,14 @@ struct X
     std::cout << "custom new for size " << count << '\n';
     return ::operator new(count);
   }
- 
+
   static void* operator new[](std::size_t count)
   {
     std::cout << "custom new[] for size " << count << '\n';
     return ::operator new[](count);
   }
 };
- 
+
 int main()
 {
   X* p1 = new X;
@@ -415,10 +415,6 @@ int i = new int(5);
 要注意 operator new 不能被 overload，挺合理的，因為它是 operator。
 
 使用 new operator 時它會先去<span class = "yellow">呼叫 operator new</span>，幫我們分配足夠的 raw memory，再去<span class = "yellow">呼叫對象的建構子</span>。
-
-
-
-
 
 # Placement new
 
@@ -441,10 +437,10 @@ placement new 的用處是於 `ptr` 處建構我們想要的物件，通常我�
   // Statically allocate the storage with automatic storage duration
   // which is large enough for any object of type `T`.
   alignas(T) unsigned char buf[sizeof(T)];
- 
+
   T* tptr = new(buf) T; // Construct a `T` object, placing it directly into your 
                         // pre-allocated storage at memory address `buf`.
- 
+
   tptr->~T();           // You must **manually** call the object's destructor
                         // if its side effects is depended by the program.
 }                       // Leaving this block scope automatically deallocates `buf`.

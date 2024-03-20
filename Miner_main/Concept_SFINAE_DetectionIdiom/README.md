@@ -1,6 +1,13 @@
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?" height = 50> 礦坑系列 ── <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>Concept と SFINAE と Detection Idiom</center></h1>
+---
+title: 礦坑系列 ── Concept と SFINAE と Detection Idiom
+date: 2022-12-01
+tags: C++ Miner
+categories:
+- C++ Miner
+---
 
-###### tags: `C++ Miner`
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?" height = 50> 礦坑系列 ── Concept と SFINAE と Detection Idiom <img src = "https://i.imgur.com/thmVmX6.png?" height = 50></center></h1>
+
 點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
 # 前言
@@ -295,14 +302,14 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
 
 1. 利用 function name lookup 建立 overload set
     這會把所有 visible 的 function declaration 找出來，建立出一個 overload set，過程中它可能會需要 ADL，對於 function template 可能還會需要做 template argument deduction。
-    
+
     這個階段只要 function name 一樣就好，argument 沒有符合並沒有關係，舉個例子：
     ```cpp
     void fn(int i) {}
     void fn(char i) {}
     void fn() {}
     void fn(int, int) {}
-		
+
     int main()
     {
       fn(1);
@@ -317,36 +324,36 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
     3. 如果呼叫的 argument 數量小於 function parameter 數量，那 function parameter 需要有 default parameter，像是 `int fn(int = 0);`。
     4. 如果 function 有額外的 constraint，那需要符合其 constraint
     5. argument 的型態要對，armument 可能有 [implicit conversion sequence](https://eel.is/c++draft/over.match#def:conversion_sequence,implicit) 存在，也就是說如果 argument 轉型可以傳進 function 那也算對
-    
+
     沿用前面的例子：
     ```cpp
     void fn(int i) {}
     void fn(char i) {}
     void fn() {}
     void fn(int, int) {}
-		
+
     int main()
     {
       fn(1);
     }
     ```
-    
+
     這裡的 candidate set 為 `void fn(int i) {}` 與 `void fn(char i) {}` 兩個。
     :::info
 	overload set 是一般的用語，candidate set 也是一般的用語，並非 standard 的用語，儘管 standard 有出現這些字眼，但並沒有詳細的定義，不是 C++ 內的專有名詞。
 	:::
-	
+
 3. ranking，找 best overload
   	如果 candidate set 只有一個 function，那麼就會直接呼叫它，如果有多個，則進行 ranking，選出一個最佳的 function 來呼叫。
 
   	若沒有 best overload，則會給出 compiled error。
-    
+
     要注意的是這個「最佳」對你來說不一定是最佳的 function，它只不過是 compiler 依照標準訂好的選出的 function。
-    
+
     到這裡主要的目的是從 candidate set 裡面挑一個最好的，換句話說這裡的每一個 function 都是 viable 的，所以主要用轉型來決定。
-    
+
     function argument 的轉型分三種，依照 ranking 高至低分別為：[Standard conversion sequences](https://timsong-cpp.github.io/cppwp/n4868/over.match#over.ics.scs)、[User-defined conversion sequences](https://timsong-cpp.github.io/cppwp/n4868/over.match#over.ics.user)、[Ellipsis conversion sequences](https://timsong-cpp.github.io/cppwp/n4868/over.match#over.ics.ellipsis)
-    
+
     而 Standard conversion sequences 自己還有分 [ranking](https://timsong-cpp.github.io/cppwp/n4868/over#ics.scs-3)：
     1. Exact Match
         1. Identity
@@ -370,18 +377,18 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
         6. [Boolean conversions](https://timsong-cpp.github.io/cppwp/n4868/conv.bool)
 
   	如果此 sequenced 有 Conversion Rank argument，那麼 sequenced rank 即為 Conversion Rank；如果沒有，但有 Promotion Rank argument，那麼 sequenced rank 為 Promotion Rank；否則為 sequenced rank 為 Exact Match Rank
-    
+
     簡單來說，<span class = "yellow">以 argument 有的最低 Rank 當作 sequenced rank</span>。
-    
+
   	如果 sequenced 的 rank 一樣，則依照 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)(基本上是照上面順序下來)，依序從 sequenced 的第一個至最後一個 parameter 開始比較 rank，從頭到尾<span class = "yellow">都沒輸過</span>，且有贏最多次的為 function 為 best overload。
-		
+
     舉個例子：		
 	```cpp
     #include <iostream>
-    
+
     void fn(int, double, int, int) { puts("A"); } // candidate A
     void fn(int, double, double, int) { puts("B"); } // candidate B
-    
+
     int main()
     {
       fn(1, 2, 3, 4); // A
@@ -401,22 +408,22 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
 	4. 平手
 		A：1->int
 		B：1->int
-		
+
 	A 從來沒有輸過，且 A 贏比較多次，所以 A 為 best overload。
-	
+
 	但我們換一下參數的順序，看另一個例子：
 	```cpp
 	#include <iostream>
 
 	void fn(int, int, int, double) { puts("A"); } // candidate A
 	void fn(int, double, double, int) { puts("B"); } // candidate B
-	
+
 	int main()
 	{
 	  fn(1, 2, 3, 4); // compile error: ambiguous
 	}
 	```
-	
+
 	這裡 A 與 B 的 sequenced rank 一樣都是 Conversion，平手，因此開始依序比叫參數的 rank：
 	1. 平手
 		A：1->int
@@ -430,7 +437,7 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
 	4. <span class = "yellow">B 贏</span>
 		A：1->double
 		B：1->int
-		
+
 	A 有輸過一次，所以不能為 best overload，但 B 也輸過兩次，也不能為 best overload，所以這邊 Compiler 會給一個 error: call of overloaded is ambiguous，表示它找不到 best overload，哪怕 A 贏了比較多次
 
 建議寫到一些比較特別的例子時要去翻一下 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)，像是扯到 template 的時候：
@@ -526,7 +533,7 @@ void callFoo() {
 ```cpp
 template<bool B, class T = void>
 struct enable_if {};
- 
+
 template<class T>
 struct enable_if<true, T> { typedef T type; };
 ```
@@ -1122,7 +1129,7 @@ int main()
   雖然可以呼叫，所以實例化的是上面的 `check(T *)`，然而回傳型態不對，因此 `std::is_same` 的 type 為 `false`。
 5. type 有 `serialize`，且回傳型態與參數全部符合
   可以呼叫，因此實例化上面的 `check(T *)`，且回傳型態是對的，因此 `std::is_same` 的 type 為 `true`。
-  
+
 從這邊你可以發現其實 Detection Idiom 的寫法很多，像這邊就只用到了 `std::declval`，且彈性很高且寫起來也可以很乾淨。
 
 ## constexpr if
@@ -1395,8 +1402,6 @@ bool check_valid(T... t) { return true; }
 template <typename... T, typename std::enable_if_t<!satisfied<valid_model, T...>> * = nullptr>
 bool check_valid(T... t) { return false; }
 ```
-
-
 ## 進行包裝
 
 我們可以對它做包裝，讓其使用起來方便一點：
@@ -1541,22 +1546,22 @@ struct detector {
   using value_t = std::false_type;
   using type = Default;
 };
- 
+
 template <class Default, 
           template<class...> class Op, class... Args>
 struct detector<Default, std::void_t<Op<Args...>>, Op, Args...> {
   using value_t = std::true_type;
   using type = Op<Args...>;
 };
- 
+
 } // namespace detail
- 
+
 template <template<class...> class Op, class... Args>
 using is_detected = typename detail::detector<nonesuch, void, Op, Args...>::value_t;
- 
+
 template <template<class...> class Op, class... Args>
 using detected_t = typename detail::detector<nonesuch, void, Op, Args...>::type;
- 
+
 template <class Default, template<class...> class Op, class... Args>
 using detected_or = detail::detector<Default, void, Op, Args...>;
 ```

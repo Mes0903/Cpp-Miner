@@ -18,8 +18,6 @@ struct T {
     puts("~T()");
   }
 };
-
-
 T f(T arg)
 {
   return arg;

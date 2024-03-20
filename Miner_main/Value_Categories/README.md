@@ -1,6 +1,12 @@
+---
+title: 礦坑系列 ── 值類別 Value Categoraries
+date: 2021-04-27
+tags: C++ Miner
+categories:
+- C++ Miner
+---
+
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 值類別 Value Categoraries <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
-
-
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
@@ -131,8 +137,6 @@ attr 是<strong><a href = "https://en.cppreference.com/w/cpp/language/attributes
 運算式有兩種獨立的特性，分別是「<strong><a href = "https://en.cppreference.com/w/cpp/language/type" class = "pinklink">Type</a></strong>」和「<strong><a href = "https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo" class = "pinklink">Value Catories</a></strong>」， Type 不是我們今天討論的主題，我們直接來看 Value Categories。
 
 <center><img src = "https://i.imgur.com/OhA7F9T.png"><br><a href = "https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c">圖源</a><br><br></center>
-
-
 Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</strong> 和 <strong>Prvalue</strong>。如果你曾讀過值類別，可能還會聽過 glvalue 與 rvalue，那這兩個又是什麼呢? 這其實與運算式發展的歷史有關，是一個方便記憶而創造出的名詞，glvalue = Lvalue + Xvalue，rvalue = Prvalue + Xvalue。讀到這裡妳可能有點頭花，我們看這兩張圖來方便自己記憶：
 
 <center><img src = "https://i.imgur.com/XK4zdqj.png"><br><strong><a href = "https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94">圖源</a></strong><br><br><img src = "https://i.imgur.com/39BvtSk.png"><br><strong><a href = "https://openhome.cc/Gossip/CppGossip/RvalueReference.html">圖源</a></strong></center><br>
@@ -236,10 +240,10 @@ const int& f() {
 int main() {
     std::cout<<&"www"<<std::endl;    //0x7ff7c0ca5050
     std::cout<<&"www"<<std::endl;    //0x7ff7c0ca5050
-    
+
     i;
     i;
-    
+
     int* p_i = new int(7);
     *p_i;
     *p_i;
@@ -285,7 +289,7 @@ int main() {
     }
     ```
     不能直接印出來看的原因是 `ostream` 的 `<<` 並沒有重載函式指標，但在標準中規範了函式指標可以隱式轉換成布林值，並且布林值會是 `true` [(來源1)](http://eel.is/c++draft/conv.bool)、[(來源2)](https://en.cppreference.com/w/cpp/language/implicit_conversion#Boolean_conversions)，因此我們需要將其轉換為 `void*` 或其他指標型態才能把它印出來看。
-    
+
     而 <a href = "https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter" class = "pinklink">模板參數物件(C++20)</a> 則是有靜態的儲存位址，所以是 Lvalue Expression。
 
 + 回傳 Lvalue Reference 的運算子重載或函式呼叫(function call)，像是 `std::getline(std::cin, str)` ， `std::cout << 1` ， `str1 = str2` 或 `++it` 等等。
@@ -297,42 +301,42 @@ int main() {
 + 利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_subscript_operator" class = "pinklink">注標運算子</a> 的運算式，像是 `a[n]`、`p[n]` ，但注意 `a` 要是一個陣列左值，不能是 <a href = "https://en.cppreference.com/w/cpp/language/array#Array_rvalues" class = "pinklink">陣列右值</a> 之類的東西
 
 + 利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員物件訪問運算子</a> 的運算式，像是 `a.m`，但 `m` 不能是 `enum` 的成員、某些非靜態的成員函式，或一個 class prvalue 內的非靜態成員(以上例來說就是 `a` 是 class prvalue 且 `m` 是非靜態成員)。
-    
+
     class prvalue 和 array rvalue 可以看這個<a href = "https://en.cppreference.com/w/cpp/language/array#Array_rvalues" class = "pinklink">例子</a>，我有稍微改一下：
     ```cpp
     #include <iostream>
 	#include <type_traits>
 	#include <utility>
-	
+
 	// x 可以是 xvalue 或 prvalue 的參考 (因為他是rvalue reference)
 	void f( int( &&rr )[2][3] ) {
 	    std::cout << " " << sizeof( rr ) << '\n';
 	}
-	
+
 	struct X {
 	    X() { std::cout << " X()" << '\n'; }
 	    int i[2][3];
 	    ~X() { std::cout << " ~X()" << '\n'; }
 	};
-	
+
 	template <typename T>
 	using identity = T;
 	int main() {
 	    std::cout << "sizeof( X().i ) = " << sizeof( X().i ) << '\n';    // size of the array
-	
+
 	    std::cout << "\n now call f( X().i )\n";
 	    f( X().i );    // okay: rr binds to xvalue
-	
+
 	    // f(x.i);    // error: cannot bind to lvalue
-	
+
 	    int a[2][3];
 	    std::cout << "\n now call f( std::move( a ) )\n";
 	    f( std::move( a ) );    // okay: rr binds to xvalue
-	
+
 	    using arr_t = int[2][3];
 	    std::cout << "\n now call f( arr_t{} )\n";
 	    f( arr_t{} );    // okay: rr binds to prvalue
-	
+
 	    std::cout << "\n now callf( identity<int[][3]>{ { 1, 2, 3 }, { 4, 5, 6 } } )\n";
 	    f( identity<int[][3]>{ { 1, 2, 3 }, { 4, 5, 6 } } );    // okay: rr binds to prvalue
 	}
@@ -352,23 +356,21 @@ int main() {
 + 字串常量 (string literal)，像是 `"Hello World"`。
 
     因為字串常量其實像是一個靜態成員，在整個程式結束前都會被存在某個唯讀的記憶體區段。
-    
+
 + 轉型(cast)成 lvalue reference 型態的運算式，像是 `static_cast<int&>(x)`。
 
 + 轉型(cast)成「函式型態」的 rvalue reference 的運算式，像是 `static_cast<void (&&)(int)>(x)`
 
 + 回傳「函式」的 rvalue reference 的函式呼叫(function call)。
 
-
-
 ## 特性
 
 那麼 Lvalue Expression 有一些特性，有些是只有 Lvalue Expression 有的，有些是 Xvalue Expression 也有的 (換句話說就是 glvalue 有的)
-    
+
 <strong>僅限 Lvalue Expression 擁有的特性:</strong>
 
 + 可以被取址
-    
+
     取址運算符 `&` 的後方必須要接上 Lvalue Expression 或一個 <a href = "https://en.cppreference.com/w/cpp/language/identifiers#Qualified_identifiers" class = "pinklink">Qualified-id</a>  [(來源)](https://timsong-cpp.github.io/cppwp/n4659/expr.unary.op#3)。
 
 + 一個可更改的 Lvalue Expression 可以擺在賦值運算子和複合賦值運算子的左邊。
@@ -393,8 +395,6 @@ int main() {
     想知道詳細狀況可以去讀 <a href = "https://en.cppreference.com/w/cpp/types#Runtime_type_identification" class = "pinklink">執行期型態訊息 (RTTI)</a> 的操作。
 
 + 在表達式合法的情況下可以是 <a href = "https://en.cppreference.com/w/cpp/language/type#Incomplete_type" class = "pinklink">不完全型態</a>。
-
-
 # Xvalue Expression
 
 Xvalue，中文翻作將亡值，一個 Xvalue Expression 回傳的物件擁有「身分標識符(identity)」，但是它通常用來「暫時儲存」某個東西。 這代表一個 Xvalue Expression 回傳的物件會有一個記憶體位址，但我們不能夠在它「生成出來的那行外」來使用這塊記憶體內的東西。
@@ -449,7 +449,7 @@ this = 0x878d9ff9fc
 + 轉型(cast)成「物件」的 rvalue reference 的運算式，像是 `static_cast<char&&>(x)`
 
 + 經過 TMC 後產生出暫時物件的運算式。
-    
+
     TMC 是一個挺重要的東西，後面會提到。
 
 ### 特性
@@ -495,11 +495,11 @@ Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其�
 	void test( const int &a ) {
 	    puts( "test function with const lvalue reference parameter" );
 	}
-	
+
 	void test( int &&a ) {
 	    puts( "test function with rvalue reference parameter" );
 	}
-	
+
 	int main() {
 	    int a{};
 	    test( std::move( a ) );
@@ -509,9 +509,9 @@ Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其�
     ```cpp
     test function with rvalue reference parameter
     ```
-    
+
     可以看見的它傳入的是 `int &&a` 版本的 `test` 函式，如果這邊還看不懂什麼是 rvalue reference 沒關係，可以等後面讀完再回來看前面的例子。
-    
+
 ## Prvalue Expression
 
 Prvalue，中文翻作純右值，一個 Prvalue Expression 回傳的是一個常量，或是沒有身分標識符的物件，在定義上 Prvalue 可以被移動。
@@ -552,7 +552,7 @@ int main () {
 + 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_address-of_operator" class = "pinklink">取址運算符</a>的運算式，像是 `&a` 。
 
 + 某些利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員物件訪問運算子</a> 的運算式，像是 `a.m`，且 `m` 是 `enum` 的成員、某些非靜態的成員函式，或是一個 Xvalue 或 Prvalue 內的非參考類型的非靜態成員(以上例來說就是說 `a` 是 Xvalue 或 Prvalue ，且 `m` 是非參考類型的非靜態成員)。
-    
+
 + 某些利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員指標訪問運算子</a> 的運算式，像是 `p->m`，且 `m` 是 `enum` 的成員或非靜態的成員函式。
 
 + 某些利用了指向「資料成員」(物件) 的 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators" class = "pinklink">成員指標運算子</a> 的運算式，像是 `a.*mp`，`mp` 是一個「成員函式」的指標，或者 `a` 是一個 Xvalue 或 Prvalue，且 `mp` 是一個「資料成員」的指標。
@@ -611,11 +611,11 @@ int main () {
 	void test( const int &a ) {
 	    puts( "test function with const lvalue reference parameter" );
 	}
-	
+
 	void test( int &&a ) {
 	    puts( "test function with rvalue reference parameter" );
 	}
-	
+
 	int main() {
 	    int a{};
 	    test( std::move( a ) );
@@ -625,7 +625,7 @@ int main () {
     ```cpp
     test function with rvalue reference parameter
     ```
-    
+
     可以看見的它傳入的是 `int &&a` 版本的 `test` 函式，如果這邊還看不懂什麼是 rvalue reference 沒關係，可以等後面讀完再回來看前面的例子。
 
 # 參考 (Reference)
@@ -678,7 +678,7 @@ void f() {
     int &rr = r;    // rr 連結到 r 連結的變數，也就是說 rr 連結到 i
     int ( &rg )( int ) = g;    // rg 是函式 g 的參考，
     rg( i );    // 呼叫 g 函式
-    
+
     int a[3];
     int( &ra )[3] = a;    // ra 連結到 a，ra 是 a 陣列的參考
     ra[1] = i;    // 改變 a[1] 的值
@@ -721,12 +721,12 @@ std::cout << std::boolalpha
 	```cpp
 	#include <iostream>
 	#include <string>
-	 
+
 	int main() {
 	    std::string s = "Ex";
 	    std::string &r1 = s;
 	    const std::string &r2 = s;
-	 
+
 	    r1 += "ample";           // 改動了 s
 	//  r2 += "!";               // error: cannot modify through reference to const (不能更改一個 const string 的 reference)
 	    std::cout << r2 << '\n'; // Example
@@ -737,11 +737,11 @@ std::cout << std::boolalpha
 	```cpp
 	#include <iostream>
 	#include <string>
-	 
+
 	void double_string(std::string &s) {
 	    s += s; // 's' 和 main() 裡面的 `str` 是同一個物件
 	}
-	 
+
 	int main() {
 	    std::string str = "Test";
 	    double_string(str);
@@ -753,11 +753,11 @@ std::cout << std::boolalpha
 	```cpp
 	#include <iostream>
 	#include <string>
-	 
+
 	char& char_number(std::string &s, std::size_t n) {
 	    return s.at(n); // string::at() 回傳一個reference，型態是 char&
 	}
-	 
+
 	int main() {
 	    std::string str = "Test";
 	    char_number(str, 1) = 'a';
@@ -835,7 +835,7 @@ int main() {
 
 組語輸出：
 
-```assembly=
+```assembly
 main:
         push    rbp
         mov     rbp, rsp
@@ -911,20 +911,20 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
     ```cpp
     #include <iostream>
 	#include <string>
-	 
+
 	int main() {
 	    std::string s1 = "Test";
 	//  std::string&& r1 = s1;           // error: can't bind to lvalue
-	 
+
 	    const std::string& r2 = s1 + s1; // okay: 利用唯讀的 Lvalue Reference 來延長 s1 + s2 的生命週期
 	//  r2 += "Test";                    // error: can't modify through reference to const
-	 
+
 	    std::string&& r3 = s1 + s1;      // okay: 利用 Rvalue Reference 來延長 s1 + s2 的生命週期
 	    r3 += "Test";                    // okay: 可以更改連結到的物件的值
 	    std::cout << r3 << '\n';    //TestTestTest
 	}
     ```
-    
+
     可以看見唯讀的 Lvalue Reference 跟 Rvalue Reference 都可以延長暫時物件的生命週期，但只有 Rvalue Reference 可以更改連結到的物件的值，因為其不是唯讀的型態。
 
 + 函式 call-by-reference 時能夠區分 Rvalue 與 Lvalue：
@@ -932,19 +932,19 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
     ```cpp
 	#include <iostream>
 	#include <utility>
-	 
+
 	void f(int& x) {
 	    std::cout << "lvalue reference overload f(" << x << ")\n";
 	}
-	 
+
 	void f(const int& x) {
 	    std::cout << "lvalue reference to const overload f(" << x << ")\n";
 	}
-	 
+
 	void f(int&& x) {
 	    std::cout << "rvalue reference overload f(" << x << ")\n";
 	}
-	 
+
 	int main() {
 	    int i = 1;
 	    const int ci = 2;
@@ -953,7 +953,7 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
 	    f(3);  // calls f(int&&)
 	           // would call f(const int&) if f(int&&) overload wasn't provided
 	    f(std::move(i)); // calls f(int&&)
-	 
+
 	    // rvalue reference variables are lvalues when used in expressions
 	    int&& x = 1;
 	    f(x);            // calls f(int& x)
@@ -962,7 +962,7 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
     ```
 
     可以看見 Prvalue Expression 與 Xvalue Expression 會傳入 Rvalue Reference 的版本，與 Lvalue Reference 的版本區分開來了。
-    
+
     這是我們能夠實現移動語意的關鍵，因為移動建構子或其他接受移動的函式吃的就是 Xvalue，建構子需要能夠區分 Lvalue 與 Rvalue。
 
 # 複製、移動省略 ( Copy / Move Elision )
@@ -1078,8 +1078,6 @@ S(S &&other)
 
 ~S()
         Destructed the object at 0x7ffd48647acf
-
-
 the address of A in main is 0x7ffd48647ace
 
 cnt = 3
@@ -1103,8 +1101,6 @@ S(S &&other)
 
 ~S()
         Destructed the object at 0x7fff9d04743f
-
-
 the address of A in main is 0x7fff9d04746f
 
 cnt = 2
@@ -1122,8 +1118,6 @@ cnt = 2
 ```cpp
 S()
         Construct object at 0x7ffc79411f7f
-
-
 the address of A in main is 0x7ffc79411f7f
 
 cnt = 1
@@ -1142,16 +1136,12 @@ cnt = 1
 | --------             | -------- | -------- |
 | 關掉 Copy Elision     | 3 次     | 2 次     |
 | 打開 Copy Elision     | ?        | 1 次     |
-
-
 這樣是關掉了 Copy Elision，從 C\+\+14 換到 C\+\+17 時少呼叫了一次建構子，這證明了 C\+\+17 「保證」了部分 Copy Elision 的發生，而同樣是 C\+\+17，關掉與打開 Copy Elision，也少呼叫了一次建構子，這則證明了 C\+\+17 只保證「部分」的 Copy Elision 會發生，其餘的部分則看 Compiler 如何處理，標準也有將這些狀況列下來，等等會談到。
 
 那麼四格中還有一格沒有檢查到，那就是在 C\+\+14 時打開 Copy Elision 的狀況，所以我們現在來看看這個狀況下的輸出 <a href = "https://godbolt.org/z/hGxjPYbrf" class = "pinklink">(連結)</a>：
 ```cpp
 S()
         Construct object at 0x7ffca23c2e6f
-
-
 the address of A in main is 0x7ffca23c2e6f
 
 cnt = 1
@@ -1179,7 +1169,7 @@ cnt = 1
 
     ```cpp
 	#include <iostream>
-	
+
 	struct T {
 	    T() {
 	        puts("T()");
@@ -1194,41 +1184,39 @@ cnt = 1
 	        puts("~T()");
 	    }
 	};
-	
+
 	T f() {
 	    return T();
 	}
-	 
+
 	int main() {
 	    f();    // 只會 call 一次建構子
         T x = f();    // 只會 call 一次建構子
 	}
     ```
-    
+
     輸出：
     ```cpp
     T()
     ~T()
     ```
-    
+
     可以看見 `f()` 和 `T x = f();`，都被省略到只呼叫了一次建構子，調回 C\+\+14 的話會輸出：
-    
+
     ```cpp
     T()
     T(T &&other)
     ~T()
     ~T()
     ```
-    
+
     要注意的是他不一定需要移動建構子與複製建構子，因為我們沒用到他( 看起來很像廢話<img src = "https://cdn.discordapp.com/emojis/754662899053494291.png?v=1" height = 20> )，妳可以把他 `delete` 掉試試看，但要有預設的建構子和解構子，不然他沒辦法建構解構 (因為會用到)。
-    
-    
 +   再來是一個大重點，在初始化物件時，如果初始化器(initializer)內是一個相同型態的 Prvalue Expression (無視 cv 限定詞)，那麼 Copy Elision 也保證發生，而且他必須直接初始化那個物件，不能複製和移動。
 
     那我們就來看看例子：
 
     環境：C\+\+17，關掉 Copy Elision (-std=c\+\+17 -fno-elide-constructors)，<a href = "https://godbolt.org/z/zY35f9W9z" class = "pinklink">連結</a>。
-    
+
     ```cpp
     #include <iostream>
 
@@ -1246,11 +1234,11 @@ cnt = 1
 	        puts( "~T()" );
 	    }
 	};
-	
+
 	T f() {
 	    return T();
 	}
-	
+
 	int main() {
 	    T x = f();    //只呼叫一次建構子
 	    T y = T( T( f() ) );    //只呼叫一次建構子
@@ -1258,7 +1246,7 @@ cnt = 1
 	    delete z;
 	}
     ```
-    
+
     輸出：
     ```cpp
     T()
@@ -1268,20 +1256,20 @@ cnt = 1
 	~T()
 	~T()
     ```
-    
+
     `T x = f();` 直接被初始化，和 `T x;` 等價，而 `T y;` 和 `T y = T( T( f() ) );` 等價。所以你可能會聽見有些人說「Copy Elision 根本沒省略東西」，指的就是這個情況，因為直接初始化了，某種層面上根本沒有複製可以讓我們來初始化，但只是一個說法，可以不用太在意他XD
-    
+
     而 Prvalue Expression 的定義也因為這項規定而改變了，還記得「回傳非參考類型的運算子重載運算式或函式呼叫(function call)」被歸類在 Prvalue Expression 嗎? 以上方的例子來說就是 `f()`。
-    
+
     看到這裡妳應該覺得很合理了，因為「沒有暫時物件」了，就好像常量一樣，也因此，我們才會說 C\+\+17 後 Prvalue Expression 不可被移，因為根本沒有暫時物件生出來給我們移動，並且依然沒有身分標識符 (identity)，原因一樣，因為沒有物件產生。
 
     要注意的是被初始化的物件不能是<a href = "https://eel.is/c++draft/intro.object#7" class = "pinklink">潛在重疊的物件</a>，潛在重疊的物件包含：
-    
+
     + 子類物件 (a base class subobject)
     + 一個有 `no_unique_address` attr 的非靜態的資料成員 (from C++20)
-    
+
     下面這個大家應該沒什麼看過，我也是第一次看到 XD，但草案內也只是提到而已，沒特別去說明，看看這個<a href = "https://godbolt.org/z/8d5ercfYM" class = "pinklink">例子</a>：
-    
+
     ```cpp
     #include <iostream>
 
@@ -1299,38 +1287,38 @@ cnt = 1
 	        puts( "~T()" );
 	    }
 	};
-	
+
 	T f();
-	
+
 	struct D;
-	
+
 	D g();
-	
+
 	struct D : T {
 	    D() : T( f() ) {
 	        puts( "D()" );
 	    }
-	
+
 	    D( int ) : D( g() ) {
 	        puts( "D(int) : D(g())" );
 	    }
 	};
-	
+
 	T f() {
 	    return {};
 	}
-	
+
 	D g() {
 	    return {};
 	}
-	
+
 	int main() {
 	    D x;
 	    D y = g();
 	    D z{ 5 };
 	}
     ```
-    
+
     輸出：
     ```cpp
     T()
@@ -1365,25 +1353,25 @@ OS：<img src = "https://i.imgur.com/m47J2qr.png" height = 30> 我當初還真�
 + 某些條件下的 throw 表達式
 
     在 <a href = "https://en.cppreference.com/w/cpp/language/throw" class = "pinklink">throw 表達式</a>中，如果妳的運算元是一個 non-volatile 的物件，而且這個物件不是函式的參數或 <a href = "https://en.cppreference.com/w/cpp/language/try_catch" class = "pinklink">catch clause</a> (不會翻QQ) 的參數，然後它的 scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)，然後！ 運算元有<a href = "https://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration" class = "pinklink">自動的儲存期限</a>，那他可能發生 Copy Elision。
-    
+
     「scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)」這句我翻得不太確定，因為我自己不常用例外處理，相對沒那麼熟，他的原文是「whose scope does not extend past the innermost try-block (if there is a try-block).」，如果有翻錯還請幫忙糾正一下，謝謝！ <img src = "https://cdn.discordapp.com/emojis/784176641428553777.gif?v=1" height = 30>
 
 + 某些狀況下的 catch clause
 
     在 <a href = "https://en.cppreference.com/w/cpp/language/try_catch" class = "pinklink">catch clause</a> 中，如果它的參數和 `exception` 丟出來的物件型態一樣(無視 cv 限定詞)，那麼這個例外物件的複製可以被省略，然後 catch clause 的 body 會直接訪問例外物件，就像是 catch by reference 一樣，但不能移動例外物件，因為例外物件永遠是 Lvalue Expression 回傳的物件。
-    
+
     如果這類的 Copy Elision 會因為任何原因 ( 除了跳過 catch clause 的參數的複製建構子和解構子 )，導致程式的外顯行為改變，舉個例子，如果妳 catch clause 的參數已經被修改了，但例外對像被重新丟出，像是這樣的某種原因，它會更改到這個程式的外顯行為，那麼就會禁止這個 Copy Elision 。
 
 + 協同程式 (Coroutines)
-    
+
     在<a href = "https://eel.is/c++draft/support.coroutine" class = "pinklink">協同程式</a>中，除了參數的建構子和解構子，於 coroutine state 的參數的移動或複製可能會被省略，因為這不會改變程式的外顯行為，換句話說，如果妳在斷點後從沒引用過這個參數，或者妳在整個 coroutine state ，從一開始就沒有 heap-allocate，那麼 Copy Elision 可能會發生。
-    
+
     這段我也翻得不太確定，我也只稍微看過 Coroutines 而已，沒有實際用過，但大概知道他想講什麼，我把原文也附上，如果我有錯還請大家糾正一下，謝謝！
-    
+
     原文：
-    
+
     In coroutines, copy/move of the parameter into coroutine state may be elided where this does not change the behavior of the program other than by omitting the calls to the parameter's constructor and destructor. This can take place if the parameter is never referenced after a suspension point or when the entire coroutine state was never heap-allocated in the first place.
-    
+
 ## Copy / Move Elision 小整理
 
 恭喜妳看到這裡了，挺不容易的，但後面還很長 <img src = "https://i.imgur.com/OilkaJ4.png" height = 30>ㄏㄏ，這裡先幫大家整理一下，並且分享一個好用的小東西。
@@ -1524,20 +1512,20 @@ int main() {
   PRINT_VALUE_CAT([]{ return A{}; }().value);
 }
 ```
-    
+
 輸出：
 ```cpp
 []{} is a prvalue
 A{}.value is a xvalue
 []{ return A{}; }().value is a xvalue
 ```
-    
+
 超方便的呀！有了這個誰還在跟你慢慢判斷阿，~~大人，時代變了呀~~，上方名稱空間裡面的內容就是用來判斷值類別的主體，而下方的巨集函式則幫助我們輸出。
 
 由於值類別會影響呼叫的順序，幫大家複習一下，Prvalue 優先傳入吃 non-reference type 參數的函式，Lvalue 優先傳入吃 lvalue reference 參數的函式，Xvalue 優先傳入吃 Rvalue Reference 參數的函式。那麼因為模板參數的優先度也一樣，於是，我們就可以利用這個特性來判斷值類別了。
 
 會到這邊才講是因為知道 Copy Elision 後會比較好理解她在幹嘛，雖然原因可能有點不一樣就是了，這邊利用了 `decltype` 來幫忙，但不是今天的主題，就先不講太多了，之後有時間再寫一篇有關 `decltype` 和 `auto` 的文章 (亂開坑)。
-    
+
 # 臨時物化 (TMC)
 
 好了現在我們完全了解 Copy Elision 了，那還有另一個重要的東西叫 TMC，TMC 是 <a href = "https://en.cppreference.com/w/cpp/language/implicit_conversion#Temporary_materialization" class = "pinklink">Temporary materialization conversion</a> 的縮寫，前面講 Rvalue Reference 時有先提到，那我們這邊再更詳細的探討一下，因為標準實際上有規定 C\+\+17 後的哪些時刻「必須」要有 TMC 的出現。
@@ -1571,7 +1559,7 @@ S fn() {
 int main() {
     int i = S( S( S( S( S( S( S( S( S( S( S( S( S( fn() ) ) ) ) ) ) ) ) ) ) ) ) ).m;
     std::cout << "i = " << i << " s_cnt = " << s_cnt;
-    
+
     int &&rr = 5;
 }
 ```
@@ -1588,36 +1576,36 @@ int main() {
 那麼這邊我就把詳細的情況列出來，在下面這些情況時 TMC 「保證」會發動：
 
 + 將一個 Reference 與 Prvalue 連結
-    
+
     前面談 Reference 的時候已經對這個狀況解釋了很多，所以我們這邊再看一個例子就帶過：
     ```cpp
     int main() {
         int a{};
-        
+
         ++a;    // Lvalue Expression
         a = 0;
-        
+
         int &r = ++a;    // Lvalue Reference Bind to Lvalue Expression
         a = 0;
-        
+
         a++;    // Rvalue Expression
         a = 0;
-        
+
         int &&rr = a++;
         a = 0;
     }
     ```
     附上我精美的手寫圖 <img src = "https://i.imgur.com/feJC2DV.png" height = 30>：
-    
+
     <center><img src = "https://i.imgur.com/cuuChWH.jpg"></center>
-    
+
     可以看見有暫時物件的產生。我在每一個操作結束時都加上 `a = 0;`，並用粉色的螢光筆標起來了，當作區間的紀錄點，方便大家閱讀。
 
 + 拜訪或使用了 Class Prvalue 的成員時：
-    
+
     ```cpp
 	#include <iostream>
-	
+
 	int main() {
 	    class C {
 	      public:
@@ -1632,12 +1620,12 @@ int main() {
 	            puts("~C()");
 	        }
 	    };
-	    
+
 	    C();    // Prvalue
 	    C().i;    // Xvalue，TMC 產生暫時物件
 	}
     ```
-    
+
     `C()` 是個 Prvalue，這大家應該不陌生，前面的例子也解釋過了，當我們拜訪她的成員時，TMC 會產生一個暫時物件，這也是我們說 `C().i` 是 Xvalue 的原因。
 
 + 拜訪或使用了 Array Prvalue 的成員時，或 Array Prvalue 退化成指標時：
@@ -1646,24 +1634,24 @@ int main() {
 
 	void f( int( &&x )[2][3] ) {
 	}
-	
+
 	template <typename T>
 	using identity = T;
-	
+
 	int main() {
 	    using arr_t = int[2][3];
-	
+
         //拜訪、使用了成員
 	    for ( const auto &x : arr_t{ { 1, 2, 3 }, { 4, 5, 6 } } ) {
 	    }
 	    for ( const auto &x : identity<int[2][3]>{ { 1, 2, 3 }, { 4, 5, 6 } } ) {
 	    }
-	
+
 	    f( arr_t{ { 1, 2, 3 }, { 4, 5, 6 } } );    //退化成指標
 	    f( identity<int[2][3]>{ { 1, 2, 3 }, { 4, 5, 6 } } );    //退化成指標
 	}
     ```
-    
+
 + 利用 <a href = "https://en.cppreference.com/w/cpp/language/list_initialization" class = "pinklink">braced-init-list</a> 來初始化一個型態為 `std::initializer_list<T>` 的物件時。
 
 + 對 Prvalue 使用 `typeid` 時 (這是一部分的<a href = "https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions" class = "pinklink">無運算表達式</a>)
@@ -1722,13 +1710,9 @@ int main() {
 ```
 
 這個例子混合了 Copy Elision 和 TMC 的應用，大家可以先自己判斷看看。
-
-
 main 裡面那一大串會因為 Copy Elision 的關係被簡化成 `S().c.m`，這時候 Compiler 發現 `S()` 是 Prvalue Expression，而我們訪問了一個 Prvalue 的成員 `c` 裡面的 `m`，所以此時的 `c` 必須被建構！但是 `S` 還沒被實例化，所以 `S` 會先被實例化，然後 `c` 在被建構。
 
 所以從定義上來看， `S().c` 是一個 Xvalue，然後我們利用 TMC 評估 `S` 內的 `m`，返回一個相同型態(`int`)的暫時物件 `S().c.m`。 
-
-
 # 回傳值優化 Return value optimization (RVO)
 
 好了，標準保證會發生的東西都談的差不多了，那我們來說說不一定會發生的東西。
@@ -1893,7 +1877,7 @@ T(T &&other)
 
 	```cpp
 	#include <iostream>
-	
+
 	struct T {
 	    T() {
 	        puts( "T()" );
@@ -1908,7 +1892,7 @@ T(T &&other)
 	        puts( "~T()" );
 	    }
 	};
-	
+
 	struct U : T {
 	    U() {
 	        puts( "U()" );
@@ -1923,22 +1907,20 @@ T(T &&other)
 	        puts( "~U()" );
 	    }
 	};
-	
-	
 	T f() {
 	    U result;
 	    return result;
 	}
-	
+
 	int main() {
 	    T x = f();
-	
+
 	    return 0;
 	}
 	```
-    
+
     輸出：
-    
+
     ```cpp
     T()
 	U()
@@ -1947,11 +1929,11 @@ T(T &&other)
 	~T()
 	~T()
     ```
-    
+
     物件切片(object slicing) 的意思就是你拿一個子類去喂父類，那麼有一些資訊就會被切掉，有興趣可以到<a href = "https://stackoverflow.com/questions/274626/what-is-object-slicing" class = "pinklink">這裡</a>看看。
-    
+
     我們可以看見在上例中 NRVO 一樣沒有發動，因為回傳物件的型態與函式回傳的型態不一樣。
-    
+
 + <a href = "https://godbolt.org/z/fMEKa48GW" class = "pinklink">(連結)</a> 回傳的物件為函式吃進來的參數時：
 
     ```cpp
@@ -1971,31 +1953,27 @@ T(T &&other)
 	        puts( "~T()" );
 	    }
 	};
-	
-	
 	T f(T arg) {
 	    return arg;
 	}
-	
+
 	int main() {
 	    T x = f(T{});
-	
+
 	    return 0;
 	}
     ```
-    
+
     輸出：
-    
+
     ```cpp
     T()
     T(T &&other)
     ~T()
     ~T()
     ```
-    
-    可以看見 NRVO 一樣沒有發動。
-    
 
+    可以看見 NRVO 一樣沒有發動。
 # 隱式移動
 
 講了這麼多，那如果 Copy Elision 和 NRVO 都沒有發動的話怎麼辦呢？不用擔心，標準告訴我們，在 C\+\+11 之後，於回傳語句中，如果在某些特殊情況下，Copy Elision 應該要發動但沒發動，或是感覺可以發動但還沒被保證，所以沒發動，像是我們在 C\+\+14 的版本內把回傳優化關掉的狀況。 這種時候 Compiler 會優先選用移動建構子來取代複製，除非回傳的物件是吃進來的參數。
@@ -2013,11 +1991,11 @@ T(T &&other)
 + 不用害怕以一個值來回傳物件
 
     如果你讓自己接受這件事，你可以很輕鬆的寫出很棒的函式，因為最終，函式回傳的終究是那些不是參數，在函式內定義出來的物件，如果你回傳了函式的參數的物件，那這會很怪，你大可以直接傳參考或指標進去改動他，又或在函式內複製一個出來回傳。
-    
+
     另外，不要回傳對區域物件的參考或指，一個函式執行完畢後裡面的區域物件會被銷毀，回傳它們的參考或指標是一件很奇怪的事，除非他們在這個函式結束後不會被解構，不然不要這樣做。如果你讀過 C\+\+Primer，你可能會看過類似的提醒，裡面有警告過一樣的事。
-    
+
     如果你在函式中大量的處理了這些管理權的問題，會導致你的可讀性變得很差，而且一沒處理好，你可能還會讓 Compiler 的優化失效。
-    
+
 + 讓 Compiler 幫你做多一點事
 
     現在妳知道了這些特性，不代表你一定要完美的處理這些複製和移動，像上面講的，如果你在函式中大量的處理了這些管理權的問題，會導致你的可讀性變得很差，而且一沒處理好，你可能還會讓 Compiler 的優化失效，先確保可讀性和可維護性再來講求效。
@@ -2025,21 +2003,21 @@ T(T &&other)
 + 實作移動建構子和移動指派運算子
 
     在設計 Class 時，記得實作移動建構子(move constructor) 和移動指派運算子(move operator=)，具體可以參考 <a href = "https://en.cppreference.com/w/cpp/language/rule_of_three" class = "pinklink">Rule of five</a>。
-    
+
     因為如果 Copy Elision 和 NRVO 沒有發動，你還有隱式移動(implicit move，另外有移動建構子在某些處理上也比較方便。
 
 + 盡量讓錯誤能在編譯期檢查出來，多使用編譯期運算
 
     這項可能每個人看法不太一樣，但這裡的原因是，普遍來說執行期的 code 很難被優化，錯誤也比較不好找，所以盡量讓錯誤和 code 在編譯期就可以被運算好。
-    
+
     有興趣的可以看看 <a href = "https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF%E8%B6%85%E7%B7%A8%E7%A8%8B" class = "pinklink">TMP</a>，也是個酷東西XD，TSJW 有寫過一篇<a href = "https://tjsw.medium.com/%E6%BD%AE-c-%E7%B7%A8%E8%AD%AF%E6%9C%9F%E7%AE%97%E5%85%AB%E7%9A%87%E5%90%8E%E6%89%80%E6%9C%89%E8%A7%A3-compile-time-8-queens-d872bc063bdc" class = "pinklink">編譯期算完八皇后所有解</a>的 Medium。但 TMP 也有它的缺點，平衡就看大家的需求自己取捨了。
 
 + 讓你的函式短一點
 
     這會讓你和你的夥伴比較好維護你們寫的 code，然後可讀性也會增加，這是一大好處。
-    
+
     另一大好處是較短的函式能減輕 Compiler 的負擔，讓 Compiler 更好的利用前面提到的那些優化來優化你的 code。
-    
+
 那麼本篇文章就到這裡啦，沒想到寫一寫，加上網址那些的竟然八萬多字了，一篇值類別就快比之前寫的 C\+\+ 基礎筆記還長了 <img src = "https://i.imgur.com/X6HiPT3.png" height = 30>。
 
 最後再次感謝 kris，marty，Cy 與 Discord 上一些不認識的人很友善且很有耐心的回答了我很多問題，尤其是 kris XD，非常有耐心的回答了我每一個問題，非常謝謝 <img src = "https://cdn.discordapp.com/emojis/784176641428553777.gif?v=1" height = 50>。

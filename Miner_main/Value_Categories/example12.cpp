@@ -37,8 +37,6 @@ struct U : T {
     puts("~U()");
   }
 };
-
-
 T f()
 {
   U result;

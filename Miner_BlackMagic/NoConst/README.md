@@ -1,3 +1,11 @@
+---
+title: 礦坑系列 ── 黑魔法前言
+date: 2022-05-21
+tags: C++ Miner-BlackMagic
+categories:
+- C++ Miner
+---
+
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 四個你不該用 "const" 的時機 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
@@ -11,6 +19,7 @@ source：[C++ Weekly - Ep 75 - Why You Cannot Move From Const](https://www.youtu
 source：[C++ Weekly - Ep 322 - Top 4 Places To Never Use "const"](https://www.youtube.com/watch?v=dGCxMmGvocE&t=929s)
 
 主要原因是因為 `const` 會破壞移動，看看這個例子：
+
 ```cpp
 #include <iostream>
 
@@ -46,7 +55,6 @@ int main()
 由此可知 `const` 也會破壞隱式移動(implicit move)，有關隱式移動，可以去看之前寫得值類別篇。這邊 Jason Turner 給了四個要注意不該使用 `const` 的例子：
 
 ## 當 function 回傳 non-reference type 時，return type 不應該用 const 修飾
-    
 寫在 return type 的 `const` 大部分的時候都會被忽略，有時候甚至會破壞效能，如這邊提到的它會破壞隱式移動，看看這段 code：
 
 ```cpp
@@ -87,37 +95,37 @@ int main()
   puts("\nend");
 }
 ```
+
 輸出：
+
 ```
 s
 S()
 S()
 operator=(const S &)
 ~S()
-	
+
 s2
 S()
 S()
 operator=(S &&)
 ~S()
-	
+
 end
 ~S()
 ~S()
 ```
-    
 這邊有兩個 function，上面那個在 return type 上有 `const` 修飾，下面的沒有。你可以看見上面那個使用的是 copy，而下面那個使用的是 move。
-    
+
 原因就如前面所述，一旦加上了 `const`，reference 要連結時就變成要使用 const rvalue reference，但通常 const rvalue reference 並不會有用處(幾乎沒意義，很多餘)，因此通常我們函式不會實作 const rvalue reference 的版本，也因此會去呼叫複製，破壞了隱式移動。
-    
+
 當然，const rvalue reference 偶爾會有用就是了，真的很偶爾。
-    
+
 額外閱讀：[Do rvalue references to const have any use?](https://stackoverflow.com/questions/4938875/do-rvalue-references-to-const-have-any-use)
 
 ## 需要隱式移動時，回傳的變數不該用 const 修飾
 
 原因一樣是因為會破壞隱式移動，看看這個例子：
-    
 ```cpp
 #include <iostream>
 
@@ -148,19 +156,17 @@ int main(int argc, const char *[])
   S s = make_value(argc == 1);
 }
 ```
-    
 輸出：
+
 ```
 S()
 S(const S &)
 ~S()
 ~S()
 ```
-    
 function 內回傳的是有名物件，因此套用的是 NRVO，但因為有 branch，因此編譯器會嘗試去做隱式移動，然而一樣由於無法利用 rvalue reference 去做連結，因此無法套用移動，導致去呼叫了 copy。
 
 ## 在你可能需要直接回傳的 non-trivial 參數上，不應該用 const 修飾
-    
 原因跟前面都一樣，因為會破壞隱式移動，看這個例子：
 
 ```cpp
@@ -180,7 +186,7 @@ S make_value(const S s)    // return statement make this bad use of `const`
 {
   return s;    // because we return it, const is bad in function definition!
 }
-	
+
 int main(int argc, const char *[])
 {
   S s = make_value(S{});
@@ -188,6 +194,7 @@ int main(int argc, const char *[])
 ```
 
 輸出：
+
 ```
 S()
 S(const S &)
@@ -200,7 +207,6 @@ S(const S &)
 額外閱讀：[What is a non-trivial constructor in C++?](https://stackoverflow.com/questions/3899223/what-is-a-non-trivial-constructor-in-c) 
 
 ## Data member 不應該用 const 修飾
-    
 這點就比較有趣了，如果你的 data member 有 `const` 修飾，那這不只會破壞掉隱式移動，也有可能會破壞掉 assignment 的語意，看看這個例子：
 
 ```cpp
@@ -226,6 +232,7 @@ int main(int argc, const char *[])
 ```
 
 輸出：
+
 ```
 S()
 S(const S &)
@@ -263,7 +270,9 @@ int main(int argc, const char *[])
   data.emplace_back();
 }
 ```
+
 輸出：
+
 ```
 S()
 S()
@@ -278,7 +287,9 @@ S(const S &)
 ~S()
 ~S()
 ```
+
 因為我們把隱式移動給破壞掉了，導致在 resize 容器時會需要整個複製，如果 `s` 沒有加上 const，輸出會是：
+
 ```
 S()
 S()

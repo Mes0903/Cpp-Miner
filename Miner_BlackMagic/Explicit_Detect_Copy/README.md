@@ -1,3 +1,11 @@
+---
+title: 礦坑系列 ── 用 "explicit" 來偵測複製
+date: 2022-05-22
+tags: C++ Miner-BlackMagic
+categories:
+- C++ Miner
+---
+
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 用 "explicit" 來偵測複製 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
@@ -9,8 +17,6 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 source：[C++ Weekly - Ep 241 - Using explicit to Find Expensive Accidental Copies](https://www.youtube.com/watch?v=5wJ-jKK_Zy0)
 
 source：[C++ Weekly - Ep - 198 - Surprise Uses For explicit Constructors](https://www.youtube.com/watch?v=Q4SXFkTzD28)
-
-
 複製常常是我們傳資料的一種選擇，如把某個東西傳到 thread 內時，這樣就不用去擔心 sharing 的問題，通常這會是一個很好的解法。
 
 又或有時候我們會有小物件，像是 string view，使用 copy 來傳遞參數也是一個很好的選擇，因為他的大小只有 2 個 pointer 的大小，在現代的 x64 calling convention 架構下這可以用 2 個 register 來包裝，這比把參數 push 進 stack 或透過 pointer/reference 來存取某段位址等等的更有效率。
@@ -48,8 +54,6 @@ void fn(const std::string &s)
 {
   std::cout << static_cast<const void *>(s.c_str()) << '\n';
 };
-
-
 int main()
 {
   std::string s = "123";

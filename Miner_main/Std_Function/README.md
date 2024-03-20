@@ -1,10 +1,16 @@
+---
+title: 礦坑系列 ── std::function
+date: 2021-06-12
+tags: C++ Miner
+categories:
+- C++ Miner
+---
+
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── std::function <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
-
 # 前言 
 
 `std::function` 是 C\+\+11 時加入的東西，它基本上是一個類型模板(Class Template)，目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用，像是函式、lambda、`std::bind`、Functor(function object) 等等。
@@ -246,7 +252,7 @@ int main() {
 
 接下來就有個問題了，到底什麼是可呼叫物件呢? 定義如下：
 > 一個可呼叫物件指的是一個物件擁有可呼叫的型態 ( <a href = "" class = "pinklink">20.14.3-4</a> )
- 
+
 所以接下來的問題就變成「什麼是可呼叫的型態」了，定義如下：
 > 可呼叫型態指的是 function object type 或是一個資料成員的指標 ( <a href = "https://timsong-cpp.github.io/cppwp/n4868/func.def#3" class = "pinklink">20.14.3-3</a> )
 
@@ -277,60 +283,60 @@ int main() {
     function( std::nullptr_t ) noexcept;    // 2
     ```
     上面這兩個(1、2) 會建構出空的 `std::function`
-    
+
     3、4：
     ```cpp
     function( const function& other );    // 3
     function( function&& other ) noexcept;    // 4
     ```
     上面這兩個(3、4) 會將 other 的 target 複製(3) 或移動(4) 到 `*this`。 簡單來說就是把對象包裝起來的東西移動或複製到自己身上。如果 other 是空的，`*this` 也會是空的。 
-    
+
     另外，移動(4) 後的 other 會處於有效但未指定的狀態。
-    
+
     5：
     ```cpp
     template< class F >
     function( F f );    // 5
     ```
-    
+
     前面的 4 個都是用 `std::function` 來初始化，這個可以說是最常用的了，這個建構子也是 `std::function` 可以做到高泛用性的原因。
-    
+
     基本上就是用我們給的東西來初始化內部的 target，如果想看內部的實作可以直接往下拉到內部概念那邊看，因為這扯到整個結構的問題。
-    
+
     不過要注意的是如果 `std::function` 的回傳型態是個繫結到某個沒有 trailing-return-type 的 lambda 所回傳的 reference type，由於 auto deduction 的關係，這種 lambda 回傳的型態一定會是個 prvalue，因此 `std::function` 的回傳型態的 reference 會繫結到一個暫時物件，但這個暫時物件的生命週期會在 `std::function::operator()` 回傳時結束，因此會變一個懸掛的 reference(dangling reference)。
-    
+
     例子：
     ```cpp
     std::function<const int&()> F([]{ return 42; });
     int x = F(); // Undefined behavior: the result of F() is a dangling reference
     ```
-    
+
     6：
     ```cpp
     template< class F >
     function( F&& f );    // 6
     ```
-    
+
     最後這個是最近更新的，還不在標準裡面，但有在 <a href = "https://eel.is/c++draft/func.wrap.func#lib:function,constructor____" class = "pinklink">C\+\+23 的草案</a>裡面，如果想看舊版的規範可以到<a href = "https://timsong-cpp.github.io/cppwp/n4868/func.wrap.func.con#lib:function,constructor____" class = "pinklink">這裡</a>看，另外裡面還有對編譯器實作的建議、Postconditions 和 Preconditions 等等，有興趣的也可以進來看。
-    
+
     具體上的原因可以到 <a href = "https://cplusplus.github.io/LWG/issue2774" class = "pinklink">Defect Report(C\+\+23)</a> 看，簡單來說就是 `operator=` 吃的是 `F&& f`，而如果 constructor 用複製的會有一些 Value Categories 上的影響。
-    
+
     在新版的實作內，我們會利用 `std::forward<F>(f)` 來初始化 target，target 的型態會是 `std::decay<F>::type`。
-    
+
     如果 `f` 是個 null 的 function pointer、member pointer 或一個由 `std::function` 特化的空值，那麼 `*this` 會是一個空的 `std::function`。
-    
+
     這個 constructor 不會參加多載解析(<a href = "https://en.cppreference.com/w/cpp/language/overload_resolution" class = "pinklink">Overload resolution</a>)，除非 target 的 type 不是 `std::function`，而且對於那些參數的型態 Args... 來說，它的 lvalue 是可呼叫的而且回傳的型態 R 也是可呼叫的型態。
-    
+
     如果 target 的 type 不能複製，或者初始化的格式不對，那麼這是個 ill-formed。
 
 + 解構子
-    
+
     destructor 就相對沒那麼複雜了，但要注意一下解構的時候的時候會連 target 一起解構。
 
 + operator=
 
     基本上內部寫好的有五個
-    
+
     1：
     ```cpp
     function& operator= ( const function& other );
@@ -342,46 +348,46 @@ int main() {
     ```cpp
     function& operator=( function&& other );
     ```
-    
+
     上面這個會移動 other 的 target 到 `*this` 的 target，此時 other 會處於未定義的有效狀態。
-    
+
     3:
     ```cpp
     function& operator=( std::nullptr_t ) noexcept;
     ```
 
     上面這個會把目前的 target 解構，讓 `*this` 回復為空。
-    
+
     4：
     ```cpp
     template< class F >
     function& operator=( F&& f );
     ```
-    
+
     上面這個將會把 `*this` 的 target 設為可呼叫的 f。
-    
+
     除非 f 對於參數的類型 Args... 和回傳的型態 R 是可呼叫的，不然這個運算符不會執行 Overload Resolution。
-    
+
     5：
     ```cpp
     template< class F >
     function& operator=( std::reference_wrapper<F> f ) noexcept;
     ```
-    
+
     上面這個會把 f 的 target 複製給 `*this` 的 target。
-    
+
 + operator bool
-    
+
     `std::function` 的 operator bool 會檢查 `*this` 的 target 是否為空，如果非空就回傳 true，如果是空的就回傳 false。
-    
+
     例子：
     ```cpp
     #include <functional>
 	#include <iostream>
-	
+
 	void sampleFunction() {
 	}
-	
+
 	void checkFunc( std::function<void()> &func ) {
 	    // 利用 operator bool 來確認 std::function 是否為空。
 	    if ( func ) {
@@ -391,77 +397,77 @@ int main() {
 	        std::cout << "Function is empty. Nothing to do.\n";
 	    }
 	}
-	
+
 	int main() {
 	    std::function<void()> f1;
 	    std::function<void()> f2( sampleFunction );
-	
+
 	    std::cout << "f1: ";
 	    checkFunc( f1 );    // std::function 為空，進入 else
-	
+
 	    std::cout << "f2: ";
 	    checkFunc( f2 );    // std::function 非空，進入 if
 	}
     ```
-    
+
 + operator()
 
     > R operator()( Args... args ) const;
-    
+
     `std::function` 的 operator() 會傳入參數，呼叫儲存的 callable object。
 
     例子：
     ```cpp
     #include <functional>
 	#include <iostream>
-	
+
 	void call( std::function<int()> f )    // std::function 可以 passed by value
 	{
 	    std::cout << f() << '\n';
 	}
-	
+
 	int normal_function() {
 	    return 42;
 	}
-	
+
 	int main() {
 	    int n = 1;
 	    std::function<int()> f = [&n]() { return n; };
 	    call( f );
-	
+
 	    n = 2;
 	    call( f );
-	
+
 	    f = normal_function;
 	    call( f );
 	}
     ```
-    
+
 + swap
     語法： `fn.swap(目標)`
     作用： 交換所存的 callable object
     例子：
-    
+
     ```cpp
     #include <functional>
 	#include <iostream>
-	
+
 	void fn1() {
 	    std::cout << "fn 1\n";
 	}
-	
+
 	void fn2() {
 	    std::cout << "fn 2\n";
 	}
-	
+
 	int main() {
 	    std::function<void()> s1{ fn1 };
 	    std::function<void()> s2{ fn2 };
-	
+
 	    s1(), s2(); // fn1 \n fn2
-	
+
 	    puts( "" ), s1.swap( s2 );
-	
+
 	    s1(), s2(); // fn2 \n fn1
 	    return 0;
 	}
@@ -472,31 +478,31 @@ int main() {
     > const std::type_info& target_type() const noexcept;
 
     回傳儲存的 target 的 `typeid`
-    
+
     例子：
     ```cpp
     #include <functional>
 	#include <iostream>
-	
+
 	int f( int a ) { return -a; }
-	
+
 	void g( double ) {}
-	
+
 	int main() {
 	    // fn1 and fn2 have the same type, but their targets do not
 	    std::function<int( int )> fn1( f ),
 	                              fn2( []( int a ) { return -a; } );
-	                              
+
 	    std::cout << fn1.target_type().name() << '\n'    // PFiiE
 	              << fn2.target_type().name() << '\n';    // Z4mainEUliE_
-	
+
 	    // since C++17 deduction guides (CTAD) can avail
 	    std::cout << std::function{ g }.target_type().name() << '\n';    // PFvdE
 	}
     ```
 
 + target
-    
+
     ```cpp
     template< class T >
     T* target() noexcept;    // (1)
@@ -506,12 +512,12 @@ int main() {
     ```
 
     如果 `target_type() == typeid(T)`，回傳一個指向儲存的 target 的 pointer，否則回傳一個 null pointer。
-    
+
     例子：
     ```cpp
 	#include <functional>
 	#include <iostream>
-	
+
 	int f( int, int ) {
 	    puts( "calling f" );
 	    return 1;
@@ -520,20 +526,20 @@ int main() {
 	    puts( "calling g" );
 	    return 2;
 	}
-	
+
     void sampleFunction() {
         puts( "calling ssample Function" );
     }
-    
+
 	void test( const std::function<int( int, int )> &arg ) {
 	    std::cout << "test function: ";
 	    if ( arg.target<std::plus<int>>() )
 	        std::cout << "it is plus\n";
 	    if ( arg.target<std::minus<int>>() )
 	        std::cout << "it is minus\n";
-	
+
 	    int ( *const *ptr )( int, int ) = arg.target<int ( * )( int, int )>();
-	
+
 	    if ( ptr && *ptr == f ) {
 	        std::cout << "it is the function f\n";
 	        ( *ptr )( 1, 1 );
@@ -543,13 +549,13 @@ int main() {
 	        ( *ptr )( 1, 1 );
 	    }
 	}
-	
+
 	int main() {
 	    test( std::function<int( int, int )>( std::plus<int>() ) );
 	    test( std::function<int( int, int )>( std::minus<int>() ) );
 	    test( std::function<int( int, int )>( f ) );
 	    test( std::function<int( int, int )>( g ) );
-        
+
         std::function<void()> fn = sampleFunction;
 
         void ( **fn_ptr )() = fn.target<void ( * )()>();
@@ -595,8 +601,6 @@ int main() {
 ```
 
 不過未來這個 Deduction Guides 可能還會改變，尤其是在 `std::function` 支援 `noexcept` 之後。
-
-
 # 內部概念
 
 內部概念我大概會講一下架構，然後帶大家看一下 GCC 上的優化與 code。
@@ -901,17 +905,3 @@ std::function<int(double)> f;
 **<a href = "" class = "redlink"></a>**
 
 **<a href = "" class = "redlink"></a>**
-
-
-
-
-
-
-
-
-
-
-
-
-
-
