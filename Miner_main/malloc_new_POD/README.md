@@ -251,101 +251,105 @@ int main()
 POD 的好處就很多了，這邊舉幾個例子：
 
 + POD-class 與 C struct 非常接近，但 POD class 可以有 member function、static member，不過這兩者並不會影響 memory layout。 所以如果你想要寫一個給 C 或甚至 .NET 用的 portable dll，你就需要讓你 exported function 的參數和回傳值都使用 POD-type，簡單來說就是 POD 對序列化很有幫助。
+
 + non-POD class 的生命週期從 constructor 完成開始，到 destructor 完成時結束；POD-class 的生命週期則是從物件占用記憶體開始，不用等到建構子執行完畢，而生命週期也是到其釋放記憶體結束。
+
 + 對於 POD types 的物件，標準保證其可以直接使用 `memcpy`，當你將 POD-class 的內容使用 `memcpy` 複製到 char/unsinged char array，再對陣列使用 `memcpy` 把內容複製回物件時，物件會維持原先的值，內容不變。 這件事對 non-POD type object 是沒有保證的。
 
-    看個[例子](https://godbolt.org/z/YheTjYPeP)：
-    ```cpp
-    #include <iostream>
-	#include <type_traits>
-	#include <cstring>
+  看個[例子](https://godbolt.org/z/YheTjYPeP)：
 
-	class T {
-	public:
-	  int i, j;
-	  char a, b, c;
-	};
+  ```cpp
+  #include <iostream>
+  #include <type_traits>
+  #include <cstring>
 
-	int main()
-	{
-	  static_assert(std::is_pod_v<T> == true);    // pass
+  class T {
+  public:
+    int i, j;
+    char a, b, c;
+  };
 
-	  std::byte buf[sizeof(T)];    // or char/unsinged char array
+  int main()
+  {
+    static_assert(std::is_pod_v<T> == true);    // pass
 
-	  T obj = { .i = 1, .j = 2, .a = 'a', .b = 'b', .c = 'c' };    // obj initialized to its original value
-	  std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';
+    std::byte buf[sizeof(T)];    // or char/unsinged char array
 
-	  memcpy(buf, &obj, sizeof(T));    // between these two calls to memcpy,
-	  // obj be modified
-	  obj.i = 0, obj.j = 0, obj.a = '0', obj.b = '0', obj.c = '0';
-	  std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';    // all 0
+    T obj = { .i = 1, .j = 2, .a = 'a', .b = 'b', .c = 'c' };    // obj initialized to its original value
+    std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';
 
-	  memcpy(&obj, buf, sizeof(T));    // at this point, each subobject of obj of scalar type
-	  // holds its original value
-	  std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';
-	}
-    ```
+    memcpy(buf, &obj, sizeof(T));    // between these two calls to memcpy,
+    // obj be modified
+    obj.i = 0, obj.j = 0, obj.a = '0', obj.b = '0', obj.c = '0';
+    std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';    // all 0
+
+    memcpy(&obj, buf, sizeof(T));    // at this point, each subobject of obj of scalar type
+    // holds its original value
+    std::cout << obj.i << ' ' << obj.j << ' ' << obj.a << ' ' << obj.b << ' ' << obj.c << '\n';
+  }
+  ```
 
 + goto 可以跳過 POD-type 物件的宣告，進入宣告後段的程式碼：
-    ```cpp
-    int f()
-	{
-	  struct NonPOD {
-	    NonPOD() {}
-	  };
 
-	  goto label;    // error, x haven't been declared
-	  NonPOD x;
-	label:
-	  return 0;
-	}
+  ```cpp
+  int f()
+  {
+    struct NonPOD {
+      NonPOD() {}
+    };
 
-	int g()
-	{
-	  struct POD {
-	    int i;
-	    char c;
-	  };
+    goto label;    // error, x haven't been declared
+    NonPOD x;
+  label:
+    return 0;
+  }
 
-	  goto label;    // okay since x is POD
-	  POD x;
-	label:
-	  return 0;
-	}
-    ```
+  int g()
+  {
+    struct POD {
+      int i;
+      char c;
+    };
+
+    goto label;    // okay since x is POD
+    POD x;
+  label:
+    return 0;
+  }
+  ```
 
 + POD-type 物件的第一個成員位址會和物件本身的位址一樣，舉個[例子](https://godbolt.org/z/n4rYjMMzd)：
-    ```cpp
-	#include <iostream>
-	#include <cassert>
+  ```cpp
+  #include <iostream>
+  #include <cassert>
 
-	class POD {
-	public:
-	  [[noreturn]] int fn1() {}
-	  [[noreturn]] int fn2() {}
-	  int i1, i2;
-	};
+  class POD {
+  public:
+    [[noreturn]] int fn1() {}
+    [[noreturn]] int fn2() {}
+    int i1, i2;
+  };
 
-	class NonPOD {
-	public:
-	  NonPOD() {}
-	  virtual int fn1() { return 0; }
-	  virtual int fn2() { return 0; }
+  class NonPOD {
+  public:
+    NonPOD() {}
+    virtual int fn1() { return 0; }
+    virtual int fn2() { return 0; }
 
-	  int i3 = 10, i4 = 20;
-	};
+    int i3 = 10, i4 = 20;
+  };
 
-	int main()
-	{
-	  POD *ptr1 = new POD{ 1, 2 };
-	  std::cout << *reinterpret_cast<int *>(ptr1) << '\n';    // 1
+  int main()
+  {
+    POD *ptr1 = new POD{ 1, 2 };
+    std::cout << *reinterpret_cast<int *>(ptr1) << '\n';    // 1
 
-	  NonPOD *ptr2 = new NonPOD();
-	  std::cout << *reinterpret_cast<int *>(ptr2) << '\n';    // 亂數
+    NonPOD *ptr2 = new NonPOD();
+    std::cout << *reinterpret_cast<int *>(ptr2) << '\n';    // 亂數
 
-	  assert(reinterpret_cast<int *>(ptr1) == &(ptr1->i1));
-	  assert(((void) "Not equal", reinterpret_cast<int *>(ptr2) == &(ptr2->i3)));    // error
-	}
+    assert(reinterpret_cast<int *>(ptr1) == &(ptr1->i1));
+    assert(((void) "Not equal", reinterpret_cast<int *>(ptr2) == &(ptr2->i3)));    // error
+  }
 	```
 
 ## malloc

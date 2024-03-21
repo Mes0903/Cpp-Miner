@@ -27,19 +27,19 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 #include <iostream>
 
 void call_func( void ( *func_ptr )( int ), int a ) {
-    func_ptr( a );
+  func_ptr( a );
 }
 
 void normal_func( int a ) {
-    int b{ 10 };
-    std::cout << "a = " << a << "\nb = " << b;
+  int b{ 10 };
+  std::cout << "a = " << a << "\nb = " << b;
 }
 
 int main() {
-    int a{ 5 };
+  int a{ 5 };
 
-    call_func( normal_func, a );
-    return 0;
+  call_func( normal_func, a );
+  return 0;
 }
 
 輸出：
@@ -54,35 +54,35 @@ b = 10
 #include <iostream>
 
 void call_func( void ( *func_ptr )( int a ), int b ) {
-    func_ptr( b );
+  func_ptr( b );
 }
 
 auto ret_lambda( int a ) {
-    int b{ 10 };
+  int b{ 10 };
 
-    return [a]( int b ) {
-        std::cout << "a = " << a << "\nb = " << b;
-    };
+  return [a]( int b ) {
+    std::cout << "a = " << a << "\nb = " << b;
+  };
 }
 
 void normal_func( int a ) {
-    int b{ 10 };
-    std::cout << "a = " << a << "\nb = " << b;
+  int b{ 10 };
+  std::cout << "a = " << a << "\nb = " << b;
 }
 
 int main() {
-    int a{ 5 }, b{ 10 };
+  int a{ 5 }, b{ 10 };
 
-    auto lambda_func = [a]( int b ) {
-        std::cout << "a = " << a << "\nb = " << b;
-    };
+  auto lambda_func = [a]( int b ) {
+    std::cout << "a = " << a << "\nb = " << b;
+  };
 
-    auto lambda2 = ret_lambda( a );
+  auto lambda2 = ret_lambda( a );
 
-    call_func( normal_func, a );
-    call_func( lambda_func, b );
-    call_func( lambda2, b );
-    return 0;
+  call_func( normal_func, a );
+  call_func( lambda_func, b );
+  call_func( lambda2, b );
+  return 0;
 }
 ```
 
@@ -94,35 +94,35 @@ int main() {
 #include <iostream>
 
 void call_func( std::function<void( int )> func_ptr, int b ) {
-    func_ptr( b );
+  func_ptr( b );
 }
 
 std::function<void( int )> ret_lambda( int a ) {
-    int b{ 10 };
+  int b{ 10 };
 
-    return [a]( int b ) {
-        std::cout << "a = " << a << "\nb = " << b << '\n';
-    };
+  return [a]( int b ) {
+    std::cout << "a = " << a << "\nb = " << b << '\n';
+  };
 }
 
 void normal_func( int a ) {
-    int b{ 10 };
-    std::cout << "a = " << a << "\nb = " << b << '\n';
+  int b{ 10 };
+  std::cout << "a = " << a << "\nb = " << b << '\n';
 }
 
 int main() {
-    int a{ 5 }, b{ 10 };
+  int a{ 5 }, b{ 10 };
 
-    std::function<void( int )> lambda_func = [a]( int b ) {
-        std::cout << "a = " << a << "\nb = " << b << '\n';
-    };
+  std::function<void( int )> lambda_func = [a]( int b ) {
+    std::cout << "a = " << a << "\nb = " << b << '\n';
+  };
 
-    std::function<void( int )> lambda2 = ret_lambda( a );
+  std::function<void( int )> lambda2 = ret_lambda( a );
 
-    call_func( normal_func, a );
-    call_func( lambda_func, b );
-    call_func( lambda2, b );
-    return 0;
+  call_func( normal_func, a );
+  call_func( lambda_func, b );
+  call_func( lambda2, b );
+  return 0;
 }
 ```
 
@@ -132,34 +132,34 @@ int main() {
 #include <iostream>
 
 void call_func( std::function<void( int )> func_ptr, int b ) {
-    func_ptr( b );
+  func_ptr( b );
 }
 
 std::function<void( int )> ret_lambda( int a ) {
-    int b{ 10 };
+  int b{ 10 };
 
-    return [a]( int b ) {
-        std::cout << "a = " << a << "\nb = " << b << '\n';
-    };
+  return [a]( int b ) {
+      std::cout << "a = " << a << "\nb = " << b << '\n';
+  };
 }
 
 class Collable_class {
-  public:
-    void operator()( int a ) const {
-        std::cout << "a = " << a << "\nb = " << b << '\n';
-    }
+public:
+  void operator()( int a ) const {
+      std::cout << "a = " << a << "\nb = " << b << '\n';
+  }
 
-  private:
-    int b{ 10 };
+private:
+  int b{ 10 };
 };
 
 int main() {
-    int a{ 5 }, b{ 10 };
+  int a{ 5 }, b{ 10 };
 
-    Collable_class C_instance;
+  Collable_class C_instance;
 
-    call_func( C_instance, a );
-    return 0;
+  call_func( C_instance, a );
+  return 0;
 }
 ```
 
@@ -181,67 +181,67 @@ int main() {
 #include <iostream>
 
 struct Foo {
-    Foo( int num ) : num_( num ) {}
-    void print_add( int i ) const { std::cout << num_ + i << '\n'; }
-    int num_;
+  Foo( int num ) : num_( num ) {}
+  void print_add( int i ) const { std::cout << num_ + i << '\n'; }
+  int num_;
 };
 
 //一般函式
 void print_num( int i ) {
-    std::cout << i << '\n';
+  std::cout << i << '\n';
 }
 
 //可呼叫的Struct，有重載operator()
 struct PrintNum {
-    void operator()( int i ) const {
-        std::cout << i << '\n';
-    }
+  void operator()( int i ) const {
+    std::cout << i << '\n';
+  }
 };
 
 int main() {
-    // std::function 儲存一個回傳 void 的 function，參數吃一個int
-    std::function<void( int )> f_display = print_num;
-    f_display( -9 );
+  // std::function 儲存一個回傳 void 的 function，參數吃一個int
+  std::function<void( int )> f_display = print_num;
+  f_display( -9 );
 
-    // std::function 儲存一個回傳 void 的 lambda，參數沒吃東西
-    std::function<void()> f_display_42 = []() { print_num( 42 ); };
-    f_display_42();
+  // std::function 儲存一個回傳 void 的 lambda，參數沒吃東西
+  std::function<void()> f_display_42 = []() { print_num( 42 ); };
+  f_display_42();
 
-    // std::function 儲存 std::bind 回傳的 function，function 回傳 void，參數列不吃東西
-    std::function<void()> f_display_31337 = std::bind( print_num, 31337 );
-    f_display_31337();
+  // std::function 儲存 std::bind 回傳的 function，function 回傳 void，參數列不吃東西
+  std::function<void()> f_display_31337 = std::bind( print_num, 31337 );
+  f_display_31337();
 
-    // std::function 儲存一個 member function，這個 member function 回傳 void，參數吃一個 Foo 和一個 int
-    std::function<void( const Foo &, int )> f_add_display = &Foo::print_add;
-    const Foo foo( 314159 );
-    f_add_display( foo, 1 );
-    f_add_display( 314159, 1 );
+  // std::function 儲存一個 member function，這個 member function 回傳 void，參數吃一個 Foo和一個 int
+  std::function<void( const Foo &, int )> f_add_display = &Foo::print_add;
+  const Foo foo( 314159 );
+  f_add_display( foo, 1 );
+  f_add_display( 314159, 1 );
 
-    // std::function 儲存一個 accessor
-    std::function<int( const Foo & )> f_num = &Foo::num_;
-    std::cout << "num_: " << f_num( foo ) << '\n';
+  // std::function 儲存一個 accessor
+  std::function<int( const Foo & )> f_num = &Foo::num_;
+  std::cout << "num_: " << f_num( foo ) << '\n';
 
-    // std::function 儲存一個 std::bind 回傳的 function，std::bind 吃一個 member function 和實例
-    std::function<void( int )> f_add_display2 = std::bind( &Foo::print_add, foo, std::placeholders::_1 );
-    f_add_display2( 2 );
+  // std::function 儲存一個 std::bind 回傳的 function，std::bind 吃一個 member function 和實例
+  std::function<void( int )> f_add_display2 = std::bind( &Foo::print_add, foo,std::placeholders::_1 );
+  f_add_display2( 2 );
 
-    // std::function 儲存一個 std::bind 回傳的 function，std::bind 吃一個 member function 和實例的位址
-    std::function<void( int )> f_add_display3 = std::bind( &Foo::print_add, &foo, std::placeholders::_1 );
-    f_add_display3( 3 );
+  // std::function 儲存一個 std::bind 回傳的 function，std::bind 吃一個 member function 和實例的位址
+  std::function<void( int )> f_add_display3 = std::bind( &Foo::print_add, &foo,std::placeholders::_1 );
+  f_add_display3( 3 );
 
-    // std::function 儲存一個可呼叫的物件
-    std::function<void( int )> f_display_obj = PrintNum();
-    f_display_obj( 18 );
+  // std::function 儲存一個可呼叫的物件
+  std::function<void( int )> f_display_obj = PrintNum();
+  f_display_obj( 18 );
 
-    auto factorial = []( int n ) {
-        // store a lambda object to emulate "recursive lambda"; aware of extra overhead
-        std::function<int( int )> fac = [&]( int n ) { return ( n < 2 ) ? 1 : n * fac( n - 1 ); };
-        // note that "auto fac = [&](int n){...};" does not work in recursive calls
-        return fac( n );
-    };
-    for ( int i{ 5 }; i != 8; ++i ) {
-        std::cout << i << "! = " << factorial( i ) << ";  ";
-    }
+  auto factorial = []( int n ) {
+    // store a lambda object to emulate "recursive lambda"; aware of extra overhead
+    std::function<int( int )> fac = [&]( int n ) { return ( n < 2 ) ? 1 : n * fac( n - 1 ); };
+    // note that "auto fac = [&](int n){...};" does not work in recursive calls
+    return fac( n );
+  };
+  for ( int i{ 5 }; i != 8; ++i ) {
+    std::cout << i << "! = " << factorial( i ) << ";  ";
+  }
 }
 ```
 
@@ -383,31 +383,31 @@ int main() {
     例子：
     ```cpp
     #include <functional>
-	#include <iostream>
+    #include <iostream>
 
-	void sampleFunction() {
-	}
+    void sampleFunction() {
+    }
 
-	void checkFunc( std::function<void()> &func ) {
-	    // 利用 operator bool 來確認 std::function 是否為空。
-	    if ( func ) {
-	        std::cout << "Function is not empty!\n";
-	    }
-	    else {
-	        std::cout << "Function is empty. Nothing to do.\n";
-	    }
-	}
+    void checkFunc( std::function<void()> &func ) {
+      // 利用 operator bool 來確認 std::function 是否為空。
+      if ( func ) {
+          std::cout << "Function is not empty!\n";
+      }
+      else {
+          std::cout << "Function is empty. Nothing to do.\n";
+      }
+    }
 
-	int main() {
-	    std::function<void()> f1;
-	    std::function<void()> f2( sampleFunction );
+    int main() {
+      std::function<void()> f1;
+      std::function<void()> f2( sampleFunction );
 
-	    std::cout << "f1: ";
-	    checkFunc( f1 );    // std::function 為空，進入 else
+      std::cout << "f1: ";
+      checkFunc( f1 );    // std::function 為空，進入 else
 
-	    std::cout << "f2: ";
-	    checkFunc( f2 );    // std::function 非空，進入 if
-	}
+      std::cout << "f2: ";
+      checkFunc( f2 );    // std::function 非空，進入 if
+    }
     ```
 
 + operator()
@@ -419,28 +419,28 @@ int main() {
     例子：
     ```cpp
     #include <functional>
-	#include <iostream>
+    #include <iostream>
 
-	void call( std::function<int()> f )    // std::function 可以 passed by value
-	{
-	    std::cout << f() << '\n';
-	}
+    void call( std::function<int()> f )    // std::function 可以 passed by value
+    {
+      std::cout << f() << '\n';
+    }
 
-	int normal_function() {
-	    return 42;
-	}
+    int normal_function() {
+      return 42;
+    }
 
-	int main() {
-	    int n = 1;
-	    std::function<int()> f = [&n]() { return n; };
-	    call( f );
+    int main() {
+      int n = 1;
+      std::function<int()> f = [&n]() { return n; };
+      call( f );
 
-	    n = 2;
-	    call( f );
+      n = 2;
+      call( f );
 
-	    f = normal_function;
-	    call( f );
-	}
+      f = normal_function;
+      call( f );
+    }
     ```
 
 + swap
@@ -450,27 +450,27 @@ int main() {
 
     ```cpp
     #include <functional>
-	#include <iostream>
+    #include <iostream>
 
-	void fn1() {
-	    std::cout << "fn 1\n";
-	}
+    void fn1() {
+      std::cout << "fn 1\n";
+    }
 
-	void fn2() {
-	    std::cout << "fn 2\n";
-	}
+    void fn2() {
+      std::cout << "fn 2\n";
+    }
 
-	int main() {
-	    std::function<void()> s1{ fn1 };
-	    std::function<void()> s2{ fn2 };
+    int main() {
+      std::function<void()> s1{ fn1 };
+      std::function<void()> s2{ fn2 };
 
-	    s1(), s2(); // fn1 \n fn2
+      s1(), s2(); // fn1 \n fn2
 
-	    puts( "" ), s1.swap( s2 );
+      puts( "" ), s1.swap( s2 );
 
-	    s1(), s2(); // fn2 \n fn1
-	    return 0;
-	}
+      s1(), s2(); // fn2 \n fn1
+      return 0;
+    }
     ```
 
 + target_type
@@ -482,23 +482,23 @@ int main() {
     例子：
     ```cpp
     #include <functional>
-	#include <iostream>
+    #include <iostream>
 
-	int f( int a ) { return -a; }
+    int f( int a ) { return -a; }
 
-	void g( double ) {}
+    void g( double ) {}
 
-	int main() {
-	    // fn1 and fn2 have the same type, but their targets do not
-	    std::function<int( int )> fn1( f ),
-	                              fn2( []( int a ) { return -a; } );
+    int main() {
+      // fn1 and fn2 have the same type, but their targets do not
+      std::function<int( int )> fn1( f ),
+                                fn2( []( int a ) { return -a; } );
 
-	    std::cout << fn1.target_type().name() << '\n'    // PFiiE
-	              << fn2.target_type().name() << '\n';    // Z4mainEUliE_
+      std::cout << fn1.target_type().name() << '\n'    // PFiiE
+                << fn2.target_type().name() << '\n';    // Z4mainEUliE_
 
-	    // since C++17 deduction guides (CTAD) can avail
-	    std::cout << std::function{ g }.target_type().name() << '\n';    // PFvdE
-	}
+      // since C++17 deduction guides (CTAD) can avail
+      std::cout << std::function{ g }.target_type().name() << '\n';    // PFvdE
+    }
     ```
 
 + target
@@ -515,52 +515,52 @@ int main() {
 
     例子：
     ```cpp
-	#include <functional>
-	#include <iostream>
+    #include <functional>
+    #include <iostream>
 
-	int f( int, int ) {
-	    puts( "calling f" );
-	    return 1;
-	}
-	int g( int, int ) {
-	    puts( "calling g" );
-	    return 2;
-	}
+    int f( int, int ) {
+      puts( "calling f" );
+      return 1;
+    }
+    int g( int, int ) {
+      puts( "calling g" );
+      return 2;
+    }
 
     void sampleFunction() {
         puts( "calling ssample Function" );
     }
 
-	void test( const std::function<int( int, int )> &arg ) {
-	    std::cout << "test function: ";
-	    if ( arg.target<std::plus<int>>() )
-	        std::cout << "it is plus\n";
-	    if ( arg.target<std::minus<int>>() )
-	        std::cout << "it is minus\n";
+    void test( const std::function<int( int, int )> &arg ) {
+      std::cout << "test function: ";
+      if ( arg.target<std::plus<int>>() )
+          std::cout << "it is plus\n";
+      if ( arg.target<std::minus<int>>() )
+          std::cout << "it is minus\n";
 
-	    int ( *const *ptr )( int, int ) = arg.target<int ( * )( int, int )>();
+      int ( *const *ptr )( int, int ) = arg.target<int ( * )( int, int )>();
 
-	    if ( ptr && *ptr == f ) {
-	        std::cout << "it is the function f\n";
-	        ( *ptr )( 1, 1 );
-	    }
-	    if ( ptr && *ptr == g ) {
-	        std::cout << "it is the function g\n";
-	        ( *ptr )( 1, 1 );
-	    }
-	}
+      if ( ptr && *ptr == f ) {
+          std::cout << "it is the function f\n";
+          ( *ptr )( 1, 1 );
+      }
+      if ( ptr && *ptr == g ) {
+          std::cout << "it is the function g\n";
+          ( *ptr )( 1, 1 );
+      }
+    }
 
-	int main() {
-	    test( std::function<int( int, int )>( std::plus<int>() ) );
-	    test( std::function<int( int, int )>( std::minus<int>() ) );
-	    test( std::function<int( int, int )>( f ) );
-	    test( std::function<int( int, int )>( g ) );
+    int main() {
+      test( std::function<int( int, int )>( std::plus<int>() ) );
+      test( std::function<int( int, int )>( std::minus<int>() ) );
+      test( std::function<int( int, int )>( f ) );
+      test( std::function<int( int, int )>( g ) );
 
         std::function<void()> fn = sampleFunction;
 
         void ( **fn_ptr )() = fn.target<void ( * )()>();
         ( *fn_ptr )();
-	}
+    }
     ```
 
 ## Deduction Guides 模板推導指引 

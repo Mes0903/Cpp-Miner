@@ -1583,7 +1583,7 @@ int main()
 
 而現在我們來看一下 virtual table 的運作模式，考慮以下範例：  
 
-```cpp  
+```cpp
 #include <iostream>  
 
 class Base {  

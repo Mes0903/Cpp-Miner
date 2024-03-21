@@ -506,7 +506,7 @@ Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其�
 	}
     ```
     輸出：
-    ```cpp
+    ```sh
     test function with rvalue reference parameter
     ```
 
@@ -622,7 +622,7 @@ int main () {
 	}
     ```
     輸出：
-    ```cpp
+    ```sh
     test function with rvalue reference parameter
     ```
 

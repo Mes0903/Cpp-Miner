@@ -189,16 +189,16 @@ source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/
     ```cpp
     #include <iostream>  
 
-	int i = 0;  
+    int i = 0;  
 
-	void fn()  
-	{  
-	  static int si = 0;  
-	}  
+    void fn()  
+    {  
+    static int si = 0;  
+    }  
 
-	int main()  
-	{  
-	}  
+    int main()  
+    {  
+    }  
     ```
 
     其中的 `i` 與 `si` 會存在 data 段。  
@@ -708,19 +708,19 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
 
     ```cpp
     #include <iostream>  
-	#include <string>  
+    #include <string>  
 
-	int main() {  
-	    std::string s1 = "Test";  
-	//  std::string&& r1 = s1;           // error: can't bind to lvalue  
+    int main() {  
+      std::string s1 = "Test";  
+    //  std::string&& r1 = s1;           // error: can't bind to lvalue  
 
-	    const std::string& r2 = s1 + s1; // okay: 利用唯讀的 Lvalue Reference 來延長 s1 + s2 的生命週期  
-	//  r2 += "Test";                    // error: can't modify through reference to const  
+      const std::string& r2 = s1 + s1; // okay: 利用唯讀的 Lvalue Reference 來延長 s1 + s2 的生命週期  
+    //  r2 += "Test";                    // error: can't modify through reference to const  
 
-	    std::string&& r3 = s1 + s1;      // okay: 利用 Rvalue Reference 來延長 s1 + s2 的生命週期  
-	    r3 += "Test";                    // okay: 可以更改連結到的物件的值  
-	    std::cout << r3 << '\n';    //TestTestTest  
-	}  
+      std::string&& r3 = s1 + s1;      // okay: 利用 Rvalue Reference 來延長 s1 + s2 的生命週期  
+      r3 += "Test";                    // okay: 可以更改連結到的物件的值  
+      std::cout << r3 << '\n';    //TestTestTest  
+    }  
     ```
 
     可以看見唯讀的 Lvalue Reference 跟 Rvalue Reference 都可以延長暫時物件的生命週期，但只有 Rvalue Reference 可以更改連結到的物件的值，因為其不是唯讀的型態。  
@@ -728,35 +728,35 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
 + 函式 call-by-reference 時能夠區分 Rvalue 與 Lvalue：  
 
     ```cpp
-	#include <iostream>  
-	#include <utility>  
+    #include <iostream>  
+    #include <utility>  
 
-	void f(int& x) {  
-	    std::cout << "lvalue reference overload f(" << x << ")\n";  
-	}  
+    void f(int& x) {  
+      std::cout << "lvalue reference overload f(" << x << ")\n";  
+    }  
 
-	void f(const int& x) {  
-	    std::cout << "lvalue reference to const overload f(" << x << ")\n";  
-	}  
+    void f(const int& x) {  
+      std::cout << "lvalue reference to const overload f(" << x << ")\n";  
+    }  
 
-	void f(int&& x) {  
-	    std::cout << "rvalue reference overload f(" << x << ")\n";  
-	}  
+    void f(int&& x) {  
+      std::cout << "rvalue reference overload f(" << x << ")\n";  
+    }  
 
-	int main() {  
-	    int i = 1;  
-	    const int ci = 2;  
-	    f(i);  // calls f(int&)  
-	    f(ci); // calls f(const int&)  
-	    f(3);  // calls f(int&&)  
-	           // would call f(const int&) if f(int&&) overload wasn't provided  
-	    f(std::move(i)); // calls f(int&&)  
+    int main() {  
+      int i = 1;  
+      const int ci = 2;  
+      f(i);  // calls f(int&)  
+      f(ci); // calls f(const int&)  
+      f(3);  // calls f(int&&)  
+              // would call f(const int&) if f(int&&) overload wasn't provided  
+      f(std::move(i)); // calls f(int&&)  
 
-	    // rvalue reference variables are lvalues when used in expressions  
-	    int&& x = 1;  
-	    f(x);            // calls f(int& x)  
-	    f(std::move(x)); // calls f(int&& x)  
-	}  
+      // rvalue reference variables are lvalues when used in expressions  
+      int&& x = 1;  
+      f(x);            // calls f(int& x)  
+      f(std::move(x)); // calls f(int&& x)  
+    }  
     ```
 
     可以看見 Prvalue Expression 與 Xvalue Expression 會傳入 Rvalue Reference 的版本，與 Lvalue Reference 的版本區分開來了。  
