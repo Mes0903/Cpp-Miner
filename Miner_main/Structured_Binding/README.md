@@ -1,6 +1,7 @@
 ---
 title: 礦坑系列 ── 結構化綁定 Structured Binding Declaration
 date: 2021-04-01
+abstract: C++17 加入的一個新特性，它讓我們能夠更簡單地去處理多個回傳值或多變數的情況，通常會在要接 tuple_like 的容器或 Struct 回傳值時搭配 auto 來使用
 tags: C++ Miner
 categories:
 - C++ Miner

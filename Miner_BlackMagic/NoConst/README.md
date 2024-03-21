@@ -1,6 +1,7 @@
 ---
 title: 礦坑系列 ── 四個你不該用 "const" 的時機
 date: 2022-05-21
+abstract: 主要原因是因為 `const` 會破壞移動，所以整理了幾個例子
 tags: C++ Miner-BlackMagic
 categories:
 - C++ Miner

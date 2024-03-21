@@ -1,6 +1,7 @@
 ---
 title: 礦坑系列 ── Concept と SFINAE と Detection Idiom
 date: 2022-12-01
+abstract: 主要的目的是偵測一個傳進 function template 的 argument 是否符合我們對 template parameter 設定的條件，之後看你要給 error 還是利用這個條件去做模板特化或分支，在對物件或函式做封裝的時候蠻好用的
 tags: C++ Miner
 categories:
 - C++ Miner

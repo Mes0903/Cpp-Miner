@@ -1,6 +1,7 @@
 ---
 title: 礦坑系列 ── C++03 ~ C++17 主要變化介紹
 date: 2022-5-23
+abstract: 就... 介紹，當初演講的講稿整理出來的介紹文
 tags: C++ Miner
 categories:
 - C++ Miner
