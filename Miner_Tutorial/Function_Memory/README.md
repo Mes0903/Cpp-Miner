@@ -1,6 +1,7 @@
 ---
 title: C++ 教學系列 ── Function 與 Memory
 date: 2022-03-22
+mathjax: true
 abstract: 本文講解了函式和與函式的記憶體配置
 tags: C++ Miner_tutorial
 categories:
