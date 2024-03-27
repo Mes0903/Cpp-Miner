@@ -1,7 +1,7 @@
 ---
 title: 礦坑系列 ── std::function
 date: 2021-06-12
-abstract: std::function 是 C\+\+11 時加入的東西，它基本上是一個類型模板(Class Template)，目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用
+description: std::function 是 C\+\+11 時加入的東西，它基本上是一個類型模板(Class Template)，目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用
 tags: C++ Miner
 categories:
 - C++ Miner
