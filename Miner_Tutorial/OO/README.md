@@ -1,11 +1,5 @@
----
-title: C++ 教學系列 ── Class & 物件導向
-date: 2022-05-19
-description: 物件導向有三個很重要的特性：資料抽象化、繼承與動態連結。資料抽象化上章有提到，就是將介面與實作分開；繼承的話則可以幫助我們建立相似模型之間的關係；動態連結則可以讓我們使用某些型態的物件時不用在意其內部細節
-tags: C++ Miner_tutorial
-categories:
-- C++ Miner
----
+{%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
+
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Class & 物件導向 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
 
 點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>  

@@ -1,11 +1,4 @@
----
-title: 礦坑系列 ── 黑魔法前言
-date: 2022-05-22
-description: 基本上就是把那些篇幅不長，但又很有趣的東西另外開一個地方放
-tags: C++ Miner-BlackMagic
-categories:
-- C++ Miner
----
+{%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 黑魔法前言 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 

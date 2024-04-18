@@ -1,11 +1,4 @@
----
-title: 礦坑系列 ── 值類別 Value Categoraries
-date: 2021-04-27
-description: 本文主要整理了 lvalue、xvalue 與 prvalue，還有與她們相關的一些知識點，像是 RVO
-tags: C++ Miner
-categories:
-- C++ Miner
----
+{%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 值類別 Value Categoraries <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>

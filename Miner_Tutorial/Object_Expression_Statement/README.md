@@ -1,11 +1,4 @@
----
-title: C++ 教學系列 ── Object、Expression、Statement
-date: 2022-02-25
-description: 本文介紹了 C++ 中 Object、Expression 與 Statement 的想法，這在 C++ 中是很重要的概念，然而對初學者比較不友善，大家可以斟酌閱讀，可以跳著看，吸收自己能理解的部分
-tags: C++ Miner_tutorial
-categories:
-- C++ Miner
----
+{%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Object、Expression、Statement <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
 

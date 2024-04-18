@@ -1,11 +1,4 @@
----
-title: 礦坑系列 ── Small String Optimization (SSO)
-date: 2022-05-22
-description: 核心概念是編譯器通常會先分配一小塊 stack 段的記憶體給 std::string，如果字串夠短就可以直接塞到這個 stack 內，如果字串太長，塞不下，就拿這個空間放 pointer，指向 heap 段存取的字串
-tags: C++ Miner-BlackMagic
-categories:
-- C++ Miner
----
+{%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── Small String Optimization (SSO) <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
 
