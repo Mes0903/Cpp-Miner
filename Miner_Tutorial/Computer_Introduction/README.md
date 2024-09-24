@@ -100,9 +100,21 @@
 
 另外這篇也寫得很好，也更詳細，建議可以讀一下：[搞懂「通用圖靈機」的終站——它的誕生與意義](https://pansci.asia/archives/203152)
 
-而在現代，我們所謂的「電腦」，或正式一點稱它為「計算機」，其實就是圖靈機的一種實作方法
+而在現代，我們所謂的「電腦」，或正式一點稱它為「計算機」，其實就是圖靈機的一種實作方法，以比較常見的家用 PC 來說，對應的關係大概如下：
 
-- 語言的規範是針對圖靈機的
+| 圖靈機組件 | 對應電腦元件 | 功能 |
+| --------- | ------------ | -------- |
+| 紙帶（Tape） | 主記憶體（RAM）或儲存裝置，像是 Disk | 提供資料和指令的存儲空間 |
+| 讀寫頭（Head） | CPU 中的記憶體控制單元或數據總線 | 負責讀取和寫入記憶體中的數據，並控制數據的傳輸 |
+| 狀態暫存器（State Register） | CPU 中的暫存器（如程序計數器、狀態暫存器） | 保存當前的執行狀態和指令位置，控制程序的執行流程 |
+| 規則表格（Transition Function/Table） | CPU 的控制單元和指令集架構 | 根據當前狀態和指令來解碼和執行操作，控制數據流和指令執行 |
+
+由於現代的電腦只是種圖靈機的實作，因此在定義語言的時候，我們會針對圖靈機去定義，而不是針對電腦去定義，因為沒有人可以確定之後不會出現新的實作方法，在 spec 中可以看見這段話：
+
+> [n4861(4.1.1-1)](https://timsong-cpp.github.io/cppwp/n4861/intro.abstract#1):
+> The semantic descriptions in this document define a parameterized <span class = "yellow">nondeterministic abstract machine</span>. This document places no requirement on the structure of conforming implementations. In particular, they need not copy or emulate the structure of the abstract machine. Rather, conforming implementations are required to emulate (only) the observable behavior of the abstract machine as explained below.
+
+這邊 spec 用的詞是「abstract machine」，但基本上是差不多的意思
 
 # 馮諾伊曼架構 Von Neumann architecture
 
