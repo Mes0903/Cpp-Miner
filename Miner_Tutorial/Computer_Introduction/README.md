@@ -36,6 +36,51 @@
 
 這個礦坑系列的教學會時不時地引用 spec 內的定義，來教新手 C\+\+，由於 C\+\+ 相對其他語言來說較為底層，也就是說比較接近硬體，抽象化的程度比較少，因此在進入 C\+\+ 的教學之前，我覺得最好先寫一篇對電腦運作的簡述，帶大家簡單學習一下計算機概論
 
+# 如何學習一樣東西
+
+我覺得學一樣東西最快的方法就是寫部落格，只要將自己的理解輸出出來，你就知道自己大概哪裡卡了，哪裡不懂。 為了寫文章，熟悉一些工具肯定是沒有壞處的，具體可以參考這篇：
+
+- [GNU/Linux 開發工具共筆](https://hackmd.io/@sysprog/gnu-linux-dev/https%3A%2F%2Fhackmd.io%2F%40sysprog%2Fr1Psrf0KW)
+
+而 blog 的內容不外乎就是記錄自己的思緒，你應該嘗試將你的主題整理出一個脈絡，照著這個脈絡，盡可能簡單地，一步一步的完成你的文章
+
+> If you can’t explain something in simple terms, you don’t understand it ー Richard Feynman
+
+在學習的過程中你肯定會遇到問題，這種時候你應該先嘗試釐清你的問題，將問題化為需求，然後列出完成需求的步驟，如此一來就可以很清晰的一步一步解決你的問題
+
+舉個例子，老師今天發了個 OpenGL 的作業下來，要你們裝一台 Ubuntu 的虛擬機來執行 sample code，但你從來「沒聽過」什麼是虛擬機，那這時候就需要先釐清你的問題，再整理成需求，脈絡可能如下：
+
+1. 什麼是虛擬機?
+2. 我的電腦是 windows 的系統，我要怎麼在 windows 上裝 Ubuntu 的虛擬機?
+3. google 後發現有許多個虛擬機可以裝，像是 VMware、VirtualBox、WSL 等，裝哪個好?
+4. 假設我想裝 WSL，那 WSL 要怎麼裝?
+5. WSL 裝好後，要怎麼灌 Ubuntu?
+6. Ubuntu 灌好後，要怎麼裝 OpenGL? 我要如何知道我的 OpenGL 裝成功了?
+7. 我要怎麼編譯和執行 OpenGL 的程式嗎?
+
+這時你就成功把你的問題化成了 7 個「需求」，或者說比較直接的問題，這種問題你一 google 下去，十之八九可以直接 google 到答案，不需要再在一堆搜尋結果中找半天
+
+換句話說，「需求」很接近你完成問題的「步驟」
+
+然而在遇到問題時，你肯定無法很直接的像這樣將大部分的需求全部列出來，這種情況你可以先嘗試照著順序將已知的需求完成，通常新的需求就會冒出來了
+
+當你無法列出需求時，這通常代表你的背景知識不足，導致你建立不了步驟與步驟之間的連結；抑或是這個東西非常的冷門，此時你就該找人詢問了，有關提問的方法請參考非常有名的一篇文章：
+
+- [提問的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way)
+
+而各位生在 2024 年這個 LLM 如此發達的時代，肯定會想要利用它來學習，LLM 能夠很快的幫你分析出你的需求，但我個人不建議新手直接使用 LLM，原因不外乎有二
+
+1. 新手非常需要練習這種「釐清問題」的能力，在你的生涯中，你遇到的問題會越來越大，當需求越來越多時，你再使用 LLM 這樣幫你跳過分析的過程，那你高機率會陷入擁有需求卻無法解決的狀況
+2. 你在分析問題過程中，或多或少都會摸到一些額外的知識，像是你小時候在 wiki 裡面逛一個一個的標籤一樣，這些機會會是你增加知識廣度的一個很大來源
+
+LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但如果你從一開始就在節省時間，那在建構你自己的思考模型時就很容易會有缺漏，就好像吃飯吃太快會消化不良一樣，知識也會消化不良
+
+如果是狀況緊急，需要速成的情況則另當別論，直接用 LLM 跳過思考的過程是個不錯的方法，能夠幫助你很快的解決需求，但在這種知識這麼集中的環境下學習，就如同機器學習會 overfitting 一樣，很容易讓你將局部的知識當作普遍定理，導致誤解，切要注意這點
+
+以上都為個人經驗與理解，由於發現初學者會有連 google 都不知道怎麼搜，遇到問題呆住的情況，因此在這邊多弄一個小節來教大家怎麼 google
+
+接下來就開始進到計概的內容~~
+
 # 抽象化 Abstraction
 
 ## 抽象化是什麼
@@ -55,11 +100,13 @@
 
 我不在乎中間那個框框(黑箱)內做了什麼，我只在乎我的錢進去框框後，我的飯會從框框內出來
 
-## 電路抽象化
+## 電路科學的抽象化
 
-學電機的人會利用 Maxwell's equations 來研究電磁現象，然後在 Maxwell's equations 之上創建一個新的抽象層，稱為集總電路(lumped circuit abstraction)，利用集總電路我們可以再增加一個新的抽象層，稱為數位層(Digital abstraction)，而利用數位電路又可以再增加一層邏輯閘層(Logic gate abstraction)，以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
+學電機的人會利用 Maxwell's equations 來研究電磁現象，然後在 Maxwell's equations 之上創建一個新的抽象層，稱為集總電路(lumped circuit abstraction)，利用集總電路我們可以再增加一個新的抽象層，稱為數位層(Digital abstraction)，而利用數位電路又可以再增加一層邏輯閘層(Logic gate abstraction)
 
-![image](https://hackmd.io/_uploads/BkVd-kAaR.png)
+以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
+
+![alt text](image-1.png)
 
 這邊的分類是我照著我電子電路學課本「foundation of analog & digital electronic circuits by anant agarwal」內的分類畫出來的，課本的分類我覺得合理。 這中間的每一層都可以再各自有其細分下去的抽象層，而 Programming language 的上方就是各式各樣的程式了。 
 
@@ -98,31 +145,53 @@
 
 注意這個機器的每一部分都是有限的，但它有一個潛在的無限長的紙帶，因此這種機器只是一個理想的裝置。 圖靈認為這樣的一台機器就能類比人類所能進行的任何計算過程
 
+<center>
+
+![alt text](image-2.png)
+
+</center>
+
 另外這篇也寫得很好，也更詳細，建議可以讀一下：[搞懂「通用圖靈機」的終站——它的誕生與意義](https://pansci.asia/archives/203152)
 
-而在現代，我們所謂的「電腦」，或正式一點稱它為「計算機」，其實就是圖靈機的一種實作方法，以比較常見的家用 PC 來說，對應的關係大概如下：
+而在現代，我們所謂的「電腦」，或正式一點稱它為「計算機」，其實就是圖靈機的一種實作方法，現在較主流的實作方法是使用馮諾伊曼架構，比較大的特色是將儲存裝置與中央處理器分開了。 
+
+以比較常見的家用 PC 來說，對應的關係大概如下：
 
 | 圖靈機組件 | 對應電腦元件 | 功能 |
 | --------- | ------------ | -------- |
 | 紙帶（Tape） | 主記憶體（RAM）或儲存裝置，像是 Disk | 提供資料和指令的存儲空間 |
-| 讀寫頭（Head） | CPU 中的記憶體控制單元或數據總線 | 負責讀取和寫入記憶體中的數據，並控制數據的傳輸 |
+| 讀寫頭（Head） | 記憶體控制器(北橋)、匯流排 | 負責控制 CPU 與記憶體之間的資料傳輸 |
 | 狀態暫存器（State Register） | CPU 中的暫存器（如程序計數器、狀態暫存器） | 保存當前的執行狀態和指令位置，控制程序的執行流程 |
-| 規則表格（Transition Function/Table） | CPU 的控制單元和指令集架構 | 根據當前狀態和指令來解碼和執行操作，控制數據流和指令執行 |
+| 規則表格（Transition Function/Table） | CPU 的控制單元和指令集架構 | 根據當前狀態和指令來解碼和執行操作，控制資料流和指令執行 |
+
+另外還有一些其他的實作方法，但目前就較偏向用在特殊場合的設計，所以我們這裡就不特別展開敘述了。
 
 由於現代的電腦只是種圖靈機的實作，因此在定義語言的時候，我們會針對圖靈機去定義，而不是針對電腦去定義，因為沒有人可以確定之後不會出現新的實作方法，在 spec 中可以看見這段話：
 
 > [n4861(4.1.1-1)](https://timsong-cpp.github.io/cppwp/n4861/intro.abstract#1):
 > The semantic descriptions in this document define a parameterized <span class = "yellow">nondeterministic abstract machine</span>. This document places no requirement on the structure of conforming implementations. In particular, they need not copy or emulate the structure of the abstract machine. Rather, conforming implementations are required to emulate (only) the observable behavior of the abstract machine as explained below.
 
-這邊 spec 用的詞是「abstract machine」，但基本上是差不多的意思
+這邊 spec 用的詞是「abstract machine」，在這邊可以先簡單理解為差不多的東西
 
-# 馮諾伊曼架構 Von Neumann architecture
+# CPU & RAM & Bus
 
-- 電腦是一種圖靈機的實作
+這邊 jserv 老師有翻譯一篇很好的論文，但難度比較高，所以我會從原文裡面選一些比較簡單的內容來當作基底介紹
 
-# CPU & Memory
+有興趣可以去翻翻 jserv 老師的原文：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
 
-- 與圖靈機的對應
+現代的 RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
+
+而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 bit，並且我們會給它一個位址，稱為記憶體位址。 一般在講 Memory 的時候我們多會關注在底層電路的實作，進而探討 cache 或是 non-volatile memory 之類比較進階的議題，但因為這篇是計概，所以就記憶體的部分大家主要記得以下兩點就好
+
+1. 可以存資料和指令，紙帶一格對應到一個 bit
+2. 每一格都有個位址，類似房子的地址
+
+匯流排則負責
+
+再來是記憶體控制器，主要負責管理與規劃從 DRAM 到 CPU 間傳輸速度的匯流排電路控制器
+
+CPU 對應到圖靈機的其他三個組件，我們一個一個來講：
+
 - CPU 架構
 - ISA
 
