@@ -97,7 +97,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "abstraction.png">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction.png?raw=true">
 
 </center>
 
@@ -111,7 +111,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "abstraction-2.png">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction-2.png?raw=true">
 
 </center>
 
@@ -154,7 +154,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "turing-machine.png"><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/turing-machine.png?raw=true"><br>
 
 </center>
 
@@ -197,7 +197,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src="memory-address.png">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/memory-address.png?raw=true">
 
 (source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
 
@@ -207,7 +207,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src = "CPU.png" width = 40%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CPU.png?raw=true" width = 40%><br>
 (source：[wiki](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
 </center>
@@ -216,12 +216,12 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src="chipset-layout.png" width=40%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=40%>
 
 (Pentium II/III 時代的典型晶片組佈局)<br>
 (source：[wiki](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
 
-<img src = "chipset-layout-2.png" width=40%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=40%>
 
 (我覺得這張寫得更清楚一點)<br>
 (source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
@@ -238,7 +238,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src = "pch.png"><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/pch.png?raw=true"><br>
 (source：[wiki](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
 </center>
@@ -264,7 +264,7 @@ Bus 負責傳輸資料，其主要分成三種：Data bus、Address Bus、Contro
 
 <center>
 
-<img src="scott-read.gif" width=60%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-read.gif?raw=true" width=60%><br>
 
 </center>
 
@@ -274,7 +274,7 @@ Bus 負責傳輸資料，其主要分成三種：Data bus、Address Bus、Contro
 
 <center>
 
-<img src = "scott-write.gif" width=60%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-write.gif?raw=true" width=60%><br>
 
 </center>
 
