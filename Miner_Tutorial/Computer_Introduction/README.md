@@ -95,8 +95,11 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 畫成圖來說就是這樣：
 
-![image](https://hackmd.io/_uploads/BJxd-y0TC.png)
+<center>
 
+<img src = "abstraction.png">
+
+</center>
 
 我不在乎中間那個框框(黑箱)內做了什麼，我只在乎我的錢進去框框後，我的飯會從框框內出來
 
@@ -106,7 +109,11 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
 
-![image](https://hackmd.io/_uploads/H1FPcs-AA.png)
+<center>
+
+<img src = "abstraction-2.png">
+
+</center>
 
 這邊的分類是我照著我電子電路學課本「foundation of analog & digital electronic circuits by anant agarwal」內的分類畫出來的，課本的分類我覺得合理。 這中間的每一層都可以再各自有其細分下去的抽象層，而 Programming language 的上方就是各式各樣的程式了。 
 
@@ -147,7 +154,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-![image](https://hackmd.io/_uploads/ryzOqiWAC.png)
+<img src = "turing-machine.png"><br>
 
 </center>
 
@@ -190,7 +197,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src="image-4.png">
+<img src="memory-address.png">
 
 (source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
 
@@ -200,7 +207,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src = "https://hackmd.io/_uploads/BJau5iZA0.png" width = 40%><br>
+<img src = "CPU.png" width = 40%><br>
 (source：[wiki](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
 </center>
@@ -209,10 +216,15 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src="未命名.png" width=40%>
+<img src="chipset-layout.png" width=40%>
 
 (Pentium II/III 時代的典型晶片組佈局)<br>
 (source：[wiki](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
+
+<img src = "chipset-layout-2.png" width=40%>
+
+(我覺得這張寫得更清楚一點)<br>
+(source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
 
 </center>
 
@@ -318,3 +330,4 @@ Bus 負責傳輸資料，其主要分成三種：Data bus、Address Bus、Contro
 - [(wiki) Direct Mdeia Interface](https://en.wikipedia.org/wiki/Direct_Media_Interface)
 - [Anyone know what this part of my motherboard is?](https://www.reddit.com/r/pcmasterrace/comments/1c77mbm/anyone_know_what_this_part_of_my_motherboard_is/)
 - [Basic Knowledge of Industrial Computers (CPU/Chipset)](https://www.contec.com/support/basic-knowledge/edge-computing/cpu/)
+- [Motherboard](https://www.sciencedirect.com/topics/engineering/motherboard)
