@@ -106,7 +106,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
 
-![alt text](image-1.png)
+![image](https://hackmd.io/_uploads/H1FPcs-AA.png)
 
 這邊的分類是我照著我電子電路學課本「foundation of analog & digital electronic circuits by anant agarwal」內的分類畫出來的，課本的分類我覺得合理。 這中間的每一層都可以再各自有其細分下去的抽象層，而 Programming language 的上方就是各式各樣的程式了。 
 
@@ -147,7 +147,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-![alt text](image-2.png)
+![image](https://hackmd.io/_uploads/ryzOqiWAC.png)
 
 </center>
 
@@ -160,7 +160,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 | 圖靈機組件 | 對應電腦元件 | 功能 |
 | --------- | ------------ | -------- |
 | 紙帶（Tape） | 主記憶體（RAM）或儲存裝置，像是 Disk | 提供資料和指令的存儲空間 |
-| 讀寫頭（Head） | 記憶體控制器(北橋)、匯流排 | 負責控制 CPU 與記憶體之間的資料傳輸 |
+| 讀寫頭（Head） | 記憶體控制器、匯流排 | 負責控制 CPU 與記憶體之間的資料傳輸 |
 | 狀態暫存器（State Register） | CPU 中的暫存器（如程序計數器、狀態暫存器） | 保存當前的執行狀態和指令位置，控制程序的執行流程 |
 | 規則表格（Transition Function/Table） | CPU 的控制單元和指令集架構 | 根據當前狀態和指令來解碼和執行操作，控制資料流和指令執行 |
 
@@ -175,25 +175,104 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 # CPU & RAM & Bus
 
-這邊 jserv 老師有翻譯一篇很好的論文，但難度比較高，所以我會從原文裡面選一些比較簡單的內容來當作基底介紹
+## CPU & RAM & Bus
 
-有興趣可以去翻翻 jserv 老師的原文：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
+從圖靈機我們可以看出，其實只要有 CPU、RAM、Bus，就差不多可以完成一台計算機了，現在我們就來針對這三個硬體來做介紹，幫助大家更理解計算機的運作。 這邊有一部很好的影片，大家也可以看看：[How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA)
 
-現代的 RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
+RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
 
-而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 bit，並且我們會給它一個位址，稱為記憶體位址。 一般在講 Memory 的時候我們多會關注在底層電路的實作，進而探討 cache 或是 non-volatile memory 之類比較進階的議題，但因為這篇是計概，所以就記憶體的部分大家主要記得以下兩點就好
+而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 bit，並且我們會給記憶體標上位址：
 
 1. 可以存資料和指令，紙帶一格對應到一個 bit
-2. 每一格都有個位址，類似房子的地址
+3. 位址通常以 Byte 為單位，也就是 8 個 bit
 
-匯流排則負責
+假設是 4G 的 memory，那它的記憶體位址就可以從 0 一路寫到 4 \* 1024 \* 1024 \* 1024，換句話說就是從 0 到 4,294,967,295。 我們通常喜歡用 16 進位表示，所以會寫成 0 ~ 0xFFFFFFFF：
 
-再來是記憶體控制器，主要負責管理與規劃從 DRAM 到 CPU 間傳輸速度的匯流排電路控制器
+<center>
 
-CPU 對應到圖靈機的其他三個組件，我們一個一個來講：
+<img src="image-4.png">
 
-- CPU 架構
-- ISA
+(source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
+
+</center>
+
+當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
+
+<center>
+
+<img src = "https://hackmd.io/_uploads/BJau5iZA0.png" width = 40%><br>
+(source：[wiki](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
+
+</center>
+
+以前會把記憶體控制器做在北橋裡面，北橋再拉 Bus 到 memory 上，因此 CPU 想要跟 memory 溝通，就需要先到北橋，再到 memory 去。 其中 CPU 到北橋的這段 Bus 有個名字被稱為 Front-side bus(FSB)，而記憶體控制器到 memory 的這段 Bus 叫 memory bus：
+
+<center>
+
+<img src="未命名.png" width=40%>
+
+(Pentium II/III 時代的典型晶片組佈局)<br>
+(source：[wiki](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
+
+</center>
+
+途中可以看到北橋還會接一些較高速的周邊裝置，通常使用的是 AGP 或是 PCIe 協定。 後來，CPU 持續的在變快，導致 FSB 的頻寬跟不上上了，這個瓶頸導致大概在 2008 年時 FSB 就被淘汰了
+
+之後的設計慢慢改成了點對點和 serial 對接，將記憶體控制器與較高速的 AGP/PCIe 通道這兩個東西直接併入到了 CPU 晶片中，讓裝置直接與 CPU 對街，並將北橋剩下其他剩下的小功能併入了南橋中，從而將傳統的北橋給消除掉了
+
+在接顯卡時大家都會說顯卡接在直連 CPU 的通道，也是因為以前北橋上的高速 PCIe 通道被併進去了，所以才會說是「直連 CPU 的通道」。 而圖中的另一個 bridge 為南橋，負責處理與其他速度較低的外設的溝通，像是 EIOE ATA、SATA、USB、ISA slot、PCI/PCIe slot 或是 BIOS 的溝通等等
+
+在 Intel 的術語中，其以 memory controller hub(MCH) 稱呼北橋，以 I/O controller hub(ICH) 稱呼南橋，在將北橋的剩餘功能移到南橋內之後，其將 ICH 改名為了 Platform Controller Hub(PCH)；而在 AMD 的架構中，與 PCH 對應的晶片組被稱為 FCH
+
+<center>
+
+<img src = "未命名-1.png"><br>
+(source：[wiki](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
+
+</center>
+
+除了南橋的所有功能之外，PCH 還合併了一些剩餘的北橋功能（例如 clock）。系統時脈以前是與專用晶片連接的，但現在被合到了 PCH 裡面。 PCH 和 CPU 之間有兩種不同的連接：Flexible Display Interface(FDI)和 Direct Media Interface(DMI)，不過這我也不熟，就不展開了
+
+題外話，PCH 中的有顆東西叫 IME，其全名為 Intel Management Engine，原本在北橋內，從 Nehalem 處理器和 Intel 5-Series 系列晶片組開始改成內置在 PCH 中了。 它是一個獨立的子系統，擁有自己的 MAC 和 IP 位址，而且能夠在系統啟動前、OS 運行期間甚至是關機的情況下運行，用來為搭載 Intel 處理器的電腦系統提供各種功能與服務
+
+很諷刺的是之前有駭客扁進了 Intel Management Engine 然後把所有資訊倒了出來，有興趣的可以看一下：[36C3 - Intel Management Engine deep dive](https://www.youtube.com/watch?v=3CQUNd3oKBM)。
+
+Bus 負責傳輸資料，其主要分成三種：Data bus、Address Bus、Control Bus
+
+- Address Bus   
+  Address Bus 用來指定 <span class = "yellow">physical address</span>，當 CPU 或支援 DMA 的裝置需要讀取或寫入某個記憶體位址時，就會透過 Address Bus 來指定該記憶體位址。 Address Bus 的寬度決定了系統可以尋址的記憶體量，例如 32-bit 的 Address Bus 就可以尋址 $2^{32}$(4,294,967,295) 個位址
+- Data Bus  
+  Data Bus 用來傳送實際的資料，通常是雙向的
+- Control Bus   
+  Control Bus 用來傳輸控制信號，像是讀/寫命令，clock 信號等等
+
+當 CPU 欲與 memory 溝通時，會先將欲操作的位址在 Address Bus 上設成高電位，再利用 Control Bus 將 control bit 依照 spec 設好，最後透過 Data Bus 讀寫資料：
+
+[How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA) 這部影片裏面引用了一個簡單的 CPU 模型，稱為 Scott's CPU，其 Address Bus 和 Data Bus 各有 8 個 bit，Control Bus 則有 set 與 enable 這兩個 bit，對於讀取來說就會長這樣：
+
+<center>
+
+<img src="scott-read.gif" width=60%><br>
+
+</center>
+
+先在 Address Bus 上將要操作的 address 設為高位，接著將 Control Bus 上的 enable 設為高位，最後將資料讀進來。
+
+寫入則長這樣：
+
+<center>
+
+<img src = "scott-write.gif" width=60%><br>
+
+</center>
+
+順序稍微不一樣，先將 Address Bus 設好，然後將 data 送上 Data Bus，最後將 Control Bus 的 set 設為高位
+
+## CPU cache
+
+我個人覺得這部分不是我們計概(了解電腦運作的 map )的重點，所以就先不寫了，未來如果有機會可能會再補上
+
+不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
 
 # BIOS & OS
 
@@ -212,3 +291,30 @@ CPU 對應到圖靈機的其他三個組件，我們一個一個來講：
 ## 可執行檔 Executable File
 
 ## 副檔名 Filename Extension
+
+# Reference
+
+- [(wiki) Bus](https://en.wikipedia.org/wiki/Bus_(computing))
+- [(wiki) System Bus](https://en.wikipedia.org/wiki/System_bus)
+- [(wiki) Control bus](https://en.wikipedia.org/wiki/Control_bus)
+- [(wiki) Memory Controller](https://en.wikipedia.org/wiki/Memory_controller)
+- [(wiki) Front-side bus](https://en.wikipedia.org/wiki/Front-side_bus)
+- [(wiki) Channel I/O](https://en.wikipedia.org/wiki/Channel_I/O)
+- [(wiki) Dynamic random-access memory](https://en.wikipedia.org/wiki/Dynamic_random-access_memory)
+- [(wiki) PCI Express](https://en.wikipedia.org/wiki/PCI_Express)
+- [(wiki) Central processing unit](https://en.wikipedia.org/wiki/Central_processing_unit)
+- [(wiki) Memory management unit](https://en.wikipedia.org/wiki/Memory_management_unit)
+- [(wiki) DDR2 SDRAM](https://en.wikipedia.org/wiki/DDR2_SDRAM)
+- [(wiki) DDR3 SDRAM](https://en.wikipedia.org/wiki/DDR3_SDRAM)
+- [(wiki) DDR4 SDRAM](https://en.wikipedia.org/wiki/DDR4_SDRAM)
+- [(wiki) DDR Interface Protocol DDR](https://electronics.stackexchange.com/questions/465749/ddr-interface-protocol)
+- [(wiki) Northbridge (computing)](https://en.wikipedia.org/wiki/Northbridge_(computing))
+- [(wiki) Southbridge (computing)](https://en.wikipedia.org/wiki/Southbridge_(computing))
+- [How does cpu communicate with peripherals?](https://stackoverflow.com/questions/6852332/how-does-cpu-communicate-with-peripherals)
+- [Cisco Data Center Virtualization Server Architectures](https://www.ciscopress.com/articles/article.asp?p=1606902&seqNum=2)
+- [(wiki) Platform Controller Hub](https://en.wikipedia.org/wiki/Platform_Controller_Hub)
+- [(wiki) AMD Fusion Controller Hub](https://zh.wikipedia.org/zh-tw/AMD_Fusion_Controller_Hub)
+- [(wiki) Flexible Display Interface](https://en.wikipedia.org/wiki/Flexible_Display_Interface)
+- [(wiki) Direct Mdeia Interface](https://en.wikipedia.org/wiki/Direct_Media_Interface)
+- [Anyone know what this part of my motherboard is?](https://www.reddit.com/r/pcmasterrace/comments/1c77mbm/anyone_know_what_this_part_of_my_motherboard_is/)
+- [Basic Knowledge of Industrial Computers (CPU/Chipset)](https://www.contec.com/support/basic-knowledge/edge-computing/cpu/)
