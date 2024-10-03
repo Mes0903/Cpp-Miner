@@ -238,7 +238,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src = "未命名-1.png"><br>
+<img src = "pch.png"><br>
 (source：[wiki](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
 </center>
