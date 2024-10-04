@@ -105,7 +105,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 ## 電路科學的抽象化
 
-學電機的人會利用 Maxwell's equations 來研究電磁現象，然後在 Maxwell's equations 之上創建一個新的抽象層，稱為集總電路(lumped circuit abstraction)，利用集總電路我們可以再增加一個新的抽象層，稱為數位層(Digital abstraction)，而利用數位電路又可以再增加一層邏輯閘層(Logic gate abstraction)
+學電機的人會利用 Maxwell's equations 來研究電磁現象，然後在 Maxwell's equations 之上創建一個新的抽象層，稱為集總電路(lumped circuit abstraction)，利用集總電路我們可以再增加一個新的抽象層，稱為數位層(Digital abstraction)，而利用數位電路又可以再增加一層邏輯閘層(Logic gate abstraction)：
 
 以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
 
@@ -121,9 +121,19 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 # 圖靈機 Turing machine
 
-圖靈機是一個在自動機理論與計算理論中定義的數學模型，因為是計概所以我這邊不寫它的數學定義，有興趣的可以看一下自動機理論這門課
+圖靈機基本上是一系列的自動機所建構出來的理論模型，因為是計概所以我這邊就不講太多，也不寫它的數學定義，有興趣的可以看一下自動機理論和計算理論的課：
 
-我覺得 wiki 上的描述寫得很好，所以讓我們看一下 [wiki](https://zh.wikipedia.org/wiki/%E5%9B%BE%E7%81%B5%E6%9C%BA) 上的描述：
+<center>
+
+<img src ="https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/automata.png?raw=true">
+
+(source：[wiki](https://en.wikipedia.org/wiki/Combinational_logic))
+
+</center>
+
+這裡可以提一下的是上圖中最內層的組合邏輯(Combinational logic)，這是一種由 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 所組成的數位邏輯，這裡的 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 是一種於計算理論中的數學模型，用來描述形式語言，所以並非真實的電路。 提這個的主要原因是，計算機內部的電路為組合邏輯與時序邏輯([Sequential logic](https://en.wikipedia.org/wiki/Sequential_logic))混合的實作，所以可以稍微知道一下有這個東西
+
+而對於圖靈機，我覺得 wiki 上的描述寫得很好，所以讓我們看一下 [wiki](https://zh.wikipedia.org/wiki/%E5%9B%BE%E7%81%B5%E6%9C%BA) 上的描述：
 
 圖靈機基本思想是用機器來模擬人類用紙筆進行數學運算的過程，它把這個過程看作下列兩種簡單的動作：
 
@@ -182,7 +192,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 # CPU & RAM & Bus
 
-## CPU & RAM & Bus
+## RAM (random-access memory)
 
 從圖靈機我們可以看出，其實只要有 CPU、RAM、Bus，就差不多可以完成一台計算機了，現在我們就來針對這三個硬體來做介紹，幫助大家更理解計算機的運作。 這邊有一部很好的影片，大家也可以看看：[How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA)
 
@@ -202,6 +212,12 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 (source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
 
 </center>
+
+## CPU (Central processing unit)
+
+CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為何，都是執行一連串被儲存的指令，這些指令會被保存在記憶體中。 而執行的步驟主要分為提取(Fetch)、解碼(Decode)、執行(Execute)和儲存(Store)
+
+CPU 電路中的
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
