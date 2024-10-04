@@ -97,7 +97,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction.png?raw=true"><br>
 
 </center>
 
@@ -111,7 +111,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction-2.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction-2.png?raw=true"><br>
 
 </center>
 
@@ -168,7 +168,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 </center>
 
-另外這篇也寫得很好，也更詳細，建議可以讀一下：[搞懂「通用圖靈機」的終站——它的誕生與意義](https://pansci.asia/archives/203152)
+另外這篇也寫得很好，有興趣的也可以讀一下：[搞懂「通用圖靈機」的終站——它的誕生與意義](https://pansci.asia/archives/203152)
 
 而在現代，我們所謂的「電腦」，或正式一點稱它為「計算機」，其實就是圖靈機的一種實作方法，現在較主流的實作方法是使用馮諾伊曼架構，比較大的特色是將儲存裝置與中央處理器分開了。 
 
@@ -230,7 +230,7 @@ CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫�
 
 <center>
 
-<img src = "uniprocessor-CPU.png" width = 60%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/uniprocessor-CPU.png?raw=true" width = 60%>
 
 (source：[wiki](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
 
@@ -261,14 +261,14 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=40%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=50%>
 
-(Pentium II/III 時代的典型晶片組佈局)<br>
+(Pentium II/III 時代的典型晶片組佈局)   
 (source：[wiki](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=40%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=50%>
 
-(我覺得這張寫得更清楚一點)<br>
+(我覺得這張寫得更清楚一點)    
 (source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
 
 </center>
@@ -283,7 +283,8 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/pch.png?raw=true"><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/pch.png?raw=true">
+
 (source：[wiki](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
 </center>
@@ -311,7 +312,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-read.gif?raw=true" width=60%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-read.gif?raw=true" width=90%><br>
 
 </center>
 
@@ -321,7 +322,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-write.gif?raw=true" width=60%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-write.gif?raw=true" width=90%><br>
 
 </center>
 
