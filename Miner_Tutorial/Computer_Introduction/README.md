@@ -1,5 +1,11 @@
 {%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
+<h1 class><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>計算機概論</center></h1>
+
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
+
+hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
+
 # 前言
 
 在閆令琪老師的 GAMES202 的第一堂課中，老師有一段話我覺得講得蠻好的：
