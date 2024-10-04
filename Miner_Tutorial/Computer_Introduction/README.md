@@ -103,7 +103,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction.png?raw=true"><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction.png?raw=true"><br> 
 
 </center>
 
@@ -117,7 +117,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction-2.png?raw=true"><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction-2.png?raw=true"><br> 
 
 </center>
 
@@ -131,7 +131,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src ="https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/automata.png?raw=true">
+<img src ="https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/automata.png?raw=true"> 
 
 (source：[wiki](https://en.wikipedia.org/wiki/Combinational_logic))
 
@@ -170,7 +170,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/turing-machine.png?raw=true"><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/turing-machine.png?raw=true"><br> 
 
 </center>
 
@@ -213,7 +213,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/memory-address.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/memory-address.png?raw=true"> 
 
 (source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
 
@@ -236,7 +236,7 @@ CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/uniprocessor-CPU.png?raw=true" width = 60%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/uniprocessor-CPU.png?raw=true" width = 60%> 
 
 (source：[wiki](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
 
@@ -258,7 +258,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CPU.png?raw=true" width = 40%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CPU.png?raw=true" width = 40%><br> 
 (source：[wiki](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
 </center>
@@ -267,12 +267,12 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=50%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=50%> 
 
 (Pentium II/III 時代的典型晶片組佈局)   
 (source：[wiki](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=50%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=50%> 
 
 (我覺得這張寫得更清楚一點)    
 (source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
@@ -289,7 +289,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/pch.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/pch.png?raw=true"> 
 
 (source：[wiki](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
@@ -318,7 +318,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-read.gif?raw=true" width=90%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-read.gif?raw=true" width=90%><br> 
 
 </center>
 
@@ -328,7 +328,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-write.gif?raw=true" width=90%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-write.gif?raw=true" width=90%><br> 
 
 </center>
 
@@ -340,11 +340,51 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 ## BIOS
 
-### EEPROM
+透過上面那些知識，我們知道了 CPU 要如何與 memory 溝通，和如何運行一個程式(一系列的指令)，現在我們終於要開始看一下電腦開機後到底發生了什麼
+
+電腦上有個東西叫做 Basic Input/Output System，簡稱為 BIOS，是我們個人電腦開機時載入的第一個軟體。 BIOS 的作用是初始化和測試硬體元件
+
+早期的 BIOS 通常儲存在 BIOS ROM 裡面，廠商在寫完 BIOS 後會將其執行檔透過燒錄器或是 flash tool 燒錄到這個 ROM 內，因此在主機板出廠時 BIOS 就會預先安裝在主機板上了。 然而隨著 BIOS 的大小和複雜度增加，硬體更新的速度變快，導致現代的 BIOS 也必須能夠更新，以支援新的硬體，因此 BIOS 就改成存在 EEPROM 或是 Flash memory 中讓使用者可以更新了
+
+:::info   
+:bulb: RAM 和 ROM 的差別我這邊不細講，只要記得 RAM 內部資料可以任意讀寫；而 ROM 的內部資料寫入後需要透過特殊的方式才能修改資料    
+:::   
+
+有關傳統 BIOS 的詳細行為，有興趣的人可以看看小華的部落格：[[我所知道的 BIOS]](https://biosengineer.blogspot.com/search?q=%5B%E6%88%91%E6%89%80%E7%9F%A5%E9%81%93%E7%9A%84BIOS%5D)
+
+我們前面有提到 CPU 會透過 memory address 來找到要執行的程式(Fetch)，因此我們需要將 BIOS 放在一開機時 CPU 就會開始讀的起始位址，這個位置通常是在 0xFFFFFFF0 這個地方，如果我沒記錯，UEFI 也是一樣的位置
+
+當 BIOS 開始執行時，會先執行[自檢(POST)](https://en.wikipedia.org/wiki/Power-on_self-test)，開始識別、測試系統設備，像是 CPU、chipset、RAM、主機板、顯卡、鍵盤滑鼠、硬碟等等的設備
+
+當 BIOS 完成 POST 後，會再去掃描 Option ROM modules，用途是識別、測試和初始化其他的設備，常見的像是 VGA card、Lan card 和 RAID card 等等。 這些 ROM 可能會直接在裝置(如網卡、RAID 控制器等)上，也有可能包在 BIOS 的 image 內
+
+在 POST 與 Option ROM 的初始化都做完後，電腦所有的硬體就都被初始化完畢了，接下來 BIOS 會呼叫 interrupt 19h，嘗試從「開機裝置（像是硬碟、CD、USB 等等）」中找到並執行開機載入程式(boot loader)
+
+Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通常是我們的作業系統(OS)，但也有可能是其他的，像是你在重灌電腦的時候，跑的就不是你原本的 OS，而是你的重灌軟體（雖然如果我沒記錯的話，有些裡面也是有 OS）
+
+底下是一張簡單的啟動示意圖：
+
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/boot-process.png?raw=true">
+
+(source：[wiki](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png))
+
+</center>
+
+另外 BIOS 會使用 CMOS 來儲存一些 BIOS 的設定，像是系統時間、硬體配置和你的開機順序等。 而 CMOS 使用的是揮發性的 SRAM，換句話說斷電後儲存的設定會消失，因此主機板上通常會配一顆小型的電池來使其不斷電，這顆電池我們叫他 CMOS 電池。 小時候在修電腦的時候，我們如果想要重置 BIOS 的設定，就會把這顆電池拔掉，如此一來存的設定消失，就會重置 BIOS 的設定了
+
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CMOS.png?raw=true" width = 70%>
+
+(Pico ITX 主機板中的 CMOS 電池，右邊那顆銀色圓圓的就是)    
+(source：[wiki](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg))
+
+</center>
 
 ## OS
 
-### 系統呼叫 System call
 
 # ELF & PE File
 
@@ -372,12 +412,19 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 - [(wiki) DDR Interface Protocol DDR](https://electronics.stackexchange.com/questions/465749/ddr-interface-protocol)
 - [(wiki) Northbridge (computing)](https://en.wikipedia.org/wiki/Northbridge_(computing))
 - [(wiki) Southbridge (computing)](https://en.wikipedia.org/wiki/Southbridge_(computing))
-- [How does cpu communicate with peripherals?](https://stackoverflow.com/questions/6852332/how-does-cpu-communicate-with-peripherals)
-- [Cisco Data Center Virtualization Server Architectures](https://www.ciscopress.com/articles/article.asp?p=1606902&seqNum=2)
+- [(wiki) Motherboard](https://www.sciencedirect.com/topics/engineering/motherboard)
+- [(wiki) Central processing unit](https://en.wikipedia.org/wiki/Central_processing_unit)
+- [(wiki) Arithmetic logic unit](https://en.wikipedia.org/wiki/Arithmetic_logic_unit)
+- [(wiki) Control unit](https://en.wikipedia.org/wiki/Control_unit)
+- [(wiki) Instruction set architecture](https://en.wikipedia.org/wiki/Instruction_set_architecture)
+- [(wiki) Computer architecture](https://en.wikipedia.org/wiki/Computer_architecture)
+- [(wiki) Processor (computing)](https://en.wikipedia.org/wiki/Processor_(computing))
+- [(wiki) Microarchitecture](https://en.wikipedia.org/wiki/Microarchitecture)
 - [(wiki) Platform Controller Hub](https://en.wikipedia.org/wiki/Platform_Controller_Hub)
 - [(wiki) AMD Fusion Controller Hub](https://zh.wikipedia.org/zh-tw/AMD_Fusion_Controller_Hub)
 - [(wiki) Flexible Display Interface](https://en.wikipedia.org/wiki/Flexible_Display_Interface)
 - [(wiki) Direct Mdeia Interface](https://en.wikipedia.org/wiki/Direct_Media_Interface)
+- [How does cpu communicate with peripherals?](https://stackoverflow.com/questions/6852332/how-does-cpu-communicate-with-peripherals)
+- [Cisco Data Center Virtualization Server Architectures](https://www.ciscopress.com/articles/article.asp?p=1606902&seqNum=2)
 - [Anyone know what this part of my motherboard is?](https://www.reddit.com/r/pcmasterrace/comments/1c77mbm/anyone_know_what_this_part_of_my_motherboard_is/)
 - [Basic Knowledge of Industrial Computers (CPU/Chipset)](https://www.contec.com/support/basic-knowledge/edge-computing/cpu/)
-- [Motherboard](https://www.sciencedirect.com/topics/engineering/motherboard)
