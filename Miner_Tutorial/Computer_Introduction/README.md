@@ -8,33 +8,35 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 # 前言
 
-在閆令琪老師的 GAMES202 的第一堂課中，老師有一段話我覺得講得蠻好的：
+首先對於這系列的文，如果有什麼寫錯的地方，都歡迎直接修改或與我討論，文章有被修改我都會收到 email 通知，這部分我想老生常談了，因此就不再多做展開
+
+由於 Miner 的前置是針對新手在寫的，所以還是先來閒聊一下，在閆令琪老師的 GAMES202 的第一堂課中，老師有一段話我覺得講得蠻好的：
 
 > 我們在學 202(課名) 的過程中一定要記得這件事情，科學與技術是不等同的，當然這件事情是我個人的理解，我認為科學和技術是嚴格意義上不等同的兩樣事情。 科學代表著知識，代表你對於這個世界應當如何去運作的理解；然後技術是什麼呢? 技術更多代表的是技巧，就是所謂的 engineering skills，工程能力啊。 然後技術是用來幹什麼的呢? 是要把科學轉換為產品的這麼個意思
 >
-> 而科學和技術通常人們會簡稱科技，這是為什麼呢? 這是因為絕大多數人認為這兩件事情，反正我都不懂，所以像是一回事對吧，但對於我們來說，要區分一下 science 和 technology。 
+> 而科學和技術通常人們會簡稱科技，這是為什麼呢? 這是因為絕大多數人認為這兩件事情，反正我都不懂，所以像是一回事對吧，但對於我們來說，要區分一下 science 和 technology    
 >
 > 一個最典型的例子就是「車」對吧，大家知道汽車這個東西，大家在很久之前，就已經知道應該怎麼樣去運作了，但是直到今天，咱們國產的車子性能仍然不是特別那個對吧(XD)，所以說啊，這就是「技術」在背後起到的關鍵作用
 >
 > 所以說科學和技術不等同，但我沒有說哪一項更重要，技術和科學我可以認為他們同等重要
 
-對於工程的問題，我們通常會有 spec 來嚴格定義我們所想要的行為，遇到什麼狀況需要做什麼事。 而我個人感覺學校在教「科學」類型的課程時，通常不會講得這麼嚴謹，因為這類的系統比較開放，你很難像工程的問題那樣對所有的事都做嚴格定義
+對於工程的問題，我們通常會有 spec 來嚴格定義我們所想要的行為，遇到什麼狀況需要做什麼事。 而我個人感覺學校在教「科學」類型的課程時，通常不會講得這麼「繁瑣」，因為這類的系統比較開放，你很難像工程的問題那樣對所有的事都做定義
 
-換句話說就是比較模糊，而這類問題通常數學就會多，也因此我個人覺得「數學」其實是門很模糊的語言，用 CS 的角度去看很多東西的定義都有點模糊，也因此想要用數學把想法描述清楚是一件相對困難的事情，數學系還會花特別一學期來教你怎麼做這件事，通常是基礎數學或是數學導論之類的大一必修課
+換句話說就是比較模糊，而這類問題通常數學就會多，也因此我個人覺得「數學」其實是門很模糊的語言，用 CS 的角度去看很多東西的定義都有點模糊，換句話說「數學」的定義很強，一個定義就可以解釋很多事情，但也因此用起來很不直觀，你往往需要很多的先備知識才能很好的使用這個語言。 也因此想要用數學把想法描述清楚是一件相對困難的事情，數學系還會花特別一學期來教你怎麼做這件事，通常是基礎數學或是數學導論之類的大一必修課
 
 當然這個是我個人的理解，數學比我好的人多的是，也許他們又會有不同的想法。 但至少與朋友閒聊時我發現有些蠻厲害的工程師也跟我有同樣的觀點，所以我想這至少不是只有我一個人的想法，蠻有趣的
 
 對於語言這個東西，以我的經驗來說，資工系大部分的課就是教 C/C++ 或 python，而教法不外乎就是開始從變數、型態、函式、class 這樣一路講一下概念，帶幾個例子後出個作業就過去了
 
-換句話說，我覺得這些課的教法很接近於「科學」類型的課程的教法，講講概念，讓你看幾個例子有個經驗，出幾個作業讓你熟悉一下這個「感覺」。
+換句話說，我覺得這些課的教法很接近於「科學」類型的課程的教法，講講概念，讓你看幾個例子有個經驗，出幾個作業讓你熟悉一下這個「感覺」
 
-然而語言是一個工程類的東西，它是有 spec 的，裡面嚴格定義了什麼樣的輸入該有什麼樣的輸出，因此學習語言的過程你應該要去讀 spec，而不是依靠「經驗」，它不是一個開放的系統，它是一個人定義出來的封閉系統。
+然而語言是一個工程類的東西，它是有 spec 的，裡面嚴格定義了什麼樣的輸入該有什麼樣的輸出，因此學習語言的過程你應該要去讀 spec，而不是依靠「經驗」，它不是一個開放的系統，它是一個人定義出來的封閉系統
 
-換句話說學語言跟學下棋是很類似的，例如西洋棋，在學的時候你需要先理解棋子移動的規則，而且你需要去遵守這些規則，所以你會去看西洋棋的規則書/說明書(spec)，而不是找個人來告訴你棋子移動的「經驗」法則。 
+換句話說學語言跟學下棋是很類似的，例如西洋棋，在學的時候你需要先理解棋子移動的規則，而且你需要去遵守這些規則，所以你會去看西洋棋的規則書/說明書(spec)，而不是找個人來告訴你棋子移動的「經驗」法則    
 
-同樣地，你需要去遵守語言 spec 裡面的規則，而不是自己去嘗試跑一次你的 code，發現會動後就認為那樣的寫法是對的，甚至是認為不需要遵守 spec 內的規則，會動與正確是兩件事情，在工程上我們會利用 UB、IB 等規則來對這種錯誤的寫法去做規範，之後有機會的話會再講到。
+同樣地，你需要去遵守語言 spec 裡面的規則，而不是自己去嘗試跑一次你的 code，發現會動後就認為那樣的寫法是對的，甚至是認為不需要遵守 spec 內的規則，會動與正確是兩件事情，在工程上我們會利用 UB、IB 等規則來對這種錯誤的寫法去做規範，之後有機會的話會再講到
 
-另外，要如何利用這些規則來贏遊戲，也就是所謂的戰術，就需要依賴經驗了，這在語言的部分也是一樣的，要怎麼寫出好的程式碼也需要經驗，可能會有一些前人發現的法則、規律，但它們是可調整的，就像下棋一樣，你可以自己去研發自己的套路。
+另外，要如何利用這些規則來贏遊戲，也就是所謂的戰術，就需要依賴經驗了，這在語言的部分也是一樣的，要怎麼寫出好的程式碼也需要經驗，可能會有一些前人發現的法則、規律，但它們是可調整的，就像下棋一樣，你可以自己去研發自己的套路
 
 總而言之，寫語言記得翻 spec，遵守 spec，語言是被嚴格定義好地，你不該利用經驗法則去判斷一個寫法是否正確
 
@@ -91,9 +93,9 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 ## 抽象化是什麼
 
-工程的目的是使用科學，科學提供了對自然現象的理解，而抽象則是對現象做包裝的一種方法，例如生活中的「顏色」，顏色是人的感官對於特定波長的電磁波的解釋，但當我們平常聊天在講「紅色」時不會特別地去強調「620-750nm 的電磁波」的這個資訊，更多是在強調人的感官的解釋。
+工程的目的是使用科學，科學提供了對自然現象的理解，而抽象則是對現象做包裝的一種方法，例如生活中的「顏色」，顏色是人的感官對於特定波長的電磁波的解釋，但當我們平常聊天在講「紅色」時不會特別地去強調「620-750nm 的電磁波」的這個資訊，更多是在強調人的感官的解釋
 
-換句話說，「紅色」這個詞是對「620-750nm 的電磁波」所做的抽象化，它對「620-750nm 的電磁波」做了包裝。 在用「紅色」這個詞的時候，我們把「620-750nm 的電磁波」、人眼的構造與大腦對人眼訊號的解析等等地細節都隱含的省略掉了，因為我們只在意 620-750nm 的電磁波對我們造成的感官結果。這讓我們在對話的過程中可以很簡單的達到共識，抓到重點。 
+換句話說，「紅色」這個詞是對「620-750nm 的電磁波」所做的抽象化，它對「620-750nm 的電磁波」做了包裝。 在用「紅色」這個詞的時候，我們把「620-750nm 的電磁波」、人眼的構造與大腦對人眼訊號的解析等等地細節都隱含的省略掉了，因為我們只在意 620-750nm 的電磁波對我們造成的感官結果。這讓我們在對話的過程中可以很簡單的達到共識，抓到重點    
 
 所以，用一句話來描述抽象化的概念就是「不管中間細節，只在乎輸入與輸出的關係」，我們不在意中間過程的細節，想把它全部忽略掉，更多的時候我們會說把它當成一個黑箱，我們只想知道丟了一個東西進去，會有什麼樣的結果出來
 
@@ -121,7 +123,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 </center>
 
-這邊的分類是我照著我電子電路學課本「foundation of analog & digital electronic circuits by anant agarwal」內的分類畫出來的，課本的分類我覺得合理。 這中間的每一層都可以再各自有其細分下去的抽象層，而 Programming language 的上方就是各式各樣的程式了。 
+這邊的分類是我照著我電子電路學課本「foundation of analog & digital electronic circuits by anant agarwal」內的分類畫出來的，課本的分類我覺得合理。 這中間的每一層都可以再各自有其細分下去的抽象層，而 Programming language 的上方就是各式各樣的程式了    
 
 然後我大概把資工、電機系內對應的課大概寫了一下，只寫了我有摸過、聽說過的，有些理解的不深，如果有錯麻煩再糾正我一下XD
 
@@ -159,12 +161,12 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
     :::   
 2. 一個讀寫頭(HEAD)。 它可以在紙帶上左右移動，讀出當前所指的格子上的符號，並且能改變它
 3. 一個狀態暫存器。 它用來儲存圖靈機當前所處的狀態。 圖靈機的所有可能狀態的數目是有限的，並且有一個特殊的狀態，稱為停機狀態，在這邊不是我們的重點，可以先不理他
-4. 一套控制規則數量有限的表格(TABLE)。 它根據當前機器所處的狀態以及當前讀寫頭所指的格子上的符號來決定讀寫頭下一步的動作，並改變狀態暫存器的值，讓機器進入一個新的狀態。 
+4. 一套控制規則數量有限的表格(TABLE)。 它根據當前機器所處的狀態以及當前讀寫頭所指的格子上的符號來決定讀寫頭下一步的動作，並改變狀態暫存器的值，讓機器進入一個新的狀態    
     
     其會按照以下順序告知圖靈機命令：
     1. 寫入(替換) 或擦除當前符號
-    2. 移動讀寫頭，有三種移動方法：「L」表示向左，「R」表示向右，「N」表示不移動。 每次最多移動一格。
-    3. 保持當前狀態或者轉到另一狀態。
+    2. 移動讀寫頭，有三種移動方法：「L」表示向左，「R」表示向右，「N」表示不移動。 每次最多移動一格
+    3. 保持當前狀態或者轉到另一狀態
 
 注意這個機器的每一部分都是有限的，但它有一個潛在的無限長的紙帶，因此這種機器只是一個理想的裝置。 圖靈認為這樣的一台機器就能類比人類所能進行的任何計算過程
 
@@ -176,7 +178,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 另外這篇也寫得很好，有興趣的也可以讀一下：[搞懂「通用圖靈機」的終站——它的誕生與意義](https://pansci.asia/archives/203152)
 
-而在現代，我們所謂的「電腦」，或正式一點稱它為「計算機」，其實就是圖靈機的一種實作方法，現在較主流的實作方法是使用馮諾伊曼架構，比較大的特色是將儲存裝置與中央處理器分開了。 
+而在現代，我們所謂的「電腦」，或正式一點稱它為「計算機」，其實就是圖靈機的一種實作方法，現在較主流的實作方法是使用馮諾伊曼架構，比較大的特色是將儲存裝置與中央處理器分開了    
 
 以比較常見的家用 PC 來說，對應的關係大概如下：
 
@@ -187,7 +189,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 | 狀態暫存器（State Register） | CPU 中的暫存器（如程序計數器、狀態暫存器） | 保存當前的執行狀態和指令位置，控制程序的執行流程 |
 | 規則表格（Transition Function/Table） | CPU 的控制單元和指令集架構 | 根據當前狀態和指令來解碼和執行操作，控制資料流和指令執行 |
 
-另外還有一些其他的實作方法，但目前就較偏向用在特殊場合的設計，所以我們這裡就不特別展開敘述了。
+另外還有一些其他的實作方法，但目前就較偏向用在特殊場合的設計，所以我們這裡就不特別展開敘述了
 
 由於現代的電腦只是種圖靈機的實作，因此在定義語言的時候，我們會針對圖靈機去定義，而不是針對電腦去定義，因為沒有人可以確定之後不會出現新的實作方法，在 spec 中可以看見這段話：
 
@@ -202,9 +204,23 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 從圖靈機我們可以看出，其實只要有 CPU、RAM、Bus，就差不多可以完成一台計算機了，現在我們就來針對這三個硬體來做介紹，幫助大家更理解計算機的運作。 這邊有一部很好的影片，大家也可以看看：[How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA)
 
-RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
+RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，我們個人電腦上的 main memory 全名為 DDR SDRAM，屬於一種 DRAM，因此相較於 SRAM 來說速度就比較慢，而 SRAM 通常我們會將其使用在 CPU 內的 cache 上。 在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
 
-而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 bit，並且我們會給記憶體標上位址：
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/ddr4.png?raw=true" width = 60%>
+
+(兩支美光 Crucial 8GB DDR4-2133 ECC 1.2V RDIMM)    
+(source：[wiki](https://zh.wikipedia.org/zh-tw/DDR4_SDRAM#/media/File:Two_8_GB_DDR4-2133_ECC_1.2_V_RDIMMs.jpg))
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/NES-SRAM.png?raw=true" width = 60%>
+
+(任天堂 NES 內的 SRAM，容量為 2Kx8 bit)   
+(source：[wiki](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg))
+
+</center>
+
+而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 Byte，並且我們會給記憶體標上位址：
 
 1. 位址通常以 Byte 為單位，也就是 8 個 bit
 2. 紙帶一格可以儲存一個符號，因此對應到記憶體中的一個 Byte
@@ -228,7 +244,7 @@ CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為
 - 執行(Execute)：使用 ALU 或其他執行單元進行計算或操作
 - 儲存(Write Back)：將結果存到暫存器/記憶體中
 
-我們會針對 CPU，或更 general 的說，針對 Processor 定義軟體與硬體的介面，這個介面被我們稱為 ISA，基本上會包含 CPU 讀取和操作的指令格式、machine code、Address mode、Registers 等等
+我們會針對 CPU，或更 general 的說，針對 Processor 定義軟體與硬體的介面，這個介面被我們稱為 ISA，基本上會包含 Processor 讀取和操作的指令格式、machine code、Address mode、Registers 等等
 
 因為是介面，所以 ISA 是個抽象化的過程，其將 Processor 真正的硬體實作給藏起來了，統一了一個對外的介面。 而對於 CPU 真正的硬體實作，我們稱其為 Microarchitecture，它基本上描述了一顆特定的 CPU 如何實現 ISA 的介面
 
@@ -246,11 +262,11 @@ CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫�
 
 Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetch 與 Decode，另外還會有管理指令的執行過程、協調 ALU 與暫存器等功用
 
-因此一般來說，CPU 執行指令的方式是從記憶體中取出指令，並使用 ALU 執行運算，期間可能會將一些中間產物存到暫存器中，最後再將結果儲存到記憶體中。 
+因此一般來說，CPU 執行指令的方式是從記憶體中取出指令，並使用 ALU 執行運算，期間可能會將一些中間產物存到暫存器中，最後再將結果儲存到記憶體中    
 
 雖然最後需要將結果儲存到記憶體中，但由於相較於和 memory 溝通的速度，CPU 內部元件的溝通速度快非常多，在程式的執行過程中，我們往往有些資料會需要重複使用，因此我們會於 CPU 內部加一些 memory 進去，這些記憶體被稱為 cache，而由於對速度的要求，因此 cache 所使用的為 SRAM，而非前面講的 DRAM，也因此 cache 的大小相較於 main memory 來說小很多(很貴)
 
-而對於 cache 的部分，我個人覺得這部分不是我們計概(了解電腦運作的 map )的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
+而對於 cache 的部分，我個人覺得這部分不是我們這篇計概(了解電腦運作的 map )的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
 
 ## 南北橋 & Bus
 
@@ -299,7 +315,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 題外話，PCH 中的有顆東西叫 IME，其全名為 Intel Management Engine，原本在北橋內，從 Nehalem 處理器和 Intel 5-Series 系列晶片組開始改成內置在 PCH 中了。 它是一個獨立的子系統，擁有自己的 MAC 和 IP 位址，而且能夠在系統啟動前、OS 運行期間甚至是關機的情況下運行，用來為搭載 Intel 處理器的電腦系統提供各種功能與服務
 
-很諷刺的是之前有駭客扁進了 Intel Management Engine 然後把所有資訊倒了出來，有興趣的可以看一下：[36C3 - Intel Management Engine deep dive](https://www.youtube.com/watch?v=3CQUNd3oKBM)。
+很諷刺的是之前有駭客扁進了 Intel Management Engine 然後把所有資訊倒了出來，有興趣的可以看一下：[36C3 - Intel Management Engine deep dive](https://www.youtube.com/watch?v=3CQUNd3oKBM)
 
 Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address Bus、Control Bus
 
@@ -322,7 +338,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 </center>
 
-先在 Address Bus 上將要操作的 address 設為高位，接著將 Control Bus 上的 enable 設為高位，最後將資料讀進來。
+先在 Address Bus 上將要操作的 address 設為高位，接著將 Control Bus 上的 enable 設為高位，最後將資料讀進來
 
 寫入則長這樣：
 
@@ -383,16 +399,116 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 </center>
 
-## OS
+## 作業系統(OS)
 
+前面講完了 BIOS，BIOS 正常情況下最終會將作業系統(OS) 給啟動，並將電腦的控制權交給 OS，所以我們現在就來看一下什麼是 OS，這邊抄一下之前的 OS 筆記XD...
 
-# ELF & PE File
+「作業系統（英語：Operating System，縮寫：OS）是一組主管並控制電腦操作、運用和執行硬體、軟體資源和提供公共服務來組織使用者互動的相互關聯的系統軟體程式」── [wiki](https://zh.wikipedia.org/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F)
 
-## 二進位檔案 Binary File
+簡單來說就是一個管理電腦的系統程式，其是使用者和電腦硬體的介面(interface)
+
+整個電腦系統主要可以分成四個部分：硬體、作業系統、應用程式和使用者，這邊先對它們做個簡單的介紹，但這些不是定義，只是一個描述
+
+- 使用者(User)：   
+  使用者可以是人、機器或其他的電腦，只要是可以操控這台電腦的都可以算  
+- 應用程式(Application)：
+  能幫助使用者解決問題的軟體都可以算，像是 Browser、Compiler 或一般的 Text Editor 都算  
+- 作業系統(Operating System)：
+    能夠幫助我們「控制(control)」和「協調(coordinate)」資源的系統軟體
+    - 控制(control) 指的大概就是 Device Driver，能夠幫助我們去控制硬體的，重點在協調(coordinate)，怎麼樣去協調使用者，分配資源，是 OS 裡面比較複雜的部份
+    - 因此我們也可以說 OS 是幫忙分配資源的軟體(resource allocator)，像是 memory management 會幫忙分配記憶體，file system 會幫忙分配 disk block 等等
+- 硬體(Hardware)：
+    能夠拿來給我們操作，做運算的硬體，因此硬體在 OS 這邊我們習慣稱它們回資源 (resources)，我們不在意它是透過哪種硬體提供的，只在意它能夠提供哪種資源，可以怎麼運用它
+
+硬體的部分我們剛剛前面都講完了，他和 OS 中間還會有一層 BIOS，或是也可以把它歸類在 OS 裡面，無論如何 BIOS 前面我們也講了，剩下的兩個部分就比較偏應用層面，我們暫時不關心
+
+由上可見 OS 可以看作是一個 resource allocator 和 control program，我們也稱它為 kernel，是一個在電腦內部隨時都在執行的程式，前面兩個名詞可以不用特定去記，因為只是一個比較常見的定義，但其實沒有很確切的定義 OS 是什麼，<span class="yellow">但 kernel 這個名詞很重要，要記一下</span>
+
+因此作業系統就會有一些 for virtual resource 的 API 可以使用，這些 API 我們稱它為 system call，<span class="yellow">這些 API 是 user 與 resource 間唯一的 interface</span>。 這裡的 virtual resource 主要指的就是剛剛我們講的硬體，因為要抽象化，所以我們通常會用虛擬的介面來定義
+
+我們看一個例子：
+
+<center>
+
+<img src = "https://github.com/Mes0903/Mes_Note/blob/main/Operating_System/Ch1_Introduction/Image/General_Purpose_Operating_Systems.jpg?raw=true" width = 70%>
+
+(source：[清大周志遠教授的 OS 講義](https://ocw.nthu.edu.tw/ocw/index.php?page=course_news_content&cid=141&id=999))
+
+</center>
+
+最下面是硬體，上面則是我們寫的程式，程式大致上可以分成「和作業系統相關的」與「和作業系統無關的」，也就是圖上的 user mode 與 kernel mode，這在後面的章節會再提更多
+
+Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一直更新、抽換的；Driver 上面就會有 OS 的主要部分，也就是如何管理 memory、cpu 等等的軟體，這個軟體會提供一些 API，也就是前面提到的 System call，OS 會把它包起來成 System library，讓我們使用
+
+我們寫完 Program 後要先 Compile，然後透過 Linker 把這些 Compile 完的 `.o` 檔 link 在一起，代表我們要去使用別人 implement 好的 Program，因此他不會只 link 我們 include 的那些 library，也一定會 link System library，link 完後才成為一個能執行的執行檔
+
+以 `printf` 來舉例，我們要印出東西在終端機上，這個動作不會是 C library 去做，而是 OS 去做的，需要呼叫到 system call，可能不是直接呼叫，但一定間接會呼叫到它，所以一定要 link System library，等到後面講 system call 時會更清楚
+
+因此這個過程中我們會先呼叫 `printf`，然後會呼叫到 system call，再去呼叫到 driver 這樣一層一層下去
+
+# 二進制檔案 Binary File
+
+現在我們有了 OS 的概念，也就可以跟硬體打交道了，所以最後我們來看一下我們到底要怎麼執行一個程式。 我們的執行檔都是一種二進制檔案，目的是使計算機根據機器碼執行指定的任務
+
+二進位檔案通常被認為是 Byte 的序列，這代表 binary digits(bit) 以八個為一組，有關計算機編碼的部分，由於已經有一篇非常棒的文章了，因此我這邊不打算詳細展開，請自行去閱讀 jserv 老師的[解讀計算機編碼](https://hackmd.io/@sysprog/binary-representation)文章
+
+我們之後的文章都會假設你已經讀過了這篇文章，理解了計算機編碼。 這是一篇科普文，門檻不高，建議你它看完，肯定會對你理解計算機有所幫助
+
+另外這邊分享一個有趣的小故事：
+
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/von-Neumann-machine-code.png?raw=true" width = 80%><br>
+
+</center>
+
+> von Neumann 認為直接用機器碼來寫程式就好了。 von Neumann 有一個博士班學生，因為用機器碼太煩了，著手設計組合語言。 von Neumann 知道了以後大為惱火，認為他不該把寶貴的時間浪費在這種無用的工具上    
+> 
+> 題外話，這名學生叫 [Donald B. Gillies](https://siebelschool.illinois.edu/about/awards/faculty-awards/chairs-and-professorships/donald-b-gillies-chair-computer-science)
+
+真硬核XD...
+
+一些二進制檔案會以特定的格式組成，通常這些格式會有指定的 headers，內部通常會有個簽名，稱為 Magic Numbers，github 上有人整理一張表，有興趣的可以看看：[File Magic Numbers](https://gist.github.com/leommoore/f9e57ba2aa4bf197ebc5)
+
+headers 內不只包含了簽名，還會擁有一些輔助解析該格式的資料，例如 GIF 檔案可以包含多個圖像，而它的 header 內就會有用於標識和描述每個圖像的資料。
+
+OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例如副檔名是 `.gif`，那預設就會使用 GIF Viewer 之類的程式來開啟該檔案，而這類對應的程式往往能夠根據該格式來正確解析出此二進制檔，進而達成我們想要的目的
+
+如果我們使用了不正確的副檔名，那就會導致預設上會使用不正確的工具來打開該二進制檔，那結果通常就是該工具無法解析給定的二進制檔，從而導致錯誤，例如我於 windows 的系統上用一個記事本打開一個 `.exe`，那看到的結果就會是記事本內顯示了一堆亂碼。 雖然這些亂碼看起來毫無意義，但本質上他們只不過是 Byte sequence，如果用正確的工具打開並解析它，那就能得到預期的結果
+
+我們能夠使用 HxD 或是 Vscode 內的 Hex Viewer 等工具來觀察二進制檔，這些工具會將 Byte sequence 利用八進制/十六進制等方式顯示出來。 假設我們於 windows 系統上利用 HxD 打開一個會印出 "Hello World!" 字串的 `.exe` 檔，那結果會像這樣：
+
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/binary-file.png?raw=true" width = 70%><br>
+
+</center>
 
 ## 可執行檔 Executable File
 
-## 副檔名 Filename Extension
+從剛剛的圖中，我們可以看見最一開始的地方擁有 `4D 5A` 這個簽名，這是 windows 上的執行檔簽名，格式被稱為 PE-file format。 現今的執行檔主要有兩種格式，一種為 ELF，主要在 Unix 與 Unix-like 的 OS 上被使用；另一種則為 PE，主要用在 windows 的 OS 上
+
+對於這兩種格式，這邊不打算多做展開，因為這展開還蠻複雜的，但是之前因為我在數學系的專題是刻 boosting 演算法和 Random Forest 演算法去偵測一個 PE File 是否為惡意軟體，所以有稍微讀過 PE File 的細節，有興趣的可以看看我的筆記：[PE FILE](https://hackmd.io/@Mes/PE_File_Format)
+
+另外，如果對 windows 上的行為，包括這邊講的 PE File，又或是 windows OS 本身有興趣的，可以去讀讀看馬哥的書：[Windows-APT-Warfare](https://github.com/aaaddress1/Windows-APT-Warfare)
+
+而對於 Linux，去修 jserv 老師的 Linux 核心設計啦XDD
+
+最後附上兩種執行檔格式的細節，我們通常會稱這個為 File ayout：
+
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/ELF-format.png?raw=true" width = 80%>
+
+(ELF File layout)   
+(source：[wiki](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:ELF_Executable_and_Linkable_Format_diagram_by_Ange_Albertini.png))
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/PE-format.png?raw=true" width = 80%>
+
+(PE File layout)    
+(source：[wiki](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg))
+
+</center>
 
 # Reference
 
@@ -424,6 +540,11 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 - [(wiki) AMD Fusion Controller Hub](https://zh.wikipedia.org/zh-tw/AMD_Fusion_Controller_Hub)
 - [(wiki) Flexible Display Interface](https://en.wikipedia.org/wiki/Flexible_Display_Interface)
 - [(wiki) Direct Mdeia Interface](https://en.wikipedia.org/wiki/Direct_Media_Interface)
+- [(wiki) BIOS](https://en.wikipedia.org/wiki/BIOS)
+- [(wiki) Option ROM](https://en.wikipedia.org/wiki/Option_ROM)
+- [(wiki) Power-on self-test](https://en.wikipedia.org/wiki/Power-on_self-test)
+- [(wiki) EEPROM](https://en.wikipedia.org/wiki/EEPROM)
+- [(wiki) Static random-access memory](https://en.wikipedia.org/wiki/Static_random-access_memory)
 - [How does cpu communicate with peripherals?](https://stackoverflow.com/questions/6852332/how-does-cpu-communicate-with-peripherals)
 - [Cisco Data Center Virtualization Server Architectures](https://www.ciscopress.com/articles/article.asp?p=1606902&seqNum=2)
 - [Anyone know what this part of my motherboard is?](https://www.reddit.com/r/pcmasterrace/comments/1c77mbm/anyone_know_what_this_part_of_my_motherboard_is/)
