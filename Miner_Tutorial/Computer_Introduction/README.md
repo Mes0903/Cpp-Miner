@@ -200,10 +200,10 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 bit，並且我們會給記憶體標上位址：
 
-1. 可以存資料和指令，紙帶一格對應到一個 bit
-3. 位址通常以 Byte 為單位，也就是 8 個 bit
+1. 位址通常以 Byte 為單位，也就是 8 個 bit
+2. 紙帶一格可以儲存一個符號，因此對應到記憶體中的一個 Byte
 
-假設是 4G 的 memory，那它的記憶體位址就可以從 0 一路寫到 4 \* 1024 \* 1024 \* 1024，換句話說就是從 0 到 4,294,967,295。 我們通常喜歡用 16 進位表示，所以會寫成 0 ~ 0xFFFFFFFF：
+假設是 4G 的 memory，那它的記憶體位址就可以從 0 一路寫到 4 \* 1024 \* 1024 \* 1024，換句話說就是從 0 到 4,294,967,295（我這裡從 0 開始）。 我們通常喜歡用 16 進位表示，所以會寫成 0 ~ 0xFFFFFFFF：
 
 <center>
 
@@ -215,9 +215,38 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 ## CPU (Central processing unit)
 
-CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為何，都是執行一連串被儲存的指令，這些指令會被保存在記憶體中。 而執行的步驟主要分為提取(Fetch)、解碼(Decode)、執行(Execute)和儲存(Store)
+CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為何，都是執行一連串被儲存的指令，這些指令會被保存在記憶體中。 而執行的步驟主要分為提取(Fetch)、解碼(Decode)、執行(Execute)和儲存(Write Back)：
 
-CPU 電路中的
+- 提取(Fetch)：從記憶體中讀取指令
+- 解碼(Decode)：解析指令，確定 operation 的類型與 operator
+- 執行(Execute)：使用 ALU 或其他執行單元進行計算或操作
+- 儲存(Write Back)：將結果存到暫存器/記憶體中
+
+我們會針對 CPU，或更 general 的說，針對 Processor 定義軟體與硬體的介面，這個介面被我們稱為 ISA，基本上會包含 CPU 讀取和操作的指令格式、machine code、Address mode、Registers 等等
+
+因為是介面，所以 ISA 是個抽象化的過程，其將 Processor 真正的硬體實作給藏起來了，統一了一個對外的介面。 而對於 CPU 真正的硬體實作，我們稱其為 Microarchitecture，它基本上描述了一顆特定的 CPU 如何實現 ISA 的介面
+
+CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫存器(Register) 與算術邏輯單元(ALU)，下圖是一個簡單的擁有單處理器 CPU 的計算機架構示意圖，紅線表示 data flow，黑線表示 control flow：
+
+<center>
+
+<img src = "uniprocessor-CPU.png" width = 60%>
+
+(source：[wiki](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
+
+</center>
+
+暫存器負責儲存指令，operator 和計算的中間結果的數據，速度非常快。 而 ALU 則負責執行算術運算、邏輯運算和位移運算等，是 CPU 執行運算的主要元件
+
+Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetch 與 Decode，另外還會有管理指令的執行過程、協調 ALU 與暫存器等功用
+
+因此一般來說，CPU 執行指令的方式是從記憶體中取出指令，並使用 ALU 執行運算，期間可能會將一些中間產物存到暫存器中，最後再將結果儲存到記憶體中。 
+
+雖然最後需要將結果儲存到記憶體中，但由於相較於和 memory 溝通的速度，CPU 內部元件的溝通速度快非常多，在程式的執行過程中，我們往往有些資料會需要重複使用，因此我們會於 CPU 內部加一些 memory 進去，這些記憶體被稱為 cache，而由於對速度的要求，因此 cache 所使用的為 SRAM，而非前面講的 DRAM，也因此 cache 的大小相較於 main memory 來說小很多(很貴)
+
+而對於 cache 的部分，我個人覺得這部分不是我們計概(了解電腦運作的 map )的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
+
+## 南北橋 & Bus
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
@@ -265,10 +294,12 @@ CPU 電路中的
 
 很諷刺的是之前有駭客扁進了 Intel Management Engine 然後把所有資訊倒了出來，有興趣的可以看一下：[36C3 - Intel Management Engine deep dive](https://www.youtube.com/watch?v=3CQUNd3oKBM)。
 
-Bus 負責傳輸資料，其主要分成三種：Data bus、Address Bus、Control Bus
+Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address Bus、Control Bus
 
 - Address Bus   
-  Address Bus 用來指定 <span class = "yellow">physical address</span>，當 CPU 或支援 DMA 的裝置需要讀取或寫入某個記憶體位址時，就會透過 Address Bus 來指定該記憶體位址。 Address Bus 的寬度決定了系統可以尋址的記憶體量，例如 32-bit 的 Address Bus 就可以尋址 $2^{32}$(4,294,967,295) 個位址
+  Address Bus 用來指定 <span class = "yellow">physical address</span>，當 CPU 或傳統上支援 DMA 的裝置需要讀取或寫入某個記憶體位址時，就會透過 Address Bus 來指定該記憶體位址。 較現代的 DMA 裝置通常改成透過專用的 Bus 或 Controller，像是 PCIe、SATA Controller 等，來與 memory 溝通
+  
+  Address Bus 的寬度決定了系統可以尋址的記憶體量，例如 32-bit 的 Address Bus 就可以尋址 $2^{32}$(4,294,967,295) 個位址
 - Data Bus  
   Data Bus 用來傳送實際的資料，通常是雙向的
 - Control Bus   
@@ -296,11 +327,7 @@ Bus 負責傳輸資料，其主要分成三種：Data bus、Address Bus、Contro
 
 順序稍微不一樣，先將 Address Bus 設好，然後將 data 送上 Data Bus，最後將 Control Bus 的 set 設為高位
 
-## CPU cache
-
-我個人覺得這部分不是我們計概(了解電腦運作的 map )的重點，所以就先不寫了，未來如果有機會可能會再補上
-
-不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
+要注意這是一個教學用的簡化模型，實際情況不長這樣，有興趣的可以去翻一下 [DDR4 之類的 spec](https://xdevs.com/doc/Standards/DDR4/JESD79-4%20DDR4%20SDRAM.pdf) 看看
 
 # BIOS & OS
 
