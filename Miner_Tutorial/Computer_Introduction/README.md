@@ -1,6 +1,6 @@
 {%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
-<h1 class><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>計算機概論</center></h1>
+# <center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</center>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -46,7 +46,11 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 # 如何學習一樣東西
 
-我覺得學一樣東西最快的方法就是寫部落格，只要將自己的理解輸出出來，你就知道自己大概哪裡卡了，哪裡不懂。 為了寫文章，熟悉一些工具肯定是沒有壞處的，具體可以參考這篇：
+因為這系列的文是針對新手在寫的，但我後來發現其實新手很常有不知道如何學習的狀況，甚至是不知道如何 google，想 google 卻不知道從何下手，因此這邊來簡單講一下這件事
+
+我覺得學一樣東西最快的方法就是寫部落格，只要將自己的理解輸出出來，你就知道自己大概哪裡卡了，哪裡不懂
+
+為了寫文章，熟悉一些工具肯定是沒有壞處的，具體可以參考 jserv 老師的這篇：
 
 - [GNU/Linux 開發工具共筆](https://hackmd.io/@sysprog/gnu-linux-dev/https%3A%2F%2Fhackmd.io%2F%40sysprog%2Fr1Psrf0KW)
 
@@ -72,6 +76,8 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 然而在遇到問題時，你肯定無法很直接的像這樣將大部分的需求全部列出來，這種情況你可以先嘗試照著順序將已知的需求完成，通常新的需求就會冒出來了
 
+這個過程我們通常會稱它為：know what, know why, know how
+
 當你無法列出需求時，這通常代表你的背景知識不足，導致你建立不了步驟與步驟之間的連結；抑或是這個東西非常的冷門，此時你就該找人詢問了，有關提問的方法請參考非常有名的一篇文章：
 
 - [提問的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way)
@@ -85,9 +91,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 如果是狀況緊急，需要速成的情況則另當別論，直接用 LLM 跳過思考的過程是個不錯的方法，能夠幫助你很快的解決需求，但在這種知識這麼集中的環境下學習，就如同機器學習會 overfitting 一樣，很容易讓你將局部的知識當作普遍定理，導致誤解，切要注意這點
 
-以上都為個人經驗與理解，由於發現初學者會有連 google 都不知道怎麼搜，遇到問題呆住的情況，因此在這邊多弄一個小節來教大家怎麼 google
-
-接下來就開始進到計概的內容~~
+以上都為個人經驗與理解，如果你已經有自己的學習方式了，那照你自己舒服的方式繼續你的旅程就好！ 接下來就開始進到計概的內容~~
 
 # 抽象化 Abstraction
 
