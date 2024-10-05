@@ -272,7 +272,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 而對於 cache 的部分，我個人覺得這部分不是我們這篇計概(了解電腦運作的 map )的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
 
-## 南北橋 & Bus
+## 南北橋
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
@@ -299,7 +299,9 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 </center>
 
-圖中可以看到北橋還會接一些較高速的周邊裝置，通常使用的是 AGP 或是 PCIe 協定。 後來，CPU 持續的在變快，導致 FSB 的頻寬跟不上上了，這個瓶頸導致大概在 2008 年時 FSB 就被淘汰了
+## intel PCH / AMD FCH
+
+於上面的圖中我們可以看到北橋還會接一些較高速的周邊裝置，通常使用的是 AGP 或是 PCIe 協定。 後來，CPU 持續的在變快，導致 FSB 的頻寬跟不上上了，這個瓶頸導致大概在 2008 年時 FSB 就被淘汰了
 
 之後的設計慢慢改成了點對點和 serial 對接，將記憶體控制器與較高速的 AGP/PCIe 通道這兩個東西直接併入到了 CPU 晶片中，讓裝置直接與 CPU 對街，並將北橋剩下其他剩下的小功能併入了南橋中，從而將傳統的北橋給消除掉了
 
@@ -320,6 +322,8 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 題外話，PCH 中的有顆東西叫 IME，其全名為 Intel Management Engine，原本在北橋內，從 Nehalem 處理器和 Intel 5-Series 系列晶片組開始改成內置在 PCH 中了。 它是一個獨立的子系統，擁有自己的 MAC 和 IP 位址，而且能夠在系統啟動前、OS 運行期間甚至是關機的情況下運行，用來為搭載 Intel 處理器的電腦系統提供各種功能與服務
 
 很諷刺的是之前有駭客扁進了 Intel Management Engine 然後把所有資訊倒了出來，有興趣的可以看一下：[36C3 - Intel Management Engine deep dive](https://www.youtube.com/watch?v=3CQUNd3oKBM)
+
+## Bus
 
 Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address Bus、Control Bus
 
