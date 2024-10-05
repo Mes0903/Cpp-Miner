@@ -44,7 +44,7 @@ class T;
 這樣的話 `T` 就是一個 Class，但尚未有 Class 的定義，此時這個 `T` 是個不完整的型態(incomplete type)，如果要使其成為 complete type，就要定義 Class，要定義 Class 的話我們需要在後面接上大括號 `{}`，語法像這樣：  
 
 ```cpp
-class { member-specification(opt) }  
+class { member-specification(opt) }
 ```
 
 大括號內填的是 Class 成員的資訊，成員的所有權與 scope 屬於這個 Class，可以有 function、object declaration、using、enum 等([一覽](https://timsong-cpp.github.io/cppwp/n4868/class#nt:member-declaration))，一樣用前面販賣機的例子：  
