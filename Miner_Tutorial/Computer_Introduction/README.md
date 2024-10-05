@@ -139,13 +139,13 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <img src ="https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/automata.png?raw=true"> 
 
-(source：[wiki](https://en.wikipedia.org/wiki/Combinational_logic))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Combinational_logic))
 
 </center>
 
 這裡可以提一下的是上圖中最內層的組合邏輯(Combinational logic)，這是一種由 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 所組成的數位邏輯，這裡的 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 是一種於計算理論中的數學模型，用來描述形式語言，所以並非真實的電路。 提這個的主要原因是，計算機內部的電路為組合邏輯與時序邏輯([Sequential logic](https://en.wikipedia.org/wiki/Sequential_logic))混合的實作，所以可以稍微知道一下有這個東西
 
-而對於圖靈機，我覺得 wiki 上的描述寫得很好，所以讓我們看一下 [wiki](https://zh.wikipedia.org/wiki/%E5%9B%BE%E7%81%B5%E6%9C%BA) 上的描述：
+而對於圖靈機，我覺得 wiki 上的描述寫得很好，所以讓我們看一下 [Wikipedia](https://zh.wikipedia.org/wiki/%E5%9B%BE%E7%81%B5%E6%9C%BA) 上的描述：
 
 圖靈機基本思想是用機器來模擬人類用紙筆進行數學運算的過程，它把這個過程看作下列兩種簡單的動作：
 
@@ -215,12 +215,12 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/ddr4.png?raw=true" width = 60%>
 
 (兩支美光 Crucial 8GB DDR4-2133 ECC 1.2V RDIMM)    
-(source：[wiki](https://zh.wikipedia.org/zh-tw/DDR4_SDRAM#/media/File:Two_8_GB_DDR4-2133_ECC_1.2_V_RDIMMs.jpg))
+(source：[Wikipedia](https://zh.wikipedia.org/zh-tw/DDR4_SDRAM#/media/File:Two_8_GB_DDR4-2133_ECC_1.2_V_RDIMMs.jpg))
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/NES-SRAM.png?raw=true" width = 60%>
 
 (任天堂 NES 內的 SRAM，容量為 2Kx8 bit)   
-(source：[wiki](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg))
 
 </center>
 
@@ -258,7 +258,7 @@ CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫�
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/uniprocessor-CPU.png?raw=true" width = 60%> 
 
-(source：[wiki](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
 
 </center>
 
@@ -279,7 +279,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 <center>
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CPU.png?raw=true" width = 40%><br> 
-(source：[wiki](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
 </center>
 
@@ -290,7 +290,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=50%> 
 
 (Pentium II/III 時代的典型晶片組佈局)   
-(source：[wiki](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=50%> 
 
@@ -311,7 +311,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/pch.png?raw=true"> 
 
-(source：[wiki](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
 </center>
 
@@ -388,7 +388,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/boot-process.png?raw=true">
 
-(source：[wiki](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png))
 
 </center>
 
@@ -399,7 +399,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CMOS.png?raw=true" width = 70%>
 
 (Pico ITX 主機板中的 CMOS 電池，右邊那顆銀色圓圓的就是)    
-(source：[wiki](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg))
 
 </center>
 
@@ -407,7 +407,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 前面講完了 BIOS，BIOS 正常情況下最終會將作業系統(OS) 給啟動，並將電腦的控制權交給 OS，所以我們現在就來看一下什麼是 OS，這邊抄一下之前的 OS 筆記XD...
 
-「作業系統（英語：Operating System，縮寫：OS）是一組主管並控制電腦操作、運用和執行硬體、軟體資源和提供公共服務來組織使用者互動的相互關聯的系統軟體程式」── [wiki](https://zh.wikipedia.org/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F)
+「作業系統（英語：Operating System，縮寫：OS）是一組主管並控制電腦操作、運用和執行硬體、軟體資源和提供公共服務來組織使用者互動的相互關聯的系統軟體程式」── [Wikipedia](https://zh.wikipedia.org/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F)
 
 簡單來說就是一個管理電腦的系統程式，其是使用者和電腦硬體的介面(interface)
 
@@ -505,53 +505,53 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/ELF-format.png?raw=true" width = 80%>
 
 (ELF File layout)   
-(source：[wiki](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:ELF_Executable_and_Linkable_Format_diagram_by_Ange_Albertini.png))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:ELF_Executable_and_Linkable_Format_diagram_by_Ange_Albertini.png))
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/PE-format.png?raw=true" width = 80%>
 
 (PE File layout)    
-(source：[wiki](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg))
+(source：[Wikipedia](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg))
 
 </center>
 
 # Reference
 
-- [(wiki) AMD Fusion Controller Hub](https://zh.wikipedia.org/zh-tw/AMD_Fusion_Controller_Hub)
-- [(wiki) Arithmetic logic unit](https://en.wikipedia.org/wiki/Arithmetic_logic_unit)
-- [(wiki) BIOS](https://en.wikipedia.org/wiki/BIOS)
-- [(wiki) Binary file](https://en.wikipedia.org/wiki/Binary_file)
-- [(wiki) Bus](https://en.wikipedia.org/wiki/Bus_(computing))
-- [(wiki) Central processing unit](https://en.wikipedia.org/wiki/Central_processing_unit)
-- [(wiki) Central processing unit](https://en.wikipedia.org/wiki/Central_processing_unit)
-- [(wiki) Channel I/O](https://en.wikipedia.org/wiki/Channel_I/O)
-- [(wiki) Computer architecture](https://en.wikipedia.org/wiki/Computer_architecture)
-- [(wiki) Control bus](https://en.wikipedia.org/wiki/Control_bus)
-- [(wiki) Control unit](https://en.wikipedia.org/wiki/Control_unit)
-- [(wiki) DDR Interface Protocol DDR](https://electronics.stackexchange.com/questions/465749/ddr-interface-protocol)
-- [(wiki) DDR2 SDRAM](https://en.wikipedia.org/wiki/DDR2_SDRAM)
-- [(wiki) DDR3 SDRAM](https://en.wikipedia.org/wiki/DDR3_SDRAM)
-- [(wiki) DDR4 SDRAM](https://en.wikipedia.org/wiki/DDR4_SDRAM)
-- [(wiki) Direct Mdeia Interface](https://en.wikipedia.org/wiki/Direct_Media_Interface)
-- [(wiki) Dynamic random-access memory](https://en.wikipedia.org/wiki/Dynamic_random-access_memory)
-- [(wiki) EEPROM](https://en.wikipedia.org/wiki/EEPROM)
-- [(wiki) Executable](https://en.wikipedia.org/wiki/Executable)
-- [(wiki) Flexible Display Interface](https://en.wikipedia.org/wiki/Flexible_Display_Interface)
-- [(wiki) Front-side bus](https://en.wikipedia.org/wiki/Front-side_bus)
-- [(wiki) Instruction set architecture](https://en.wikipedia.org/wiki/Instruction_set_architecture)
-- [(wiki) Memory Controller](https://en.wikipedia.org/wiki/Memory_controller)
-- [(wiki) Memory management unit](https://en.wikipedia.org/wiki/Memory_management_unit)
-- [(wiki) Microarchitecture](https://en.wikipedia.org/wiki/Microarchitecture)
-- [(wiki) Motherboard](https://www.sciencedirect.com/topics/engineering/motherboard)
-- [(wiki) Northbridge (computing)](https://en.wikipedia.org/wiki/Northbridge_(computing))
-- [(wiki) Option ROM](https://en.wikipedia.org/wiki/Option_ROM)
-- [(wiki) PCI Express](https://en.wikipedia.org/wiki/PCI_Express)
-- [(wiki) Platform Controller Hub](https://en.wikipedia.org/wiki/Platform_Controller_Hub)
-- [(wiki) Portable Executable](https://en.wikipedia.org/wiki/Portable_Executable)
-- [(wiki) Power-on self-test](https://en.wikipedia.org/wiki/Power-on_self-test)
-- [(wiki) Processor (computing)](https://en.wikipedia.org/wiki/Processor_(computing))
-- [(wiki) Southbridge (computing)](https://en.wikipedia.org/wiki/Southbridge_(computing))
-- [(wiki) Static random-access memory](https://en.wikipedia.org/wiki/Static_random-access_memory)
-- [(wiki) System Bus](https://en.wikipedia.org/wiki/System_bus)
+- [(Wikipedia) AMD Fusion Controller Hub](https://zh.wikipedia.org/zh-tw/AMD_Fusion_Controller_Hub)
+- [(Wikipedia) Arithmetic logic unit](https://en.wikipedia.org/wiki/Arithmetic_logic_unit)
+- [(Wikipedia) BIOS](https://en.wikipedia.org/wiki/BIOS)
+- [(Wikipedia) Binary file](https://en.wikipedia.org/wiki/Binary_file)
+- [(Wikipedia) Bus](https://en.wikipedia.org/wiki/Bus_(computing))
+- [(Wikipedia) Central processing unit](https://en.wikipedia.org/wiki/Central_processing_unit)
+- [(Wikipedia) Central processing unit](https://en.wikipedia.org/wiki/Central_processing_unit)
+- [(Wikipedia) Channel I/O](https://en.wikipedia.org/wiki/Channel_I/O)
+- [(Wikipedia) Computer architecture](https://en.wikipedia.org/wiki/Computer_architecture)
+- [(Wikipedia) Control bus](https://en.wikipedia.org/wiki/Control_bus)
+- [(Wikipedia) Control unit](https://en.wikipedia.org/wiki/Control_unit)
+- [(Wikipedia) DDR Interface Protocol DDR](https://electronics.stackexchange.com/questions/465749/ddr-interface-protocol)
+- [(Wikipedia) DDR2 SDRAM](https://en.wikipedia.org/wiki/DDR2_SDRAM)
+- [(Wikipedia) DDR3 SDRAM](https://en.wikipedia.org/wiki/DDR3_SDRAM)
+- [(Wikipedia) DDR4 SDRAM](https://en.wikipedia.org/wiki/DDR4_SDRAM)
+- [(Wikipedia) Direct Mdeia Interface](https://en.wikipedia.org/wiki/Direct_Media_Interface)
+- [(Wikipedia) Dynamic random-access memory](https://en.wikipedia.org/wiki/Dynamic_random-access_memory)
+- [(Wikipedia) EEPROM](https://en.wikipedia.org/wiki/EEPROM)
+- [(Wikipedia) Executable](https://en.wikipedia.org/wiki/Executable)
+- [(Wikipedia) Flexible Display Interface](https://en.wikipedia.org/wiki/Flexible_Display_Interface)
+- [(Wikipedia) Front-side bus](https://en.wikipedia.org/wiki/Front-side_bus)
+- [(Wikipedia) Instruction set architecture](https://en.wikipedia.org/wiki/Instruction_set_architecture)
+- [(Wikipedia) Memory Controller](https://en.wikipedia.org/wiki/Memory_controller)
+- [(Wikipedia) Memory management unit](https://en.wikipedia.org/wiki/Memory_management_unit)
+- [(Wikipedia) Microarchitecture](https://en.wikipedia.org/wiki/Microarchitecture)
+- [(Wikipedia) Motherboard](https://www.sciencedirect.com/topics/engineering/motherboard)
+- [(Wikipedia) Northbridge (computing)](https://en.wikipedia.org/wiki/Northbridge_(computing))
+- [(Wikipedia) Option ROM](https://en.wikipedia.org/wiki/Option_ROM)
+- [(Wikipedia) PCI Express](https://en.wikipedia.org/wiki/PCI_Express)
+- [(Wikipedia) Platform Controller Hub](https://en.wikipedia.org/wiki/Platform_Controller_Hub)
+- [(Wikipedia) Portable Executable](https://en.wikipedia.org/wiki/Portable_Executable)
+- [(Wikipedia) Power-on self-test](https://en.wikipedia.org/wiki/Power-on_self-test)
+- [(Wikipedia) Processor (computing)](https://en.wikipedia.org/wiki/Processor_(computing))
+- [(Wikipedia) Southbridge (computing)](https://en.wikipedia.org/wiki/Southbridge_(computing))
+- [(Wikipedia) Static random-access memory](https://en.wikipedia.org/wiki/Static_random-access_memory)
+- [(Wikipedia) System Bus](https://en.wikipedia.org/wiki/System_bus)
 - [Anyone know what this part of my motherboard is?](https://www.reddit.com/r/pcmasterrace/comments/1c77mbm/anyone_know_what_this_part_of_my_motherboard_is/)
 - [Basic Knowledge of Industrial Computers (CPU/Chipset)](https://www.contec.com/support/basic-knowledge/edge-computing/cpu/)
 - [Cisco Data Center Virtualization Server Architectures](https://www.ciscopress.com/articles/article.asp?p=1606902&seqNum=2)
