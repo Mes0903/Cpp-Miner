@@ -272,7 +272,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 而對於 cache 的部分，我個人覺得這部分不是我們這篇計概(了解電腦運作的 map )的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
 
-## 南北橋
+## 舊時代的南北橋
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
@@ -299,7 +299,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 </center>
 
-## intel PCH / AMD FCH
+## 現代 intel PCH / AMD FCH
 
 於上面的圖中我們可以看到北橋還會接一些較高速的周邊裝置，通常使用的是 AGP 或是 PCIe 協定。 後來，CPU 持續的在變快，導致 FSB 的頻寬跟不上上了，這個瓶頸導致大概在 2008 年時 FSB 就被淘汰了
 
@@ -358,7 +358,9 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 順序稍微不一樣，先將 Address Bus 設好，然後將 data 送上 Data Bus，最後將 Control Bus 的 set 設為高位
 
-要注意這是一個教學用的簡化模型，實際情況不長這樣，有興趣的可以去翻一下 [DDR4 之類的 spec](https://xdevs.com/doc/Standards/DDR4/JESD79-4%20DDR4%20SDRAM.pdf) 看看
+現代由於已經沒有南北橋晶片了，memory controller 做在了 CPU 裡面，因此與 memory 是直接對接的，而中間溝通的這個 Bus 則被稱為 memory bus
+
+然後要注意這是一個教學用的簡化模型，實際情況不長這樣，有興趣的可以去翻一下 [DDR4 之類的 spec](https://xdevs.com/doc/Standards/DDR4/JESD79-4%20DDR4%20SDRAM.pdf) 看看
 
 # BIOS & OS
 
