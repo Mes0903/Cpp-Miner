@@ -1,4 +1,11 @@
-{%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
+---
+title: C++ 教學系列 ── 淺談計算機概論
+date: 2024-10-08
+description: 這學期又開始拿來教了，覺得需要一篇計概當前置，所以就來教教計概
+tags: C++ Miner_tutorial
+categories:
+- C++ Miner
+---
 
 # <center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</center>
 
