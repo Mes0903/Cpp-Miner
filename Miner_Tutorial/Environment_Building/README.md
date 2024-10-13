@@ -1,8 +1,10 @@
 {%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Windows 內的 C++ 與 VSCode 環境建置 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Windows 內的 C++ 與 VSCode 環境建置</center></h1>  
 
-點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>  
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
+
+hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
 # 前言  
 
@@ -144,3 +146,80 @@ int main()
 ![](https://i.imgur.com/oLBBwCM.png)  
 
 這樣一來你的環境就建好了，好好享受 C++ ㄅ
+
+# 手動建立設定檔
+
+如果按下 F5 後你的資料夾內沒有自動建立 `.vscode` 的資料夾，導致程式跑不起來，那你就需要自己手動建立這些設定了
+
+首先在你的專案資料夾內新增名叫 `.vscode` 的資料夾，接著將建立兩個檔案 `launch.json` 與 `tasks.json`，內容分別如下：
+
+- `launch.json`
+    ```json
+    {
+      "configurations": [
+        {
+          "name": "C/C++: g++.exe 建置及偵錯使用中的檔案",
+          "type": "cppdbg",
+          "request": "launch",
+          "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+          "args": [],
+          "stopAtEntry": false,
+          "cwd": "${fileDirname}",
+          "environment": [],
+          "externalConsole": false,
+          "MIMode": "gdb",
+          "miDebuggerPath": "C:\\mingw64\\bin\\gdb.exe",
+          "setupCommands": [
+            {
+              "description": "啟用 gdb 的美化顯示",
+              "text": "-enable-pretty-printing",
+              "ignoreFailures": true
+            },
+            {
+              "description": "將反組譯碼變體設為 Intel",
+              "text": "-gdb-set disassembly-flavor intel",
+              "ignoreFailures": true
+            }
+          ],
+          "preLaunchTask": "C/C++: g++.exe 建置使用中檔案"
+        }
+      ],
+      "version": "2.0.0"
+    }
+    ```
+- `tasks.json`
+    ```json
+    {
+      "tasks": [
+        {
+          "type": "cppbuild",
+          "label": "C/C++: g++.exe 建置使用中檔案",
+          "command": "C:\\mingw64\\bin\\g++.exe",
+          "args": [
+            "-fdiagnostics-color=always",
+            "-g",
+            "${file}",
+            "-o",
+            "${fileDirname}\\${fileBasenameNoExtension}.exe"
+          ],
+          "options": {
+            "cwd": "${fileDirname}"
+          },
+          "problemMatcher": [
+            "$gcc"
+          ],
+          "group": {
+            "kind": "build",
+            "isDefault": true
+          },
+          "detail": "偵錯工具產生的工作。"
+        }
+      ],
+      "version": "2.0.0"
+    }
+    ```
+
+要注意的事情有兩點
+
+1. 這份設定檔是給 C++ 用的
+2. 在兩份檔案中的 `"C:\\mingw64\\bin\\"` 需要改成你 mingw 安裝的位置
