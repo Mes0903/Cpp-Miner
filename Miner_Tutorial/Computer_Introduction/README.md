@@ -1,3 +1,5 @@
+[![hackmd-github-sync-badge](https://hackmd.io/UC8jnZmoRsGVFp_pmcLGtQ/badge)](https://hackmd.io/UC8jnZmoRsGVFp_pmcLGtQ)
+
 {%hackmd aPqG0f7uS3CSdeXvHSYQKQ %}
 
 # <center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</center>
