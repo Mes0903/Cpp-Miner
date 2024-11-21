@@ -116,7 +116,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction.png?raw=true"><br> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/abstraction.png?raw=true"><br> 
 
 </center>
 
@@ -130,7 +130,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/abstraction-2.png?raw=true"><br> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/abstraction-2.png?raw=true"><br> 
 
 </center>
 
@@ -144,7 +144,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src ="https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/automata.png?raw=true"> 
+<img src ="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/automata.png?raw=true"> 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Combinational_logic))
 
@@ -183,7 +183,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/turing-machine.png?raw=true"><br> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/turing-machine.png?raw=true"><br> 
 
 </center>
 
@@ -219,12 +219,12 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/ddr4.png?raw=true" width = 60%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/ddr4.png?raw=true" width = 60%>
 
 (兩支美光 Crucial 8GB DDR4-2133 ECC 1.2V RDIMM)    
 (source：[Wikipedia](https://zh.wikipedia.org/zh-tw/DDR4_SDRAM#/media/File:Two_8_GB_DDR4-2133_ECC_1.2_V_RDIMMs.jpg))
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/NES-SRAM.png?raw=true" width = 60%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/NES-SRAM.png?raw=true" width = 60%>
 
 (任天堂 NES 內的 SRAM，容量為 2Kx8 bit)   
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg))
@@ -240,7 +240,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/memory-address.png?raw=true"> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/memory-address.png?raw=true"> 
 
 (source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
 
@@ -263,7 +263,7 @@ CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/uniprocessor-CPU.png?raw=true" width = 60%> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/uniprocessor-CPU.png?raw=true" width = 60%> 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
 
@@ -285,7 +285,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CPU.png?raw=true" width = 40%><br> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/CPU.png?raw=true" width = 40%><br> 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
 </center>
@@ -294,12 +294,12 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=50%> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/chipset-layout.png?raw=true" width=50%> 
 
 (Pentium II/III 時代的典型晶片組佈局)   
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=50%> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/chipset-layout-2.png?raw=true" width=50%> 
 
 (我覺得這張寫得更清楚一點)    
 (source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
@@ -318,7 +318,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/pch.png?raw=true"> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/pch.png?raw=true"> 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
@@ -349,7 +349,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-read.gif?raw=true" width=90%><br> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/scott-read.gif?raw=true" width=90%><br> 
 
 </center>
 
@@ -359,7 +359,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/scott-write.gif?raw=true" width=90%><br> 
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/scott-write.gif?raw=true" width=90%><br> 
 
 </center>
 
@@ -399,7 +399,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/boot-process.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/boot-process.png?raw=true">
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png))
 
@@ -409,7 +409,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/CMOS.png?raw=true" width = 70%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/CMOS.png?raw=true" width = 70%>
 
 (Pico ITX 主機板中的 CMOS 電池，右邊那顆銀色圓圓的就是)    
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg))
@@ -475,7 +475,7 @@ Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/von-Neumann-machine-code.png?raw=true" width = 80%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/von-Neumann-machine-code.png?raw=true" width = 80%><br>
 
 </center>
 
@@ -497,7 +497,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/binary-file.png?raw=true" width = 70%><br>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/binary-file.png?raw=true" width = 70%><br>
 
 </center>
 
@@ -515,12 +515,12 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/ELF-format.png?raw=true" width = 80%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/ELF-format.png?raw=true" width = 80%>
 
 (ELF File layout)   
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:ELF_Executable_and_Linkable_Format_diagram_by_Ange_Albertini.png))
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Computer_Introduction/PE-format.png?raw=true" width = 80%>
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/PE-format.png?raw=true" width = 80%>
 
 (PE File layout)    
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg))
