@@ -271,116 +271,423 @@ Allocating 17 bytes
 
 如果你的環境上沒有跑出一樣的結果大概是因為你那邊它有自己的 extension 我猜，如 tcc、icc file 之類的，內部實作可能就有些許差異，又或者你是在 Debug 模式下輸出的結果也有可能不同。
 
-## 挖礦，入坑看魔法
+## 入坑挖礦
 
-在一開始先說一下，<span class = "yellow">下面的 code 只是其中一種實作方式</span>，不代表每個 lib 都是這樣做的，後面就以我的環境為例帶大家看一下 code。
+### MSVC ([src code](https://github.com/microsoft/STL/blob/main/stl/inc/xstring))
+
+底下 msvc 版本：
+
+```
+Microsoft (R) C/C++ Optimizing Compiler Version 19.41.34120 for x64
+Copyright (C) Microsoft Corporation.  著作權所有，並保留一切權利
+```
+
+之前有寫過一個舊版的，但我今天發現新版的 code 乾淨很多，所以就更新一下，想看舊的話去 github 翻一下記錄吧，這邊就不留了XD
 
 如果我們進到 `std::string` 的內部去看會發現 `std::string` 是一種元素為 `char` 的 `basic_string`：
 
 ```cpp
-template <class _Elem, class _Traits = char_traits<_Elem>, class _Alloc = allocator<_Elem>>
+_EXPORT_STD template <class _Elem, class _Traits = char_traits<_Elem>, class _Alloc = allocator<_Elem>>
 class basic_string { // null-terminated transparent array of elements
   // lot of contents...
-};
+}; // end of basic_string
 
 // many lines...
 
-using string  = basic_string<char, char_traits<char>, allocator<char>>;
+_EXPORT_STD using string  = basic_string<char, char_traits<char>, allocator<char>>;
 ```
 
-而當我們去找這裡對應的建構子，會看見這個：
+我們先來看裡面其中比較重要的一個 class `_String_val`，裡面放了一些重要的變數與成員函式：
+```cpp
+template <class _Val_types>
+class _String_val : public _Container_base {
+// ...
+    static constexpr size_type _BUF_SIZE = 16 / sizeof(value_type) < 1 ? 1 : 16 / sizeof(value_type);
+// ...
+    static constexpr size_type _Small_string_capacity = _BUF_SIZE - 1;
+
+    _NODISCARD _CONSTEXPR20 value_type* _Myptr() noexcept {
+        value_type* _Result = _Bx._Buf;
+        if (_Large_mode_engaged()) {
+            _Result = _Unfancy(_Bx._Ptr);
+        }
+
+        return _Result;
+    }
+// ...
+    _NODISCARD _CONSTEXPR20 bool _Large_mode_engaged() const noexcept {
+        return _Myres > _Small_string_capacity;
+    }
+// ...
+  union _Bxty { // storage for small buffer or pointer to larger one
+        // This constructor previously initialized _Ptr. Don't rely on the new behavior without
+        // renaming `_String_val` (and fixing the visualizer).
+        _CONSTEXPR20 _Bxty() noexcept : _Buf() {} // user-provided, for fancy pointers
+        _CONSTEXPR20 ~_Bxty() noexcept {} // user-provided, for fancy pointers
+
+        value_type _Buf[_BUF_SIZE];
+        pointer _Ptr;
+        char _Alias[_BUF_SIZE]; // TRANSITION, ABI: _Alias is preserved for binary compatibility (especially /clr)
+
+        _CONSTEXPR20 void _Switch_to_buf() noexcept {
+            _STD _Destroy_in_place(_Ptr);
+
+#if _HAS_CXX20
+            // start the lifetime of the array elements
+            if (_STD is_constant_evaluated()) {
+                for (size_type _Idx = 0; _Idx < _BUF_SIZE; ++_Idx) {
+                    _Buf[_Idx] = value_type();
+                }
+            }
+#endif // _HAS_CXX20
+        }
+    };
+    _Bxty _Bx;
+
+    // invariant: _Myres >= _Mysize, and _Myres >= _Small_string_capacity (after string's construction)
+    // neither _Mysize nor _Myres takes account of the extra null terminator
+    size_type _Mysize = 0; // current length of string (size)
+    size_type _Myres  = 0; // current storage reserved for string (capacity)
+};
+```
+
+可以看見裡面定義了 `size`、`capacity` 與最重要的 union 實例 `_Bx`，union 內包含了 pointer 與 buffer。 然後我們也可以看到在 `_Myptr` 內他會根據大小來去回傳 buffer 的位址，或是 pointer 存的值
+
+接著我們回來看 `basic_string` 的建構子，我們在意的是以字串為參數來建構的版本：
 
 ```cpp
-_CONSTEXPR20 basic_string(_In_reads_(_Count) const _Elem* const _Ptr, _CRT_GUARDOVERFLOW const size_type _Count)
-    : _Mypair(_Zero_then_variadic_args_t{}) {
-    auto&& _Alproxy = _GET_PROXY_ALLOCATOR(_Alty, _Getal());
-    _Container_proxy_ptr<_Alty> _Proxy(_Alproxy, _Mypair._Myval2);
-    _Tidy_init();
-    assign(_Ptr, _Count);
+_CONSTEXPR20 basic_string(_In_z_ const _Elem* const _Ptr) : _Mypair(_Zero_then_variadic_args_t{}) {
+    _Construct<_Construct_strategy::_From_ptr>(_Ptr, _Convert_size<size_type>(_Traits::length(_Ptr)));
+}
+```
+
+雖然還有超級多其他的建構子，但這兩個是我們比較關心的版本。 這裡可以看見他把指標本身與字串的長度當作參數呼叫了 `_Construct`，所以接著看 `_Construct`：
+
+```cpp
+template <_Construct_strategy _Strat, class _Char_or_ptr>
+_CONSTEXPR20 void _Construct(const _Char_or_ptr _Arg, _CRT_GUARDOVERFLOW const size_type _Count) {
+// ...
+    if (_Count <= _Small_string_capacity) {
+        _My_data._Mysize = _Count;
+        _My_data._Myres  = _Small_string_capacity;
+
+        if constexpr (_Strat == _Construct_strategy::_From_char) {
+            _Traits::assign(_My_data._Bx._Buf, _Count, _Arg);
+            _Traits::assign(_My_data._Bx._Buf[_Count], _Elem());
+        } else if constexpr (_Strat == _Construct_strategy::_From_ptr) {
+            _Traits::copy(_My_data._Bx._Buf, _Arg, _Count);
+            _Traits::assign(_My_data._Bx._Buf[_Count], _Elem());
+        } else { // _Strat == _Construct_strategy::_From_string
+#ifdef _INSERT_STRING_ANNOTATION
+            _Traits::copy(_My_data._Bx._Buf, _Arg, _Count + 1);
+#else // ^^^ _INSERT_STRING_ANNOTATION / !_INSERT_STRING_ANNOTATION vvv
+            _Traits::copy(_My_data._Bx._Buf, _Arg, _BUF_SIZE);
+#endif // ^^^ !_INSERT_STRING_ANNOTATION ^^^
+        }
+
+        _Proxy._Release();
+        return;
+    }
+
+    size_type _New_capacity = _Calculate_growth(_Count, _Small_string_capacity, max_size());
+    const pointer _New_ptr  = _Allocate_for_capacity(_Al, _New_capacity); // throws
+    _Construct_in_place(_My_data._Bx._Ptr, _New_ptr);
+
+    _My_data._Mysize = _Count;
+    _My_data._Myres  = _New_capacity;
+    if constexpr (_Strat == _Construct_strategy::_From_char) {
+        _Traits::assign(_Unfancy(_New_ptr), _Count, _Arg);
+        _Traits::assign(_Unfancy(_New_ptr)[_Count], _Elem());
+    } else if constexpr (_Strat == _Construct_strategy::_From_ptr) {
+        _Traits::copy(_Unfancy(_New_ptr), _Arg, _Count);
+        _Traits::assign(_Unfancy(_New_ptr)[_Count], _Elem());
+    } else { // _Strat == _Construct_strategy::_From_string
+        _Traits::copy(_Unfancy(_New_ptr), _Arg, _Count + 1);
+    }
+
+    _ASAN_STRING_CREATE(*this);
     _Proxy._Release();
 }
 ```
 
-以 `std::stirng` 來說，就是吃一個 const char pointer，這裡的重點是 `assign(_Ptr, _Count);` 函式，`_Ptr` 指的是實際的 pointer，只像我們的 `"Name"`，而 `_Count` 則是有幾個字，以這裡來說會是 4。
+你會看見裡面有一個分支檢查 `_Count` 是否小於 `_Small_string_capacity`，如果是，那就會對 `_Buf` 賦值，然後 return，因此完全<span class = "yellow">沒有多餘的 allocation</span>
 
-我們再繼續往這個 `assign` 函式看，會看見它長這樣：
+而如果 `_Count` 大於於 `_Small_string_capacity`，則會利用 `_Allocate_for_capacity` 與 `_Construct_in_place` 分配記憶體空間，然後再賦值給 `_Ptr`(也就是 `_New_ptr`)
+
+`_Allocate_for_capacity` 內會利用 allocator 分配記憶體空間：
 
 ```cpp
-_CONSTEXPR20 basic_string& assign(
-    _In_reads_(_Count) const _Elem* const _Ptr, _CRT_GUARDOVERFLOW const size_type _Count) {
-        // assign [_Ptr, _Ptr + _Count)
-    if (_Count <= _Mypair._Myval2._Myres) {
-        _Elem* const _Old_ptr   = _Mypair._Myval2._Myptr();
-        _Mypair._Myval2._Mysize = _Count;
-        _Traits::move(_Old_ptr, _Ptr, _Count);
-        _Traits::assign(_Old_ptr[_Count], _Elem());
-        return *this;
+enum class _Allocation_policy { _At_least, _Exactly };
+
+template <_Allocation_policy _Policy = _Allocation_policy::_At_least>
+_NODISCARD static _CONSTEXPR20 pointer _Allocate_for_capacity(_Alty& _Al, size_type& _Capacity) {
+    _STL_INTERNAL_CHECK(_Capacity > _Small_string_capacity);
+    ++_Capacity; // Take null terminator into consideration
+
+    pointer _Fancy_ptr = nullptr;
+    if constexpr (_Policy == _Allocation_policy::_At_least) {
+        _Fancy_ptr = _Allocate_at_least_helper(_Al, _Capacity);
+    } else {
+        _STL_INTERNAL_STATIC_ASSERT(_Policy == _Allocation_policy::_Exactly);
+        _Fancy_ptr = _Al.allocate(_Capacity);
     }
 
-    return _Reallocate_for(
-        _Count,
-        [](_Elem* const _New_ptr, const size_type _Count, const _Elem* const _Ptr) {
-            _Traits::copy(_New_ptr, _Ptr, _Count);
-            _Traits::assign(_New_ptr[_Count], _Elem());
-        },
-        _Ptr);
+#if _HAS_CXX20
+    // Start element lifetimes to avoid UB. This is a more general mechanism than _String_val::_Activate_SSO_buffer,
+    // but likely more impactful to throughput.
+    if (_STD is_constant_evaluated()) {
+        _Elem* const _Ptr = _Unfancy(_Fancy_ptr);
+        for (size_type _Idx = 0; _Idx < _Capacity; ++_Idx) {
+            _STD construct_at(_Ptr + _Idx);
+        }
+    }
+#endif // _HAS_CXX20
+    --_Capacity;
+    return _Fancy_ptr;
 }
 ```
 
-你會看見裡面有一個 `if` 判斷式，如果 `_Count` 小於某個值，那就會拿到 stack 段 buffer 的指標 `_Old_ptr`，並直接把我們的字串移動到 buffer 內，然後 return，因此完全<span class = "yellow">沒有多餘的 allocation</span>。
-
-但如果它沒有進到上面那個 if-statement，也就是 `_Count` 比某個值還大，那就會去用到下面那個 `_Reallocate_for` 函式，這個 function 內有一行是這個：
+而 `_Construct_in_place` 的內容其實就是一個 placement new，利用剛剛分配的記憶體空間構建物件：
 
 ```cpp
-const pointer _New_ptr = _Al.allocate(_New_capacity + 1); // throws
-```
-
-也就是說去動到了 allocation。
-
-而這個關鍵的值 `_Myres` 在一個叫做 `_String_val` 的 class 裡面，這個 class 的最下面有著這兩行：
-
-```cpp
-size_type _Mysize = 0; // current length of string
-size_type _Myres  = 0; // current storage reserved for string
-```
-
-而關於 `_Myres` 的賦值在這裡：
-
-```cpp
-void _Become_small() {
-    // release any held storage and return to small string mode
-    // pre: *this is in large string mode
-    // pre: this is small enough to return to small string mode
-    // (not _CONSTEXPR20; SSO should be disabled in a constexpr context)
-
-    _Mypair._Myval2._Orphan_all();
-    const pointer _Ptr = _Mypair._Myval2._Bx._Ptr;
-    auto& _Al          = _Getal();
-    _Destroy_in_place(_Mypair._Myval2._Bx._Ptr);
-    _Traits::copy(_Mypair._Myval2._Bx._Buf, _Unfancy(_Ptr), _Mypair._Myval2._Mysize + 1);
-    _Al.deallocate(_Ptr, _Mypair._Myval2._Myres + 1);
-    _Mypair._Myval2._Myres = _BUF_SIZE - 1;          // 這行
+// in file "xutility"
+template <class _Ty, class... _Types>
+_CONSTEXPR20 void _Construct_in_place(_Ty& _Obj, _Types&&... _Args) noexcept(
+    is_nothrow_constructible_v<_Ty, _Types...>) {
+#if _HAS_CXX20
+    if (_STD is_constant_evaluated()) {
+        _STD construct_at(_STD addressof(_Obj), _STD forward<_Types>(_Args)...);
+    } else
+#endif // _HAS_CXX20
+    {
+        ::new (static_cast<void*>(_STD addressof(_Obj))) _Ty(_STD forward<_Types>(_Args)...);
+    }
 }
 ```
 
-在最下面你可以看見它被設定為 `_BUF_SIZE-1` 的大小，而 `_BUF_SIZE` 的大小則定義在 `basic_stirng` 裡面：
+對於空字串的，建構子內會呼叫 `_Construct_empty`：
 
 ```cpp
-static constexpr auto _BUF_SIZE   = _Scary_val::_BUF_SIZE;
-static constexpr auto _ALLOC_MASK = _Scary_val::_ALLOC_MASK;
+_CONSTEXPR20
+basic_string() noexcept(is_nothrow_default_constructible_v<_Alty>) : _Mypair(_Zero_then_variadic_args_t{}) {
+    _Construct_empty();
+}
+
+// ...
+
+_CONSTEXPR20 void _Construct_empty() {
+    auto& _My_data = _Mypair._Myval2;
+    _My_data._Alloc_proxy(_GET_PROXY_ALLOCATOR(_Alty, _Getal()));
+
+    // initialize basic_string data members
+    _My_data._Mysize = 0;
+    _My_data._Myres  = _Small_string_capacity;
+    _My_data._Activate_SSO_buffer();
+
+    // the _Traits::assign is last so the codegen doesn't think the char write can alias this
+    _Traits::assign(_My_data._Bx._Buf[0], _Elem());
+}
 ```
 
-而 `_Scary_val::_BUF_SIZE` 則定義在 `_String_val` 裡面：
+基本上就做了一些簡單的初始化，讀完前面的應該不難懂
+
+## gcc & clang
+
+讀書會後原本還想多補 gcc & clang 的版本，但太忙了，之後再補XD
+
+# 為 std::string 提供自定義 std::allocator
+
+原本會有這篇是因為 MISRA C/C++ spec 內規定不能用 heap allocation，所以朋朋來問了一下能不能把 data 全部放在 stack 段上的 memory pool，而我想到序列化那裏去了，所以才看了一下 SSO 的實作
+
+但後來發現其實 `std::string` 可以使用自定義的 `std::allocator`，所以這邊就來補充一下怎麼實現這個需求，
+
+在標準中，允許使用自定義 allocator 的容器被稱為 [AllocatorAwareContainer]((https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer))，他們在使用 allocator 時不是只接使用 allocator 本身，而是透過 `std::allocator_trait` 這個介面來去間接地使用 allocator
+
+這麼做是因為標準對 allocator 洋洋灑灑的列了許多要求，基本上就是規定要有哪些成員變數與成員函式，而且不同的成員還有各自需要滿足的要求，可以從 [cppreference](https://en.cppreference.com/w/cpp/named_req/Allocator) 上面看到許多表格來描述它們
+
+但如果每次客製化時都要把這些要求一個一個完成，那就太麻煩了，畢竟真的很多，因此才需要 `std::allocator_trait` 這個介面，這個東西對大部分的需求提供了一個「預設」的版本，如此一來我們只需要對在意的操作進行客製化，其他的部分使用 `std::allocator_trait` 的版本即可
+
+具體提供了哪些預設的成員可以到 [cppreference](https://en.cppreference.com/w/cpp/memory/allocator_traits) 上面看。 有一位 committee 的成員 Howard Hinnant 在[他的部落格](https://howardhinnant.github.io/allocator_boilerplate.html)上提供了一個可以讓我們快速複製貼上的版本，class 的名字可以改成你想要的名稱：
 
 ```cpp
-// length of internal buffer, [1, 16]:
-static constexpr size_type _BUF_SIZE = 16 / sizeof(value_type) < 1 ? 1 : 16 / sizeof(value_type);
+template <class T>
+class allocator
+{
+public:
+    using value_type    = T;
+
+//     using pointer       = value_type*;
+//     using const_pointer = typename std::pointer_traits<pointer>::template
+//                                                     rebind<value_type const>;
+//     using void_pointer       = typename std::pointer_traits<pointer>::template
+//                                                           rebind<void>;
+//     using const_void_pointer = typename std::pointer_traits<pointer>::template
+//                                                           rebind<const void>;
+
+//     using difference_type = typename std::pointer_traits<pointer>::difference_type;
+//     using size_type       = std::make_unsigned_t<difference_type>;
+
+//     template <class U> struct rebind {typedef allocator<U> other;};
+
+    allocator() noexcept {}  // not required, unless used
+    template <class U> allocator(allocator<U> const&) noexcept {}
+
+    value_type*  // Use pointer if pointer is not a value_type*
+    allocate(std::size_t n)
+    {
+        return static_cast<value_type*>(::operator new (n*sizeof(value_type)));
+    }
+
+    void
+    deallocate(value_type* p, std::size_t) noexcept  // Use pointer if pointer is not a value_type*
+    {
+        ::operator delete(p);
+    }
+
+//     value_type*
+//     allocate(std::size_t n, const_void_pointer)
+//     {
+//         return allocate(n);
+//     }
+
+//     template <class U, class ...Args>
+//     void
+//     construct(U* p, Args&& ...args)
+//     {
+//         ::new(p) U(std::forward<Args>(args)...);
+//     }
+
+//     template <class U>
+//     void
+//     destroy(U* p) noexcept
+//     {
+//         p->~U();
+//     }
+
+//     std::size_t
+//     max_size() const noexcept
+//     {
+//         return std::numeric_limits<size_type>::max();
+//     }
+
+//     allocator
+//     select_on_container_copy_construction() const
+//     {
+//         return *this;
+//     }
+
+//     using propagate_on_container_copy_assignment = std::false_type;
+//     using propagate_on_container_move_assignment = std::false_type;
+//     using propagate_on_container_swap            = std::false_type;
+//     using is_always_equal                        = std::is_empty<allocator>;
+};
+
+template <class T, class U>
+bool
+operator==(allocator<T> const&, allocator<U> const&) noexcept
+{
+    return true;
+}
+
+template <class T, class U>
+bool
+operator!=(allocator<T> const& x, allocator<U> const& y) noexcept
+{
+    return !(x == y);
+}
 ```
 
-以我們的例子來說會是 16，而 `_Myres` 的值還需要再 -1，也就是 15，因此當超過 15 個字的時候就會呼叫 heap allocation。
+其中註解的部分是 `std::allocator_traits` 有預設版本的成員，所以如果沒有用到你可以把他們都刪了。 不過這篇文章是 2016 寫的，所以是比較以前的版本，但基本上這個東西沒什麼太大的更動，所以還是很好用的
+
+接下來我們就可以照這個邏輯來設計一下我們的 string stack allocator 了：
+
+```cpp
+#include <iostream>
+#include <string>
+#include <array>
+#include <memory>
+
+template <typename T, size_t PoolSize>
+class StackAllocator {
+public:
+    using value_type = T;
+
+    StackAllocator() : pool{}, offset(0) {}
+
+    template <typename U>
+    StackAllocator(const StackAllocator<U, PoolSize>&) {}
+
+    T* allocate(size_t n) {
+        size_t bytes = n * sizeof(T);
+        if (offset + bytes > PoolSize) {
+            throw std::bad_alloc();
+        }
+
+        T* ptr = reinterpret_cast<T*>(&pool[offset]);
+        offset += bytes;
+        return ptr;
+    }
+
+    void deallocate(T* p, size_t n) {
+        // Stack memory does not need to be deallocated in this simple example.
+        // Optionally, you could implement a reset mechanism to reuse memory.
+    }
+
+    template <typename U>
+    struct rebind {
+        using other = StackAllocator<U, PoolSize>;
+    };
+
+private:
+    alignas(T) std::array<std::byte, PoolSize> pool;
+    size_t offset;
+};
+
+// Comparison operators for the Allocator
+template <typename T1, typename T2, size_t S1, size_t S2>
+bool operator==(const StackAllocator<T1, S1>&, const StackAllocator<T2, S2>&) {
+    return S1 == S2; // Same pool size
+}
+
+template <typename T1, typename T2, size_t S1, size_t S2>
+bool operator!=(const StackAllocator<T1, S1>&, const StackAllocator<T2, S2>&) {
+    return !(S1 == S2);
+}
+
+int main() {
+    constexpr size_t PoolSize = 1024; // 1 KB stack pool
+
+    // Create a string with custom allocator
+    using CustomString = std::basic_string<char, std::char_traits<char>, StackAllocator<char, PoolSize>>;
+
+    // Stack memory pool allocator
+    StackAllocator<char, PoolSize> allocator;
+
+    {
+        // Create a string
+        CustomString s("Hello, StackAllocator!", allocator);
+
+        std::cout << "String: " << s << std::endl;
+
+        // Modify the string
+        s += " Nice to meet you!";
+        std::cout << "Modified String: " << s << std::endl;
+    }
+    
+    return 0;
+}
+```
+
+[輸出](https://godbolt.org/z/os1PT3PrT)：
+
+```
+String: Hello, StackAllocator!
+Modified String: Hello, StackAllocator! Nice to meet you!
+```
 
 # Reference
 
 - [Small String Optimization in C++](https://www.youtube.com/watch?v=S7oVXMzTo4w)
 - [Inside STL: The string STL](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)
+- [An informal comparison of the three major implementations of std::string](https://devblogs.microsoft.com/oldnewthing/20240510-00/?p=109742)
 - [CppCon 2016: Nicholas Ormrod “The strange details of std::string at Facebook"](https://www.youtube.com/watch?v=kPR8h4-qZdk)
