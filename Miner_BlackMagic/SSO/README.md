@@ -7,9 +7,9 @@ categories:
 - C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── Small String Optimization (SSO) <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Small String Optimization (SSO)</center></h1>
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
@@ -37,7 +37,7 @@ struct basic_string {
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/tree/standard-markdown/Miner_BlackMagic/SSO/string-begin-layout.png?raw=true">  
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/string-begin-layout.png?raw=true">  
 
 （layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
 
@@ -69,7 +69,7 @@ struct basic_string
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/tree/standard-markdown/Miner_BlackMagic/SSO/basic-string-layout.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/basic-string-layout.png?raw=true">
 
 （layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
 
@@ -95,7 +95,7 @@ int main()
 
 而會選擇去使用 const char pointer 來減少負擔，然而以這個例子來講，因為這個字串長度很短，所以其實根本不會使用到 heap 段，負擔也很小。
 
-## 使用 enumeration 包裝變數
+## 使用 union 包裝變數
 
 ### gcc
 
@@ -209,7 +209,7 @@ struct string
 };
 
 // clang
-union string
+struct string
 {
     struct large {
         unsigned char is_large : 1;
@@ -383,3 +383,4 @@ static constexpr size_type _BUF_SIZE = 16 / sizeof(value_type) < 1 ? 1 : 16 / si
 
 - [Small String Optimization in C++](https://www.youtube.com/watch?v=S7oVXMzTo4w)
 - [Inside STL: The string STL](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)
+- [CppCon 2016: Nicholas Ormrod “The strange details of std::string at Facebook"](https://www.youtube.com/watch?v=kPR8h4-qZdk)
