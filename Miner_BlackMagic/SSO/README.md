@@ -493,7 +493,7 @@ _CONSTEXPR20 void _Construct_empty() {
 
 ## gcc & clang
 
-讀書會後原本還想多補 gcc & clang 的版本，但太忙了，之後再補XD
+讀書會後原本還想多補 [gcc](https://github.com/gcc-mirror/gcc/blob/master/libstdc++-v3/include/bits/basic_string.h) & [clang](https://github.com/llvm-mirror/libcxx/blob/master/include/string) 的版本，但太忙了，之後再補XD
 
 # 為 std::string 提供自定義 std::allocator
 
