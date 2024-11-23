@@ -685,6 +685,8 @@ String: Hello, StackAllocator!
 Modified String: Hello, StackAllocator! Nice to meet you!
 ```
 
+不過因為這東西真不好寫，像上面這個例子，你還需要寫一個 memory pool 的 handler，因此到了 C++17，就有了一個更方便的東西叫做 [std::pmr::polymorphic_allocator](https://en.cppreference.com/w/cpp/memory/polymorphic_allocator)（[N3916 提案](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3916.pdf)），可以讓你很快速地做到剛剛我們想做的事，之後另開一篇再寫吧XD
+
 # Reference
 
 - [Small String Optimization in C++](https://www.youtube.com/watch?v=S7oVXMzTo4w)
