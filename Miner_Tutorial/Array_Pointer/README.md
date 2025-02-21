@@ -5,9 +5,11 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Array 與 Pointer <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Array 與 Pointer</center></h1>  
 
-點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>  
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
+
+hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
 # Array(陣列)  
 
@@ -40,16 +42,16 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
     可以是任何合法的宣告器，如果沒有接初始化器，那麼陣列的元素內容會是未知的。如果 Pointer Declarator/Reference 要作用在指標/參考本身，而不是目標的話，那要加上括號把它們括住，例如  
 
     ```cpp
-    int main()  
-    {  
-    int arr[2] = { 1, 2 };    // 一個有兩個整數元素的陣列型態，其變數名為 arr  
-    int arr2[2];    // 一個有兩個整數元素的陣列型態，其變數名為 arr2，但沒有初始化，內部元素可能為隨機值  
-    int *p_arr[2];    // 一個有兩個整數指標元素的陣列型態，其變數名為 p_arr，也沒有初始化  
-    int(*p_arr2[2])[2] = { &arr, &arr2 };    // 一個有兩個指向 int[2] 元素的陣列型態，其變數名為 p_arr2  
-    int(*a1)[2] = &arr;    // 一個指向 int[2] 型態的指標，其變數名為 a1，指向 arr  
-    int(&a2)[2] = arr;    // 一個參考 int[2] 型態的別名，其變數名為 a2，參考 arr  
-    return 0;  
-    }  
+    int main()
+    {
+      int arr[2] = { 1, 2 };    // 一個有兩個整數元素的陣列型態，其變數名為 arr
+      int arr2[2];    // 一個有兩個整數元素的陣列型態，其變數名為 arr2，但沒有初始化，內部元素可能為隨機值
+      int *p_arr[2];    // 一個有兩個整數指標元素的陣列型態，其變數名為 p_arr，也沒有初始化
+      int(*p_arr2[2])[2] = { &arr, &arr2 };    // 一個有兩個指向 int[2] 元素的陣列型態，其變數名為 p_arr2
+      int(*a1)[2] = &arr;    // 一個指向 int[2] 型態的指標，其變數名為 a1，指向 arr
+      int(&a2)[2] = arr;    // 一個參考 int[2] 型態的別名，其變數名為 a2，參考 arr
+      return 0;
+    }
     ```
 
     這個部分基本上就是你陣列的變數名，視情況會再加上其他你需要的東西，讀的方法是從右至左，以 `int *p_arr[2]` 來說，`int` 屬於 type specifier，`*p_arr[2]` 屬於 declarator。  
@@ -57,12 +59,12 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
     另外補充一點，Array 無法使用 assignment，也不能 copy，因為 array type 的物件無法一次修改全部的元素，也就是說像這樣是不行的：  
 
     ```cpp
-    int main()  
-    {  
-    int a[3] = { 1, 2, 3 }, b[3] = { 4, 5, 6 };  
-    int c[3] = a;    // error: array must be initialized with a brace-enclosed initializer  
-    a = b;    // error: invalid array assignment  
-    }  
+    int main()
+    {
+      int a[3] = { 1, 2, 3 }, b[3] = { 4, 5, 6 };
+      int c[3] = a;    // error: array must be initialized with a brace-enclosed initializer
+      a = b;    // error: invalid array assignment
+    }
     ```
 
 + expr  
@@ -72,25 +74,25 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
     這個部分基本上是你陣列元素的數目，所以需要大於 0，且如果不是使用動態配置，那麼需要是個<span class = "yellow">編譯時期就能算出的值</span>，所以才會說需要是一個 constant expression，例如：  
 
     ```cpp
-    int main()  
-    {  
-    int i = 40;    // i 不是 constant expression  
-    const int ci = 40;    // ci 是 constant expression  
-    int arr[i];    // error，i 不是 constant expression  
-    int arr2[ci];    // ok  
-    return 0;  
-    }  
+    int main()
+    {
+      int i = 40;    // i 不是 constant expression
+      const int ci = 40;    // ci 是 constant expression
+      int arr[i];    // error，i 不是 constant expression
+      int arr2[ci];    // ok
+      return 0;
+    }
     ```
 
     上面這段 code 你可能可以編譯成功，這是因為有些編譯器有幫忙做特殊的處理，像是先在 stack 上分配一些空間之類的，但這種 code 換個編譯器可能就不會過了，這種拿非編譯時期的值拿來當作其大小的陣列叫做 VLA(variable-length array)，有興趣的可以看看。  
 
     如果你沒有寫 expression，那就需要有初始化器，此時編譯器會幫忙從初始化器推算出陣列的元素個數，例如：  
     ```cpp
-    int main()  
-    {  
-    int arr[] = { 1, 2 };  
-    return 0;  
-    }  
+    int main()
+    {
+      int arr[] = { 1, 2 };
+      return 0;
+    }
     ```
 
     這裡的 `arr` 是個整數的陣列，編譯器會幫忙推算出陣列有兩個元素。  
@@ -281,9 +283,14 @@ int main()
 
 圖解就會長這樣：  
 
-<center><img src="https://i.imgur.com/lUlVnFM.png"></center><br>  
+<center>
+
+<img src="https://github.com/Mes0903/Cpp-Miner/tree/standard-markdown/Miner_Tutorial/Array_Pointer/image/pointer.png?raw=true"><br>
+
+</center>
 
 `i` 是一個整數變數，儲存的值為 20；`p1` 是個整數的指標，指向 `i`，儲存的值為 `&i`；`p2` 是個整數的指標的指標，指向 `p1`，儲存的值為 `&p1`。  
+
 ## Pointer to objects  
 
 我們可以用 `address-of operator` 的回傳值或別的指標來初始化指標變數，舉個例子：  
@@ -302,6 +309,7 @@ struct S {
 S s = { 1 };  
 int *sp = &s.n;    // pointer to the int that is a member of s  
 ```
+
 source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Pointers_to_objects)  
 
 ### 指標的運算  
@@ -376,13 +384,13 @@ int a = *p;    // undefined behavior
 
 所以我們可以簡單寫一個表出來：  
 
-| 語法 | 意思 |  
-| -------- | -------- |  
-| `const T*` | 指向 「constant 物件」的指標 |   
-| `T const*` | 指向 「constant 物件」的指標 |   
-| `T* const` | 指向普通物件的「constant 指標」 |   
-| `const T* const` | 指向「constant 物件」的「constant 指標」 |   
-| `T const* const` | 指向「constant 物件」的「constant 指標」 |   
+| 語法             | 意思                                     |
+| ---------------- | ---------------------------------------- |
+| `const T*`       | 指向 「constant 物件」的指標             |
+| `T const*`       | 指向 「constant 物件」的指標             |
+| `T* const`       | 指向普通物件的「constant 指標」          |
+| `const T* const` | 指向「constant 物件」的「constant 指標」 |
+| `T const* const` | 指向「constant 物件」的「constant 指標」 |
 
 source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Constness)  
 

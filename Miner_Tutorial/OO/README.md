@@ -4,9 +4,12 @@ date: 2022-05-19
 tag: C++ Miner-tutorial
 category: C++ Miner
 ---
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Class & 物件導向 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
 
-點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>  
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class & 物件導向</center></h1>  
+
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
+
+hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
 # 前言  
 
@@ -115,9 +118,15 @@ int main()
 
 另外，access specifier 如果寫 public，那基類內的成員訪問許可權不會變，如果寫 protected，則原先是 public 的會變為 protected，寫 private 的話 public 與 protected 都會變為 private，因此第二層繼承的 class 將無法使用基類的 member：  
 
-<center><img src="https://hackmd.io/_uploads/H1-XJmxLT.png"></center><br>  
+<center>
+
+<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/based_derived.png?raw=true">
+
+</center><br>  
 
 ```cpp
+#include <iostream>
+
 class B {  
 public:  
   int i1 = 1;  
@@ -184,6 +193,8 @@ void print_member()
 
   std::cout << priD.i1 << '\n'; // error: 'int B::i1' is inaccessible within this context  
   std::cout << priD.i2 << '\n'; // error: 'int B::i2' is protected with  
+}
+
 int main()  
 {  
 }  
@@ -191,7 +202,7 @@ int main()
 
 # Operator of Derived Class  
 
-如果衍生類有 operator overloading 的需求，那他必須自己寫出來，無法調用基類的 operator overloading：  
+如果衍生類有 operator overloading 的需求，那他必須顯式的寫出來，無法調用基類的 operator overloading：  
 
 ```cpp
 #include <iostream>  
@@ -312,7 +323,7 @@ void DerivedFriend(D d)
 
 # 建構子(Constructor)  
 
-雖然衍生類內含有基類的成員，但衍生類不應該直接初始化那些成員(除非你有特殊設計需求)，需要透過基類的建構子來初始化他們，因此建構時會先呼叫基類的建構子，再呼叫衍生類的建構子：  
+雖然衍生類內含有基類的成員，但一般來說衍生類不應該直接初始化那些成員，需要透過基類的建構子來初始化他們，因此建構時會先呼叫基類的建構子，再呼叫衍生類的建構子：  
 ```cpp
 #include <iostream>  
 
@@ -343,23 +354,21 @@ class B {
 public:  
   int i;  
   B() { std::cout << "Base Class Constructor\n"; }  
-  B(int i)  
-      : i(i) {}  
+  B(int i) : i(i) { std::cout << "Base Class Constructor\n"; }  
 };  
 
 class D : public B {  
 public:  
   int j;  
   D() { std::cout << "Derived Class Constructor\n"; }  
-  D(int i, int j)  
-      : B(i), j(j) {}  
+  D(int i, int j) : B(i), j(j) { std::cout << "Derived Class Constructor\n"; }  
 };  
 
 int main()  
 {  
   D d(1, 2);  
   std::cout << d.i << " " << d.j;    // 1 2  
-}  
+}    
 ```
 
 這樣比較好的原因是因為每個 Class 都會有自己的 interface，我們應該透過這些 interface 來跟 Class 互動，即使它是你的基類也是。另外一點就是 Class 有自己的 scope，在繼承底下衍生類的 scope 為巢狀的範疇(nested scope)，如果你使用衍生類的建構子來初始化基類的成員，可能讓 code 變得較為複雜。  
@@ -555,10 +564,12 @@ public:
 
 <center>  
 
-![image](https://hackmd.io/_uploads/Hk1OE4e8T.png)  
+<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
+
 (順序不一定會一樣，要看電腦的架構與編譯器，但一定會有個排列的規則)      
 
 </center>  
+
 我們可以使用 `reinterpret_cast` 來做簡單的驗證：  
 
 ```cpp
@@ -1331,8 +1342,8 @@ void print_type(B *ptr)
 }  
 
 int main() {  
-  D *d1 = new D();  
-  D2 *d2 = new D2();  
+  B *d1 = new D();  
+  B *d2 = new D2();  
 
   print_type(d1);    // 1D  
   print_type(d2);    // 2D2  
@@ -1354,8 +1365,8 @@ void print_type(B *ptr)
 }  
 
 int main() {  
-  D *d1 = new D();  
-  D2 *d2 = new D2();  
+  B *d1 = new D();  
+  B *d2 = new D2();  
 
   print_type(d1);    // 1B  
   print_type(d2);    // 1B  
@@ -1403,13 +1414,13 @@ void do_casting(B *base) {
 
 int main() {  
   B *b = new B();  
-  D1 *d1 = new D1();  
-  D2 *d2 = new D2();  
+  B *d1 = new D1();  
+  B *d2 = new D2();  
 
   do_casting(b);    // cannot do the dynamic cast!  
   do_casting(d1);    // cannot do the dynamic cast!  
   do_casting(d2);    // D2  
-}  
+}   
 ```
 
 對於 reference，則是會丟出 `std::bad_cast`，需要透過 try-catch 來去捕捉這個例外：  
@@ -1457,7 +1468,7 @@ int main() {
 
 downcasting 需要被顯式的寫出來，而且基類要是 polymorphic class，否則會報錯：  
 
-```cpp
+```cpp=
 #include <iostream>  
 
 class B {};  
@@ -1512,7 +1523,7 @@ public:
 ```
 <center>  
 
-![image](https://hackmd.io/_uploads/Hk1OE4e8T.png)  
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
 
 </center>  
 
@@ -1543,7 +1554,7 @@ int main()
 
 <center>  
 
-![image](https://hackmd.io/_uploads/B1fFWq7IT.png)  
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table1.png?raw=true"><br>  
 
 </center>  
 
@@ -1576,7 +1587,7 @@ int main()
 
 <center>  
 
-![image](https://hackmd.io/_uploads/rk1P-cXIT.png)  
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table2.png?raw=true"><br>  
 
 </center>  
 
@@ -1594,7 +1605,7 @@ public:
 
 class Derived : public Base {  
 public:  
-  virtual void func2() override { std::cout << "Derived::func2()\n"; }  
+  void func2() override { std::cout << "Derived::func2()\n"; }  
   void nonVirtualFunc() { std::cout << "Derived::nonVirtualFunc()\n"; }  
 };  
 
@@ -1626,7 +1637,7 @@ int main()
 
 <center>  
 
-![image](https://hackmd.io/_uploads/rJHc9qm8a.png)  
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table3.png?raw=true"><br>  
 
 </center>  
 

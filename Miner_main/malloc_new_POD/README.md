@@ -5,9 +5,9 @@ tag: C++ Miner
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── malloc、new 與 POD Type <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>malloc、new 與 POD Type</center></h1>
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
@@ -415,7 +415,7 @@ operator new 也有可能是透過一般的函式呼叫形式來呼叫的；呼�
 int i = new int(5);
 ```
 
-要注意 operator new 不能被 overload，挺合理的，因為它是 operator。
+要注意 new operator 不能被 overload，挺合理的，因為它是 operator。
 
 使用 new operator 時它會先去<span class = "yellow">呼叫 operator new</span>，幫我們分配足夠的 raw memory，再去<span class = "yellow">呼叫對象的建構子</span>。
 

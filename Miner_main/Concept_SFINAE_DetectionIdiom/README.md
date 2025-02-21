@@ -5,15 +5,21 @@ tag: C++ Miner
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?" height = 50> 礦坑系列 ── Concept と SFINAE と Detection Idiom <img src = "https://i.imgur.com/thmVmX6.png?" height = 50></center></h1>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>Concept と SFINAE と Detection Idiom</center></h1>
 
-點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
+
+hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
 # 前言
 
 ぼっち・ざ・ろっく！ 實在太棒了，標題致敬一下ギターと孤独と蒼い惑星 XD
 
-![](https://i.imgur.com/KGmaSgl.png)
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti1.png?raw=true">
+
+</center><br>
 
 Detection Idiom 中文翻譯為偵測語意，其他的名字還有 Member Detector 和 Template type constraint 等等。
 
@@ -154,7 +160,12 @@ int main()
   // check(m3); // error: no matching function for call to 'check(M3&)'
 }
 ```
-![](https://i.imgur.com/ED73ecV.png)
+
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/concept_error.png?raw=true">
+
+</center><br>
 
 可以看見錯誤訊息變得十分乾淨，debug 變的很方便。
 
@@ -488,7 +499,11 @@ int main()
 
 如此一來編譯器便會給予錯誤訊息，並把 candidate set 給印出來：
 
-![](https://i.imgur.com/0ENmOeD.png)
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/candidate_set.png?raw=true">
+
+</center>
 
 可以看見 candidate set 的確有這三個函式。
 
@@ -541,7 +556,7 @@ struct enable_if<true, T> { typedef T type; };
 
 也就是說 `std::enable_if<true, T>::type` 的結果為 `T`，`std::enable_if<false, T>::type` 則無法被 evaluated。
 
-C\+\+11 時可以利用 `std::enable_if<CONDITION>::type` 拿到這個 `typedef` member。C\+\+14 時為了讓大家少打點自，多了一個 type alias 叫 `std::enable_if_t<CONDITION>` 可以直接拿到這個 member，也就是說它長得像這樣：
+C\+\+11 時可以利用 `std::enable_if<CONDITION>::type` 拿到這個 `typedef` member。C\+\+14 時為了讓大家少打點字，多了一個 type alias 叫 `std::enable_if_t<CONDITION>` 可以直接拿到這個 member，也就是說它長得像這樣：
 
 ```cpp
 template<bool B, typename T>
@@ -1749,7 +1764,7 @@ int main()
 
 template 真的是個大坑，畢竟~~實作泛型就是為了接受更多的苦難~~，沒有啦是更多型態啦ㄏㄏ
 
-![](https://i.imgur.com/gSIbsYm.png)
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti2.png?raw=true">
 
 # 參考資料
 

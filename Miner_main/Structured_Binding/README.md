@@ -5,9 +5,9 @@ tag: C++ Miner
 category: C++ Miner
 ---
 
-<center><h1> <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 結構化綁定 Structured Binding Declaration <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></h1></center>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>結構化綁定 Structured Binding Declaration</center></h1>
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 

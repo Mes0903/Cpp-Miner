@@ -5,9 +5,11 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Class <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class</center></h1>  
 
-點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>  
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
+
+hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
 # 前言  
 
@@ -719,7 +721,7 @@ gcc -o output test.o test2.o
 g++ -S -o output.asm input.cpp  
 ```
 
-這邊我把輸出結果丟到 github 上了：[普通版本](https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Class/normal.asm)、[extern 版本](https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Class/extern.asm)、[static 版本](https://github.com/Mes0903/Cpp-Miner/blob/main/Miner_Tutorial/Class/static.asm)。  
+這邊我把輸出結果丟到 github 上了：[普通版本](https://github.com/Mes0903/Cpp-Miner/blob/hackmd/Miner_Tutorial/Class/normal.asm)、[extern 版本](https://github.com/Mes0903/Cpp-Miner/blob/hackmd/Miner_Tutorial/Class/extern.asm)、[static 版本](https://github.com/Mes0903/Cpp-Miner/blob/hackmd/Miner_Tutorial/Class/static.asm)。  
 
 對比一下你會發現在 `extern` 版本，多了一行 `def	_Z2fnv;	.scl	2;	.type	32;	.endef`，表示他要去找定義，我們之前也提過 `extern` 修飾的變數會只有宣告，並且要從其他 TU 裡面去找定義；  
 

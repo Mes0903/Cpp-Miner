@@ -5,9 +5,9 @@ tag: C++ Miner
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── std::function <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>std::function</center></h1>
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
+礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 # 前言 
@@ -87,7 +87,7 @@ int main() {
 
 下面這兩個 `lambda_func` 和 `lambda2` 就無法傳入 call_func，因為 capture list 有東西的 lambda 是無法轉換成 function pointer 的。
 
-此時我們就需要 `std::function` 了，前面有提到，這個東西的產生就是為了保證泛用性，讓 lambda 或其他 collable 物件都可以被傳入：
+此時我們就需要 `std::function` 了，前面有提到，這個東西的產生就是為了保證泛用性，讓 lambda 或其他 callable 物件都可以被傳入：
 ```cpp
 #include <functional>
 #include <iostream>
@@ -673,7 +673,6 @@ class function<R( Args... )> {
     using invoke_fn_t = R ( * )( void *, Args &&... );    //拿來呼叫的函式指標
     using construct_fn_t = void ( * )( void *, void * );    //建構子的函式指標
     using destroy_fn_t = void ( * )( void * );    //解構子的函式指標
-    using fn_ptr = void ( * )();    //普通的函式指標
 
     // 因為有些 callable 物件無法直接被轉換成 function pointer，像是有捕捉東西的 lambda，所以我們需要一個泛型的函式幫助我們將其轉換成指標並呼叫。
     template <typename Functor>
@@ -693,12 +692,12 @@ class function<R( Args... )> {
     }
 
     // 這些 pointer 拿來儲存行為
-    invoke_fn_t invoke_f;    // 儲存呼叫韓式的指標
+    invoke_fn_t invoke_f;    // 儲存呼叫函式的指標
     construct_fn_t construct_f;    // 儲存建構子的函式指標
     destroy_fn_t destroy_f;    // 儲存解構子的函式指標
 
     // 這邊要把 Functor 的型態消除，並將它存到 void*。 因此我們也要能夠拿到儲存的空間。
-    std::unique_ptr<fn_ptr[]> data_ptr;    // 「 函式指標的陣列 」的 unique_ptr
+    std::unique_ptr<std::byte[]> data_ptr;    // 指向一段 memory pool 的 unique_ptr，用來放 function pointer
     std::size_t data_size;    // 能夠儲存的空間
 
   public:
@@ -713,7 +712,7 @@ class function<R( Args... )> {
         : invoke_f( reinterpret_cast<invoke_fn_t>( invoke_fn<Functor> ) ),    // 初始化呼叫指標
           construct_f( reinterpret_cast<construct_fn_t>( construct_fn<Functor> ) ),    // 初始化建構指標
           destroy_f( reinterpret_cast<destroy_fn_t>( destroy_fn<Functor> ) ),    // 初始化解構指標
-          data_ptr( new fn_ptr[sizeof( Functor )] ),    // 初始化資料陣列的指標
+          data_ptr( new std::byte[sizeof( Functor )] ),    // 初始化資料陣列的指標
           data_size( sizeof( Functor ) ) {    // 初始化儲存空間的大小
         // 複製 functor 到內部拿來儲存行為的指標
         this->construct_f( this->data_ptr.get(), reinterpret_cast<void *>( &f ) );
@@ -724,7 +723,7 @@ class function<R( Args... )> {
         : invoke_f( rhs.invoke_f ), construct_f( rhs.construct_f ), destroy_f( rhs.destroy_f ), data_size( rhs.data_size ) {
         if ( this->invoke_f ) {
             //如果 target 非空，那就複製 target。
-            this->data_ptr.reset( new fn_ptr[this->data_size] );
+            this->data_ptr.reset( new std::byte[this->data_size] );
             this->construct_f( this->data_ptr.get(), rhs.data_ptr.get() );
         }
     }
@@ -776,7 +775,7 @@ int main() {
 
 雖然因為簡化的關係和 gcc 裡面寫的已經有點不太一樣了，但主要的核心概念仍一樣，就是透過模板來消除型態。
 
-## 內部實作與優化 <img src="https://walfiegif.files.wordpress.com/2021/02/out-transparent-3.gif?w=875"  width="50">
+## 內部實作與優化
 
 ### 前言
 
@@ -788,13 +787,13 @@ int main() {
 
 ### 實作前的想法
 
-`std::function` 能儲存不同的可呼叫物件，表示有多態性，這我們前面使用了 virtual function 與繼承解決了，這是個簡單、直覺且有效的方法，但這個方法會用到動態內存，很多情況下這是種浪費，像是一個沒捕捉東西的 lambda，這種情況下他只有一個 char 的大小，但我們卻為了它去呼叫了分配動態內存的函式。
+`std::function` 能儲存不同的可呼叫物件，表示有多態性，這我們前面使用了 virtual function 與繼承解決了，這是個簡單、直覺且有效的方法，但這個方法會用到動態記憶體，很多情況下這是種浪費，像是一個沒捕捉東西的 lambda，這種情況下他只有一個 char 的大小，但我們卻為了它去呼叫了分配動態記憶體的函式。
 
-於是我們就需要想辦法避免這種浪費，剛剛說了 `std::function` 的大小是固定的，但是這個大小是可以讓我們自己定的，所以我們可以在 `std::function` 裡面放一個空白且大小適中的 field 來存這種小對象，來避免呼叫到動態內存。
+於是我們就需要想辦法避免這種浪費，剛剛說了 `std::function` 的大小是固定的，但是這個大小是可以讓我們自己定的，所以我們可以在 `std::function` 裡面放一個空白且大小適中的 field 來存這種小對象，來避免呼叫到動態記憶體。
 
 而對於更大的可呼叫物件，雖然放不進這個 field，但可以放這個可呼叫物件的指標，這種 TDM 的結構可以用 union 來做。
 
-這種小物件直接儲存，大對象才放在 heap 上並儲存指標的方法叫做 <span class = "yellow">small object optimization</span>。
+這種小物件直接儲存，大物件才放在 heap 上並儲存指標的方法叫做 <span class = "yellow">small object optimization</span>。
 
 在利用了繼承的實作中，可呼叫物件被包裝在一個子類裡面，`std::function` 會持有一個其父類的指標，但為了效率，我們需要把剛剛那個空白的 field 與這個指針用 union 包裝起來。
 

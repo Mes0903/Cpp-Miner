@@ -29,7 +29,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 首先大家一開始在學 C++ 都有學過變數，但大家可能沒什麼注意過他的定義，他的定義是這樣的：
 
-> 變數是一種物件(object)，或者是 non-static data member 的 reference。<a href = "https://eel.is/c++draft/basic.pre#6" class = "pinklink">(來源)</a>
+> 變數是一種物件(object)，或者是 non-static data member 的 reference [(來源)](https://eel.is/c++draft/basic.pre#6)
 
 一般在沒有編譯器優化的情況下，宣告一個變數的時候我們會在記憶體裡面挖一塊空間，並在這塊記憶體空間上加上識別字(identifier)，如此一來，我們便能通過這個 identifier 對這個記憶體的位址操作，像是賦值之類的，看看這個例子：
 
@@ -87,7 +87,7 @@ printf("Hi!")    //一個有額外作用的運算式，回傳值被捨棄了(dis
 
 注意我都沒寫分號，因為運算式是一個「組件」，一但加上分號，他就不是一個「組件」，而是一個陳述句了。也因此上面這個程式肯定是無法正常運作的，因為他們都不是陳述句，程式運作的是陳述句。
 
-運算式主要有分「主運算式(Primary Expression)」、「非計算運算式(Unevaluated expressions)」與「棄值運算式(Discarded-value Expression)」，但這不是今天我們的主軸，有興趣的可以到 <strong><a href = "https://en.cppreference.com/w/cpp/language/expressions" class = "pinklink">cppreference</a></strong> 看。
+運算式主要有分「主運算式(Primary Expression)」、「非計算運算式(Unevaluated expressions)」與「棄值運算式(Discarded-value Expression)」，但這不是今天我們的主軸，有興趣的可以到 <strong>[cppreference](https://en.cppreference.com/w/cpp/language/expressions)</strong> 看。
 
 ## 陳述句 Statement
 
@@ -114,16 +114,20 @@ int main() {
 
 錯誤訊息：
 
-<center><img src = "https://i.imgur.com/bfTNiVp.png" ></center><br>
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image1.png?raw=true">
+
+</center><br>
 
 原因是因為 `int b = 5` 本身就是一個 Statement 了，所以 Compiler 並不希望妳把 `int b = 5` 放在 `int a = ` 的右邊，它原先預期右邊要是一個 Expression，所以就噴了這個錯。
 
-然後我們將運算陳述句拿出來講一下，因為要分清楚運算式跟陳述句的差別，可以直接用這個例子來看，其實就只差了一個分號，因此一個可執行，一個不行。 其他的大家有興趣可以到 <strong><a href = "https://en.cppreference.com/w/cpp/language/statements" class = "pinklink">cppreference</a></strong> 上看。
+然後我們將運算陳述句拿出來講一下，因為要分清楚運算式跟陳述句的差別，可以直接用這個例子來看，其實就只差了一個分號，因此一個可執行，一個不行。 其他的大家有興趣可以到 <strong>[cppreference](https://en.cppreference.com/w/cpp/language/statements)</strong> 上看。
 
 運算陳述句的結構長這樣：
 > expression(optional);
 
-attr 是<strong><a href = "https://en.cppreference.com/w/cpp/language/attributes" class = "pinklink">屬性識別字</a></strong>，用來告訴編譯器一些事情，妳可以想像成給編譯器看的註解，可加可不加。
+attr 是<strong>[屬性識別字](https://en.cppreference.com/w/cpp/language/attributes)</strong>，用來告訴編譯器一些事情，妳可以想像成給編譯器看的註解，可加可不加。
 
 而 expression 就是前面提到的運算式，「可加可不加」，如果不加就會變一個空陳述句，也就是只有一個分號的陳式句，空陳述句通常用來提供 for、while 迴圈一個空的代碼塊(body)，或是一個標籤(label)的代碼塊。
 
@@ -133,12 +137,29 @@ attr 是<strong><a href = "https://en.cppreference.com/w/cpp/language/attributes
 
 那麼我們現在知道什麼是淺複製與深複製，也知道變數、運算式和陳述式差在哪了，那我們就可以來討論什麼是 Value Categories 了，首先有一點很重要，那就是值類別是用來判斷<strong>運算式的種類</strong>的，而不是給物件實體用的，因為超重要，所以講三次，是<strong>運算式的種類!! 運算式的種類!! </strong><strong>運算式的種類!!</strong>，如果不知道這個，我們接下來講的妳大概也都聽不懂，或者是一知半解了。
 
-運算式有兩種獨立的特性，分別是「<strong><a href = "https://en.cppreference.com/w/cpp/language/type" class = "pinklink">Type</a></strong>」和「<strong><a href = "https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo" class = "pinklink">Value Catories</a></strong>」， Type 不是我們今天討論的主題，我們直接來看 Value Categories。
+運算式有兩種獨立的特性，分別是「[Type](https://en.cppreference.com/w/cpp/language/type)」和「[Value Catories](https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo)」，Type 不是我們今天討論的主題，我們直接來看 Value Categories。
 
-<center><img src = "https://i.imgur.com/OhA7F9T.png"><br><a href = "https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c">圖源</a><br><br></center>
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image2.png?raw=true">
+
+([圖源](https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c))
+
+</center><br>
+
 Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</strong> 和 <strong>Prvalue</strong>。如果你曾讀過值類別，可能還會聽過 glvalue 與 rvalue，那這兩個又是什麼呢? 這其實與運算式發展的歷史有關，是一個方便記憶而創造出的名詞，glvalue = Lvalue + Xvalue，rvalue = Prvalue + Xvalue。讀到這裡妳可能有點頭花，我們看這兩張圖來方便自己記憶：
 
-<center><img src = "https://i.imgur.com/XK4zdqj.png"><br><strong><a href = "https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94">圖源</a></strong><br><br><img src = "https://i.imgur.com/39BvtSk.png"><br><strong><a href = "https://openhome.cc/Gossip/CppGossip/RvalueReference.html">圖源</a></strong></center><br>
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image3.png?raw=true">
+
+[圖源](https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94)<br>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image3.png?raw=true">
+
+[圖源](https://openhome.cc/Gossip/CppGossip/RvalueReference.html)
+
+</center><br>
 
 是不是清楚多了，那麼這邊我先將每個的翻譯名稱都給大家，以免之後在閱讀的時候搞混：
 
@@ -155,7 +176,7 @@ Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</str
 1. 這個運算式回傳的是有身分標識符(identity)的物件嗎? 還是僅僅是個常量值?
 2. 如果是有身分標識符的物件，那這個物件的值可以安全的「移動」給別人嗎?
 
-<br><strong>1. 這個運算式回傳的是有身分標識符(identity)的物件嗎? 還是僅僅是個常量值</strong>
+#### 1. 這個運算式回傳的是有身分標識符(identity)的物件嗎? 還是僅僅是個常量值
 
 首先我們先來看一下，什麼叫做 「有身分標識符(identity)」 呢?，有身分標識符表示我們能夠有辦法去<strong>證明這個 Expreesion 回傳的物件與另一個 Expression 回傳的物件相</strong>，方法隨便，最常見的就是取址，我們看一下這個例子幫大家理解一下什麼叫做「有身分標識符」：
 
@@ -191,7 +212,8 @@ std::cout    //擁有 identity，std::cout 是 std::ostream 的 instance
 static_cast<int>(a)    //沒有 identity
 std::move(a)    //擁有 identity
 ```
-<br><strong>2. 如果是有身分標識符的物件，那這個物件的值可以安全的「移動」給別人嗎</strong>
+
+#### 2. 如果是有身分標識符的物件，那這個物件的值可以安全的「移動」給別人嗎
 
 再來看第二點，那麼什麼時候運算式回傳的物件可以安全的「移動」給別人呢? 如果這個物件是個匿名的「暫時」物件，或者這個物件的生命週期快要結束了，我們就稱它可以安全的「移動」給別人，是不是已經有一點移動語意的感覺了ㄋ? 沒錯，這94移動語意的核心，讓我們來看看接下來的例子：
 
@@ -225,7 +247,7 @@ int main() {
 
 Lvalue，中文翻作左值，一個 Lvalue Expression 回傳的物件擁有「身分標識符(identity)」，並且在正常的情況下它不該被「移動」，只能複製。 這代表一個 Lvalue Expression 回傳的物件會有一個記憶體位址，用途常會類似是「儲存」一個東西，像變數一樣。 我們能夠透過這個名稱，在它「生成出來的那行外」來使用這塊記憶體內的東西。
 
-我們看看 Stackoverflow 上的一個 <a href = "https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues?fbclid=IwAR1BIns58XNgIy3KmXgFuc33KHkUC1mS10nUYvQec6BqxXK5BlUXM_f9UfE" class = "pinklink">例子</a>：
+我們看看 Stackoverflow 上的一個[例子](https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues?fbclid=IwAR1BIns58XNgIy3KmXgFuc33KHkUC1mS10nUYvQec6BqxXK5BlUXM_f9UfE)：
 
 ```cpp
 #include <iostream>
@@ -274,7 +296,7 @@ int main() {
 
 那 Lvalue Expression 有以下這些 [(來源)](https://en.cppreference.com/w/cpp/language/value_category#lvalue)：
 
-+ 變數的名稱、函式本體、<a href = "https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter" class = "pinklink">模板參數物件(C++20)</a>、或一個資料成員，像是 `std::cin` 或 `std::endl`。
++ 變數的名稱、函式本體、[模板參數物件(C++20)](https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter)、或一個資料成員，像是 `std::cin` 或 `std::endl`。
 
     函式本體的位址我們可以這樣印出來看：
     ```cpp
@@ -289,19 +311,19 @@ int main() {
     ```
     不能直接印出來看的原因是 `ostream` 的 `<<` 並沒有重載函式指標，但在標準中規範了函式指標可以隱式轉換成布林值，並且布林值會是 `true` [(來源1)](http://eel.is/c++draft/conv.bool)、[(來源2)](https://en.cppreference.com/w/cpp/language/implicit_conversion#Boolean_conversions)，因此我們需要將其轉換為 `void*` 或其他指標型態才能把它印出來看。
 
-    而 <a href = "https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter" class = "pinklink">模板參數物件(C++20)</a> 則是有靜態的儲存位址，所以是 Lvalue Expression。
+    而 [模板參數物件(C++20)](https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter) 則是有靜態的儲存位址，所以是 Lvalue Expression。
 
 + 回傳 Lvalue Reference 的運算子重載或函式呼叫(function call)，像是 `std::getline(std::cin, str)` ， `std::cout << 1` ， `str1 = str2` 或 `++it` 等等。
 
-+ 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_assignment" class = "pinklink">賦值運算子或複合賦值運算子</a>的運算式，像是`a = b`、`a += b`、`a %= b`。
++ 利用了[賦值運算子或複合賦值運算子](https://en.cppreference.com/w/cpp/language/operator_assignment)的運算式，像是`a = b`、`a += b`、`a %= b`。
 
-+ 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_indirection_operator" class = "pinklink">間接取值運算子</a>的運算式，像是 `*p`。
++ 利用了[間接取值運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_indirection_operator)的運算式，像是 `*p`。
 
-+ 利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_subscript_operator" class = "pinklink">注標運算子</a> 的運算式，像是 `a[n]`、`p[n]` ，但注意 `a` 要是一個陣列左值，不能是 <a href = "https://en.cppreference.com/w/cpp/language/array#Array_rvalues" class = "pinklink">陣列右值</a> 之類的東西
++ 利用了 [注標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_subscript_operator) 的運算式，像是 `a[n]`、`p[n]` ，但注意 `a` 要是一個陣列左值，不能是 [陣列右值](https://en.cppreference.com/w/cpp/language/array#Array_rvalues) 之類的東西
 
-+ 利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員物件訪問運算子</a> 的運算式，像是 `a.m`，但 `m` 不能是 `enum` 的成員、某些非靜態的成員函式，或一個 class prvalue 內的非靜態成員(以上例來說就是 `a` 是 class prvalue 且 `m` 是非靜態成員)。
++ 利用了 [成員物件訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `a.m`，但 `m` 不能是 `enum` 的成員、某些非靜態的成員函式，或一個 class prvalue 內的非靜態成員(以上例來說就是 `a` 是 class prvalue 且 `m` 是非靜態成員)。
 
-    class prvalue 和 array rvalue 可以看這個<a href = "https://en.cppreference.com/w/cpp/language/array#Array_rvalues" class = "pinklink">例子</a>，我有稍微改一下：
+    class prvalue 和 array rvalue 可以看這個[例子](https://en.cppreference.com/w/cpp/language/array#Array_rvalues)，我有稍微改一下：
     ```cpp
     #include <iostream>
 	#include <type_traits>
@@ -342,15 +364,15 @@ int main() {
     ```
     看不懂的話可以等後面的TMC、Copy Elision、RVO讀完後再回來看一次。
 
-+ 部分利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員指標訪問運算子</a> 的運算式，像是 `p->m`，但 `m` 不能是 `enum` 的成員或某些非靜態的成員函式。
++ 部分利用了 [成員指標訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `p->m`，但 `m` 不能是 `enum` 的成員或某些非靜態的成員函式。
 
-+ 部分利用了指向「資料成員」(物件) 的 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators" class = "pinklink">成員指標運算子</a> 的運算式，像是 `a.*mp`，`a` 是一個 lvalue 且 `mp` 是一個「資料成員」的指標。
++ 部分利用了指向「資料成員」(物件) 的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `a.*mp`，`a` 是一個 lvalue 且 `mp` 是一個「資料成員」的指標。
 
-+ 部分利用了指向成員「指標」的 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators" class = "pinklink">成員指標運算子</a> 的運算式，像是 `p->*mp`，`mp` 是一個「資料成員」的指標。
++ 部分利用了指向成員「指標」的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `p->*mp`，`mp` 是一個「資料成員」的指標。
 
-+ 利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator" class = "pinklink">逗號運算子</a> 的運算式，像是 `a, b` ，`b` 要是一個 lvalue。
++ 利用了 [逗號運算子](https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator) 的運算式，像是 `a, b` ，`b` 要是一個 lvalue。
 
-+ (待補) 部分利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator" class = "pinklink">三元運算子</a> 的運算式。
++ (待補) 部分利用了 [三元運算子](https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator) 的運算式。
 
 + 字串常量 (string literal)，像是 `"Hello World"`。
 
@@ -370,7 +392,7 @@ int main() {
 
 + 可以被取址
 
-    取址運算符 `&` 的後方必須要接上 Lvalue Expression 或一個 <a href = "https://en.cppreference.com/w/cpp/language/identifiers#Qualified_identifiers" class = "pinklink">Qualified-id</a>  [(來源)](https://timsong-cpp.github.io/cppwp/n4659/expr.unary.op#3)。
+    取址運算符 `&` 的後方必須要接上 Lvalue Expression 或一個 [Qualified-id](https://en.cppreference.com/w/cpp/language/identifiers#Qualified_identifiers)  ([來源](https://timsong-cpp.github.io/cppwp/n4659/expr.unary.op#3))。
 
 + 一個可更改的 Lvalue Expression 可以擺在賦值運算子和複合賦值運算子的左邊。
 
@@ -380,9 +402,9 @@ int main() {
 
 + 可被隱式轉換成 prvalue，像是「Lvalue 與 Prvalue的隱式轉換」、「陣列與指標的隱式轉換」、「函式與指標的隱式轉換」
 
-+ 可能是 <a href = "https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects" class = "pinklink">多形</a> 的，它標識的對象的 <a href = "https://en.cppreference.com/w/cpp/language/type#Dynamic_type" class = "pinklink">動態類型</a> 不一定是表達式的靜態類型。
++ 可能是[多形](https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects)的，它標識的對象的[動態類型](https://en.cppreference.com/w/cpp/language/type#Dynamic_type) 不一定是表達式的靜態類型
 
-    如果某個 Lvalue Expression 或 Xvalue Expression 指向了 <a href = "https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects" class = "pinklink">多形</a> 的物件，那麼它衍生的型態(子類)我們稱它為 <a href = "https://en.cppreference.com/w/cpp/language/type#Dynamic_type" class = "pinklink">動態類型</a> :
+    如果某個 Lvalue Expression 或 Xvalue Expression 指向了[多形](https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects) 的物件，那麼它衍生的型態(子類)我們稱它為[動態類型](https://en.cppreference.com/w/cpp/language/type#Dynamic_type) :
     ```cpp
 	struct B { virtual ~B() {} }; // polymorphic type
 	struct D: B {}; // polymorphic type
@@ -391,9 +413,9 @@ int main() {
 	// the static type of (*ptr) is B
 	// the dynamic type of (*ptr) is D
     ```
-    想知道詳細狀況可以去讀 <a href = "https://en.cppreference.com/w/cpp/types#Runtime_type_identification" class = "pinklink">執行期型態訊息 (RTTI)</a> 的操作。
+    想知道詳細狀況可以去讀[執行期型態訊息 (RTTI)](https://en.cppreference.com/w/cpp/types#Runtime_type_identification) 的操作。
 
-+ 在表達式合法的情況下可以是 <a href = "https://en.cppreference.com/w/cpp/language/type#Incomplete_type" class = "pinklink">不完全型態</a>。
++ 在表達式合法的情況下可以是[不完全型態](https://en.cppreference.com/w/cpp/language/type#Incomplete_type)。
 # Xvalue Expression
 
 Xvalue，中文翻作將亡值，一個 Xvalue Expression 回傳的物件擁有「身分標識符(identity)」，但是它通常用來「暫時儲存」某個東西。 這代表一個 Xvalue Expression 回傳的物件會有一個記憶體位址，但我們不能夠在它「生成出來的那行外」來使用這塊記憶體內的東西。
@@ -437,13 +459,13 @@ this = 0x878d9ff9fc
 
 + 回傳「物件」的 rvalue reference 的函式呼叫 (function call) 或運算子重載表達式，像是 `std::move(x)`。
 
-+ 利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_subscript_operator" class = "pinklink">注標運算子</a> 的運算式，像是 `a[n]`，`a` 要是一個<a href = "https://en.cppreference.com/w/cpp/language/array#Array_rvalues" class = "pinklink">陣列右值</a> 。
++ 利用了[注標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_subscript_operator)的運算式，像是 `a[n]`，`a` 要是一個[陣列右值](https://en.cppreference.com/w/cpp/language/array#Array_rvalues) 。
 
-+ 部分利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員物件訪問運算子</a> 的運算式，像是 `a.m`，但 `a` 要是 rvalue 而且 `m` 是一個非引用類型的非靜態的資料成員。
++ 部分利用了 [成員物件訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `a.m`，但 `a` 要是 rvalue 而且 `m` 是一個非引用類型的非靜態的資料成員。
 
-+ 部分利用了指向「資料成員」(物件) 的 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators" class = "pinklink">成員指標運算子</a> 的運算式，像是 `a.*mp`，`a` 是一個 rvalue 且 `mp` 是一個「資料成員」的指標。
++ 部分利用了指向「資料成員」(物件) 的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `a.*mp`，`a` 是一個 rvalue 且 `mp` 是一個「資料成員」的指標。
 
-+ (待補) 部分利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator" class = "pinklink">三元運算子</a> 的運算式。
++ (待補) 部分利用了 [三元運算子](https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator) 的運算式。
 
 + 轉型(cast)成「物件」的 rvalue reference 的運算式，像是 `static_cast<char&&>(x)`
 
@@ -459,9 +481,9 @@ Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其�
 
 + 可被隱式轉換成 prvalue，像是「Lvalue 與 Prvalue的隱式轉換」、「陣列與指標的隱式轉換」、「函式與指標的隱式轉換」
 
-+ 可能是 <a href = "https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects" class = "pinklink">多形</a> 的，它標識的對象的 <a href = "https://en.cppreference.com/w/cpp/language/type#Dynamic_type" class = "pinklink">動態類型</a> 不一定是表達式的靜態類型。
++ 可能是 [多形](https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects) 的，它標識的對象的[動態類型](https://en.cppreference.com/w/cpp/language/type#Dynamic_type)不一定是表達式的靜態類型。
 
-    如果某個 Lvalue Expression 或 Xvalue Expression 指向了 <a href = "https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects" class = "pinklink">多形</a> 的物件，那麼它衍生的型態(子類)我們稱它為 <a href = "https://en.cppreference.com/w/cpp/language/type#Dynamic_type" class = "pinklink">動態類型</a> :
+    如果某個 Lvalue Expression 或 Xvalue Expression 指向了[多形](https://en.cppreference.com/w/cpp/language/object#Polymorphic_objects)的物件，那麼它衍生的型態(子類)我們稱它為 [動態類型](https://en.cppreference.com/w/cpp/language/type#Dynamic_type) :
     ```cpp
 	struct B { virtual ~B() {} }; // polymorphic type
 	struct D: B {}; // polymorphic type
@@ -470,15 +492,15 @@ Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其�
 	// the static type of (*ptr) is B
 	// the dynamic type of (*ptr) is D
     ```
-    想知道詳細狀況可以去讀 <a href = "https://en.cppreference.com/w/cpp/types#Runtime_type_identification" class = "pinklink">執行期型態訊息 (RTTI)</a> 的操作。
+    想知道詳細狀況可以去讀 [執行期型態訊息 (RTTI)](https://en.cppreference.com/w/cpp/types#Runtime_type_identification) 的操作。
 
-+ 在表達式合法的情況下可以是 <a href = "https://en.cppreference.com/w/cpp/language/type#Incomplete_type" class = "pinklink">不完全型態</a>。
++ 在表達式合法的情況下可以是 [不完全型態](https://en.cppreference.com/w/cpp/language/type#Incomplete_type)。
 
 <strong>與 Prvalue Expression 共用的特性</strong>
 
 + 不能被取址
 
-    因為取址運算符 `&` 的後方必須要接上 Lvalue Expression 或一個 <a href = "https://en.cppreference.com/w/cpp/language/identifiers#Qualified_identifiers" class = "pinklink">Qualified-id</a>  [(來源)](https://timsong-cpp.github.io/cppwp/n4659/expr.unary.op#3)。
+    因為取址運算符 `&` 的後方必須要接上 Lvalue Expression 或一個 [Qualified-id](https://en.cppreference.com/w/cpp/language/identifiers#Qualified_identifiers)  [(來源)](https://timsong-cpp.github.io/cppwp/n4659/expr.unary.op#3)。
 
 + 不能擺在賦值運算子和複合賦值運算子的左邊。
 
@@ -536,31 +558,31 @@ int main () {
 
 那 Prvalue Expression 有以下這些 [(來源)](https://en.cppreference.com/w/cpp/language/value_category#prvalue)：
 
-+ <a href = "https://en.cppreference.com/w/cpp/language/expressions#Literals" class = "pinklink">字面常量</a>，像是 `42`、`true` 或 `nullptr`。
++ [字面常量](https://en.cppreference.com/w/cpp/language/expressions#Literals)，像是 `42`、`true` 或 `nullptr`。
 
 + 回傳非參考類型的運算子重載運算式或函式呼叫(function call)，像是 `str.substr(1,2)` `str1 + str2` 或 `it++`，
 
-+ 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_incdec#Built-in_postfix_operators" class = "pinklink">後置遞增、遞減運算子</a>的運算式，像是 `a++`、`a--`。
++ 利用了[後置遞增、遞減運算子](https://en.cppreference.com/w/cpp/language/operator_incdec#Built-in_postfix_operators)的運算式，像是 `a++`、`a--`。
 
-+ 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_arithmetic" class = "pinklink">算術運算子</a>的運算式，像是 `a + b`、`a % b`、`a & b`、`a << b` 等等。
++ 利用了[算術運算子](https://en.cppreference.com/w/cpp/language/operator_arithmetic)的運算式，像是 `a + b`、`a % b`、`a & b`、`a << b` 等等。
 
-+ 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_logical" class = "pinklink">邏輯運算子</a>的運算式，像是 `a && b`、`a || b`、`!a`。
++ 利用了[邏輯運算子](https://en.cppreference.com/w/cpp/language/operator_logical)的運算式，像是 `a && b`、`a || b`、`!a`。
 
-+ 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_comparison" class = "pinklink">比較運算子</a>的運算式，像是 `a < b`、`a == b`、`a >= b`。
++ 利用了[比較運算子](https://en.cppreference.com/w/cpp/language/operator_comparison)的運算式，像是 `a < b`、`a == b`、`a >= b`。
 
-+ 利用了<a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_address-of_operator" class = "pinklink">取址運算符</a>的運算式，像是 `&a` 。
++ 利用了[取址運算符](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_address-of_operator)的運算式，像是 `&a` 。
 
-+ 某些利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員物件訪問運算子</a> 的運算式，像是 `a.m`，且 `m` 是 `enum` 的成員、某些非靜態的成員函式，或是一個 Xvalue 或 Prvalue 內的非參考類型的非靜態成員(以上例來說就是說 `a` 是 Xvalue 或 Prvalue ，且 `m` 是非參考類型的非靜態成員)。
++ 某些利用了 [成員物件訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `a.m`，且 `m` 是 `enum` 的成員、某些非靜態的成員函式，或是一個 Xvalue 或 Prvalue 內的非參考類型的非靜態成員(以上例來說就是說 `a` 是 Xvalue 或 Prvalue ，且 `m` 是非參考類型的非靜態成員)。
 
-+ 某些利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators" class = "pinklink">成員指標訪問運算子</a> 的運算式，像是 `p->m`，且 `m` 是 `enum` 的成員或非靜態的成員函式。
++ 某些利用了 [成員指標訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `p->m`，且 `m` 是 `enum` 的成員或非靜態的成員函式。
 
-+ 某些利用了指向「資料成員」(物件) 的 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators" class = "pinklink">成員指標運算子</a> 的運算式，像是 `a.*mp`，`mp` 是一個「成員函式」的指標，或者 `a` 是一個 Xvalue 或 Prvalue，且 `mp` 是一個「資料成員」的指標。
++ 某些利用了指向「資料成員」(物件) 的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `a.*mp`，`mp` 是一個「成員函式」的指標，或者 `a` 是一個 Xvalue 或 Prvalue，且 `mp` 是一個「資料成員」的指標。
 
-+ 利用了指向「成員函式的指標」的 <a href = "https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators" class = "pinklink">成員指標運算子</a> 的運算式，像是 `p->*mp`，`mp` 是一個「成員函式」的指標。
++ 利用了指向「成員函式的指標」的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `p->*mp`，`mp` 是一個「成員函式」的指標。
 
-+ 利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator" class = "pinklink">逗號運算子</a> 的運算式，像是 `a, b` ，`b` 要是一個 Xvalue 或 Prvalue。
++ 利用了 [逗號運算子](https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator) 的運算式，像是 `a, b` ，`b` 要是一個 Xvalue 或 Prvalue。
 
-+ (待補) 部分利用了 <a href = "https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator" class = "pinklink">三元運算子</a> 的運算式。
++ (待補) 部分利用了 [三元運算子](https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator) 的運算式。
 
 + 轉型(cast)成非參考類型的運算式，像是 `static_cast<double>(x)`、`std::string{}` 或 `(int)42`。
 
@@ -568,13 +590,13 @@ int main () {
 
 + `enumerator`。
 
-+ <a href = "https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter" class = "pinklink">非型別樣板參數</a>，除非她的型態(type) 是個 `class` 或一個 lvalue reference。
++ [非型別樣板參數](https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter)，除非她的型態(type) 是個 `class` 或一個 lvalue reference。
 
-+ 沒有實體化的 <a href = "https://en.cppreference.com/w/cpp/language/lambda" class = "pinklink">lmabda</a> 運算式，像是 `[](int x){ return x*x; }`。
++ 沒有實體化的 [lmabda](https://en.cppreference.com/w/cpp/language/lambda) 運算式，像是 `[](int x){ return x*x; }`。
 
-+ <a href = "https://en.cppreference.com/w/cpp/language/constraints#Requires_expressions" class = "pinklink">要求表達式 (Requires Expression)</a>，像是 `requires (T i) { typename T::type; };`。
++ [要求表達式 (Requires Expression)](https://en.cppreference.com/w/cpp/language/constraints#Requires_expressions)，像是 `requires (T i) { typename T::type; };`。
 
-+ <a href = "https://en.cppreference.com/w/cpp/language/constraints" class = "pinklink">特殊化的概念 (Specialization of a Concept)</a>，像是 `std::equality_comparable<int>`。
++ [特殊化的概念 (Specialization of a Concept)](https://en.cppreference.com/w/cpp/language/constraints)，像是 `std::equality_comparable<int>`。
 
 ### 特性
 
@@ -584,17 +606,17 @@ int main () {
 
 + Prvalue Expression 不能是多型的，它回傳的物件的動態類型永遠跟表達式的類型一樣。
 
-+ 一個不是 Class 或 array 的 Prvalue 不能有 <a href = "https://en.cppreference.com/w/cpp/language/cv" class = "pinklink">cv限定詞</a>。要注意的是函數呼叫(function call) 或轉型運算式可能會變成非 Class 的 <a href = "https://en.cppreference.com/w/cpp/language/cv" class = "pinklink">cv限定詞</a> 類型的Prvalue，但它的 cv限定詞會馬上被遺棄(無效)。
++ 一個不是 Class 或 array 的 Prvalue 不能有[cv限定詞](https://en.cppreference.com/w/cpp/language/cv)。要注意的是函數呼叫(function call) 或轉型運算式可能會變成非 Class 的 [cv限定詞](https://en.cppreference.com/w/cpp/language/cv) 類型的Prvalue，但它的 cv限定詞會馬上被遺棄(無效)。
 
-+ Prvalue Expression 不能是除了 `void` <a href = "https://en.cppreference.com/w/cpp/language/type#Incomplete_type" class = "pinklink">不完全型態</a>，但如果是在 `decltype()` 內就可以。
++ Prvalue Expression 不能是除了 `void` [不完全型態](https://en.cppreference.com/w/cpp/language/type#Incomplete_type)，但如果是在 `decltype()` 內就可以。
 
-+ 不能有 Prvalue 的 <a href = "https://en.cppreference.com/w/cpp/language/abstract_class" class = "pinklink">抽象類別類型</a> 或陣列。
++ 不能有 Prvalue 的 [抽象類別類型](https://en.cppreference.com/w/cpp/language/abstract_class) 或陣列。
 
 <strong>與 Xvalue Expression 共有的特性</strong>
 
 + 不能被取址
 
-    因為取址運算符 `&` 的後方必須要接上 Lvalue Expression 或一個 <a href = "https://en.cppreference.com/w/cpp/language/identifiers#Qualified_identifiers" class = "pinklink">Qualified-id</a>  [(來源)](https://timsong-cpp.github.io/cppwp/n4659/expr.unary.op#3)。
+    因為取址運算符 `&` 的後方必須要接上 Lvalue Expression 或一個 [Qualified-id](https://en.cppreference.com/w/cpp/language/identifiers#Qualified_identifiers)  [(來源)](https://timsong-cpp.github.io/cppwp/n4659/expr.unary.op#3)。
 
 + 不能擺在賦值運算子和複合賦值運算子的左邊。
 
@@ -637,7 +659,7 @@ int main () {
 
 參考是一種變數，其型別(Type) 是他連結到的東西的型態的引用(reference to type)，這邊不講物件的原因是因為他連結到的東西不一定是個物件，也有可能是函式之類的東西，他會像是被連結到的東西的別名一樣，呼叫他，就等於呼叫被連結到的東西。
 
-實際上參考並不一定會有 memory allocate，而且參考也不是一個 object，這樣才符合他的精神「別名」。儘管為了實現語意，Compiler 常常會給他 memory allocate，看看這個<a href = "https://stackoverflow.com/questions/45821678/is-always-the-address-of-a-reference-equal-to-the-address-of-origin" class = "pinklink">例子</a>：
+實際上參考並不一定會有 memory allocate，而且參考也不是一個 object，這樣才符合他的精神「別名」。儘管為了實現語意，Compiler 常常會給他 memory allocate，看看這個[例子](https://stackoverflow.com/questions/45821678/is-always-the-address-of-a-reference-equal-to-the-address-of-origin)：
 
 ```cpp
 #include <iostream>
@@ -665,7 +687,7 @@ int main() {
 
 我們透過「僅有單一成員的 struct 的位址、大小與第一個元素相同」的特性將 `ref` 的位址與 `size` 給印了出來，算是有點破壞規則，但在這個情況下，將 Compiler 的優化關掉，他就會擁有 memory location，如此一來我們便能看見 Reference 的位址了，記得在寫程式的時候別這樣做呀XD 不然就違反 Refernce 的精神了，這只是個方便大家思考的例子。
 
-再來，參考一定要被初始化，來看下面這個<a href = "https://eel.is/c++draft/dcl.init.ref" class = "pinklink">例子</a>：
+再來，參考一定要被初始化，來看下面這個[例子](https://eel.is/c++draft/dcl.init.ref)：
 ```cpp
 int g( int ) noexcept;    //回傳 int 的函式
 
@@ -684,7 +706,7 @@ void f() {
 }
 ```
 
-一但 reference 被初始化，我們就無法再對 reference 本身進行操作了。我們也不能有參考的參考(reference to reference)，參考的陣列(arrays of reference)，和參考的指標(pointer to references)，因為 reference 並不是物件(object)。 <a href = "https://eel.is/c++draft/dcl.ref#5" class = "pinklink">(來源)</a>
+一但 reference 被初始化，我們就無法再對 reference 本身進行操作了。我們也不能有參考的參考(reference to reference)，參考的陣列(arrays of reference)，和參考的指標(pointer to references)，因為 reference 並不是物件(object)[(來源)](https://eel.is/c++draft/dcl.ref#5)
 
 這樣看起來，一旦參考被初始化後，參考「本身」好像就消失在程式當中，真的變成一個「別名」了，那麼底層是如何實作的呢? 不一定! 通常是利用指標來實作，但要記得，他不一定要是指標，參考與指標本質上是不同的東西，僅僅是因為他們倆個的性質很相似而已。
 
@@ -700,17 +722,21 @@ std::cout << std::boolalpha
 
 可以看見 Compiler 可以分出來兩者的差別，因為兩者的 type 是不同的。那麼我們來看看一個有編譯器優化的狀況：
 
-<center><img src = "https://i.imgur.com/EEpi2JR.png"></center><br>
+<center>
 
-<a href = "https://godbolt.org/z/8KqxsKrPM" class = "pinklink">連結</a>在這裡，記得要把編譯器優化打開。 我們可以看見 `std::cin >> r;` 像是被替換成 `std::cin >> a;` 了，跟 `inline` 類似。 (感謝Cy大神補充
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image5.png?raw=true">
 
-如果對 Referecne 的定義與相關的詳細規範還有興趣，可以到<a href = "https://eel.is/c++draft/dcl.ref" class = "pinklink">這裡</a>看看。
+</center><br>
+
+[連結](https://godbolt.org/z/8KqxsKrPM)在這裡，記得要把編譯器優化打開。 我們可以看見 `std::cin >> r;` 像是被替換成 `std::cin >> a;` 了，跟 `inline` 類似 (感謝Cy大神補充)
+
+如果對 Referecne 的定義與相關的詳細規範還有興趣，可以到[這裡](https://eel.is/c++draft/dcl.ref)看看。
 
 ## Lvalue Reference
 
 那麼現在大家都有背景知識了，就來看一下什麼是 Lvalue Referecne 和 Rvalue Referecne 吧。
 
-首先我們看 Lvalue Reference，語法長這樣 <a href = "https://en.cppreference.com/w/cpp/language/reference" class = "pinklink">(來源)</a>：
+首先我們看 Lvalue Reference，語法長這樣 [(來源)](https://en.cppreference.com/w/cpp/language/reference)：
 
 > & attr(可加可不加) declarator
 
@@ -773,6 +799,7 @@ std::cout << std::boolalpha
 在進到 Rvalue Reference 前，我們要先稍微了解一下歷史，才會知道為何要有 Rvalue Reference，所以我們先從舊的 C++ 講起。
 
 在以前，我們只擁有 Lvalue Reference，但 Lvalue Reference 沒有辦法連結到沒有 cv 限定詞的暫時物件或常量：
+
 ```cpp
 #include <iostream>
 
@@ -791,6 +818,7 @@ int main() {
 因為 Lvalue Reference 只能綁定到一個 Lvalue Expression 回傳的物件，從語意上來講，更改暫時物件的值不一定是合理的，而常量值更不用說了，他甚至可能不是個物件，沒有儲存位址，要怎麼改動他呢? 由於 Lvalue Refference 綁定到的物件基本上可以被更改(除非他有加上 const 限定詞)，所以我們無法綁定 Prvalue Expression 與 Xvalue Expression (統稱 Rvalue)。
 
 那麼這會出現什麼問題呢? 最明顯的問題出在函式 call-by-reference 的身上：
+
 ```cpp
 #include <iostream>
 
@@ -809,7 +837,8 @@ int main() {
 可以看見 `func(a, b)` 是合法的，這很合理，我們傳了兩個 Lvalue Expression 進去，但是 
 `func(1, 1)` 就有問題了，因為這兩個是 Prvalue Expression 但我們的需求也很直覺，就是將傳入的兩個整數相加後回傳。
 
-怎麼解決呢? 照剛剛的邏輯，不能利用 Lvalue Reference 做連結的原因是因為 Prvalue 與 Xvalue 回傳的物件照理說不應該被更改。那麼只要我們保證不更改他就好了對吧! 所以答案是<strong>加上 cons</strong>：
+怎麼解決呢? 照剛剛的邏輯，不能利用 Lvalue Reference 做連結的原因是因為 Prvalue 與 Xvalue 回傳的物件照理說不應該被更改。那麼只要我們保證不更改他就好了對吧! 所以答案是<strong>加上 const</strong>：
+
 ```cpp
 #include <iostream>
 
@@ -826,6 +855,7 @@ int main() {
 ```
 
 我們先在這邊暫停一下，剛剛不是說了常量值可能沒有記憶體位址? 那麼就算加上了 `const` 也不該可行呀! 所以這時候出現了一個東西叫做臨時物化(TMC)，我們來看看利用 `const int&` 型態的 reference 綁定 `1` 時到底發生了什麼：
+
 ```cpp
 int main() {
     const int &cr = 1;
@@ -834,7 +864,7 @@ int main() {
 
 組語輸出：
 
-```assembly
+```armasm
 main:
         push    rbp
         mov     rbp, rsp
@@ -848,6 +878,7 @@ main:
 ```
 
 不會組語的朋友沒關係，我這邊寫個偽代碼來示意：
+
 ```cpp
 int main() {
     int __e = 1;    //mov     DWORD PTR [rbp-12], eax
@@ -860,6 +891,7 @@ int main() {
 但這樣又出現了兩個問題，首先是我們無法區分 Rvalue 與 Lvalue，剛剛的例子中可以看見 `1` 和 `a`、`b` 都一樣可以傳進 `func()` 裡面。
 
 再來是既然產生了臨時物件，我們也透過 Reference 連結到它了，而且它本身也不是個不可更改的物件，因為在被 Reference 連結後，它的生命週期已經大幅增加，不再是個暫時物件了，那麼也就是說：
+
 ```cpp
 int main() {
     int __e = 1;
@@ -867,7 +899,9 @@ int main() {
     cr;    // cr 是 Lvalue Expression
 }
 ```
+
 `cr` 已經是一個 Lvalue Expression 了，既然我們都知道會有臨時物件出現，並且它的生命週期會因為 Reference 的連結而增加，那麼可以被更改也很合理吧? 但是在函式中很明顯它不這麼覺得：
+
 ```cpp
 #include <iostream>
 
@@ -885,12 +919,14 @@ int main() {
 ```
 
 `++a` 被擋了下來，這也很正常，因為它是唯讀的，那麼要怎麼做才可以讓它像這樣呢：
+
 ```cpp
 int main() {
     int __e = 1;
     int &cr = __e;
 }
 ```
+
 如果能夠沒有 `const`，那麼 `++a` 就可以過，事情就解決了對吧？
 
 但這樣就回到了一開始的問題，常量並沒有記憶體位址，語意上來說不該能被更改，我們會說它能更改是從臨時物化與記憶體的角度去看，但在寫程式的時候我們應該由語意方面來寫，而不是底層，因為還有 Compiler 優化與平台差異的問題，底層應該交給他們去判斷。 於是陷入了死胡同，直到 C++11 時為了滿足移動語意，Rvalue Reference 的出現及值類別、TMC、Copy Elision 等更詳細的定義，這個問題才被解決。
@@ -903,7 +939,7 @@ int main() {
 
 沒錯，就只是多了一個 `&`，意義就大有不同，注意它不是參考的參考，前面已經說過不能有參考的參考了。
 
-Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/language/reference#Rvalue_references" class = "pinklink">(來源)</a>：
+Rvalue Reference 有幾種特性 [(來源)](https://en.cppreference.com/w/cpp/language/reference#Rvalue_references)：
 
 + 延長暫時物件的生命週期：
 
@@ -966,7 +1002,7 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
 
 # 複製、移動省略 ( Copy / Move Elision )
 
-Copy Elision 在 C\+\+11 與 C\+\+14，甚至更早期的 C\+\+03、C\+\+98 時就存在了，不同的是 C++11 有移動建構子的出現，導致能夠省略的建構子又多了一種。 之後 Copy Elision 在2015年時，於<a href = "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0135r0.html" class = "pinklink"> P0135R0 提案 </a> 中被提出應該要在某些情況下保證 Copy Elision 的發生，後來提案被採用，在 C\+\+17 時「部分」保證 Copy Elision 會發生，就算建構子與解構子有 side effect 也一。
+Copy Elision 在 C\+\+11 與 C\+\+14，甚至更早期的 C\+\+03、C\+\+98 時就存在了，不同的是 C++11 有移動建構子的出現，導致能夠省略的建構子又多了一種。 之後 Copy Elision 在2015年時，於[ P0135R0 提案](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0135r0.html)中被提出應該要在某些情況下保證 Copy Elision 的發生，後來提案被採用，在 C\+\+17 時「部分」保證 Copy Elision 會發生，就算建構子與解構子有 side effect 也一。
 
 那麼我們就先來談談什麼是 Copy Elision 吧，如果大家想跟著測試 code，記得把 Copy Elision 關掉，指令是 -fno-elide-constructors (gcc的，其他編譯器我不清楚一不一樣)，然後版本記得在 C\+\+17 與 C\+\+14 間來回切換看一下差別，因為如果是在 C\+\+17 是「保證」會發生 Copy Elision 的狀況，它的 Copy Elision 是無法被關掉的，因為「保證」要發生，必須發生。
 
@@ -974,7 +1010,7 @@ Copy Elision 在 C\+\+11 與 C\+\+14，甚至更早期的 C\+\+03、C\+\+98 時�
 
 基本上 Copy Elision 的精神就是在條件允許下，直到必須建構前，都不能建構，在初始化物件時能直接以傳入的原料(Value) 來初始化就直接初始化，不要在那邊搞一堆複製或移動。另外，在下方，當我講 Copy Elision 的時候指的就是 Copy / Move Elision 了，因為習慣所以仍只講 Copy Elision，若是特殊情形我會特別標註，但應該是沒有啦。
 
-另外，Copy Elision 是現在唯二能改變外顯行為的優化，另一個是 <a href = "https://en.cppreference.com/w/cpp/language/new#Allocation" class = "pinklink">Allocate Elision</a>，可以當作小知識知道一下 XD。
+另外，Copy Elision 是現在唯二能改變外顯行為的優化，另一個是 [Allocate Elision](https://en.cppreference.com/w/cpp/language/new#Allocation)，可以當作小知識知道一下 XD。
 
 ## 什麼是 Copy Elision?
 
@@ -1061,7 +1097,7 @@ int main() {
 
 ### 環境 1： C\+\+14，關掉 Copy Elsion ( <strong>-std=c++14 -fno-elide-constructors</strong> )
 
-<a href = "https://godbolt.org/z/ejvWaWrEE" class = "pinklink">連結在這</a>，輸出如下：
+[測試連結](https://godbolt.org/z/ejvWaWrEE)，輸出如下：
 ```cpp
 S()
         Construct object at 0x7ffd48647a9f
@@ -1089,7 +1125,7 @@ cnt = 3
 
 ### 環境 2：C\+\+17，關掉 Copy Elsion ( <strong>-std=c++17 -fno-elide-constructors</strong> )
 
-<a href = "https://godbolt.org/z/sv75ErEKG" class = "pinklink">連結在這</a>，輸出如下：
+[測試連結](https://godbolt.org/z/sv75ErEKG)，輸出如下：
 
 ```cpp
 S()
@@ -1112,7 +1148,7 @@ cnt = 2
 
 ### 環境 3：C\+\+17，打開 Copy Elsion ( <strong>-std=c++17 </strong> )
 
-<a href = "https://godbolt.org/z/TYo3e5dqq" class = "pinklink">連結在這</a>，輸出如下：
+[測試連結](https://godbolt.org/z/TYo3e5dqq)，輸出如下：
 
 ```cpp
 S()
@@ -1135,9 +1171,11 @@ cnt = 1
 | --------             | -------- | -------- |
 | 關掉 Copy Elision     | 3 次     | 2 次     |
 | 打開 Copy Elision     | ?        | 1 次     |
+
 這樣是關掉了 Copy Elision，從 C\+\+14 換到 C\+\+17 時少呼叫了一次建構子，這證明了 C\+\+17 「保證」了部分 Copy Elision 的發生，而同樣是 C\+\+17，關掉與打開 Copy Elision，也少呼叫了一次建構子，這則證明了 C\+\+17 只保證「部分」的 Copy Elision 會發生，其餘的部分則看 Compiler 如何處理，標準也有將這些狀況列下來，等等會談到。
 
-那麼四格中還有一格沒有檢查到，那就是在 C\+\+14 時打開 Copy Elision 的狀況，所以我們現在來看看這個狀況下的輸出 <a href = "https://godbolt.org/z/hGxjPYbrf" class = "pinklink">(連結)</a>：
+那麼四格中還有一格沒有檢查到，那就是在 C\+\+14 時打開 Copy Elision 的狀況，所以我們現在來看看這個狀況下的輸出 [(連結)](https://godbolt.org/z/hGxjPYbrf)：
+
 ```cpp
 S()
         Construct object at 0x7ffca23c2e6f
@@ -1156,15 +1194,15 @@ cnt = 1
 | 關掉 Copy Elision     | 3 次     | 2 次     |
 | 打開 Copy Elision     | 1 次     | 1 次     |
 
-可以看見 Compiler 一直以來其實都默默地在幫我們做事 <img src = "https://cdn.discordapp.com/emojis/757732504240128071.gif?v=1" height = 25>，只是妳可能都沒發現 XD。
+可以看見 Compiler 一直以來其實都默默地在幫我們做事，只是妳可能都沒發現 XD。
 
-## <strong>保證會發生 Copy / Move Elision 的狀況</strong>
+## 保證會發生 Copy / Move Elision 的狀況
 
-那我們現在就來看看這神奇的東西什麼時候會發生吧！首先是「保證」會發生的情況 <a href = "https://eel.is/c++draft/class.copy.elision" class = "pinklink">(來源)</a>，在這些情況下，Compiler 必須省略複製與移動建構子的呼叫，即使它們有 side effect 也一：
+那我們現在就來看看這神奇的東西什麼時候會發生吧！首先是「保證」會發生的情況 [(來源)](https://eel.is/c++draft/class.copy.elision)，在這些情況下，Compiler 必須省略複製與移動建構子的呼叫，即使它們有 side effect 也一：
 
-+ 在一個回傳 `T` 型態的<a href = "https://en.cppreference.com/w/cpp/language/return" class = "pinklink">回傳陳述句</a>，像是函式，如果回傳的是一個相同型態 `T` 的 Prvalue Expression (無視 cv 限定詞)，那麼他必須發動：
++ 在一個回傳 `T` 型態的[回傳陳述句](https://en.cppreference.com/w/cpp/language/return)，像是函式，如果回傳的是一個相同型態 `T` 的 Prvalue Expression (無視 cv 限定詞)，那麼他必須發動：
 
-    環境：C\+\+17，關掉 Copy Elision (-std=c\+\+17 -fno-elide-constructors)，<a href = "https://godbolt.org/z/d9c86xfTb" class = "pinklink">連結</a>。
+    環境：C\+\+17，關掉 Copy Elision (-std=c\+\+17 -fno-elide-constructors)，[測試連結](https://godbolt.org/z/d9c86xfTb)。
 
     ```cpp
 	#include <iostream>
@@ -1209,12 +1247,12 @@ cnt = 1
     ~T()
     ```
 
-    要注意的是他不一定需要移動建構子與複製建構子，因為我們沒用到他( 看起來很像廢話<img src = "https://cdn.discordapp.com/emojis/754662899053494291.png?v=1" height = 20> )，妳可以把他 `delete` 掉試試看，但要有預設的建構子和解構子，不然他沒辦法建構解構 (因為會用到)。
+    要注意的是他不一定需要移動建構子與複製建構子，因為我們沒用到他(看起來很像廢話)，妳可以把他 `delete` 掉試試看，但要有預設的建構子和解構子，不然他沒辦法建構解構 (因為會用到)。
 +   再來是一個大重點，在初始化物件時，如果初始化器(initializer)內是一個相同型態的 Prvalue Expression (無視 cv 限定詞)，那麼 Copy Elision 也保證發生，而且他必須直接初始化那個物件，不能複製和移動。
 
     那我們就來看看例子：
 
-    環境：C\+\+17，關掉 Copy Elision (-std=c\+\+17 -fno-elide-constructors)，<a href = "https://godbolt.org/z/zY35f9W9z" class = "pinklink">連結</a>。
+    環境：C\+\+17，關掉 Copy Elision (-std=c\+\+17 -fno-elide-constructors)，[連結](https://godbolt.org/z/zY35f9W9z)。
 
     ```cpp
     #include <iostream>
@@ -1262,12 +1300,12 @@ cnt = 1
 
     看到這裡妳應該覺得很合理了，因為「沒有暫時物件」了，就好像常量一樣，也因此，我們才會說 C\+\+17 後 Prvalue Expression 不可被移，因為根本沒有暫時物件生出來給我們移動，並且依然沒有身分標識符 (identity)，原因一樣，因為沒有物件產生。
 
-    要注意的是被初始化的物件不能是<a href = "https://eel.is/c++draft/intro.object#7" class = "pinklink">潛在重疊的物件</a>，潛在重疊的物件包含：
+    要注意的是被初始化的物件不能是[潛在重疊的物件](https://eel.is/c++draft/intro.object#7)，潛在重疊的物件包含：
 
     + 子類物件 (a base class subobject)
     + 一個有 `no_unique_address` attr 的非靜態的資料成員 (from C++20)
 
-    下面這個大家應該沒什麼看過，我也是第一次看到 XD，但草案內也只是提到而已，沒特別去說明，看看這個<a href = "https://godbolt.org/z/8d5ercfYM" class = "pinklink">例子</a>：
+    下面這個大家應該沒什麼看過，我也是第一次看到 XD，但草案內也只是提到而已，沒特別去說明，看看這個[例子](https://godbolt.org/z/8d5ercfYM)：
 
     ```cpp
     #include <iostream>
@@ -1342,28 +1380,26 @@ cnt = 1
 
 ## 不保證發生 Copy Elision 的狀況
 
-那這邊我就大概列一列，翻譯一下 Cppreference 就好 <a href = "https://en.cppreference.com/w/cpp/language/copy_elision#Non-mandatory_elision_of_copy.2Fmove_.28since_C.2B.2B11.29_operations" class = "pinklink">(來源)</a>，因為我覺得最重要的是 NRVO，但 NRVO 後面會單獨拉出來講，所以就先不自己寫例子或找例子了 XD，~~不然好多怕字不夠，寫到這裡的時候，把網址那些的字元都算進來，已經六萬五千字ㄌ~~。但如果大家願意幫我補例子當然是歡迎XD 我對例外處理也不太熟，不敢亂誤人子弟 <img src = "https://i.imgur.com/X6HiPT3.png" height = 30>。 不過草案裡面倒是有給初一些例子，有興趣的話可以點進<a href = "https://eel.is/c++draft/class.copy.elision" class = "pinklink">這裡</a>看看。
-
-OS：<img src = "https://i.imgur.com/m47J2qr.png" height = 30> 我當初還真的沒想到會這麼長 <img src = "https://cdn.discordapp.com/emojis/756863495630225428.gif?v=1" height = 30>
+那這邊我就大概列一列，翻譯一下 Cppreference 就好 [(來源)](https://en.cppreference.com/w/cpp/language/copy_elision#Non-mandatory_elision_of_copy.2Fmove_.28since_C.2B.2B11.29_operations)，因為我覺得最重要的是 NRVO，但 NRVO 後面會單獨拉出來講，所以就先不自己寫例子或找例子了 XD，~~不然好多怕字不夠，寫到這裡的時候，把網址那些的字元都算進來，已經六萬五千字ㄌ~~。但如果大家願意幫我補例子當然是歡迎XD 我對例外處理也不太熟，不敢亂誤人子弟。 不過草案裡面倒是有給初一些例子，有興趣的話可以點進[這裡](https://eel.is/c++draft/class.copy.elision)看看。
 
 那麼項目大概有這些，這個很看 Compiler，然後我不確定官方是不是把所有有可能的狀況都列下來了，但我想不太可能，畢竟 C\+\+ 挺複雜也挺自由的，我主要在讀的也只是 draft 和 Cpprefence，字密密麻麻的我也有可能漏看，不過我是沒特別看到她說這是全部的狀況啦，如果有人知道可以幫我補充一下，感恩！
 
 + 命名回傳值優化 (NRVO)，這等後面談回傳值優化的時候再一起講吧 XD
 + 某些條件下的 throw 表達式
 
-    在 <a href = "https://en.cppreference.com/w/cpp/language/throw" class = "pinklink">throw 表達式</a>中，如果妳的運算元是一個 non-volatile 的物件，而且這個物件不是函式的參數或 <a href = "https://en.cppreference.com/w/cpp/language/try_catch" class = "pinklink">catch clause</a> (不會翻QQ) 的參數，然後它的 scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)，然後！ 運算元有<a href = "https://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration" class = "pinklink">自動的儲存期限</a>，那他可能發生 Copy Elision。
+    在 [throw 表達式](https://en.cppreference.com/w/cpp/language/throw)中，如果妳的運算元是一個 non-volatile 的物件，而且這個物件不是函式的參數或 [catch clause](https://en.cppreference.com/w/cpp/language/try_catch) (不會翻QQ) 的參數，然後它的 scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)，然後！ 運算元有[自動的儲存期限](https://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration)，那他可能發生 Copy Elision。
 
     「scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)」這句我翻得不太確定，因為我自己不常用例外處理，相對沒那麼熟，他的原文是「whose scope does not extend past the innermost try-block (if there is a try-block).」，如果有翻錯還請幫忙糾正一下，謝謝！ <img src = "https://cdn.discordapp.com/emojis/784176641428553777.gif?v=1" height = 30>
 
 + 某些狀況下的 catch clause
 
-    在 <a href = "https://en.cppreference.com/w/cpp/language/try_catch" class = "pinklink">catch clause</a> 中，如果它的參數和 `exception` 丟出來的物件型態一樣(無視 cv 限定詞)，那麼這個例外物件的複製可以被省略，然後 catch clause 的 body 會直接訪問例外物件，就像是 catch by reference 一樣，但不能移動例外物件，因為例外物件永遠是 Lvalue Expression 回傳的物件。
+    在 [catch clause](https://en.cppreference.com/w/cpp/language/try_catch) 中，如果它的參數和 `exception` 丟出來的物件型態一樣(無視 cv 限定詞)，那麼這個例外物件的複製可以被省略，然後 catch clause 的 body 會直接訪問例外物件，就像是 catch by reference 一樣，但不能移動例外物件，因為例外物件永遠是 Lvalue Expression 回傳的物件。
 
     如果這類的 Copy Elision 會因為任何原因 ( 除了跳過 catch clause 的參數的複製建構子和解構子 )，導致程式的外顯行為改變，舉個例子，如果妳 catch clause 的參數已經被修改了，但例外對像被重新丟出，像是這樣的某種原因，它會更改到這個程式的外顯行為，那麼就會禁止這個 Copy Elision 。
 
 + 協同程式 (Coroutines)
 
-    在<a href = "https://eel.is/c++draft/support.coroutine" class = "pinklink">協同程式</a>中，除了參數的建構子和解構子，於 coroutine state 的參數的移動或複製可能會被省略，因為這不會改變程式的外顯行為，換句話說，如果妳在斷點後從沒引用過這個參數，或者妳在整個 coroutine state ，從一開始就沒有 heap-allocate，那麼 Copy Elision 可能會發生。
+    在[協同程式](https://eel.is/c++draft/support.coroutine)中，除了參數的建構子和解構子，於 coroutine state 的參數的移動或複製可能會被省略，因為這不會改變程式的外顯行為，換句話說，如果妳在斷點後從沒引用過這個參數，或者妳在整個 coroutine state ，從一開始就沒有 heap-allocate，那麼 Copy Elision 可能會發生。
 
     這段我也翻得不太確定，我也只稍微看過 Coroutines 而已，沒有實際用過，但大概知道他想講什麼，我把原文也附上，如果我有錯還請大家糾正一下，謝謝！
 
@@ -1373,13 +1409,13 @@ OS：<img src = "https://i.imgur.com/m47J2qr.png" height = 30> 我當初還真�
 
 ## Copy / Move Elision 小整理
 
-恭喜妳看到這裡了，挺不容易的，但後面還很長 <img src = "https://i.imgur.com/OilkaJ4.png" height = 30>ㄏㄏ，這裡先幫大家整理一下，並且分享一個好用的小東西。
+恭喜妳看到這裡了，但後面還很長，這裡先幫大家整理一下，並且分享一個好用的小東西
 
-複製省略「保證」會發生在一個回傳同型態 Prvalue Expression 的<a href = "https://en.cppreference.com/w/cpp/language/return" class = "pinklink">回傳語句</a>中，通常舉例是舉函式，又或一個回傳同類型的 Prvalue Expression。
+複製省略「保證」會發生在一個回傳同型態 Prvalue Expression 的[回傳語句](https://en.cppreference.com/w/cpp/language/return)中，通常舉例是舉函式，又或一個回傳同類型的 Prvalue Expression。
 
 另外，一開始在介紹什麼是 Copy Elision 時，給大家看了一份很長的 code 然後在不同環境下去跑他對吧? 但不知道大家有沒注意到有時候是呼叫 Rvalue Reference 版本的建構子，有時候是預設的建構子。
 
-這邊有一個要注意的地方是我們也有實作 const Lvalue Reference 的版本，但他傳入的是 Rvalue Reference 的版本，這代表什麼? 代表有「暫時物件」的產生，在什麼時候?! 在 `return` 的時候，這邊我給了一個簡單的 code 讓大家看，<a href = "https://godbolt.org/z/To7198TGa" class = "pinklink">連結在這</a>：
+這邊有一個要注意的地方是我們也有實作 const Lvalue Reference 的版本，但他傳入的是 Rvalue Reference 的版本，這代表什麼? 代表有「暫時物件」的產生，在什麼時候?! 在 `return` 的時候，這邊我給了一個簡單的 code 讓大家看，[測試連結](https://godbolt.org/z/To7198TGa)：
 
 環境：C\+\+14，關掉 Copy Elision
 
@@ -1416,9 +1452,13 @@ Test test_fn() {
 
 注意只是這個例子剛好一樣，情況一複雜起來，他不一定會一樣。 
 
-為了方便大家理解，附上一張我精美的手寫圖 <img src = "https://i.imgur.com/OilkaJ4.png" height = 30>：
+為了方便大家理解，附上一張手寫圖：
 
-<center><img src = "https://i.imgur.com/RUC4N6Q.jpg"></center><br>
+<center>
+
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image6.png?raw=true">
+
+</center><br>
 
 今天熟組語的朋友真是有福了，每個例子旁邊都配了組語讓你看 XD，但不會組語的朋友不用擔心，我照順序翻譯成中文敘述給你們看，`test_fn()` 回傳的物件我們暫時叫他 `X`，妳可能會想說他不是 `return B` 嗎? 怎麼會多一個 `X`? 欸沒錯，它們其實不一樣，想不到吧ㄏㄏ，如果大家想跟著確認，可以在建構子裡面，像是一開始的例子那樣把正在呼叫的建構子印出來看：
 
@@ -1426,29 +1466,29 @@ Test test_fn() {
 1. Test A = 「test_fn()」; 右邊的部分先執行
 > 記憶體裡面挖一塊空間，拿來放等等 test_fn() 回傳的物件，位址就叫 "&X"，代表在 Main 裡面 X 的位址，準備呼叫 test_fn()，將 &X 丟到暫存器裡面
 
-2. 進入 test_fn()， &X 跟著傳入
+1. 進入 test_fn()， &X 跟著傳入
 
-3. Test B;
+2. Test B;
 > 記憶體裡面挖一塊空間，拿來放 B，位址我們叫他 "&B"，準備呼叫 B 的建構子，將 &B 丟到暫存器裡面
 > 進入 B 的建構子，進入的建構子是預設建構子 Test()，&B 跟著傳入
 > B 建構完成，i 被初始化為 0
 
-4. return B;
+1. return B;
 > 準備呼叫 X 的建構子，也就是準備呼叫回傳物件的建構子，將 &B 和 &X 丟到暫存器裡
 > 進入 X 的建構子，進入的建構子是 Test( const Test &other )，&B 和 &X 都被傳入
 > 會進入 Test( const Test &other ) 的原因是因為我們傳了 B 進去
 
-5. 離開 test_fn()
+1. 離開 test_fn()
 > B 解構，解構完後要離開函式，回傳 &X，所以剛剛挖好的空間裡面有建構好的 X 了
 
-6. Test A = test_fn(); 右邊執行完了，換初始化
+1. Test A = test_fn(); 右邊執行完了，換初始化
 > 記憶體裡面挖一塊空間，拿來放A，位址就叫 "&A"
 > 準備呼叫 A 的建構子，將 &X 和 &A 丟到暫存器裡面
 > 進入 A 的建構子，進入的建構子是 Test( const Test &other )，&X 和 &A 都被傳入
 > 會進入 Test( const Test &other ) 的原因是因為我們傳了 X 進去
 > 離開 A 的建構子
 
-7. Test A = test_fn(); 此 Statement 執行完畢
+1. Test A = test_fn(); 此 Statement 執行完畢
 > X 的生命週期結束
 > X 解構
 
@@ -1471,13 +1511,11 @@ Test( const Test &other )    // A 建構
 ~Test()    // A 解構
 ```
 
-如果覺得非常有趣的朋友歡迎一起來學組合語言和作業系統，~~國家需要你~~。
-
 如果有比較敏銳的朋友可能會發現這是我們說 Prvalue Expression 沒有身分標識符(identity) 的原因，因為事實上有兩個不同的物件，就算在建構子裡面輸出了 `this` (B 的位址)，與 Rvalue Reference 輸出的位址也不同個 (一個是 &X，一個是 &B)，當然在我們不應該用這個方式來思考文法的問題，只是幫助大家理解而已 XD，那麼 C\+\+17 後的 Prvalue 又是另一件事，這剛剛解釋過了。
 
 另外可能有人會發現如果有實作 Rvalue Reference 的版本，那麼他會優先呼叫這個版本的建構子，原因牽涉到隱式移動(implicit move)，後面再講 XD，這邊只是為了讓大家知道建構解構的詳細過程而已。
 
-另外讀到這裡大家已經知道了由於 Copy Elision 的關係，Prvalue Expression 直到必須被實例化時才會有實例的出現，所以分享一個方便的偵測器給大家，可以幫你判斷值類別，這是我問 kris 問題時，他給我的例子裡面用到的，出處在<a href = "https://medium.com/@barryrevzin/value-categories-in-c-17-f56ae54bccbe" class = "pinklink">這裡</a>：
+另外讀到這裡大家已經知道了由於 Copy Elision 的關係，Prvalue Expression 直到必須被實例化時才會有實例的出現，所以分享一個方便的偵測器給大家，可以幫你判斷值類別，這是我問 kris 問題時，他給我的例子裡面用到的，出處在[這裡](https://medium.com/@barryrevzin/value-categories-in-c-17-f56ae54bccbe)：
 
 ```cpp
 #include <iostream>
@@ -1527,9 +1565,9 @@ A{}.value is a xvalue
 
 # 臨時物化 (TMC)
 
-好了現在我們完全了解 Copy Elision 了，那還有另一個重要的東西叫 TMC，TMC 是 <a href = "https://en.cppreference.com/w/cpp/language/implicit_conversion#Temporary_materialization" class = "pinklink">Temporary materialization conversion</a> 的縮寫，前面講 Rvalue Reference 時有先提到，那我們這邊再更詳細的探討一下，因為標準實際上有規定 C\+\+17 後的哪些時刻「必須」要有 TMC 的出現。
+好了現在我們完全了解 Copy Elision 了，那還有另一個重要的東西叫 TMC，TMC 是 [Temporary materialization conversion](https://en.cppreference.com/w/cpp/language/implicit_conversion#Temporary_materialization) 的縮寫，前面講 Rvalue Reference 時有先提到，那我們這邊再更詳細的探討一下，因為標準實際上有規定 C\+\+17 後的哪些時刻「必須」要有 TMC 的出現。
 
-基本上 TMC 的精神就是在必要的時候，一個完全型(Complete Type) 的 Prvalue 能夠被轉換成同型態(Type) 的 Xvalue。TMC 會透過計算評估相關的 Prvalue Expression 來初始化一個相同型態的暫時物件當作它的結果，也就是說 TMC 是一個 Prvalue to Xvalue 的橋樑。前面的 Copy Elision 負責減少實例，而 TMC 則幫忙於必須要有實例的時候建構實例，看看這個<a href = "https://godbolt.org/z/hbexrMKTc" class = "pinklink">例子</a>，如果你想複習 Copy Elision，也可以把版本改回 C\+\+14 去看看：
+基本上 TMC 的精神就是在必要的時候，一個完全型(Complete Type) 的 Prvalue 能夠被轉換成同型態(Type) 的 Xvalue。TMC 會透過計算評估相關的 Prvalue Expression 來初始化一個相同型態的暫時物件當作它的結果，也就是說 TMC 是一個 Prvalue to Xvalue 的橋樑。前面的 Copy Elision 負責減少實例，而 TMC 則幫忙於必須要有實例的時候建構實例，看看這個[例子](https://godbolt.org/z/hbexrMKTc)，如果你想複習 Copy Elision，也可以把版本改回 C\+\+14 去看看：
 
 ```cpp
 #include <iostream>
@@ -1594,9 +1632,13 @@ int main() {
         a = 0;
     }
     ```
-    附上我精美的手寫圖 <img src = "https://i.imgur.com/feJC2DV.png" height = 30>：
+    附上我精美的手寫圖：
 
-    <center><img src = "https://i.imgur.com/cuuChWH.jpg"></center>
+    <center>
+    
+    <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image7.png?raw=true">
+    
+    </center><br>
 
     可以看見有暫時物件的產生。我在每一個操作結束時都加上 `a = 0;`，並用粉色的螢光筆標起來了，當作區間的紀錄點，方便大家閱讀。
 
@@ -1651,13 +1693,13 @@ int main() {
 	}
     ```
 
-+ 利用 <a href = "https://en.cppreference.com/w/cpp/language/list_initialization" class = "pinklink">braced-init-list</a> 來初始化一個型態為 `std::initializer_list<T>` 的物件時。
++ 利用 [braced-init-list](https://en.cppreference.com/w/cpp/language/list_initialization) 來初始化一個型態為 `std::initializer_list<T>` 的物件時。
 
-+ 對 Prvalue 使用 `typeid` 時 (這是一部分的<a href = "https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions" class = "pinklink">無運算表達式</a>)
++ 對 Prvalue 使用 `typeid` 時 (這是一部分的[無運算表達式](https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions))
 
-+ 對 Prvalue 使用 `sizeof` 時 (這是一部分的<a href = "https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions" class = "pinklink">無運算表達式</a>)
++ 對 Prvalue 使用 `sizeof` 時 (這是一部分的[無運算表達式](https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions))
 
-+ 當一個 Prvalue 作為 <a href = "https://en.cppreference.com/w/cpp/language/expressions#Discarded-value_expressions" class = "pinklink">棄值表達式</a> 出現時
++ 當一個 Prvalue 作為 [棄值表達式](https://en.cppreference.com/w/cpp/language/expressions#Discarded-value_expressions) 出現時
 
 要注意的是當我們拿 Prvalue 來初始化物件時，TMC 並不會發動，因為有 Copy ELision 的存在，保證了直接初始化。
 
@@ -1819,7 +1861,7 @@ T()
 ~T()
 ```
 
-可以看見一樣會發動，但是！NRVO 是非常脆弱的，很容易就不會發動，我們再改一下上面這個<a href = "https://godbolt.org/z/q658Ge1TY" class = "pinklink">例子</a>：
+可以看見一樣會發動，但是！NRVO 是非常脆弱的，很容易就不會發動，我們再改一下上面這個[例子](https://godbolt.org/z/q658Ge1TY)：
 ```cpp
 #include <iostream>
 
@@ -1872,7 +1914,7 @@ T(T &&other)
 
 那麼前面還有提到 NRVO 有一些條件，在這邊我也把它們寫出來給大家看看，所以下面這兩項保證不會發動。 (感謝 kris 提供例子)
 
-+ <a href = "https://godbolt.org/z/fbMe66asq" class = "pinklink">(連結)</a> 發生物件切片(object slicing) 時：
++ [(連結)](https://godbolt.org/z/fbMe66asq) 發生物件切片(object slicing) 時：
 
 	```cpp
 	#include <iostream>
@@ -1929,11 +1971,11 @@ T(T &&other)
 	~T()
     ```
 
-    物件切片(object slicing) 的意思就是你拿一個子類去喂父類，那麼有一些資訊就會被切掉，有興趣可以到<a href = "https://stackoverflow.com/questions/274626/what-is-object-slicing" class = "pinklink">這裡</a>看看。
+    物件切片(object slicing) 的意思就是你拿一個子類去喂父類，那麼有一些資訊就會被切掉，有興趣可以到[這裡](https://stackoverflow.com/questions/274626/what-is-object-slicing)看看。
 
     我們可以看見在上例中 NRVO 一樣沒有發動，因為回傳物件的型態與函式回傳的型態不一樣。
 
-+ <a href = "https://godbolt.org/z/fMEKa48GW" class = "pinklink">(連結)</a> 回傳的物件為函式吃進來的參數時：
++ [(連結)](https://godbolt.org/z/fMEKa48GW) 回傳的物件為函式吃進來的參數時：
 
     ```cpp
     #include <iostream>
@@ -1977,7 +2019,7 @@ T(T &&other)
 
 講了這麼多，那如果 Copy Elision 和 NRVO 都沒有發動的話怎麼辦呢？不用擔心，標準告訴我們，在 C\+\+11 之後，於回傳語句中，如果在某些特殊情況下，Copy Elision 應該要發動但沒發動，或是感覺可以發動但還沒被保證，所以沒發動，像是我們在 C\+\+14 的版本內把回傳優化關掉的狀況。 這種時候 Compiler 會優先選用移動建構子來取代複製，除非回傳的物件是吃進來的參數。
 
-要注意的是即使回傳這個物件的表達式是 Lvalue Expression，他仍然會優先選用移動建構子，好像偷偷的轉型了一樣，詳細可以看<a href = "https://en.cppreference.com/w/cpp/language/return#Notes" class = "pinklink">這裡</a>。
+要注意的是即使回傳這個物件的表達式是 Lvalue Expression，他仍然會優先選用移動建構子，好像偷偷的轉型了一樣，詳細可以看[這裡](https://en.cppreference.com/w/cpp/language/return#Notes)。
 
 看到這裡，大家應該知道為什麼前面的例子中，如果有 `T(T &&other)` 這類的建構子時優先度會比 `T(const T &other)` 還高了，當然，你需要提供移動建構子就是了。
 
@@ -2001,7 +2043,7 @@ T(T &&other)
 
 + 實作移動建構子和移動指派運算子
 
-    在設計 Class 時，記得實作移動建構子(move constructor) 和移動指派運算子(move operator=)，具體可以參考 <a href = "https://en.cppreference.com/w/cpp/language/rule_of_three" class = "pinklink">Rule of five</a>。
+    在設計 Class 時，記得實作移動建構子(move constructor) 和移動指派運算子(move operator=)，具體可以參考 [Rule of five](https://en.cppreference.com/w/cpp/language/rule_of_three)。
 
     因為如果 Copy Elision 和 NRVO 沒有發動，你還有隱式移動(implicit move，另外有移動建構子在某些處理上也比較方便。
 
@@ -2009,7 +2051,7 @@ T(T &&other)
 
     這項可能每個人看法不太一樣，但這裡的原因是，普遍來說執行期的 code 很難被優化，錯誤也比較不好找，所以盡量讓錯誤和 code 在編譯期就可以被運算好。
 
-    有興趣的可以看看 <a href = "https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF%E8%B6%85%E7%B7%A8%E7%A8%8B" class = "pinklink">TMP</a>，也是個酷東西XD，TSJW 有寫過一篇<a href = "https://tjsw.medium.com/%E6%BD%AE-c-%E7%B7%A8%E8%AD%AF%E6%9C%9F%E7%AE%97%E5%85%AB%E7%9A%87%E5%90%8E%E6%89%80%E6%9C%89%E8%A7%A3-compile-time-8-queens-d872bc063bdc" class = "pinklink">編譯期算完八皇后所有解</a>的 Medium。但 TMP 也有它的缺點，平衡就看大家的需求自己取捨了。
+    有興趣的可以看看 [TMP](https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF%E8%B6%85%E7%B7%A8%E7%A8%8B)，也是個酷東西XD，TSJW 有寫過一篇[編譯期算完八皇后所有解](https://tjsw.medium.com/%E6%BD%AE-c-%E7%B7%A8%E8%AD%AF%E6%9C%9F%E7%AE%97%E5%85%AB%E7%9A%87%E5%90%8E%E6%89%80%E6%9C%89%E8%A7%A3-compile-time-8-queens-d872bc063bdc)的 Medium。但 TMP 也有它的缺點，平衡就看大家的需求自己取捨了。
 
 + 讓你的函式短一點
 
@@ -2017,178 +2059,94 @@ T(T &&other)
 
     另一大好處是較短的函式能減輕 Compiler 的負擔，讓 Compiler 更好的利用前面提到的那些優化來優化你的 code。
 
-那麼本篇文章就到這裡啦，沒想到寫一寫，加上網址那些的竟然八萬多字了，一篇值類別就快比之前寫的 C\+\+ 基礎筆記還長了 <img src = "https://i.imgur.com/X6HiPT3.png" height = 30>。
+那麼本篇文章就到這裡啦，沒想到寫一寫，加上網址那些的竟然八萬多字了，一篇值類別就快比之前寫的 C\+\+ 基礎筆記還長了 
 
-最後再次感謝 kris，marty，Cy 與 Discord 上一些不認識的人很友善且很有耐心的回答了我很多問題，尤其是 kris XD，非常有耐心的回答了我每一個問題，非常謝謝 <img src = "https://cdn.discordapp.com/emojis/784176641428553777.gif?v=1" height = 50>。
+最後再次感謝 kris，marty，Cy 與 Discord 上一些不認識的人很友善且很有耐心的回答了我很多問題，尤其是 kris XD，非常有耐心的回答了我每一個問題，非常謝謝
 
 # 參考資料
 
-**<a href = "https://www.youtube.com/watch?v=km3Urog_wzk&ab_channel=ItalianCppCommunity" class = "redlink">1. [CppDay20] Understanding value categories in C++ (Kris van Rens)</a> (文章部分來源，感謝 kris 提供授權)**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/identifiers" class = "redlink">2. Identifiers (cppreference)</a>**
-
-**<a href = "https://eopxd.com/2021/02/03/value-category-1/" class = "redlink">3. Value Category（值類別）- 1 / 2</a>**
-
-**<a href = "https://eopxd.com/2021/02/03/value-category-2/" class = "redlink">4. Value Category（值類別）- 2 / 2</a>**
-
-**<a href = "https://stackoverflow.com/questions/36349360/c-type-and-value-category-for-expression-and-variable" class = "redlink">5. C++ Type and Value Category for Expression and Variable</a>**
-
-**<a href = "https://stackoverflow.com/questions/20583531/lvalue-to-rvalue-reference-binding#comment-30793019" class = "redlink">6. Lvalue to rvalue reference binding</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo" class = "redlink">7. Value categories (cppreference)</a> (文章部分來源)**
-
-**<a href = "https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues?fbclid=IwAR1BIns58XNgIy3KmXgFuc33KHkUC1mS10nUYvQec6BqxXK5BlUXM_f9UfE" class = "redlink">8. What are rvalues, lvalues, xvalues, glvalues, and prvalues?</a>**
-
-**<a href = "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3055.pdf" class = "redlink">9. A Taxonomy of Expression Value Categories</a>**
-
-**<a href = "https://shininglionking.blogspot.com/2018/05/c-move-semantic.html" class = "redlink">10. [C++] move semantic 的誤解</a>**
-
-**<a href = "https://www.ptt.cc/man/C_and_CPP/DB9B/DC33/M.1271034153.A.7F9.html" class = "redlink">11. [心得] Compound literals, flexible array members</a>**
-
-**<a href = "https://www.reddit.com/r/cpp_questions/comments/8anfud/how_can_a_string_literal_be_an_lvalue/" class = "redlink">12. How can a string literal be an lvalue?</a>**
-
-**<a href = "https://stackoverflow.com/questions/10004511/why-are-string-literals-l-value-while-all-other-literals-are-r-value" class = "redlink">13. Why are string literals l-value while all other literals are r-value?</a>**
-
-**<a href = "https://en.cppreference.com/w/c/language/compound_literal" class = "redlink">14. compound literals</a>** (cppreference)
-
-**<a href = "https://en.cppreference.com/w/cpp/language/statements" class = "redlink">15. Statements</a>** (cppreference)
-
-**<a href = "https://en.cppreference.com/w/cpp/language/type" class = "redlink">16. Type</a>** (cppreference)
-
-**<a href = "https://www.youtube.com/watch?v=fbYknr-HPYE&ab_channel=TheCherno" class = "redlink">17. lvalues and rvalues in C++</a>**
-
-**<a href = "https://www.youtube.com/watch?v=ehMg6zvXuMY&ab_channel=TheCherno" class = "redlink">18. Move Semantics in C++</a>**
-
-**<a href = "https://www.youtube.com/watch?v=OWNeCTd7yQE&ab_channel=TheCherno" class = "redlink">19. std::move and the Move Assignment Operator in C++</a>**
-
-**<a href = "https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94" class = "redlink">20. 值類別，以及其參考</a>**
-
-**<a href = "identity VS identifier in c++" class = "redlink">21. identity VS identifier in c++</a>**
-
-**<a href = "https://docs.microsoft.com/zh-tw/cpp/cpp/types-of-expressions?view=msvc-160" class = "redlink">22. Types of Expressions</a>**
-
-**<a href = "https://www.geeksforgeeks.org/what-is-an-expression-and-what-are-the-types-of-expressions/" class = "redlink">23. What is an Expression and What are the types of Expressions?</a>**
-
-**<a href = "https://www.ibm.com/docs/en/i/7.3?topic=expressions-identifier-c-only" class = "redlink">24. Identifier expressions (C++ only)</a>**
-
-**<a href = "http://eel.is/c++draft/expr#conv.rval" class = "redlink">25. Expressions</a>**
-
-**<a href = "https://www.cs.auckland.ac.nz/references/unix/digital/AQTLTBTE/DOCU_032.HTM" class = "redlink">26. Integral Types</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/implicit_conversion#Boolean_conversions" class = "redlink">27. Boolean conversions</a>** (cppreference)
-
-**<a href = "https://stackoverflow.com/questions/1347691/static-vs-dynamic-type-checking-in-c" class = "redlink">28. Static vs dynamic type checking in C++</a>**
-
-**<a href = "https://stackoverflow.com/questions/7016777/what-is-an-rvalue-reference-to-function-type" class = "redlink">29. What is an rvalue reference to function type?</a>**
-
-**<a href = "https://blog.csdn.net/u014645632/article/details/78966340" class = "redlink">30. 淺析std::ref與reference_wrapper</a>**
-
-**<a href = "https://stackoverflow.com/questions/25146508/rvalue-reference-to-function" class = "redlink">31. rvalue reference to function</a>**
-
-**<a href = "https://stackoverflow.com/questions/42930598/is-it-legal-to-cast-a-non-class-non-array-prvalue-to-a-cv-qualified-type" class = "redlink">32. Is it legal to cast a non-class non-array prvalue to a cv-qualified type?</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/abstract_class" class = "redlink">33. abstract class</a>** (cppreference)
-
-**<a href = "https://devblogs.microsoft.com/cppblog/guaranteed-copy-elision-does-not-elide-copies/" class = "redlink">34. Guaranteed Copy Elision Does Not Elide Copies</a>**
-
-**<a href = "https://stackoverflow.com/questions/21392160/storage-duration-vs-lifetime" class = "redlink">35. storage duration vs lifetime</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/object" class = "redlink">36. Object</a>** (cpprefernce)
-
-**<a href = "https://stackoverflow.com/questions/42043414/why-are-function-expressions-returning-non-reference-types-considered-to-be-prva" class = "redlink">37. Why are function expressions returning non-reference types considered to be prvalues and not xvalues?</a>**
-
-**<a href = "https://stackoverflow.com/questions/12953127/what-are-copy-elision-and-return-value-optimization/12953150?fbclid=IwAR3nCd45hj09HtaKwDydF3Ouje_VzfQKP336gJPbRjNnmflu7fzlBmqJByA#12953150" class = "redlink">38. What are copy elision and return value optimization?</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/copy_elision" class = "redlink">39. Copy elision</a>** (cppreference)
-
-**<a href = "https://en.cppreference.com/w/cpp/language/reference" class = "redlink">40. Reference declaration</a>** (cppreference)
-
-**<a href = "https://en.cppreference.com/w/cpp/language/reference_initialization#Lifetime_of_a_temporary" class = "redlink">41. Reference initialization</a>** (cppreference)
-
-**<a href = "https://blog.csdn.net/davidhopper/article/details/90696200" class = "redlink">42. 淺談C++11標準中的複製省略 (copy elision, 也叫RVO返回值優化)</a>**
-
-**<a href = "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0135r1.html" class = "redlink">43. Wording for guaranteed copy elision through simplified value categories</a>**
-
-**<a href = "https://stackoverflow.com/questions/50783525/what-does-it-mean-xvalue-has-identity" class = "redlink">44. What does it mean “xvalue has identity”?</a>**
-
-**<a href = "https://stackoverflow.com/questions/1950779/is-there-any-way-to-find-the-address-of-a-reference" class = "redlink">45. Is there any way to find the address of a reference?</a>**
-
-**<a href = "https://stackoverflow.com/questions/57483/what-are-the-differences-between-a-pointer-variable-and-a-reference-variable-in?page=2&tab=votes#tab-top" class = "redlink">46. What are the differences between a pointer variable and a reference variable in C++?</a>**
-
-**<a href = "https://isocpp.org/wiki/faq/references#refs-not-null" class = "redlink">47. What does it mean that a reference must refer to an object, not a dereferenced null pointer?</a>**
-
-**<a href = "https://stackoverflow.com/questions/45821678/is-always-the-address-of-a-reference-equal-to-the-address-of-origin" class = "redlink">48. Is always the address of a reference equal to the address of origin?</a>**
-
-**<a href = "https://stackoverflow.com/questions/9254605/is-a-structs-address-the-same-as-its-first-members-address" class = "redlink">49. Is a struct's address the same as its first member's address?</a>**
-
-**<a href = "http://annwm.lbl.gov/~leggett/vars.html" class = "redlink">50. Variables and Memory</a>**
-
-**<a href = "https://stackoverflow.com/questions/35175795/c-how-are-variables-accessed-in-memory" class = "redlink">51. C++ how are variables accessed in memory?</a>**
-
-**<a href = "https://stackoverflow.com/questions/41148054/is-the-cppreference-definition-of-non-static-data-member-wrong" class = "redlink">52. Is the cppreference definition of non-static data member wrong?</a>**
-
-**<a href = "https://stackoverflow.com/questions/12987259/why-is-a-non-static-data-member-reference-not-a-variable" class = "redlink">53. Why is a non-static data member reference not a variable?</a>**
-
-**<a href = "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0135r0.html" class = "redlink">54. Guaranteed copy elision through simplified value categories </a>** (P0135R0)
-
-**<a href = "https://stackoverflow.com/questions/38043319/how-does-guaranteed-copy-elision-work" class = "redlink">55. How does guaranteed copy elision work?</a>**
-
-**<a href = "https://stackoverflow.com/questions/57392150/temporary-materialization-during-array-to-pointer-conversion" class = "redlink">56. Temporary materialization during array-to-pointer conversion</a>**
-
-**<a href = "https://stackoverflow.com/questions/4223617/standard-conversions-array-to-pointer-conversion" class = "redlink">57. standard conversions: Array-to-pointer conversion</a>**
-
-**<a href = "https://stackoverflow.com/questions/4058151/i-think-i-may-have-come-up-with-an-example-of-rvalue-of-array-type" class = "redlink">58. I think I may have come up with an example of rvalue of array type</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/static_cast" class = "redlink">59. static_cast conversion</a>** (cppreference)
-
-**<a href = "https://stackoverflow.com/questions/66422584/copy-elision-in-c03" class = "redlink">60. copy elision in c++03</a>**
-
-**<a href = "https://jonasdevlieghere.com/guaranteed-copy-elision/" class = "redlink">61. Guaranteed Copy Elision</a>**
-
-**<a href = "https://eel.is/c++draft/dcl.attr.nouniqueaddr" class = "redlink">62. No unique address attribute</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/attributes/no_unique_address" class = "redlink">63. C++ attribute: no_unique_address</a>** (cppreference)
-
-**<a href = "https://stackoverflow.com/questions/52884257/placement-new-base-subobject-of-derived-in-c" class = "redlink">64. Placement new base subobject of derived in C++</a>**
-
-**<a href = "https://zhuanlan.zhihu.com/p/237952115" class = "redlink">65. The Coroutine in C++ 20 協程初探</a>**
-
-**<a href = "https://humanreadablemag.com/issues/0/articles/what-are-unevaluated-operands-in-c" class = "redlink">66. What are unevaluated operands in C++?</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/return" class = "redlink">67. return statement</a>** (cppreference)
-
-**<a href = "https://www.ptt.cc/bbs/b97902HW/M.1226692638.A.F2B.html" class = "redlink">68. [計程] 變數的儲存週期</a>**
-
-**<a href = "https://sites.google.com/a/qtm.ks.edu.tw/qtm052-org/cheng-shi-she-ji/visual-c/5-bian-shu-chu-cun-qi-jian" class = "redlink">69. 變數儲存期間</a>**
-
-**<a href = "http://wucodingroad.blogspot.com/2017/05/Cplusplus-copyelision.html" class = "redlink">70. C++軟體開發 - 返回值優化、具名返回值優化、複製省略 概念與實例</a>**
-
-**<a href = "https://www.yhspy.com/2019/09/01/C-%E7%BC%96%E8%AF%91%E5%99%A8%E4%BC%98%E5%8C%96%E4%B9%8B-RVO-%E4%B8%8E-NRVO/" class = "redlink">71. C++ 編譯器優化之RVO 與NRVO</a>**
-
-**<a href = "https://blog.csdn.net/Virtual_Func/article/details/48709617" class = "redlink">72. 詳解RVO與NRVO（區別於網上常見的RVO）</a>**
-
-**<a href = "https://www.cnblogs.com/kekec/p/11303391.html" class = "redlink">73. C++編譯器優化技術：RVO、NRVO和復制省略</a>**
-
-**<a href = "https://stackoverflow.com/questions/9227608/why-does-does-not-nrvo-kick-in-g-in-the-code-below" class = "redlink">74. Why does/ does not NRVO kick in g++ in the code below?</a>**
-
-**<a href = "https://www.reddit.com/r/cpp/comments/j25t46/explicit_nrvo_proposal/" class = "redlink">75. Explicit NRVO Proposal</a>**
-
-**<a href = "https://sigcpp.github.io/2020/06/08/return-value-optimization" class = "redlink">76. Return value optimization (RVO)</a>**
-
-**<a href = "https://stackoverflow.com/questions/274626/what-is-object-slicing" class = "redlink">77. What is object slicing?</a>**
-
-**<a href = "https://stackoverflow.com/questions/9779079/why-does-c11-have-implicit-moves-for-value-parameters-but-not-for-rvalue-para" class = "redlink">78. Why does C++11 have implicit moves for value parameters, but not for rvalue parameters?</a>**
-
-**<a href = "https://en.cppreference.com/w/cpp/language/move_constructor" class = "redlink">79. Move constructors</a>** (cppreference)
-
-**<a href = "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1155r0.html" class = "redlink">80. More implicit moves</a>** (P1155R0)
-
-**<a href = "http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1155r3.html" class = "redlink">81. More implicit moves</a>** (P1155R3)
-
-**<a href = "https://en.cppreference.com/w/cpp/language/rule_of_three" class = "redlink">82. The rule of three/five/zero</a>** (cppreference)
-
-**<a href = "https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF%E8%B6%85%E7%B7%A8%E7%A8%8B" class = "redlink">83. 模板超程式設計</a>**
-
-**<a href = "https://tjsw.medium.com/%E6%BD%AE-c-%E7%B7%A8%E8%AD%AF%E6%9C%9F%E7%AE%97%E5%85%AB%E7%9A%87%E5%90%8E%E6%89%80%E6%9C%89%E8%A7%A3-compile-time-8-queens-d872bc063bdc" class = "redlink">84. 潮．C++ | 編譯期算八皇后所有解 Compile-time 8-Queens</a>**
-
-**<a href = "https://medium.com/@barryrevzin/value-categories-in-c-17-f56ae54bccbe" class = "redlink">85. Value Categories in C++17</a>**
+- [1. [CppDay20] Understanding value categories in C++ (Kris van Rens)](https://www.youtube.com/watch?v=km3Urog_wzk&ab_channel=ItalianCppCommunity") (文章部分來源，感謝 kris 提供授權)
+- [2. Identifiers (cppreference)](https://en.cppreference.com/w/cpp/language/identifiers")
+- [3. Value Category（值類別）- 1 / 2](https://eopxd.com/2021/02/03/value-category-1/")
+- [4. Value Category（值類別）- 2 / 2](https://eopxd.com/2021/02/03/value-category-2/")
+- [5. C++ Type and Value Category for Expression and Variable](https://stackoverflow.com/questions/36349360/c-type-and-value-category-for-expression-and-variable")
+- [6. Lvalue to rvalue reference binding](https://stackoverflow.com/questions/20583531/lvalue-to-rvalue-reference-binding#comment-30793019")
+- [7. Value categories (cppreference)](https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo") (文章部分來源)
+- [8. What are rvalues, lvalues, xvalues, glvalues, and prvalues?](https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues?fbclid=IwAR1BIns58XNgIy3KmXgFuc33KHkUC1mS10nUYvQec6BqxXK5BlUXM_f9UfE")
+- [9. A Taxonomy of Expression Value Categories](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3055.pdf")
+- [10. [C++] move semantic 的誤解](https://shininglionking.blogspot.com/2018/05/c-move-semantic.html")
+- [11. [心得] Compound literals, flexible array members](https://www.ptt.cc/man/C_and_CPP/DB9B/DC33/M.1271034153.A.7F9.html")
+- [12. How can a string literal be an lvalue?](https://www.reddit.com/r/cpp_questions/comments/8anfud/how_can_a_string_literal_be_an_lvalue/")
+- [13. Why are string literals l-value while all other literals are r-value?](https://stackoverflow.com/questions/10004511/why-are-string-literals-l-value-while-all-other-literals-are-r-value")
+- [14. compound literals](https://en.cppreference.com/w/c/language/compound_literal") (cppreference)
+- [15. Statements](https://en.cppreference.com/w/cpp/language/statements") (cppreference)
+- [16. Type](https://en.cppreference.com/w/cpp/language/type") (cppreference)
+- [17. lvalues and rvalues in C++](https://www.youtube.com/watch?v=fbYknr-HPYE&ab_channel=TheCherno")
+- [18. Move Semantics in C++](https://www.youtube.com/watch?v=ehMg6zvXuMY&ab_channel=TheCherno")
+- [19. std::move and the Move Assignment Operator in C++](https://www.youtube.com/watch?v=OWNeCTd7yQE&ab_channel=TheCherno")
+- [20. 值類別，以及其參考](https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94")
+- [21. identity VS identifier in c++](https://stackoverflow.com/questions/50785535/identity-vs-identifier-in-c)
+- [22. Types of Expressions](https://docs.microsoft.com/zh-tw/cpp/cpp/types-of-expressions?view=msvc-160")
+- [23. What is an Expression and What are the types of Expressions?](https://www.geeksforgeeks.org/what-is-an-expression-and-what-are-the-types-of-expressions/")
+- [24. Identifier expressions (C++ only)](https://www.ibm.com/docs/en/i/7.3?topic=expressions-identifier-c-only")
+- [25. Expressions](http://eel.is/c++draft/expr#conv.rval")
+- [26. Integral Types](https://www.cs.auckland.ac.nz/references/unix/digital/AQTLTBTE/DOCU_032.HTM")
+- [27. Boolean conversions](https://en.cppreference.com/w/cpp/language/implicit_conversion#Boolean_conversions") (cppreference)
+- [28. Static vs dynamic type checking in C++](https://stackoverflow.com/questions/1347691/static-vs-dynamic-type-checking-in-c")
+- [29. What is an rvalue reference to function type?](https://stackoverflow.com/questions/7016777/what-is-an-rvalue-reference-to-function-type")
+- [30. 淺析std::ref與reference_wrapper](https://blog.csdn.net/u014645632/article/details/78966340")
+- [31. rvalue reference to function](https://stackoverflow.com/questions/25146508/rvalue-reference-to-function")
+- [32. Is it legal to cast a non-class non-array prvalue to a cv-qualified type?](https://stackoverflow.com/questions/42930598/is-it-legal-to-cast-a-non-class-non-array-prvalue-to-a-cv-qualified-type")
+- [33. abstract class](https://en.cppreference.com/w/cpp/language/abstract_class") (cppreference)
+- [34. Guaranteed Copy Elision Does Not Elide Copies](https://devblogs.microsoft.com/cppblog/guaranteed-copy-elision-does-not-elide-copies/")
+- [35. storage duration vs lifetime](https://stackoverflow.com/questions/21392160/storage-duration-vs-lifetime")
+- [36. Object](https://en.cppreference.com/w/cpp/language/object") (cpprefernce)
+- [37. Why are function expressions returning non-reference types considered to be prvalues and not xvalues?](https://stackoverflow.com/questions/42043414/why-are-function-expressions-returning-non-reference-types-considered-to-be-prva")
+- [38. What are copy elision and return value optimization?](https://stackoverflow.com/questions/12953127/what-are-copy-elision-and-return-value-optimization/12953150?fbclid=IwAR3nCd45hj09HtaKwDydF3Ouje_VzfQKP336gJPbRjNnmflu7fzlBmqJByA#12953150")
+- [39. Copy elision](https://en.cppreference.com/w/cpp/language/copy_elision") (cppreference)
+- [40. Reference declaration](https://en.cppreference.com/w/cpp/language/reference") (cppreference)
+- [41. Reference initialization](https://en.cppreference.com/w/cpp/language/reference_initialization#Lifetime_of_a_temporary") (cppreference)
+- [42. 淺談C++11標準中的複製省略 (copy elision, 也叫RVO返回值優化)](https://blog.csdn.net/davidhopper/article/details/90696200")
+- [43. Wording for guaranteed copy elision through simplified value categories](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0135r1.html")
+- [44. What does it mean “xvalue has identity”?](https://stackoverflow.com/questions/50783525/what-does-it-mean-xvalue-has-identity")
+- [45. Is there any way to find the address of a reference?](https://stackoverflow.com/questions/1950779/is-there-any-way-to-find-the-address-of-a-reference")
+- [46. What are the differences between a pointer variable and a reference variable in C++?](https://stackoverflow.com/questions/57483/what-are-the-differences-between-a-pointer-variable-and-a-reference-variable-in?page=2&tab=votes#tab-top")
+- [47. What does it mean that a reference must refer to an object, not a dereferenced null pointer?](https://isocpp.org/wiki/faq/references#refs-not-null")
+- [48. Is always the address of a reference equal to the address of origin?](https://stackoverflow.com/questions/45821678/is-always-the-address-of-a-reference-equal-to-the-address-of-origin")
+- [49. Is a struct's address the same as its first member's address?](https://stackoverflow.com/questions/9254605/is-a-structs-address-the-same-as-its-first-members-address")
+- [50. Variables and Memory](http://annwm.lbl.gov/~leggett/vars.html")
+- [51. C++ how are variables accessed in memory?](https://stackoverflow.com/questions/35175795/c-how-are-variables-accessed-in-memory")
+- [52. Is the cppreference definition of non-static data member wrong?](https://stackoverflow.com/questions/41148054/is-the-cppreference-definition-of-non-static-data-member-wrong")
+- [53. Why is a non-static data member reference not a variable?](https://stackoverflow.com/questions/12987259/why-is-a-non-static-data-member-reference-not-a-variable")
+- [54. Guaranteed copy elision through simplified value categories ](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0135r0.html") (P0135R0)
+- [55. How does guaranteed copy elision work?](https://stackoverflow.com/questions/38043319/how-does-guaranteed-copy-elision-work")
+- [56. Temporary materialization during array-to-pointer conversion](https://stackoverflow.com/questions/57392150/temporary-materialization-during-array-to-pointer-conversion")
+- [57. standard conversions: Array-to-pointer conversion](https://stackoverflow.com/questions/4223617/standard-conversions-array-to-pointer-conversion")
+- [58. I think I may have come up with an example of rvalue of array type](https://stackoverflow.com/questions/4058151/i-think-i-may-have-come-up-with-an-example-of-rvalue-of-array-type")
+- [59. static_cast conversion](https://en.cppreference.com/w/cpp/language/static_cast") (cppreference)
+- [60. copy elision in c++03](https://stackoverflow.com/questions/66422584/copy-elision-in-c03")
+- [61. Guaranteed Copy Elision](https://jonasdevlieghere.com/guaranteed-copy-elision/")
+- [62. No unique address attribute](https://eel.is/c++draft/dcl.attr.nouniqueaddr")
+- [63. C++ attribute: no_unique_address](https://en.cppreference.com/w/cpp/language/attributes/no_unique_address") (cppreference)
+- [64. Placement new base subobject of derived in C++](https://stackoverflow.com/questions/52884257/placement-new-base-subobject-of-derived-in-c")
+- [65. The Coroutine in C++ 20 協程初探](https://zhuanlan.zhihu.com/p/237952115")
+- [66. What are unevaluated operands in C++?](https://humanreadablemag.com/issues/0/articles/what-are-unevaluated-operands-in-c")
+- [67. return statement](https://en.cppreference.com/w/cpp/language/return") (cppreference)
+- [68. [計程] 變數的儲存週期](https://www.ptt.cc/bbs/b97902HW/M.1226692638.A.F2B.html")
+- [69. 變數儲存期間](https://sites.google.com/a/qtm.ks.edu.tw/qtm052-org/cheng-shi-she-ji/visual-c/5-bian-shu-chu-cun-qi-jian")
+- [70. C++軟體開發 - 返回值優化、具名返回值優化、複製省略 概念與實例](http://wucodingroad.blogspot.com/2017/05/Cplusplus-copyelision.html")
+- [71. C++ 編譯器優化之RVO 與NRVO](https://www.yhspy.com/2019/09/01/C-%E7%BC%96%E8%AF%91%E5%99%A8%E4%BC%98%E5%8C%96%E4%B9%8B-RVO-%E4%B8%8E-NRVO/")
+- [72. 詳解RVO與NRVO（區別於網上常見的RVO）](https://blog.csdn.net/Virtual_Func/article/details/48709617")
+- [73. C++編譯器優化技術：RVO、NRVO和復制省略](https://www.cnblogs.com/kekec/p/11303391.html")
+- [74. Why does/ does not NRVO kick in g++ in the code below?](https://stackoverflow.com/questions/9227608/why-does-does-not-nrvo-kick-in-g-in-the-code-below")
+- [75. Explicit NRVO Proposal](https://www.reddit.com/r/cpp/comments/j25t46/explicit_nrvo_proposal/")
+- [76. Return value optimization (RVO)](https://sigcpp.github.io/2020/06/08/return-value-optimization")
+- [77. What is object slicing?](https://stackoverflow.com/questions/274626/what-is-object-slicing")
+- [78. Why does C++11 have implicit moves for value parameters, but not for rvalue parameters?](https://stackoverflow.com/questions/9779079/why-does-c11-have-implicit-moves-for-value-parameters-but-not-for-rvalue-para")
+- [79. Move constructors](https://en.cppreference.com/w/cpp/language/move_constructor") (cppreference)
+- [80. More implicit moves](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1155r0.html") (P1155R0)
+- [81. More implicit moves](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1155r3.html") (P1155R3)
+- [82. The rule of three/five/zero](https://en.cppreference.com/w/cpp/language/rule_of_three") (cppreference)
+- [83. 模板超程式設計](https://zh.wikipedia.org/wiki/%E6%A8%A1%E6%9D%BF%E8%B6%85%E7%B7%A8%E7%A8%8B")
+- [84. 潮．C++ | 編譯期算八皇后所有解 Compile-time 8-Queens](https://tjsw.medium.com/%E6%BD%AE-c-%E7%B7%A8%E8%AD%AF%E6%9C%9F%E7%AE%97%E5%85%AB%E7%9A%87%E5%90%8E%E6%89%80%E6%9C%89%E8%A7%A3-compile-time-8-queens-d872bc063bdc")
+- [85. Value Categories in C++17](https://medium.com/@barryrevzin/value-categories-in-c-17-f56ae54bccbe")
