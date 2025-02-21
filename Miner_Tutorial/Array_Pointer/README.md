@@ -285,7 +285,7 @@ int main()
 
 <center>
 
-<img src="https://github.com/Mes0903/Cpp-Miner/tree/standard-markdown/Miner_Tutorial/Array_Pointer/image/pointer.png?raw=true"><br>
+<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Array_Pointer/image/pointer.png?raw=true"><br>
 
 </center>
 

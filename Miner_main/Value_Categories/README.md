@@ -5,7 +5,7 @@ tag: C++ Miner
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 值類別 Value Categoraries <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>
+<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>值類別 Value Categoraries</center></h1>
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
@@ -155,7 +155,7 @@ Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</str
 
 [圖源](https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94)<br>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image3.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image4.png?raw=true">
 
 [圖源](https://openhome.cc/Gossip/CppGossip/RvalueReference.html)
 
