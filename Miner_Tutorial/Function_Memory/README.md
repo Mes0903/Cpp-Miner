@@ -1,11 +1,8 @@
 ---
 title: C++ 教學系列 ── Function 與 Memory
 date: 2022-03-22
-mathjax: true
-description: 本文講解了函式和與函式的記憶體配置
-tags: C++ Miner_tutorial
-categories:
-- C++ Miner
+tag: C++ Miner-tutorial
+category: C++ Miner
 ---
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Function 與 Memory <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  

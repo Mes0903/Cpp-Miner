@@ -1,10 +1,8 @@
 ---
 title: 礦坑系列 ── 四個你不該用 "const" 的時機
 date: 2022-05-21
-description: 主要原因是因為 const 會破壞移動，所以整理了幾個例子
-tags: C++ Miner-BlackMagic
-categories:
-- C++ Miner
+tag: C++ Miner-BlackMagic
+category: C++ Miner
 ---
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 四個你不該用 "const" 的時機 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>

@@ -1,10 +1,8 @@
 ---
 title: C++ 教學系列 ── Array 與 Pointer
 date: 2022-03-14 
-description: Array 與 int、char、bool 一樣是一種型態，稱為 array type，初學者常常把它跟 pointer 搞混，所以最好在一開始學的時候就把它們分清楚
-tags: C++ Miner_tutorial
-categories:
-- C++ Miner
+tag: C++ Miner-tutorial
+category: C++ Miner
 ---
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Array 與 Pointer <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  

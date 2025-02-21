@@ -1,10 +1,8 @@
 ---
 title: C++ 教學系列 ── Object、Expression、Statement
 date: 2022-02-25
-description: 本文介紹了 C++ 中 Object、Expression 與 Statement 的想法，這在 C++ 中是很重要的概念，然而對初學者比較不友善，大家可以斟酌閱讀，可以跳著看，吸收自己能理解的部分
-tags: C++ Miner_tutorial
-categories:
-- C++ Miner
+tag: C++ Miner-tutorial
+category: C++ Miner
 ---
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Object、Expression、Statement <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
@@ -527,7 +525,7 @@ int main() {
 
 compound statement 又稱為 block，由一些小的 statement 組成，小的 statement 稱為 substatement，語法像這樣：  
 
-> { statement...(opt) }  
+> \{ statement...(opt) \}  
 
 我們會利用 `{}` 來建立 block，當一個預期只能擺一個 statement 的地方，需要多個 statement 時，我們就能夠利用複合陳述句來包裝，每個複合陳述句會建立自己的 scope，變數離開 scope 時會被解構，忘記的可以回到上面複習一下。  
 

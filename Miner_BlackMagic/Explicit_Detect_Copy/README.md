@@ -1,10 +1,8 @@
 ---
 title: 礦坑系列 ── 用 "explicit" 來偵測複製
 date: 2022-05-22
-description: 有時候某些型態的物件的 copy 非常的貴，所以我們不會希望他在每個地方都被複製一次，造成效能上的損失，這時我們可以使用 explicit 來看我們是否有不小心造成物件的複製
-tags: C++ Miner-BlackMagic
-categories:
-- C++ Miner
+tag: C++ Miner-BlackMagic
+category: C++ Miner
 ---
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 用 "explicit" 來偵測複製 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>

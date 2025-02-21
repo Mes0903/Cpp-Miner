@@ -1,10 +1,8 @@
 ---
 title: 礦坑系列 ── 序
 date: 2021-05-14
-abstract: 這是礦坑系列的序，給了一些好用的資源連結，順便講了一些廢話
-tags: C++ Miner
-categories:
-- C++ Miner
+tag: C++ Miner
+category: C++ Miner
 ---
 
 <h1 class><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 序 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>

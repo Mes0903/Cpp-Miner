@@ -1,10 +1,8 @@
 ---
 title: C++ 教學系列 ── Class
 date: 2022-04-28
-description: Class 背後最核心的概念是資料的抽象化與資料封裝。這些是一種程式設計上的技巧、想法，其清楚區分了介面和實作的不同，介面是與使用者直接互動的運算，實作則是利用了 Class 內的資料成員與成員函式來寫出的演算法，而封裝則是強制分開了介面與實作，實作會被隱藏，使用者只看的到介面，但看不到實作
-tags: C++ Miner_tutorial
-categories:
-- C++ Miner
+tag: C++ Miner-tutorial
+category: C++ Miner
 ---
 
 <h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 ── Class <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></center></h1>  
