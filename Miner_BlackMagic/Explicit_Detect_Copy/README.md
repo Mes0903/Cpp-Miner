@@ -17,13 +17,13 @@ source：[C++ Weekly - Ep 241 - Using explicit to Find Expensive Accidental Copi
 
 source：[C++ Weekly - Ep - 198 - Surprise Uses For explicit Constructors](https://www.youtube.com/watch?v=Q4SXFkTzD28)
 
-複製常常是我們傳資料的一種選擇，如把某個東西傳到 thread 內時，這樣就不用去擔心 sharing 的問題，通常這會是一個很好的解法。
+複製常常是我們傳資料的一種選擇，如把某個東西傳到 thread 內時，這樣就不用去擔心 sharing 的問題，通常這會是一個很好的解法
 
-又或有時候我們會有小物件，像是 string view，使用 copy 來傳遞參數也是一個很好的選擇，因為他的大小只有 2 個 pointer 的大小，在現代的 x64 calling convention 架構下這可以用 2 個 register 來包裝，這比把參數 push 進 stack 或透過 pointer/reference 來存取某段位址等等的更有效率。
+又或有時候我們會有小物件，像是 string view，使用 copy 來傳遞參數也是一個很好的選擇，因為他的大小只有 2 個 pointer 的大小，在現代的 x64 calling convention 架構下這可以用 2 個 register 來包裝，這比把參數 push 進 stack 或透過 pointer/reference 來存取某段位址等等的更有效率
 
-因此 copy 常常是一個更好的選擇，至於該如何有效的使用複製，寫出 cache friendly 的 code 可以再去看看 Jserv 老師的課程。
+因此 copy 常常是一個更好的選擇，至於該如何有效的使用複製，寫出 cache friendly 的 code 可以再去看看 Jserv 老師的課程
 
-不過有時候某些型態的物件的 copy 非常的貴，所以我們不會希望他在每個地方都被複製一次，造成效能上的損失，這時我們可以使用 `explicit` 來看我們是否有不小心造成物件的複製。
+不過有時候某些型態的物件的 copy 非常的貴，所以我們不會希望他在每個地方都被複製一次，造成效能上的損失，這時我們可以使用 `explicit` 來看我們是否有不小心造成物件的複製
 
 先看一下 `explicit` 用在建構子上的狀況：
 
@@ -42,7 +42,7 @@ int main()
 }
 ```
 
-上例中我們在 `S(int)` 前用了 `explicit` 修飾，因為沒有可用的轉型把 `10` 轉為 `S`，因此 `fn(10)` 被擋掉了，除非我們顯式的做了轉型，把 `10` 作為 `S` 傳入，否則不會過編譯。
+上例中我們在 `S(int)` 前用了 `explicit` 修飾，因為沒有可用的轉型把 `10` 轉為 `S`，因此 `fn(10)` 被擋掉了，除非我們顯式的做了轉型，把 `10` 作為 `S` 傳入，否則不會過編譯
 
 這可以幫助我們去檢查不小心造成的複製，例如下面這個例子：
 
@@ -102,11 +102,11 @@ int main()
 }
 ```
 
-可以看見我們需要顯式的呼叫 copy 才可以，否則會被擋下來。
+可以看見我們需要顯式的呼叫 copy 才可以，否則會被擋下來
 
-這在 `S` 這個物件的複製非常貴的時候有用，不過可能會在 code 的可讀性上帶來一定程度的影響，因此我自己覺得最好的辦法還是把 copy 的優化寫好，並且讓其是 implicit safe 的設計最好，但不管如何，這還是個很有用的工具，在你需要一次性的檢查到底哪裡有複製時很有用。
+這在 `S` 這個物件的複製非常貴的時候有用，不過可能會在 code 的可讀性上帶來一定程度的影響，因此我自己覺得最好的辦法還是把 copy 的優化寫好，並且讓其是 implicit safe 的設計最好，但不管如何，這還是個很有用的工具，在你需要一次性的檢查到底哪裡有複製時很有用
 
-另外，對於 one single argument 的建構子來說，加上 explicit 是個很好的習慣，這可以幫助你避免很多意外的隱式轉換，這大概也是 C++ 有那麼多奇怪的 cast 的原因之一。
+另外，對於 one single argument 的建構子來說，加上 explicit 是個很好的習慣，這可以幫助你避免很多意外的隱式轉換，這大概也是 C++ 有那麼多奇怪的 cast 的原因之一
 
 想像一下如果 `>>` 的 bool conversion 不是 explicit 會發生什麼事：
 ```cpp
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
 }
 ```
 
-上面這個例子由於 `explicit`，他破壞了 NRVO 優化，此時他想要去用 move，但我們沒有寫，所以無法通過編譯。
+上面這個例子由於 `explicit`，他破壞了 NRVO 優化，此時他想要去用 move，但我們沒有寫，所以無法通過編譯
 
 此時<span class = "yellow">黑魔法</span>來了，我們把移動建構子加上：
 ```cpp
@@ -181,6 +181,6 @@ int main(int argc, char *argv[])
 
 結果你會發現他不去呼叫移動，NRVO 回來了，我第一次看到的時候真的覺得太神奇了，不過 NRVO 畢竟不保證發動，但最少仍會有移動，所以這樣是 OK 的，由此可見還是要<span class = "yellow">遵守 Rule of three/five</span>
 
-總之最後的結果就是可以用這個來測試、偵測，若要拿來<span class = "yellow">避免</span>複製還是有一些難度，但至少可以拿來避免隱式轉型，在 one single argument 的建構子前加上 `explicit` 會是個很好的習慣。
+總之最後的結果就是可以用這個來測試、偵測，若要拿來<span class = "yellow">避免</span>複製還是有一些難度，但至少可以拿來避免隱式轉型，在 one single argument 的建構子前加上 `explicit` 會是個很好的習慣
 
 <center>(感謝社團內的 <I>Actual Wizard</I> wreien 提供例子)</center><br>

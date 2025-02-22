@@ -49,7 +49,7 @@ int main()
 }
 ```
 
-由於 `std::move()` 基本上是在做轉型，這會保留 const 的修飾，因此若原物件有 const 修飾，就需要使用 const rvalue reference 來做繫結，也因此他會無法去呼叫移動建構子，破壞了移動。
+由於 `std::move()` 基本上是在做轉型，這會保留 const 的修飾，因此若原物件有 const 修飾，就需要使用 const rvalue reference 來做繫結，也因此他會無法去呼叫移動建構子，破壞了移動
 
 由此可知 `const` 也會破壞隱式移動(implicit move)，有關隱式移動，可以去看之前寫得值類別篇。這邊 Jason Turner 給了四個要注意不該使用 `const` 的例子：
 
@@ -114,11 +114,11 @@ end
 ~S()
 ~S()
 ```
-這邊有兩個 function，上面那個在 return type 上有 `const` 修飾，下面的沒有。你可以看見上面那個使用的是 copy，而下面那個使用的是 move。
+這邊有兩個 function，上面那個在 return type 上有 `const` 修飾，下面的沒有。你可以看見上面那個使用的是 copy，而下面那個使用的是 move
 
-原因就如前面所述，一旦加上了 `const`，reference 要連結時就變成要使用 const rvalue reference，但通常 const rvalue reference 並不會有用處(幾乎沒意義，很多餘)，因此通常我們函式不會實作 const rvalue reference 的版本，也因此會去呼叫複製，破壞了隱式移動。
+原因就如前面所述，一旦加上了 `const`，reference 要連結時就變成要使用 const rvalue reference，但通常 const rvalue reference 並不會有用處(幾乎沒意義，很多餘)，因此通常我們函式不會實作 const rvalue reference 的版本，也因此會去呼叫複製，破壞了隱式移動
 
-當然，const rvalue reference 偶爾會有用就是了，真的很偶爾。
+當然，const rvalue reference 偶爾會有用就是了，真的很偶爾
 
 額外閱讀：[Do rvalue references to const have any use?](https://stackoverflow.com/questions/4938875/do-rvalue-references-to-const-have-any-use)
 
@@ -163,7 +163,7 @@ S(const S &)
 ~S()
 ~S()
 ```
-function 內回傳的是有名物件，因此套用的是 NRVO，但因為有 branch，因此編譯器會嘗試去做隱式移動，然而一樣由於無法利用 rvalue reference 去做連結，因此無法套用移動，導致去呼叫了 copy。
+function 內回傳的是有名物件，因此套用的是 NRVO，但因為有 branch，因此編譯器會嘗試去做隱式移動，然而一樣由於無法利用 rvalue reference 去做連結，因此無法套用移動，導致去呼叫了 copy
 
 ## 在你可能需要直接回傳的 non-trivial 參數上，不應該用 const 修飾
 原因跟前面都一樣，因為會破壞隱式移動，看這個例子：
@@ -201,7 +201,7 @@ S(const S &)
 ~S()
 ```
 
-當然我們可能會使用 const reference，那就沒關係，但這邊討論的是一般的 pass by value 的狀況。
+當然我們可能會使用 const reference，那就沒關係，但這邊討論的是一般的 pass by value 的狀況
 
 額外閱讀：[What is a non-trivial constructor in C++?](https://stackoverflow.com/questions/3899223/what-is-a-non-trivial-constructor-in-c) 
 
@@ -239,7 +239,7 @@ S(const S &)
 ~S()
 ```
 
-上例中你可以看見 s 使用的並不是 move 而是 copy，這跟我們大部分時候預期的不太一樣，除非你有特殊用途。
+上例中你可以看見 s 使用的並不是 move 而是 copy，這跟我們大部分時候預期的不太一樣，除非你有特殊用途
 
 這在我們要使用 STL 容器時會有些問題：
 

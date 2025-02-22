@@ -73,7 +73,7 @@ struct basic_string
 
 </center>
 
-至於 buffer 的大小具體要是多少就要看你的編譯器實作了，太大會導致記憶體的浪費，太小則會增加程式碼的複雜度。 在 VS2019 的 msvc 裡是 15 個字，而在我的環境上(mingw-gcc 11.2.0) 也是 15。
+至於 buffer 的大小具體要是多少就要看你的編譯器實作了，太大會導致記憶體的浪費，太小則會增加程式碼的複雜度。 在 VS2019 的 msvc 裡是 15 個字，而在我的環境上(mingw-gcc 11.2.0) 也是 15
 
 很多人可能會覺得 `std::string` 會有 heap allocation 因此不去用他：
 
@@ -91,7 +91,7 @@ int main()
 }
 ```
 
-而會選擇去使用 const char pointer 來減少負擔，然而以這個例子來講，因為這個字串長度很短，所以其實根本不會使用到 heap 段，負擔也很小。
+而會選擇去使用 const char pointer 來減少負擔，然而以這個例子來講，因為這個字串長度很短，所以其實根本不會使用到 heap 段，負擔也很小
 
 ## 使用 union 包裝變數
 
@@ -265,9 +265,9 @@ str2:
 Allocating 17 bytes
 ```
 
-上面我們 overload 了 `new` operator，因此當它要 allocate heap 空間時就會多輸出一段文字，而我們可以看見 `str` 因為只有 15 個字，所以不會分配 heap 段的記憶體，但 `str2` 就有了，這裡分配的是 17 bytes，clang 14.0.0 也是分配 17 bytes，然而 VS2019 的 msvc 則是 32 bytes。
+上面我們 overload 了 `new` operator，因此當它要 allocate heap 空間時就會多輸出一段文字，而我們可以看見 `str` 因為只有 15 個字，所以不會分配 heap 段的記憶體，但 `str2` 就有了，這裡分配的是 17 bytes，clang 14.0.0 也是分配 17 bytes，然而 VS2019 的 msvc 則是 32 bytes
 
-如果你的環境上沒有跑出一樣的結果大概是因為你那邊它有自己的 extension 我猜，如 tcc、icc file 之類的，內部實作可能就有些許差異，又或者你是在 Debug 模式下輸出的結果也有可能不同。
+如果你的環境上沒有跑出一樣的結果大概是因為你那邊它有自己的 extension 我猜，如 tcc、icc file 之類的，內部實作可能就有些許差異，又或者你是在 Debug 模式下輸出的結果也有可能不同
 
 ## 入坑挖礦
 

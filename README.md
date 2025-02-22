@@ -15,23 +15,23 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 # 前言 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
-這是一本介紹 Modern C++ 與一些 C++ 深度解析的書，從我的 hackmd 搬運而來，你可以從[這裡](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)看見文章一覽。 如果您是 C++ 新手，我會建議您先去看 Miner Tutorial 的部分，裡面對初學者會學到的東西做了簡單的介紹，可以幫助大家理解、回憶一些基礎知識，同時可以讓你習慣本書風格。
+這是一本介紹 Modern C++ 與一些 C++ 深度解析的書，從我的 hackmd 搬運而來，你可以從[這裡](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)看見文章一覽。 如果您是 C++ 新手，我會建議您先去看 Miner Tutorial 的部分，裡面對初學者會學到的東西做了簡單的介紹，可以幫助大家理解、回憶一些基礎知識，同時可以讓你習慣本書風格
 
 讀著讀著便來到了 Modern C++，語法和文法比以往的 C、C++03 複雜很多，而且在找文章閱讀時發現網路上中文的資源其實沒有想像中的多，受到 Jserv 老師「你所不知道的 C 語言系列」啟發，想著那就自己來寫吧! 於是就有了這個礦坑系列~
 
-原本想說是一個禮拜一篇，但後來發現每篇文章的撰寫時間大概會需要到 50 小時，一個禮拜要一篇實在是有點難哈哈，~~所以後來調整的速度大概會是一個月一篇左右，也有可能兩篇，但也有可能 0 篇QQ~~，後來大約是三個月一篇的速度，若是短篇，像是黑魔法，可能一兩個禮拜便能寫好了，要看寫的內容而定。
+原本想說是一個禮拜一篇，但後來發現每篇文章的撰寫時間大概會需要到 50 小時，一個禮拜要一篇實在是有點難哈哈，~~所以後來調整的速度大概會是一個月一篇左右，也有可能兩篇，但也有可能 0 篇QQ~~，後來大約是三個月一篇的速度，若是短篇，像是黑魔法，可能一兩個禮拜便能寫好了，要看寫的內容而定
 
-文章的內容主要會是 Cppreference、draft 或一些好文章的翻譯，可以的話會把語法底層的一些原理也寫進去，可能會碰到一點編譯器和組語，希望能夠寫得盡量詳細，如果有什麼想看的或想補充的也都歡迎留言或私訊告訴我。
+文章的內容主要會是 Cppreference、draft 或一些好文章的翻譯，可以的話會把語法底層的一些原理也寫進去，可能會碰到一點編譯器和組語，希望能夠寫得盡量詳細，如果有什麼想看的或想補充的也都歡迎留言或私訊告訴我
 
 而取叫礦坑的原因是因為在寫這類文章的時候要挖的東西實在是太多了XD 常常需要挖到 C++ 會議的討論紀錄之類的，像是礦坑那樣深不見底，而想要的東西像鑽石一樣十分難找，自己就像個礦工一樣不停地往內部探索，所以就取叫礦坑系列啦!
 
-感謝一路上教我許多東西的老師、朋友與 Stackoverflow、Discord 上那些不認識但十分熱心的人們。
+感謝一路上教我許多東西的老師、朋友與 Stackoverflow、Discord 上那些不認識但十分熱心的人們
 
 # Summary 文章一覽 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
 ## Miner Tutorial 新手教學
 
-此處為新手教學，可以幫助大家回憶以前的東西，並幫助理解基礎 C++ 與熟悉本書風格。
+此處為新手教學，可以幫助大家回憶以前的東西，並幫助理解基礎 C++ 與熟悉本書風格
 
 + [Windows 內的 C++ 與 Vscode 環境建置](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Environment_Building) 
 + [Object、Expression 與 Statement](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Object_Expression_Statement)  
@@ -65,11 +65,11 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 # 貢獻此書 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
-如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mailto:mes900903@gmail.com)，也可以加我 Discord `mes_0903`。
+如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mailto:mes900903@gmail.com)，也可以加我 Discord `mes_0903`
 
-如果發現有錯字，可以到 hackmd 處直接修改，我會收到信件通知，你也可以直接發 PR，從 hackmd 搬過來有些格式可能會跑掉，若你發現格式長得有點奇怪，該換行的地方沒有換行等等的，也歡迎告訴我。
+如果發現有錯字，可以到 hackmd 處直接修改，我會收到信件通知，你也可以直接發 PR，從 hackmd 搬過來有些格式可能會跑掉，若你發現格式長得有點奇怪，該換行的地方沒有換行等等的，也歡迎告訴我
 
-如果由於版本更新導致文章內容已與事實不符，也歡迎進行更新，文章有時內容會過於艱澀導致我無法翻譯，若你有能力且樂意幫忙翻譯，也很歡迎您修改。
+如果由於版本更新導致文章內容已與事實不符，也歡迎進行更新，文章有時內容會過於艱澀導致我無法翻譯，若你有能力且樂意幫忙翻譯，也很歡迎您修改
 
 # 關於我 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
@@ -79,7 +79,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 - Facebook：[鄭詠澤](https://www.facebook.com/Mes0903/)
 - Youtube：[Mes](https://www.youtube.com/channel/UCT3MbveOznWLlxNIdLUUOhg)
 
-興趣是寫作、Compiler、OS、C++、Assembly，偶爾會去攝影，會在 IG 上寫雜記和分享家裡的貓咪照片，FB 版上全是分享別人動物的貼文，~~愜意的生活~~。
+興趣是寫作、Compiler、OS、C++、Assembly，偶爾會去攝影，會在 IG 上寫雜記和分享家裡的貓咪照片，FB 版上全是分享別人動物的貼文，~~愜意的生活~~
 
 # <span class = "orange">一些資源</span> <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
@@ -97,9 +97,9 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 + <strong><a href = "https://discord.gg/ypvyFDugM8" class = "wheatlink">中學資訊討論群</a></strong>
 
-如果有哪個連結失效了還請留言或私訊告訴我，我都選了永久的，應該是不會失效才對XD 我非常建議大家加入 Discord 群組討論，Telegram 據我所知還沒有這麼多的群組，而 Discord 有一個優點就是資訊流通的速度非常快，你問完問題馬上就會有人回答了，如果不懂你能馬上再回問她，相較於 FB 社團，甚至是 Email 問外國演講者、作者問題之類的，速度會快上許多。
+如果有哪個連結失效了還請留言或私訊告訴我，我都選了永久的，應該是不會失效才對XD 我非常建議大家加入 Discord 群組討論，Telegram 據我所知還沒有這麼多的群組，而 Discord 有一個優點就是資訊流通的速度非常快，你問完問題馬上就會有人回答了，如果不懂你能馬上再回問她，相較於 FB 社團，甚至是 Email 問外國演講者、作者問題之類的，速度會快上許多
 
-雖然自己思考問題是很好的進步方式，這樣的方式能讓你的思緒更清晰，對事情和原理的理解也會更透徹，但若到了一定階段你還沒思考出來，最好還是找一些人問一下會比較好，別人可能會從你從沒想過的角度來解釋問題，讓你豁然開朗。
+雖然自己思考問題是很好的進步方式，這樣的方式能讓你的思緒更清晰，對事情和原理的理解也會更透徹，但若到了一定階段你還沒思考出來，最好還是找一些人問一下會比較好，別人可能會從你從沒想過的角度來解釋問題，讓你豁然開朗
 
 再來是一些 C++ 的文件：
 
@@ -129,7 +129,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 </strong>
 
-你可以在 <a href = "https://en.cppreference.com/w/cpp/links" class = "wheatlink">Cppreference</a> 看到這些資訊，我的閱讀方式是 Drafts 配 Cppreference 來看，然後上網找例子或自己想一些例子來驗證，如果有不懂的就會到 Google 和 Stackoverflow 搜尋，有時候 CSDN 也會有答案，但就如我前面所說的，比較新的東西通常中文資源很少，不太會有什麼文章。不過據我所知，Drafts 這樣密密麻麻的英文字對許多人來說並不是很友善，所以我的方法可能並不適合你，希望你可以找到自己的方法。
+你可以在 <a href = "https://en.cppreference.com/w/cpp/links" class = "wheatlink">Cppreference</a> 看到這些資訊，我的閱讀方式是 Drafts 配 Cppreference 來看，然後上網找例子或自己想一些例子來驗證，如果有不懂的就會到 Google 和 Stackoverflow 搜尋，有時候 CSDN 也會有答案，但就如我前面所說的，比較新的東西通常中文資源很少，不太會有什麼文章。不過據我所知，Drafts 這樣密密麻麻的英文字對許多人來說並不是很友善，所以我的方法可能並不適合你，希望你可以找到自己的方法
 
 那如果一直找不到 (可能是比較深或偏向英文方面意思理解有困難等等)，那我就會到 Discord 群裡面發問，發問的方式可以參考 <strong><a href = "https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way" class = "wheatlink">How To Ask Questions The Smart Way</a></strong>，總之不要問那些一到 Google 就馬上可以找到的問題，如果你問完問題別人馬上丟了一個解答的網址給你，你應該要檢討一下XD 
 
@@ -155,6 +155,6 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 ---
 
-前言差不多就這樣啦，我是 Mes，一個喜愛 C++ 的人，主推 ina (x。
+前言差不多就這樣啦，我是 Mes，一個喜愛 C++ 的人，主推 ina (x
 
 <center><img src = "https://i.imgur.com/SLfT4YJ.png" height = 400></center>

@@ -218,7 +218,7 @@ int main()
 }
 ```
 
-這個便是標準中給的 well-defined 例子，在這裡我們會 catch 住 `std::bad_typeid` 進而輸出 `bad_exception`。
+這個便是標準中給的 well-defined 例子，在這裡我們會 catch 住 `std::bad_typeid` 進而輸出 `bad_exception`
 
 這邊 `*((A*)0)` 為 lvalue expression，根據標準，在 `typeid` 中它會 evaluated 並導致 `std::bad_exception`
 
