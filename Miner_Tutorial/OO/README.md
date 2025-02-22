@@ -1468,7 +1468,7 @@ int main() {
 
 downcasting 需要被顯式的寫出來，而且基類要是 polymorphic class，否則會報錯：  
 
-```cpp=
+```cpp
 #include <iostream>  
 
 class B {};  
