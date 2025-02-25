@@ -1,7 +1,7 @@
 ---
 title: 礦坑系列 ── Concept と SFINAE と Detection Idiom
 date: 2022-12-01
-tag: C++ Miner
+tag: C++ Miner-main
 category: C++ Miner
 ---
 

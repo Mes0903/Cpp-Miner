@@ -1,7 +1,7 @@
 ---
 title: 礦坑系列 ── 值類別 Value Categoraries
 date: 2021-04-27
-tag: C++ Miner
+tag: C++ Miner-main
 category: C++ Miner
 ---
 

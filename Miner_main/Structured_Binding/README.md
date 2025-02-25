@@ -1,7 +1,7 @@
 ---
 title: 礦坑系列 ── 結構化綁定 Structured Binding Declaration
 date: 2021-04-01
-tag: C++ Miner
+tag: C++ Miner-main
 category: C++ Miner
 ---
 

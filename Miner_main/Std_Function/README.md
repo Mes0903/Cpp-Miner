@@ -1,7 +1,7 @@
 ---
 title: 礦坑系列 ── std::function
 date: 2021-06-12
-tag: C++ Miner
+tag: C++ Miner-main
 category: C++ Miner
 ---
 

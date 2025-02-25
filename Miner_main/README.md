@@ -1,7 +1,7 @@
 ---
 title: 礦坑系列 ── C++03 ~ C++17 主要變化介紹
 date: 2022-05-23
-tag: C++ Miner
+tag: C++ Miner-main
 category: C++ Miner
 ---
 
