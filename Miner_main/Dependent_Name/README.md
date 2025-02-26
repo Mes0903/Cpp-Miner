@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言
+## 前言
 
 在對 C\+\+ 做語法解析的時候，編譯器需要知道某個名稱是不是一個型態，像是這個例子：
 
@@ -74,7 +74,7 @@ g(double)
 
 接下來我們就來詳細看一下 C\+\+ 中的名稱查找與待決名吧~
 
-# Unqualified Name & Qualified Name 
+## Unqualified Name & Qualified Name 
 
 Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫做「限定名稱」，這兩個名詞我比較習慣講英文，所以本文會用英文來來表達
 
@@ -107,7 +107,7 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 接下來標準內就是講講每項的細節，但重點主要放在 declaration 和 expression，跟我們在意的東西不一樣，所以有興趣的再點進去看ㄅ
 
-# 名稱查找
+## 名稱查找
 
 那在 C\+\+ 中，名稱查找有兩種分類方式，第一種比較正式，以 qualified 與 non qualified 來分：
 
@@ -128,11 +128,11 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 - [Qualified name lookup](https://en.cppreference.com/w/cpp/language/qualified_lookup)
 - [n4868(6.5)](https://timsong-cpp.github.io/cppwp/n4861/basic.lookup)
 
-## Unqualified Name lookup
+### Unqualified Name lookup
 
 接下來基本上就是一堆規則，名稱查找會按照每個對應規則中列出的順序在 scope 中尋找宣告，直到找到至少一個宣告就會停止名稱查找，如果沒有找到對應的宣告，則 program 為 ill-formed(簡單來說就是錯的)
 
-### 1. 全域/文件作用域 (Global scope/File scope)
+#### 1. 全域/文件作用域 (Global scope/File scope)
 
 在全域(top-level namespace) 範圍內使用的名稱，在任何函數、類別或使用者聲明的命名空間之外，應在其在全域範圍內使用之前進行宣告
 
@@ -144,7 +144,7 @@ int z = y - 1;    // Error: lookup fails
 int y = 2;    // declaration of y
 ```
 
-### 2. 命名空間作用域 (Namespace scope)
+#### 2. 命名空間作用域 (Namespace scope)
 
 對於在使用者宣告的命名空間內，且在任何函式或類之外所使用的名字，首先會查找該命名空間中，該次使用之前的部分，然後查找外圍命名空間在宣告該命名空間之前的部分，以此類推，直到抵達全域
 
@@ -199,7 +199,7 @@ int i = 4;
 - `X::m` 不存在，但 `::m` 存在且出現在 `X::y` 的定義之前，因此 `X::y` 為 `3`
 - `X::i` 不存在，而 `::i` 雖然存在但出現在 `X::z` 之後，因此 `X::i = i` 處名稱查找失敗
 
-### 3. 非成員函式定義 (Non-member function definition)
+#### 3. 非成員函式定義 (Non-member function definition)
 
 ```cpp
 namespace A
@@ -237,11 +237,11 @@ namespace A
 }
 ```
 
-## Qualified Name lookup
+### Qualified Name lookup
 
-## Argument-dependent lookup(ADL)
+### Argument-dependent lookup(ADL)
 
-# Dependent Name (待決名)
+## Dependent Name (待決名)
 
 如同前言中所說的，在模板（類模板和函式模板）的定義裡面，某些建構的意義可能會因實例化而異。類型和表達式的推導可能會取決於「<span class = "yellow">template parameters 的型態</span>」和「<span class = "yellow">non-type template parameters 的值</span>」。這種東西我們就將其稱為待決名(Dependent Name)，舉個例子：
 
@@ -274,7 +274,7 @@ T::x * f;
 
 如同前言所述，在編譯器的實作上，可能會等到使用者實例化模板後，才去真正的解析 `T::x * f` 這樣的語句。 編譯器基本上會將模板的內容複製到內部的 buffer，在需要實例化時才開始解析模板，並檢測定義中的錯誤
 
-## 利用 typename 消除待決名的歧義
+### 利用 typename 消除待決名的歧義
 
 在模板的宣告或定義中，不是當前實例化成員且依賴模板參數的名稱不會被視為類型，除非它已經有建立了類型名稱，例如使用 `typedef` 宣告，或用於命名基底類別
 
@@ -349,7 +349,7 @@ Compiler returned: 1
 對於 `T::A *a8;` 與 `B *a9` 這兩個例子，編譯器都把他們當乘法了，因此報了錯說找不到 `a8`、`B` 和 `a9` 的宣告。 
 
 
-## 利用 template 消除歧義
+### 利用 template 消除歧義
 
 再來看個例子：
 
@@ -412,9 +412,9 @@ void f(T* p) {
 這裡的 `alloc` 與 `adjust` 為兩個 template specialization，但在函式 `f` 內，我們無從得知  
 `p->alloc` 與 `T::adjust` 是不是 template specialization，因此需要在前方加上 `template` 的關鍵字以消除歧義
 
-# Template 的建構
+## Template 的建構
 
-## Dependencies
+### Dependencies
 
 講完了如何使用，接下來來談談標準，在標準中隨著 template arguments 的不同，template declarations 的建構也會有不同的意義。 具體來說，由於 types 和 expressions 會依賴於 template parameters 的 type 或 value，會導致 name lookup 的行為不同
 
@@ -436,11 +436,11 @@ void f(T* p) {
 
 
 
-## Dependent types
-## Type-dependent expressions
-## Value-dependent expressions
+### Dependent types
+### Type-dependent expressions
+### Value-dependent expressions
 
-# 參考資料
+## 參考資料
 
 - [Where and why do I have to put the "template" and "typename" keywords?](https://stackoverflow.com/questions/610245/where-and-why-do-i-have-to-put-the-template-and-typename-keywords)
 

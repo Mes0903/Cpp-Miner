@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 四個你不該用 "const" 的時機
+## 四個你不該用 "const" 的時機
 
 source：[C++ Weekly - Ep 75 - Why You Cannot Move From Const](https://www.youtube.com/watch?v=ZKaoR3dP9uM)
 
@@ -53,7 +53,7 @@ int main()
 
 由此可知 `const` 也會破壞隱式移動(implicit move)，有關隱式移動，可以去看之前寫得值類別篇。這邊 Jason Turner 給了四個要注意不該使用 `const` 的例子：
 
-## 當 function 回傳 non-reference type 時，return type 不應該用 const 修飾
+### 當 function 回傳 non-reference type 時，return type 不應該用 const 修飾
 寫在 return type 的 `const` 大部分的時候都會被忽略，有時候甚至會破壞效能，如這邊提到的它會破壞隱式移動，看看這段 code：
 
 ```cpp
@@ -122,7 +122,7 @@ end
 
 額外閱讀：[Do rvalue references to const have any use?](https://stackoverflow.com/questions/4938875/do-rvalue-references-to-const-have-any-use)
 
-## 需要隱式移動時，回傳的變數不該用 const 修飾
+### 需要隱式移動時，回傳的變數不該用 const 修飾
 
 原因一樣是因為會破壞隱式移動，看看這個例子：
 ```cpp
@@ -165,7 +165,7 @@ S(const S &)
 ```
 function 內回傳的是有名物件，因此套用的是 NRVO，但因為有 branch，因此編譯器會嘗試去做隱式移動，然而一樣由於無法利用 rvalue reference 去做連結，因此無法套用移動，導致去呼叫了 copy
 
-## 在你可能需要直接回傳的 non-trivial 參數上，不應該用 const 修飾
+### 在你可能需要直接回傳的 non-trivial 參數上，不應該用 const 修飾
 原因跟前面都一樣，因為會破壞隱式移動，看這個例子：
 
 ```cpp
@@ -205,7 +205,7 @@ S(const S &)
 
 額外閱讀：[What is a non-trivial constructor in C++?](https://stackoverflow.com/questions/3899223/what-is-a-non-trivial-constructor-in-c) 
 
-## Data member 不應該用 const 修飾
+### Data member 不應該用 const 修飾
 這點就比較有趣了，如果你的 data member 有 `const` 修飾，那這不只會破壞掉隱式移動，也有可能會破壞掉 assignment 的語意，看看這個例子：
 
 ```cpp

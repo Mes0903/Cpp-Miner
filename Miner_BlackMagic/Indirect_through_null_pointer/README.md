@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言
+## 前言
 
 事情起於 jserv 的講義裡面有個 `&((data*)0)->c)` 這樣的操作，作用是求 `c` 在 `data` 這個 struct 中的偏移量，但那個 `0` 實在是讓我覺得很不順眼，為了確定他到底是不是 UB，我翻了一個多禮拜的 standard 與 committee paper，甚至翻了 CWG issue 和 Standard Defect Report，才總算是有個結果 (翻到快吐了)
 
@@ -28,7 +28,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 註：本文的標準將以 n4861(C++20) 內的定義為主  
 註2：本文討論的內容都假設 class type 為 standard layout type，非 standard layout type 不在本文討論範圍內，相關內容詳見 [offsetof](https://en.cppreference.com/w/cpp/types/offsetof?fbclid=IwAR0qW2nZ1MX3ZPlmDXROTMNxB4fY_1Ba637-j_6ew_RAU2-T7HyshlQ-QQs#:~:text=offsetof%20cannot%20be%20implemented%20in,specified%20by%20C%20DR%20496)
 
-# Implicit Undefined Behavior?
+## Implicit Undefined Behavior?
 
 Implicit Undefined Behavior 是口語的說法，不是標準內的用語，其表達的意義就如前言所說：
 > standard 沒有要求的東西歸為 UB
@@ -51,7 +51,7 @@ C 和 C++ 都有於 standard 內列下這個規則，下面是 C 與 C++ 對於 
 
 另外，在實作上，*"Technically UB but it’ll always do what you expect"* 的狀況也是有的
 
-# 問題討論
+## 問題討論
 
 對於 `&((T*)NULL)->member` 這個行為，重點在於中間的 `((T*)NULL)->member`
 
@@ -65,7 +65,7 @@ C 和 C++ 都有於 standard 內列下這個規則，下面是 C 與 C++ 對於 
 
 我們先看看前兩條，試著找出標準內能套用到這個 behavior 上的定義
 
-### pointer arithmetic 的路徑
+#### pointer arithmetic 的路徑
 
 我們先談一下 pointer arithmetic 的 UB 行為，看以下的例子：
 
@@ -88,7 +88,7 @@ p2 += 1;    // p2 = &NULL[1]; invalid, NULL is not an object
 
 但對於實務層面(compiler 的視角) 來說，這是一個說明它 *invalid* 的好原因。 另外因為還有一個 address-of operator 在外面，編譯器產生的代碼通常不會有 dereference 的步驟，所以這是一個經典的 *"Technically UB but it’ll always do what you expect"* 的情況
 
-### `*` 與 `->` 的路徑
+#### `*` 與 `->` 的路徑
 
 C++ 中有個條款明確定義了 `->` 與 `*` 在語言上的等價性：
 
@@ -104,7 +104,7 @@ C++ 中有個條款明確定義了 `->` 與 `*` 在語言上的等價性：
 
 <span class = "yellow">但在 C 的標準中並沒有定義 `->` 與 `*` 的等價性，所以這條是只有 C++ 能走的路線</span>
 
-### 結論
+#### 結論
 
 剛剛說有三條路線
 
@@ -116,7 +116,7 @@ C++ 中有個條款明確定義了 `->` 與 `*` 在語言上的等價性：
 
 然而原則上來說我們仍希望 UB 可以被 explicit specified，畢竟像這樣可能有多種原因的例子並不好，可能會有一些衍生的 issue 出現，接下來就看看 C++ 中的例子 [CWG issue #232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232)
 
-# Indirect through null pointer?
+## Indirect through null pointer?
 
 去年(2022) 12 月，又有人在 CWG 的 github 發了 [issue](https://github.com/cplusplus/CWG/issues/198)  問 [CWG issue #232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 的結果，可見 _Indirect through null pointer_ 為 UB 的原因時至今日都還未被完全解決
 
@@ -154,7 +154,7 @@ int main()
 
 問題來了，`d->fun()` 合法嗎?
 
-# `->` 與 `*` 
+## `->` 與 `*` 
 
 前面有提到在 C++ 中 `->` 與 `*` 有這樣的等價關係：
 
@@ -191,7 +191,7 @@ int main()
 
 因此如果 `*d;` 這個 statement 沒問題，那 `(*d).fun();` 自然沒問題，因此 `d->fun();` 沒問題
 
-# 標準自己用了 indirect through null pointer?
+## 標準自己用了 indirect through null pointer?
 
 [CWG issue#232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 是 2004 年發起的 issue，標題內容大大的就打了「Is indirection through a null pointer undefined behavior?」
 
@@ -235,7 +235,7 @@ int main()
 
 > [n4868(expr.typeid#3)](https://timsong-cpp.github.io/cppwp/n4861/expr.typeid#3)：<span class = "yellow">When typeid is applied to an expression other than a glvalue of a polymorphic class type, the result refers to a std​::​type_­info object representing the static type of the expression.</span> Lvalue-to-rvalue, array-to-pointer, and function-to-pointer conversions are not applied to the expression. If the expression is a prvalue, the temporary materialization conversion is applied. The expression is an unevaluated operand.
 
-# CWG issue\#232 的結論 (C++ 26 前)
+## CWG issue\#232 的結論 (C++ 26 前)
 
 最後這個 issue 討論的結果為
 
@@ -279,7 +279,7 @@ issue#1102 中給的理由是
 
 簡單來說就是這個問題還在討論中，不要用這個當例子
 
-# CWG issue#2823
+## CWG issue#2823
 
 在 2023-11-08，這件事終於迎來了轉機，讓我回來更新了這篇文章XD
 
@@ -304,7 +304,7 @@ issue#1102 中給的理由是
 只是因為 C++23 的 draft 最後一更是在 2023-05-10，因此這要等到 C++26 的 spec 發布後才可以看見了，目前可以在[最新的 draft](https://eel.is/c++draft/expr.unary.op#1.sentence-4)看見該片段，沒意外的話就會變標準了  
 :::
 
-# 參考連結
+## 參考連結
 
 1. [Dereference null is not always UB?](https://stackoverflow.com/questions/43533262/dereference-null-is-not-always-ub)
 2. [c++ access static members using null pointer](https://stackoverflow.com/questions/28482809/c-access-static-members-using-null-pointer/28483477)

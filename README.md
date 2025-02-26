@@ -13,7 +13,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 文章一覽：[連結](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)
 
-# 前言 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## 前言 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
 這是一本介紹 Modern C++ 與一些 C++ 深度解析的書，從我的 hackmd 搬運而來，你可以從[這裡](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)看見文章一覽。 如果您是 C++ 新手，我會建議您先去看 Miner Tutorial 的部分，裡面對初學者會學到的東西做了簡單的介紹，可以幫助大家理解、回憶一些基礎知識，同時可以讓你習慣本書風格
 
@@ -27,9 +27,9 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 感謝一路上教我許多東西的老師、朋友與 Stackoverflow、Discord 上那些不認識但十分熱心的人們
 
-# Summary 文章一覽 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## Summary 文章一覽 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
-## Miner Tutorial 新手教學
+### Miner Tutorial 新手教學
 
 此處為新手教學，可以幫助大家回憶以前的東西，並幫助理解基礎 C++ 與熟悉本書風格
 
@@ -40,30 +40,30 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 + [Class](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Class)
 + [Class 與物件導向](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/OO)
 
-## Cpp Miner 礦坑系列本文
+### Cpp Miner 礦坑系列本文
 
-### C++11、14
+#### C++11、14
 
 + [Value Categories 值類別](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Value_Categories)
 + [malloc、new 與 POD Type](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/malloc_new_POD) (部分待補)
 + [std::function](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Std_Function) (source code 解析部分尚未完成)
 
-### C++17
+#### C++17
 
 + [Structured Binding 結構化綁定](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Structured_Binding)
 
-### C++20
+#### C++20
 
 + [Concept、SFINAE 與 Detection Idiom](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Concept_SFINAE_DetectionIdiom)
 
-## 礦坑內的黑魔法
+### 礦坑內的黑魔法
 
 + [用 "explicit" 來偵測複製](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/Explicit_Detect_Copy)
 + [Small String Optimization](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/SSO)
 + [四個不該用 "const" 的時機](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/NoConst)
 + [Indirect through null pointer 是 UB 嗎?](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/Indirect_through_null_pointer)
 
-# 貢獻此書 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## 貢獻此書 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
 如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mailto:mes900903@gmail.com)，也可以加我 Discord `mes_0903`
 
@@ -71,7 +71,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 如果由於版本更新導致文章內容已與事實不符，也歡迎進行更新，文章有時內容會過於艱澀導致我無法翻譯，若你有能力且樂意幫忙翻譯，也很歡迎您修改
 
-# 關於我 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## 關於我 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
 我是 Mes，一個喜愛 C++ 的人，寫文的現在(2021/04/02) 就讀中央大學數學系，目前大一，~~成績很差，盡量不要問我數學~~，如果想一起討論程式問題的話可以加我的 Discord、FB 或 IG，我主要用這三個，程式方面的討論我主要都在 Discord 找人問和回答問題：
 
@@ -81,7 +81,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 興趣是寫作、Compiler、OS、C++、Assembly，偶爾會去攝影，會在 IG 上寫雜記和分享家裡的貓咪照片，FB 版上全是分享別人動物的貼文，~~愜意的生活~~
 
-# <span class = "orange">一些資源</span> <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## <span class = "orange">一些資源</span> <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
 
 下面這些是我可能會出現的 Discord 群，我通常會在這些群裡面回答問題或問問題：
 

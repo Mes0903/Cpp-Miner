@@ -11,11 +11,11 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong> 
 
-# 函式 (Function)  
+## 函式 (Function)  
 
 函式是一個有名稱的程式碼區塊，通常拿來表示一個過程，可以接受參數並產生一個結果，我們可以透過呼叫(calling) 來使用函式。  
 
-## Function Declaration  
+### Function Declaration  
 
 Function declarations 可以出現在任何的 scope 內，Function 的型態由回傳型態與 Function 的 Declarator 組成。  
 
@@ -58,7 +58,7 @@ int fn1(int, int);    // (1)
 額外閱讀：[In the standard, what is "derived-declarator-type"?](https://stackoverflow.com/questions/13779273/in-the-standard-what-is-derived-declarator-type)  
 額外閱讀：[Why does C++ allow unnamed function parameters?](https://stackoverflow.com/questions/12186698/why-does-c-allow-unnamed-function-parameters)  
 
-## Function Definition  
+### Function Definition  
 
 前面講完宣告了，跟變數不一樣，函式的定義需要另外寫，函式的定義會把函式的名字、型態與 function body 連結起來。<span class = "yellow">函式的定義不能出現在函式裡面</span>。  
 
@@ -82,7 +82,7 @@ int main()
 
 上面這個例子中有一個函式 `fn`，參數列是空的，也沒有回傳物件，function body 裡面只有一行字串的輸出。在 main function 裡面我透過 `()` 呼叫了 `fn`，因此這段程式的執行結果會是「get in fn()」。  
 
-## return statement  
+### return statement  
 
 `return` 是一個 statement，它會結束目前正在執行的函式，並回傳對應的結果，`return` 的語法如下：  
 
@@ -146,7 +146,7 @@ int main()
 
 注意版本要在 C++11 以上  
 
-### Don't return pointer of local variable  
+#### Don't return pointer of local variable  
 
 在回傳物件時有一點要注意的是<span class = "yellow">別回傳指向區域變數的指標</span>，因為在離開 function 時區域變數就離開了他們的 scope，因此其生命週期就結束了，此時的 pointer 為 dangling pointer。  
 
@@ -173,7 +173,7 @@ int main()
 
 reference 也同理。  
 
-# 記憶體配置過程  
+## 記憶體配置過程  
 
 一般的 C/C++ 程式在執行時記憶體的配置會長的像下圖那樣，主要可分為 text、data、bss、stack、heap 與 system 這幾個部分。  
 
@@ -262,9 +262,9 @@ int main()
 
 一開始先分配好 main function 需要的大小，然後將 `fn(1)` 的 frame 推到 stack 內，之後因為要回傳值，所以會將要回傳的值儲存到暫存器或 stack 中，再把 `fn(1)` 的 frame 刪除，並把剛剛儲存的值拿去給 `i1` 初始化。  
 
-# new 與 delete  
+## new 與 delete  
 
-### new expression  
+#### new expression  
 
 因為 `fn` 結束後其相對應的 stack frame 也會消失，因此區域變數也會跟著解構，如果想要自己掌控變數的生命週期，我們就需要利用動態配置，因為動態配置的變數會存在 heap 段，所以當 stack frame 消失時並不會影響到動態配置的變數。  
 
@@ -344,7 +344,7 @@ int main()
 
 上面有三個 `new` 出來的陣列，第一個沒有初始化器，因此會是預設初始化，第二個的初始化器則為 `()`，使用 value initialized，因此陣列的元素全被初始化為 `0`，第三個的初始化器則為 `{}`，為每個元素都寫好了初始化的值。  
 
-### delete  
+#### delete  
 
 由於動態配置的物件我們需要自己掌握其生命週期，因此解構也需要自己來，使用的是 `delete` expression，語法長這樣：  
 
@@ -374,7 +374,7 @@ int main()
 
 有 `new` 物件出來就需要有 `delete` 將其解構，否則那個物件會一直存在 heap 區，導致 memory leak  
 
-### 動態配置陣列  
+#### 動態配置陣列  
 
 之前有說過陣列的大小需要是靜態時期就能夠知道大小的常數，除非是動態配置，由此我們可知動態配置出來的陣列可以在執行期才決定大小，舉個例子：  
 
@@ -446,7 +446,7 @@ int main()
 
 例子 source：[new 與 delete](https://openhome.cc/Gossip/CppGossip/newDelete.html)  
 
-# Parameter List  
+## Parameter List  
 
 Parameter List 還有一些地方還沒講，但在講之前，大家需要先知道什麼是 reference，接下來的 call by value、call by reference 才聽得懂。  
 
@@ -456,9 +456,9 @@ reference 是一個很重要的東西，在近代 C\+\+ 中大量的被使用，
 
 以下內容我直接從 C\+\+ Miner 的 Value Categories 篇擷取過來，做了一點小刪減，讓新手比較好看懂。  
 
-## Reference  
+### Reference  
 
-### 什麼是參考 (Reference) ?  
+#### 什麼是參考 (Reference) ?  
 
 參考是一種變數，其型別(Type) 是他連結到的東西的型態的引用(reference to type)，這邊不講物件的原因是因為他連結到的東西不一定是個物件，也有可能是函式之類的東西，語法長這樣：  
 
@@ -535,7 +535,7 @@ std::cout << std::boolalpha
 
 如果對 Referecne 的定義與相關的詳細規範還有興趣，可以到<a href = "https://eel.is/c++draft/dcl.ref" class = "pinklink">這裡</a>看看。  
 
-### Lvalue Reference  
+#### Lvalue Reference  
 那麼現在大家都有背景知識了，就來看一下什麼是 Lvalue Referecne 和 Rvalue Referecne 吧。  
 
 首先我們看 Lvalue Reference，語法長這樣 <a href = "https://en.cppreference.com/w/cpp/language/reference" class = "pinklink">(來源)</a>：  
@@ -594,9 +594,9 @@ lvalue 裡面的 「l」 主要的意涵是 locatable，也就是有固定位址
 
 這些差不多就是 Lvalue Reference 的作用了，應該非常符合他是一個「別名」的意義吧!  
 
-### Rvalue Reference  
+#### Rvalue Reference  
 
-#### <span class = "wheat">先談談歷史</span>  
+##### <span class = "wheat">先談談歷史</span>  
 
 在進到 Rvalue Reference 前，我們要先稍微了解一下歷史，才會知道為何要有 Rvalue Reference，所以我們先從舊的 C++ 講起。  
 
@@ -716,7 +716,7 @@ int main() {
 
 但這樣就回到了一開始的問題，常量並沒有記憶體位址，語意上來說不該能被更改，我們會說它能更改是從臨時物化與記憶體的角度去看，但在寫程式的時候我們應該由語意方面來寫，而不是底層，因為還有 Compiler 優化與平台差異的問題，底層應該交給他們去判斷。 於是陷入了死胡同，直到 C++11 時為了滿足移動語意，Rvalue Reference 的出現及值類別、TMC、Copy Elision 等更詳細的定義，這個問題才被解決。  
 
-#### <span class = "wheat">Rvalue Reference 的出現</span>  
+##### <span class = "wheat">Rvalue Reference 的出現</span>  
 
 所以為了滿足移動語意，Rvalue Reference 出現了，大量取代了以前使用 const Reference 的情景。 Rvalue Reference 是 C\+\+11 後的東西，使用前記得看一下自己的 C\+\+ 版本，語法長這樣：  
 
@@ -785,11 +785,11 @@ Rvalue Reference 有幾種特性 <a href = "https://en.cppreference.com/w/cpp/la
 
     這是我們能夠實現移動語意的關鍵，因為移動建構子或其他接受移動的函式吃的就是 Xvalue，建構子需要能夠區分 Lvalue 與 Rvalue。  
 
-## Parameter Passing  
+### Parameter Passing  
 
 Function 中傳遞參數的方式有兩種，一為 pass by value、另一種為 pass by reference。  
 
-### Pass by value  
+#### Pass by value  
 
 前面我們已經知道了在 call function 時記憶體內會建立 stack frame，參數會被<span class = "yellow">複製</span>進去，舉個例子：  
 
@@ -827,7 +827,7 @@ int main()
 4. function body，執行 `a = 5;` 與 `b = 10;`，更改 `a` 與 `b` 的值  
 5. 退出 function，解構 `a`、`b`，並回收 stack frame  
 
-### Pass by reference  
+#### Pass by reference  
 
 上面那個方法將會複製傳進去的參數，這有一個壞處，當傳進去的物件很大時，將其複製就會很花時間，或是有些物件根本就不允許複製，此時就可以使用 reference 來傳遞參數，如此一來就可以避免整個物件的複製。  
 
@@ -887,7 +887,7 @@ int main()
 額外閱讀：[Pass by value faster than pass by reference](https://stackoverflow.com/questions/22840120/pass-by-value-faster-than-pass-by-reference)  
 額外閱讀：[WANT SPEED? DON’T (ALWAYS) PASS BY VALUE.](https://juanchopanzacpp.wordpress.com/2014/05/11/want-speed-dont-always-pass-by-value/)  
 
-## 預設引數 Default Argument  
+### 預設引數 Default Argument  
 
 有些函式可能有某個參數在大部分的情況下都是固定的值，例如一個生成視窗的函式，一個視窗預設大小為 250 $\times$ 250，此時就可以利用 Default argument 來實作：  
 
@@ -927,7 +927,7 @@ Window make_window(int length = 250, int width);
 
 這樣在解讀時就不會有漏掉值的問題了。  
 
-# 函式重載 Function Overloading  
+## 函式重載 Function Overloading  
 
 當有很多個 Function 可能有類似的操作時，或是一個 Function 有很多種操作時，如 `print` 函式可能可以輸出字串、整數、布林值，此時我們可以透過 Function Overload 來幫助我們實作。  
 
@@ -962,7 +962,7 @@ int main() {
 
 在 Function matching 中，他會先去查名字(Name lookup)，如果有同名的 Function，才會去對照 parameter list，這個叫做 ADL(Argument-dependent lookup)。  
 
-## Top level const、Low level const  
+### Top level const、Low level const  
 
 考慮這個例子：  
 
@@ -993,7 +993,7 @@ void Print(const int *i) {
     std::cout << "with const\n";  
 }    // okay, passed the compiled  
 ```
-# 遞迴 (Recursion)  
+## 遞迴 (Recursion)  
 
 在函式中是可以再呼叫自己的，可以是間接呼叫或是直接呼叫，這種呼叫自己的函式我們稱為遞迴函式，一個常見的例子是費氏數列的運算：  
 
@@ -1025,7 +1025,7 @@ int main()
 
 額外閱讀：[Tail recursion in C++](https://stackoverflow.com/questions/2693683/tail-recursion-in-c)  
 
-# Function Pointer  
+## Function Pointer  
 
 Function Pointer 與一般的指標差別在於 Function 並不是物件，因此特性有一些差別，Function Pointer 一樣會指向一個特別的型態，這個型態以 Function 的 return type 與 parameter list 組成，如一個指向 `int(int, int)` 的指標 `int (*ptr)(int, int)`。  
 
@@ -1075,7 +1075,7 @@ int main()
 }  
 ```
 
-# Main function 中的 argc、argv 參數  
+## Main function 中的 argc、argv 參數  
 
 我們可以透過命令列傳一些參數進去 main function，此時這些資訊會利用 `argc` 與 `argv` 這兩個參數來儲存，`argc` 是個整數，記錄命令列參數的個數，而 `argv` 則是一個指向 char array 的 pointer，儲存命令列內容：  
 

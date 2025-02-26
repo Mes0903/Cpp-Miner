@@ -10,7 +10,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言
+## 前言
 
 原本想說要一個禮拜寫一篇礦坑，結果發現這種文都要花很多的時間，好像一篇一個月就差不多了XD 這篇文章特別感謝 Kris van Rens，我寫信問了他許多問題，他也很耐心的回答我XD 文章內容有許多部份都參考了他的講稿，他也提供了授權給我，真ㄉ是太感謝了XD
 
@@ -22,10 +22,10 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 希望這篇文章能幫助大家少翻一點草案，幫大家整理一下重點，同時也希望能讓想深入閱讀的人能夠有中文的資源可以看，~~畢竟不是每個人都像我一樣閒可以在那邊用破英文慢慢看~~，大家可以依自己的興趣來跳著看
 
-#  Variable、Expression 與 Statement
+##  Variable、Expression 與 Statement
 移動語意是一個很大很廣的概念，在看移動語意前我們需要知道「值類別(Value Category)」是什麼。而若要知道什麼是值類別，我們需要先分清楚「變數(Variable)」、「運算式(Expression)」、「陳述式(Statement)」的差別。 這些東西比較偏向程式的文法，那我們就開始吧!
 
-## 變數 Variable
+### 變數 Variable
 
 首先大家一開始在學 C++ 都有學過變數，但大家可能沒什麼注意過他的定義，他的定義是這樣的：
 
@@ -65,7 +65,7 @@ int main() {
 >
 > 而名字則不一定要有
 
-## 運算式 Expression
+### 運算式 Expression
 
 一個運算式由一個以上的運算元(operand) 和運算子組成，用來表示一個計算式，被計算後它可能會「回傳一個結果」，又或可能會有額外的作用(side-effects)，像是 `std::printf("%d", 4)` 會去呼叫 system call，印出一個 4
 
@@ -89,7 +89,7 @@ printf("Hi!")    //一個有額外作用的運算式，回傳值被捨棄了(dis
 
 運算式主要有分「主運算式(Primary Expression)」、「非計算運算式(Unevaluated expressions)」與「棄值運算式(Discarded-value Expression)」，但這不是今天我們的主軸，有興趣的可以到 <strong>[cppreference](https://en.cppreference.com/w/cpp/language/expressions)</strong> 看
 
-## 陳述句 Statement
+### 陳述句 Statement
 
 最後是陳述句，一個陳述句是程式執行的基本元素，通常最後面會有 `;` 來結尾。 陳述句會照順序被執行，它可能會單獨一行出現，但我們也可以利用 `{}` 將許多陳述句包成一個新的陳述句，這個我們稱它為「複合陳述句(Compound Statement)」。 而運算式通常會是陳述句的一部分，另外，還有一種陳述句叫「運算陳述句(Expression Statement)」，這種陳述句裡面只有運算式
 
@@ -133,7 +133,7 @@ attr 是<strong>[屬性識別字](https://en.cppreference.com/w/cpp/language/att
 
 程式裡大部分的陳述句都是運算陳述句，像是賦值或是函式的呼叫等都是
 
-# 值類別 Value Categories
+## 值類別 Value Categories
 
 那麼我們現在知道什麼是淺複製與深複製，也知道變數、運算式和陳述式差在哪了，那我們就可以來討論什麼是 Value Categories 了，首先有一點很重要，那就是值類別是用來判斷<strong>運算式的種類</strong>的，而不是給物件實體用的，因為超重要，所以講三次，是<strong>運算式的種類!! 運算式的種類!! </strong><strong>運算式的種類!!</strong>，如果不知道這個，我們接下來講的妳大概也都聽不懂，或者是一知半解了
 
@@ -169,14 +169,14 @@ Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</str
 + xvalue：將亡值
 + prvalue：純右值
 
-### 判斷依據
+#### 判斷依據
 
 那接下來就來看看這些分類是怎麼分的吧! 主要有兩個判斷依據：
 
 1. 這個運算式回傳的是有身分標識符(identity)的物件嗎? 還是僅僅是個常量值?
 2. 如果是有身分標識符的物件，那這個物件的值可以安全的「移動」給別人嗎?
 
-#### 1. 這個運算式回傳的是有身分標識符(identity)的物件嗎? 還是僅僅是個常量值
+##### 1. 這個運算式回傳的是有身分標識符(identity)的物件嗎? 還是僅僅是個常量值
 
 首先我們先來看一下，什麼叫做 「有身分標識符(identity)」 呢?，有身分標識符表示我們能夠有辦法去<strong>證明這個 Expreesion 回傳的物件與另一個 Expression 回傳的物件相</strong>，方法隨便，最常見的就是取址，我們看一下這個例子幫大家理解一下什麼叫做「有身分標識符」：
 
@@ -213,7 +213,7 @@ static_cast<int>(a)    //沒有 identity
 std::move(a)    //擁有 identity
 ```
 
-#### 2. 如果是有身分標識符的物件，那這個物件的值可以安全的「移動」給別人嗎
+##### 2. 如果是有身分標識符的物件，那這個物件的值可以安全的「移動」給別人嗎
 
 再來看第二點，那麼什麼時候運算式回傳的物件可以安全的「移動」給別人呢? 如果這個物件是個匿名的「暫時」物件，或者這個物件的生命週期快要結束了，我們就稱它可以安全的「移動」給別人，是不是已經有一點移動語意的感覺了ㄋ? 沒錯，這94移動語意的核心，讓我們來看看接下來的例子：
 
@@ -243,7 +243,7 @@ int main() {
 
 那麼這樣我們就可以開始看什麼是 Lvalue、Prvalue 與 Xvalue 了!
 
-# Lvalue Expression
+## Lvalue Expression
 
 Lvalue，中文翻作左值，一個 Lvalue Expression 回傳的物件擁有「身分標識符(identity)」，並且在正常的情況下它不該被「移動」，只能複製。 這代表一個 Lvalue Expression 回傳的物件會有一個記憶體位址，用途常會類似是「儲存」一個東西，像變數一樣。 我們能夠透過這個名稱，在它「生成出來的那行外」來使用這塊記憶體內的東西
 
@@ -292,7 +292,7 @@ int main() {
 
 不知道大家有沒有感受到那個精神，小心不要把他們想成 variable，因為這邊講的是文法，而不是在說記憶體內部的分配，所以他們是 expression，不是variable
 
-### 種類
+#### 種類
 
 那 Lvalue Expression 有以下這些 [(來源)](https://en.cppreference.com/w/cpp/language/value_category#lvalue)：
 
@@ -384,7 +384,7 @@ int main() {
 
 + 回傳「函式」的 rvalue reference 的函式呼叫(function call)
 
-## 特性
+### 特性
 
 那麼 Lvalue Expression 有一些特性，有些是只有 Lvalue Expression 有的，有些是 Xvalue Expression 也有的 (換句話說就是 glvalue 有的)
 
@@ -416,7 +416,7 @@ int main() {
     想知道詳細狀況可以去讀[執行期型態訊息 (RTTI)](https://en.cppreference.com/w/cpp/types#Runtime_type_identification) 的操作
 
 + 在表達式合法的情況下可以是[不完全型態](https://en.cppreference.com/w/cpp/language/type#Incomplete_type)
-# Xvalue Expression
+## Xvalue Expression
 
 Xvalue，中文翻作將亡值，一個 Xvalue Expression 回傳的物件擁有「身分標識符(identity)」，但是它通常用來「暫時儲存」某個東西。 這代表一個 Xvalue Expression 回傳的物件會有一個記憶體位址，但我們不能夠在它「生成出來的那行外」來使用這塊記憶體內的東西
 
@@ -453,7 +453,7 @@ this = 0x878d9ff9fc
 
 在 `main` 內有兩行同樣的 Expression `X().i`，這個 Expression 會生成一個暫時的匿名物件，所以我們可以看到輸出裡面第一個 `X().i` 執行了建構之後馬上又解構了，如果我們沒有用記憶體標識符去抓住它，它就消失了，因為它是一個暫時物件，所以這個 Expression 為 Xvalue Expression。 這邊我呼叫了兩次，大家可以看見上下兩行的暫時物件的位址不一樣，他們不是同一個物件，我們無法在「外部呼叫」它
 
-### 種類
+#### 種類
 
 那 Xvalue Expression 有以下這些 [(來源)](https://en.cppreference.com/w/cpp/language/value_category#xvalue)：
 
@@ -473,7 +473,7 @@ this = 0x878d9ff9fc
 
     TMC 是一個挺重要的東西，後面會提到
 
-### 特性
+#### 特性
 
 Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其中一個共用，因為 Xvalue Expression 算是這兩個的中間過度區，官方因此才分出了 glvalue 與 rvalue，簡單來說，與 Lvalue Expression 共用的特性我們稱它為 glvalue 的特性，與 Prvalue Expression 共用的特性我們稱它為 rvalue 的特性，但我覺得再分這兩個出來可能會變得更亂，所以我這邊就不分了，直接列出來
 
@@ -533,7 +533,7 @@ Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其�
 
     可以看見的它傳入的是 `int &&a` 版本的 `test` 函式，如果這邊還看不懂什麼是 rvalue reference 沒關係，可以等後面讀完再回來看前面的例子
 
-## Prvalue Expression
+### Prvalue Expression
 
 Prvalue，中文翻作純右值，一個 Prvalue Expression 回傳的是一個常量，或是沒有身分標識符的物件，在定義上 Prvalue 可以被移動
 
@@ -554,7 +554,7 @@ int main () {
 
 上例中 `0` 是一個常量，所以它是 Prvalue，而 `foo()` 回傳的是一個整數，是一個純量，沒有 identity ，所以它是 prvalue
 
-### 種類
+#### 種類
 
 那 Prvalue Expression 有以下這些 [(來源)](https://en.cppreference.com/w/cpp/language/value_category#prvalue)：
 
@@ -598,7 +598,7 @@ int main () {
 
 + [特殊化的概念 (Specialization of a Concept)](https://en.cppreference.com/w/cpp/language/constraints)，像是 `std::equality_comparable<int>`
 
-### 特性
+#### 特性
 
 那麼 Prvalue Expression 有一些特性，有些是只有 Prvalue Expression 有的，有些是 Xvalue Expression 也有的 (換句話說就是 rvalue 有的)
 
@@ -649,13 +649,13 @@ int main () {
 
     可以看見的它傳入的是 `int &&a` 版本的 `test` 函式，如果這邊還看不懂什麼是 rvalue reference 沒關係，可以等後面讀完再回來看前面的例子
 
-# 參考 (Reference)
+## 參考 (Reference)
 
 參考並不是我們今天的主軸，但由於 Rvalue Reference 對理解 Value Categories 挺重要的，所以我這邊稍微提一下 Lvalue Reference 和 Rvalue Reference，至於 Forward Reference 就太遠了，所以這邊就不提了
 
 如果你已經知道什麼是 Lvalue Reference 和 Rvalue Reference 了，那就大膽的跳過這段吧 XD
 
-## 什麼是參考 (Reference) ?
+### 什麼是參考 (Reference) ?
 
 參考是一種變數，其型別(Type) 是他連結到的東西的型態的引用(reference to type)，這邊不講物件的原因是因為他連結到的東西不一定是個物件，也有可能是函式之類的東西，他會像是被連結到的東西的別名一樣，呼叫他，就等於呼叫被連結到的東西
 
@@ -732,7 +732,7 @@ std::cout << std::boolalpha
 
 如果對 Referecne 的定義與相關的詳細規範還有興趣，可以到[這裡](https://eel.is/c++draft/dcl.ref)看看
 
-## Lvalue Reference
+### Lvalue Reference
 
 那麼現在大家都有背景知識了，就來看一下什麼是 Lvalue Referecne 和 Rvalue Referecne 吧
 
@@ -792,9 +792,9 @@ std::cout << std::boolalpha
 
 這些差不多就是 Lvalue Reference 的作用了，應該非常符合他是一個「別名」的意義吧 XD
 
-## Rvalue Reference
+### Rvalue Reference
 
-### 先談談歷史
+#### 先談談歷史
 
 在進到 Rvalue Reference 前，我們要先稍微了解一下歷史，才會知道為何要有 Rvalue Reference，所以我們先從舊的 C++ 講起
 
@@ -931,7 +931,7 @@ int main() {
 
 但這樣就回到了一開始的問題，常量並沒有記憶體位址，語意上來說不該能被更改，我們會說它能更改是從臨時物化與記憶體的角度去看，但在寫程式的時候我們應該由語意方面來寫，而不是底層，因為還有 Compiler 優化與平台差異的問題，底層應該交給他們去判斷。 於是陷入了死胡同，直到 C++11 時為了滿足移動語意，Rvalue Reference 的出現及值類別、TMC、Copy Elision 等更詳細的定義，這個問題才被解決
 
-### Rvalue Reference 的出現
+#### Rvalue Reference 的出現
 
 所以為了滿足移動語意，Rvalue Reference 出現了，大量取代了以前使用 const Reference 的情景。 Rvalue Reference 是 C\+\+11 後的東西，使用前記得看一下自己的 C\+\+ 版本，語法長這樣：
 
@@ -1000,7 +1000,7 @@ Rvalue Reference 有幾種特性 [(來源)](https://en.cppreference.com/w/cpp/la
 
     這是我們能夠實現移動語意的關鍵，因為移動建構子或其他接受移動的函式吃的就是 Xvalue，建構子需要能夠區分 Lvalue 與 Rvalue
 
-# 複製、移動省略 ( Copy / Move Elision )
+## 複製、移動省略 ( Copy / Move Elision )
 
 Copy Elision 在 C\+\+11 與 C\+\+14，甚至更早期的 C\+\+03、C\+\+98 時就存在了，不同的是 C++11 有移動建構子的出現，導致能夠省略的建構子又多了一種。 之後 Copy Elision 在2015年時，於[ P0135R0 提案](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0135r0.html)中被提出應該要在某些情況下保證 Copy Elision 的發生，後來提案被採用，在 C\+\+17 時「部分」保證 Copy Elision 會發生，就算建構子與解構子有 side effect 也一
 
@@ -1012,7 +1012,7 @@ Copy Elision 在 C\+\+11 與 C\+\+14，甚至更早期的 C\+\+03、C\+\+98 時�
 
 另外，Copy Elision 是現在唯二能改變外顯行為的優化，另一個是 [Allocate Elision](https://en.cppreference.com/w/cpp/language/new#Allocation)，可以當作小知識知道一下 XD
 
-## 什麼是 Copy Elision?
+### 什麼是 Copy Elision?
 
 Copy Elision 就是字面上的意思，能夠省略複製與移動建構子，直接看例子會比較好懂，那麼接下來我會用同一份 Code，看看在不同環境與設定下有什麼差別
 
@@ -1095,7 +1095,7 @@ int main() {
 
 現在知道 Code 在幹嘛了，那就來看輸出吧!
 
-### 環境 1： C\+\+14，關掉 Copy Elsion ( <strong>-std=c++14 -fno-elide-constructors</strong> )
+#### 環境 1： C\+\+14，關掉 Copy Elsion ( <strong>-std=c++14 -fno-elide-constructors</strong> )
 
 [測試連結](https://godbolt.org/z/ejvWaWrEE)，輸出如下：
 ```cpp
@@ -1123,7 +1123,7 @@ cnt = 3
 
 可以看見呼叫了 3 次建構子。那麼我們接著來看下一個環境
 
-### 環境 2：C\+\+17，關掉 Copy Elsion ( <strong>-std=c++17 -fno-elide-constructors</strong> )
+#### 環境 2：C\+\+17，關掉 Copy Elsion ( <strong>-std=c++17 -fno-elide-constructors</strong> )
 
 [測試連結](https://godbolt.org/z/sv75ErEKG)，輸出如下：
 
@@ -1146,7 +1146,7 @@ cnt = 2
 
 呼叫了 2 次建構，太厲害了，少了一次! 看來 C\+\+17 說保證會發生並不是唬爛的，那我們把 Copy Elision 打開看看
 
-### 環境 3：C\+\+17，打開 Copy Elsion ( <strong>-std=c++17 </strong> )
+#### 環境 3：C\+\+17，打開 Copy Elsion ( <strong>-std=c++17 </strong> )
 
 [測試連結](https://godbolt.org/z/TYo3e5dqq)，輸出如下：
 
@@ -1163,7 +1163,7 @@ cnt = 1
 
 只呼叫了 1 次建構，太神啦，又少了一次
 
-### <strong>小整理</strong>
+#### <strong>小整理</strong>
 
 我們來統整一下這三個例子，用個表格來看：
 
@@ -1196,7 +1196,7 @@ cnt = 1
 
 可以看見 Compiler 一直以來其實都默默地在幫我們做事，只是妳可能都沒發現 XD
 
-## 保證會發生 Copy / Move Elision 的狀況
+### 保證會發生 Copy / Move Elision 的狀況
 
 那我們現在就來看看這神奇的東西什麼時候會發生吧！首先是「保證」會發生的情況 [(來源)](https://eel.is/c++draft/class.copy.elision)，在這些情況下，Compiler 必須省略複製與移動建構子的呼叫，即使它們有 side effect 也一：
 
@@ -1378,7 +1378,7 @@ cnt = 1
 
     超亂 XD，而且就算把 Copy Elision 開起來也一樣，所以就自己在寫的時候注意一下囉！
 
-## 不保證發生 Copy Elision 的狀況
+### 不保證發生 Copy Elision 的狀況
 
 那這邊我就大概列一列，翻譯一下 Cppreference 就好 [(來源)](https://en.cppreference.com/w/cpp/language/copy_elision#Non-mandatory_elision_of_copy.2Fmove_.28since_C.2B.2B11.29_operations)，因為我覺得最重要的是 NRVO，但 NRVO 後面會單獨拉出來講，所以就先不自己寫例子或找例子了 XD，~~不然好多怕字不夠，寫到這裡的時候，把網址那些的字元都算進來，已經六萬五千字ㄌ~~。但如果大家願意幫我補例子當然是歡迎XD 我對例外處理也不太熟，不敢亂誤人子弟。 不過草案裡面倒是有給初一些例子，有興趣的話可以點進[這裡](https://eel.is/c++draft/class.copy.elision)看看
 
@@ -1407,7 +1407,7 @@ cnt = 1
 
     In coroutines, copy/move of the parameter into coroutine state may be elided where this does not change the behavior of the program other than by omitting the calls to the parameter's constructor and destructor. This can take place if the parameter is never referenced after a suspension point or when the entire coroutine state was never heap-allocated in the first place.
 
-## Copy / Move Elision 小整理
+### Copy / Move Elision 小整理
 
 恭喜妳看到這裡了，但後面還很長，這裡先幫大家整理一下，並且分享一個好用的小東西
 
@@ -1563,7 +1563,7 @@ A{}.value is a xvalue
 
 會到這邊才講是因為知道 Copy Elision 後會比較好理解她在幹嘛，雖然原因可能有點不一樣就是了，這邊利用了 `decltype` 來幫忙，但不是今天的主題，就先不講太多了，之後有時間再寫一篇有關 `decltype` 和 `auto` 的文章 (亂開坑)
 
-# 臨時物化 (TMC)
+## 臨時物化 (TMC)
 
 好了現在我們完全了解 Copy Elision 了，那還有另一個重要的東西叫 TMC，TMC 是 [Temporary materialization conversion](https://en.cppreference.com/w/cpp/language/implicit_conversion#Temporary_materialization) 的縮寫，前面講 Rvalue Reference 時有先提到，那我們這邊再更詳細的探討一下，因為標準實際上有規定 C\+\+17 後的哪些時刻「必須」要有 TMC 的出現
 
@@ -1754,7 +1754,7 @@ int main() {
 main 裡面那一大串會因為 Copy Elision 的關係被簡化成 `S().c.m`，這時候 Compiler 發現 `S()` 是 Prvalue Expression，而我們訪問了一個 Prvalue 的成員 `c` 裡面的 `m`，所以此時的 `c` 必須被建構！但是 `S` 還沒被實例化，所以 `S` 會先被實例化，然後 `c` 在被建構
 
 所以從定義上來看， `S().c` 是一個 Xvalue，然後我們利用 TMC 評估 `S` 內的 `m`，返回一個相同型態(`int`)的暫時物件 `S().c.m`。 
-# 回傳值優化 Return value optimization (RVO)
+## 回傳值優化 Return value optimization (RVO)
 
 好了，標準保證會發生的東西都談的差不多了，那我們來說說不一定會發生的東西
 
@@ -1762,13 +1762,13 @@ RVO 的全名叫做 Return Value Optimization，字面上的意思，他是對�
 
 那麼 RVO 分成兩種，URVO 和 NRVO，兩者的差別是函式內回傳的物件有沒有 identifie，換句話說就是「是不是一個匿名物件」。那麼我們就來看看吧！
 
-## 匿名回傳值優化 (URVO)
+### 匿名回傳值優化 (URVO)
 
 URVO 全名叫 Unnamed Return Value Optimization。 當我們用一個回傳同型態的匿名物件的回傳表達式來初始化一個物件時，URVO 會發動來省略複製
 
 等等，這句話有點眼熟，不就是 Copy Elision 嗎? 沒錯，所以在 C\+\+17 後，URVO 被保證了，也就是 Copy Elision 的其中一部份
 
-## 有名回傳值優化 (NRVO)
+### 有名回傳值優化 (NRVO)
 
 NRVO 全名叫 Named Return Value Optimization ，那麼 NRVO 就是比較重點的地方了
 
@@ -2015,7 +2015,7 @@ T(T &&other)
     ```
 
     可以看見 NRVO 一樣沒有發動
-# 隱式移動
+## 隱式移動
 
 講了這麼多，那如果 Copy Elision 和 NRVO 都沒有發動的話怎麼辦呢？不用擔心，標準告訴我們，在 C\+\+11 之後，於回傳語句中，如果在某些特殊情況下，Copy Elision 應該要發動但沒發動，或是感覺可以發動但還沒被保證，所以沒發動，像是我們在 C\+\+14 的版本內把回傳優化關掉的狀況。 這種時候 Compiler 會優先選用移動建構子來取代複製，除非回傳的物件是吃進來的參數
 
@@ -2023,7 +2023,7 @@ T(T &&other)
 
 看到這裡，大家應該知道為什麼前面的例子中，如果有 `T(T &&other)` 這類的建構子時優先度會比 `T(const T &other)` 還高了，當然，你需要提供移動建構子就是了
 
-# 結尾與一些小建議
+## 結尾與一些小建議
 
 好啦，這就是全部了，恭喜你讀完了！！
 
@@ -2063,7 +2063,7 @@ T(T &&other)
 
 最後再次感謝 kris，marty，Cy 與 Discord 上一些不認識的人很友善且很有耐心的回答了我很多問題，尤其是 kris XD，非常有耐心的回答了我每一個問題，非常謝謝
 
-# 參考資料
+## 參考資料
 
 - [1. [CppDay20] Understanding value categories in C++ (Kris van Rens)](https://www.youtube.com/watch?v=km3Urog_wzk&ab_channel=ItalianCppCommunity") (文章部分來源，感謝 kris 提供授權)
 - [2. Identifiers (cppreference)](https://en.cppreference.com/w/cpp/language/identifiers")

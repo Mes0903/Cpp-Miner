@@ -11,11 +11,11 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# Small String Optimization (SSO)
+## Small String Optimization (SSO)
 
 最近由於讀書會又把這個主題拿出來講了，想想再把這篇補得更詳細一點好了，因此就以 Raymond Chen 的文章為主體翻譯一下，再多補充一些資訊
 
-## std::string
+### std::string
 
 `std::string` 的起點是這樣的：
 
@@ -43,7 +43,7 @@ struct basic_string {
 
 從這邊你會發現一個問題，也是通常我們不太喜歡 string 的原因 ── 其有 heap allocation 的操作，因此可能會造成效能上的影響
 
-## SSO
+### SSO
 
 對於這個問題，編譯器便希望針對長度較短的字串去做優化，這個優化就被稱為 SSO。 要注意這是編譯器的實作，因此並不是標準，換句話說 SSO 是 <span class = "yellow">optional</span> 的，不一定會有這個行為，但大多數的編譯器都有實作
 
@@ -93,9 +93,9 @@ int main()
 
 而會選擇去使用 const char pointer 來減少負擔，然而以這個例子來講，因為這個字串長度很短，所以其實根本不會使用到 heap 段，負擔也很小
 
-## 使用 union 包裝變數
+### 使用 union 包裝變數
 
-### gcc
+#### gcc
 
 而在思考 buffer 大小時，gcc 意識到如果 `std::string` 內部是使用 stack 上的 buffer，那就不需要再紀錄 `capacity` 了，因為我們已經知道它是 `BUFSIZE - 1` 了
 
@@ -117,7 +117,7 @@ struct basic_string
 
 這裡的 `BUFSIZE` 設為 `16 / sizeof(T)`，也是目前比較常見的數字，對於 `char`，它可以容納 15 個字元（少了一個是因為要拿來放 `'\0'`）
 
-### msvc
+#### msvc
 
 而對於 msvc，他們的想法則是透過 `capacity` 來確認容量是否小於 `BUFSIZE - 1`，如果是，那就代表目前使用的是 stack 上的 buffer，從而拋棄了 `ptr`，反之則拋棄 `buf` 留下 `ptr`：
 
@@ -135,7 +135,7 @@ struct basic_string
 };
 ```
 
-### clang
+#### clang
 
 clang 的實作就比較複雜了，他寫了兩個結構體：
 
@@ -169,7 +169,7 @@ struct basic_string_small
 
 而 `T` 通常為 `CharT`，所以對於 64 位元的系統來說，如果 `sizeof(CharT)` 為 1，則 `BUFSIZE` 為 23，如果 `sizeof(CharT)` 為 2，則 `BUFSIZE` 為 11
 
-### 小節
+#### 小節
 
 因此如果把三個編譯器的實作簡化再簡化，就會如下：
 
@@ -233,7 +233,7 @@ struct string
 };
 ```
 
-## 測試 & 實例
+### 測試 & 實例
 
 避免有人不想看內部 code，就先放例子，這裡我是用 Compiler Explorer gcc 12.1 來測的 ([網址](https://godbolt.org/z/qajh5PeKc))：
 
@@ -269,9 +269,9 @@ Allocating 17 bytes
 
 如果你的環境上沒有跑出一樣的結果大概是因為你那邊它有自己的 extension 我猜，如 tcc、icc file 之類的，內部實作可能就有些許差異，又或者你是在 Debug 模式下輸出的結果也有可能不同
 
-## 入坑挖礦
+### 入坑挖礦
 
-### MSVC ([src code](https://github.com/microsoft/STL/blob/main/stl/inc/xstring))
+#### MSVC ([src code](https://github.com/microsoft/STL/blob/main/stl/inc/xstring))
 
 底下 msvc 版本：
 
@@ -489,11 +489,11 @@ _CONSTEXPR20 void _Construct_empty() {
 
 基本上就做了一些簡單的初始化，讀完前面的應該不難懂
 
-## gcc & clang
+### gcc & clang
 
 讀書會後原本還想多補 [gcc](https://github.com/gcc-mirror/gcc/blob/master/libstdc++-v3/include/bits/basic_string.h) & [clang](https://github.com/llvm-mirror/libcxx/blob/master/include/string) 的版本，但太忙了，之後再補XD
 
-# 為 std::string 提供自定義 std::allocator
+## 為 std::string 提供自定義 std::allocator
 
 原本會有這篇是因為 MISRA C/C++ spec 內規定不能用 heap allocation，所以朋朋來問了一下能不能把 data 全部放在 stack 段上的 memory pool，而我想到序列化那裏去了，所以才看了一下 SSO 的實作
 
@@ -685,7 +685,7 @@ Modified String: Hello, StackAllocator! Nice to meet you!
 
 不過因為這東西真不好寫，像上面這個例子，你還需要寫一個 memory pool 的 handler，因此到了 C++17，就有了一個更方便的東西叫做 [std::pmr::polymorphic_allocator](https://en.cppreference.com/w/cpp/memory/polymorphic_allocator)（[N3916 提案](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3916.pdf)），可以讓你很快速地做到剛剛我們想做的事，之後另開一篇再寫吧XD
 
-# Reference
+## Reference
 
 - [Small String Optimization in C++](https://www.youtube.com/watch?v=S7oVXMzTo4w)
 - [Inside STL: The string STL](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)

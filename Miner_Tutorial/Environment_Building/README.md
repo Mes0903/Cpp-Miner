@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言  
+## 前言  
 
 這篇文章以 windows 為例，教大家如何建置 windows 上能寫 C++ 的環境。文字編輯器的部分我使用 Vscode，因為比較方便，擴充功能也挺多的，但這系列應該只會用到最基本的功能，擴充功能的部分大家可以自己多多摸索。  
 
@@ -27,7 +27,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 之後的教學我可能是在 Linux 環境下撰寫的，但考慮到大多數人的環境可能還是 windows，所以寫了這篇讓大家能夠跟著建置可用的環境。  
 
-# Vscode 安裝  
+## Vscode 安裝  
 
 首先到 Vscode 官網的[下載頁面](https://code.visualstudio.com/download)下載自己對應的系統版本，這邊我們選 Windows  
 
@@ -49,7 +49,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Environment_Building/image/download5.png?raw=true"><br>  
 
-# 安裝 Mingw-gcc  
+## 安裝 Mingw-gcc  
 
 本文使用的是 winlibs 提供的 Mingw-w64 GCC，你可以直接點[這裡](https://github.com/brechtsanders/winlibs_mingw/releases/download/11.2.0-9.0.0-ucrt-r5/winlibs-x86_64-posix-seh-gcc-11.2.0-mingw-w64ucrt-9.0.0-r5.7z)下載，或是進到 [winlibs](https://winlibs.com/) 的網站，在下方選擇你想要的版本，我上方連結給的版本是下圖紅圈圈起來的版本：  
 
@@ -81,7 +81,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 之後按確定出來，<strong><span class = "yellow">重開機</span></strong>。  
 
-# 測試第一個 C++ 程式  
+## 測試第一個 C++ 程式  
 
 開啟 Vscode，選取左上方的檔案，然後選取開啟資料夾  
 
@@ -153,7 +153,7 @@ int main()
 
 這樣一來你的環境就建好了，好好享受 C++ ㄅ
 
-# 手動建立設定檔
+## 手動建立設定檔
 
 如果按下 F5 後你的資料夾內沒有自動建立 `.vscode` 的資料夾，導致程式跑不起來，那你就需要自己手動建立這些設定了
 

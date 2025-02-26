@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言  
+## 前言  
 
 Class 背後最核心的概念是資料的抽象化(data abstraction)與資料封裝(data encapsulation)。這些是一種程式設計上的技巧、想法，其清楚區分了介面(interface)和實作(implementation)的不同，介面是與使用者直接互動的運算，實作則是利用了 Class 內的資料成員與成員函式來寫出的演算法，而封裝則是強制分開了介面與實作，實作會被隱藏，使用者只看的到介面，但看不到實作。  
 
@@ -21,13 +21,13 @@ Class 背後最核心的概念是資料的抽象化(data abstraction)與資料�
 
 額外閱讀：[What is the big difference between modular and object oriented programming?](https://stackoverflow.com/questions/18034683/what-is-the-big-difference-between-modular-and-object-oriented-programming)  
 
-# 類別(Class)  
+## 類別(Class)  
 
 因此 Class 你可以把他想像為一個設計藍圖，設計者可以利用這個藍圖來去建立物件，換句話說 Class 是一種使用者定義的型態，  
 
 > n4868(11.1)：A class is a type. Its name becomes a class-name within its scope.  
 
-## Class Declaration 與 Class Definition  
+### Class Declaration 與 Class Definition  
 
 Class Declaration 與 Class Definition 都是屬於 Simple Declaration 中的 Declaration Specifier，幫大家複習一下，一個 Simple Declaration 的形式會長：  
 
@@ -148,7 +148,7 @@ int main()
 
 這裡我們建構了兩個販賣機出來，Class 的物件可以透過成員訪問運算子 `.` 來使用 Class 中存取權限為 `public` 的成員，以上面這個例子，我們使用了第一台機器的 `ordered_chicken()` 這個函式，又再使用了 `money()` 這個函數來確認金錢。  
 
-## 建構子(Constructor) 與解構子(Destructor)  
+### 建構子(Constructor) 與解構子(Destructor)  
 
 在前面的章節我們很強調建構與賦值不同，大家可能沒什麼感覺，但在這裡就會很強烈的發現兩者的不同了。  
 
@@ -297,11 +297,11 @@ int main()
 }  
 ```
 
-### Rule of three、Rule of five、Rule of zero  
+#### Rule of three、Rule of five、Rule of zero  
 
 而當我們自己定義了解構子、複製建構子或複製運算符時，通常就代表我們需要自己管理 Class 的內部資源，因此就會需要同時定義這三個建構子，這就是 R3，而如果考慮了移動進去，則多了移動建構子與移動運算子進去，因此是 R5，而如果都沒有動到，就一個都不用寫，這就是 R0。  
 
-# this  
+## this  
 
 `this` 是一個特殊的指標，基本上會出現在 class 的 non-static member function 內，`this` 會指向呼叫他的 member function 所屬的 class instance。  
 
@@ -391,7 +391,7 @@ int main()
 
 在 `t1.fn()` 這裡，通常 compiler 會改寫為 `t1.fn(&t1)`，如此一來就可以實作 `this` 了，但要注意這不是標準，我一開始一直以為這是標準規定的，後來花了很多時間去理解才發現這件事，標準只規定了行為，說了 `this` 是一個 prvalue pointer，值是 implicit object 的位址，並沒有規定如何實作。  
 
-# friend  
+## friend  
 
 前面說了權限為 private 的成員只有同一個 class type 的 object 能使用，如果今天有外部的函式或 class 想存取 private 成員時，可以將其設為 friend，使用方法如下：  
 
@@ -442,7 +442,7 @@ void X::g() { return f(); } // error: 'f' was not declared in this scope
 
 > [n4659(14.3)](https://timsong-cpp.github.io/cppwp/n4659/class.friend#1)：A friend of a class is a function or class that is given permission to use the private and protected member names from the class. A class specifies its friends, if any, by way of friend declarations. Such declarations give special access rights to the friends, but they do not make the nominated friends members of the befriending class. [ Example: The following example illustrates the differences between members and friends:  
 
-# 運算子重載 (operator overload)  
+## 運算子重載 (operator overload)  
 
 當我們要定義一個運算子如何操作自定義的 class 時，我們可以使用運算子重載，在上面建構子的地方我們其實已經用過運算子重載了，那邊重載了 `=`，改變了 `=` 的行為，這邊再多舉一個例子，假設有個 2\*2 矩陣的 class，我們要定義矩陣的加法：  
 
@@ -487,7 +487,7 @@ int main()
 }  
 ```
 
-# const、mutable  
+## const、mutable  
 
 如果一個 class instance 有被 `const` 修飾，此時若有用到沒有用 `const` 修飾的 member function 便不會通過編譯。  
 
@@ -602,7 +602,7 @@ int main()
 }  
 ```
 
-# 自定義的型態轉換 (user-defined conversion)  
+## 自定義的型態轉換 (user-defined conversion)  
 
 有時我們自己定義的 class 可以與其它的型態互相轉換，此時我們就要自定義轉型的函式，語法是這樣：  
 
@@ -658,7 +658,7 @@ int main()
 
 加上 `explicit` 關鍵字的轉換函式，compiler 不會自動套用它，需要我們加上 cast operator 時才會去套用轉換，像 19 行那樣。  
 
-# static  
+## static  
 
 `static` 有主要會出現在三個地方：  
 
@@ -668,7 +668,7 @@ int main()
 
 這三個地方的 `static` 所代表的意義會不太一樣，這邊就由上往下來一一解釋  
 
-## global variable/function 前  
+### global variable/function 前  
 
 在前面我們有提到 TU(.o 檔) 的概念，一個 TU 會有一組自己的 symbol table 來記錄哪些 symbol 需要從外部取得，這個 table、symbol 我們稱它為 ABI(Application Binary interface)。  
 
@@ -727,7 +727,7 @@ g++ -S -o output.asm input.cpp
 
 而 `static` 版本則是在最一開始的地方少了 `.globl i`，表示 `i` 這個變數不再是所有 TU 都可以使用的了，後面也少了一行 `.globl _Z2fnv`。  
 
-## function 內的 varaible 前  
+### function 內的 varaible 前  
 
 如果 `static` 出現在 function 內的變數前，表示這個變數為<span class = "yellow">靜態變數</span>，生命週期要到程式結束才會跟著結束：  
 
@@ -750,7 +750,7 @@ int main()
 
 因為 `fn` 中的 `i` 變為一個靜態變數，因此離開 `fn` 時 `i` 並不會解構，所以上例輸出的結果為 `1 2 3`。  
 
-## class 的 member variable/function 前  
+### class 的 member variable/function 前  
 
 利用 `static` 修飾的 member variable/function 所有權並不屬於任何一個 instance，所有的 class instance 會共用這個 member，因此有 `static` 修飾的 member variable 不能利用建構子來初始化，需要在外部定義它：  
 
@@ -806,7 +806,7 @@ public:
 
 > [11.4.9](https://eel.is/c++draft/class.static#data-1)：A static data member is not part of the subobjects of a class.  
 
-# default member initializer  
+## default member initializer  
 
 在 C++11 後，我們可以使用 default member initializer 來初始化 non-static data member，也有人稱這方法為 in-class initializer 或 non-static data member initializer，寫法很簡單，直接在 data member 的後方加上初始化器就可以了：  
 

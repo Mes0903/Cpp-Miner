@@ -11,13 +11,13 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言
+## 前言
 
 `new` 是 C\+\+ 內一個幫助我們操作記憶體的工具，傳統的 pure C 內也有類似的工具 `malloc`，然而由於 C\+\+ 語言上內建多支援了物件導向的特性，導致 `new` 比 `malloc` 多做了一些事情
 
 本篇大部分內容為整理 Effective C\+\+ 而來，並額外補上一些細節
 
-# malloc 與 POD type
+## malloc 與 POD type
 
 首先先講一下 `malloc` 在 C\+\+ 的行為，要想講這個我們最好先知道兩個東西，一個為 Aggregates，一個為 POD，全名為 Plain Old Data，這兩個東西對於 C-style coding 非常的有幫助，在某些 Modern C\+\+ 的場合也會有幫助
 
@@ -25,9 +25,9 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都有更動，但基本上都是增加了新的東西進去，因此這裡主要以 C\+\+03 為主來去解釋，幫助大家先快速理解，後面再回頭介紹 C\+\+11 後的定義
 
-## Aggregates
+### Aggregates
 
-### 什麼是 Aggregate?
+#### 什麼是 Aggregate?
 一般我們理解的定義來自於 Standard 的定義：
 
 > (C++03 8.5.1 §1)：
@@ -93,7 +93,7 @@ int main()
 }
 ```
 
-### Aggregate 的好處?
+#### Aggregate 的好處?
 
 現在我們就來看看 Aggregate 有什麼好處，主要是可以使用 Aggregate initialization `{}` 來初始化，你可以常常在 array 的初始化裡看到它，舉個例子：
 
@@ -164,7 +164,7 @@ Y y = { 'a', { 10, 20 }, { 20, 30 } };
 
 上例中這裡 `y.c` 被初始化為 `a`，`y.x.i1` 初始化為 `10`，`y.i[1]` 初始化為 `30`，`y.f` 初始化為 `0.0`
 
-### 結論
+#### 結論
 
 看到這裡你可能會想說為什麼需要這些設定，前面也講了，這可以幫助 C-style coding，某種程度上也代表這個 Type 類似 built-in type，如 `int`、`char` 等可以幫助 compiler 去做優化
 
@@ -184,9 +184,9 @@ Z z = { 0.0 }; // error
 
 對於 vtable，有興趣的可以看看這篇：[What happens in the hardware when I call a virtual function? How many layers of indirection are there? How much overhead is there?](https://isocpp.org/wiki/faq/virtual-functions#dyn-binding2)
 
-## POD
+### POD
 
-### 定義
+#### 定義
 
 POD 全名叫 Plain Old Data，一般我們理解的 POD 與 C++03 標準內的定義相同：
 
@@ -245,7 +245,7 @@ int main()
 > [n4659 (6.9 - 9)](https://timsong-cpp.github.io/cppwp/n4659/basic.types#9)：
 > Arithmetic types, enumeration types, pointer types, pointer to member types, std::nullptr_t, and cv-qualified versions of these types are collectively called scalar types. Scalar types, POD classes, arrays of such types and cv-qualified versions of these types are collectively called POD types.
 
-### POD Type 的好處
+#### POD Type 的好處
 
 POD 的好處就很多了，這邊舉幾個例子：
 
@@ -351,21 +351,21 @@ POD 的好處就很多了，這邊舉幾個例子：
   }
 	```
 
-## malloc
+### malloc
 
 由於 windows 不好分析，這邊以 Linux 環境為主來講 malloc 的原理
 
 這部分要講很深的話會牽扯到整個 Linux 的記憶體管理，但這並不是我們的重點，所以我盡量不要講太多，提到必要的東西就好，
 
-### 記憶體分配
+#### 記憶體分配
 
 記憶體的分配分為動態分配與靜態分配，靜態分配發生在編譯與 linking 時期，而動態分配則是在程式調入和執行的時候發生的
 
-# new
+## new
 
-## std::set_new_handler
+### std::set_new_handler
 
-# Placement new
+## Placement new
 
 Placement new 本身是一個能夠幫助我們使用 memory pool 的工具，它能夠在預先配置好的一段記憶體建構物件
 
@@ -373,7 +373,7 @@ Placement new 本身是一個能夠幫助我們使用 memory pool 的工具，�
 
 甚至有時候有些核心程式不允許記憶體申請失敗，我們希望每次的記憶體申請都是成功的，這種極端的要求下，使用 memory pool 的好處就很大
 
-# new operator 與 operator new
+## new operator 與 operator new
 
 首先，new operator/delete operator 為運算子，而 operator new/operator delete 為函式
 
@@ -419,7 +419,7 @@ int i = new int(5);
 
 使用 new operator 時它會先去<span class = "yellow">呼叫 operator new</span>，幫我們分配足夠的 raw memory，再去<span class = "yellow">呼叫對象的建構子</span>
 
-# Placement new
+## Placement new
 
 Placement new 是 operator new 的一種標準的 global overload，它不像一般的 operator new 可以被替換掉
 
@@ -453,7 +453,7 @@ placement new 的用處是於 `ptr` 處建構我們想要的物件，通常我�
 
 需要注意的是物件使用完畢後需要自己手動呼叫解構子，所以上例使用了 `tptr->~T();`，如此一來前面建構的物件會被解構，但先前分配好的 `buf` 不會被釋放
 
-# 參考資料
+## 參考資料
 
 **<a href = "https://www.dsi.fceia.unr.edu.ar/downloads/informatica/info_II/c++/Effective%20C++%20+%20More%20Effective%20C++.pdf" class = "redlink">1. Effective C++</a>**
 

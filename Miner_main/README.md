@@ -5,11 +5,11 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-# 礦坑系列 ── C++03 ~ C++17 主要變化介紹 
+## 礦坑系列 ── C++03 ~ C++17 主要變化介紹 
 
 點此回到礦坑系列首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>  
 
-# Modern Cpp 在追求什麼?  
+## Modern Cpp 在追求什麼?  
 
 來到 Modern Cpp，Cpp 已經不僅僅是個有物件導向的 C 了，其還追求 type-safe, metaprograming 與 static/compile time error 等議題，並包含了如 functional language 的特性進來，已經與以往的 Cpp 長的完全不一樣了。  
 
@@ -60,11 +60,11 @@ int main()
 
 接下來我就介紹一下 Jason Turner 整理的例子，看一下 Modern C\+\+ 內 C\+\+03 到 C\+\+17 有什麼重要的東西 & 概念，不會講太深，簡單介紹一下而已。  
 
-# C++ 98 & C++03  
+## C++ 98 & C++03  
 
 source：[C++ Weekly - Ep 173 - The Important Parts of C++98 in 13 Minutes](https://www.youtube.com/watch?v=78Y_LRZPVRg)  
 
-## 建構子與解構子  
+### 建構子與解構子  
 
 最初許多人稱 C\+\+ 為 C with Object Oriented 的原因就是因為 C\+\+ 引入了對物件導向的支援，我們能夠自己定義一個型態，這個型態的物件被建構出來時會去呼叫建構子，當物件被解構時會去呼叫解構子：  
 
@@ -78,7 +78,7 @@ public:
 
 這裡 `T()` 就是一種建構子，而 `~T()` 就是一種解構子。  
 
-## RAII  
+### RAII  
 
 RAII 全名為 Resource Acquisition Is Initialization，意思為資源取得即初始化，是由 C++ 之父 Bjarne Stroustrup 提出的，這裡的 Resource 指的主要是指系統中有限的東西，像是記憶體、socket 等等，利用 RAII 可以很好的自動管理這類資源。  
 
@@ -117,7 +117,7 @@ after scope
 
 讀更多：[c++经验之谈一：RAII原理介绍](https://zhuanlan.zhihu.com/p/34660259)  
 
-## 模板 (Template)  
+### 模板 (Template)  
 
 模板是 metaprogramming 的基礎之一，他可以幫助我們生成 code，看下面這個例子：  
 
@@ -144,7 +144,7 @@ template 是個大坑，越後面的版本可以玩的越花俏，另外 templat
 
 順代一提，`printf` 也是圖靈完備的，有個東西甚至叫 printf-oriented programming，有興趣的可以看看：[printf-tac-toe](https://github.com/carlini/printf-tac-toe)，他只用 `printf` 就寫了一個圈圈叉叉的遊戲，黑魔法。  
 
-## algorithm  
+### algorithm  
 
 在 C++98 後我們可以使用 standard algorithm：  
 
@@ -161,14 +161,14 @@ int main()
 
 有沒有在 standard lib 裡面是差很多的，這影響到程式的一致性。  
 
-# C\+\+11 & C\+\+14  
+## C\+\+11 & C\+\+14  
 
 C\+\+11 是一個大更新，而 C\+\+14 則完善了 C\+\+11，做了一些延伸，並沒有特別新增什麼東西，因此我兩個擺在一起講。  
 
 source：[C++ Weekly - Ep 176 - Important Parts of C++11 in 12 Minutes](https://www.youtube.com/watch?v=D5n6xMUKU3A)  
 source：[C++ Weekly - Ep 178 - The Important Parts of C++14 In 9 Minutes](https://www.youtube.com/watch?v=mXxNvaEdNHI)  
 
-## auto  
+### auto  
 
 在某些情況下我們可能並不是特別在意某個物件的型態，在 C\+\+11 後我們可以使用 auto，舉個例子：  
 
@@ -211,7 +211,7 @@ auto count_things(const T &vec, int value)
 
 當然他還是有一些的規則和限制，不過這邊就只先簡單介紹。  
 
-## ranged-for loop  
+### ranged-for loop  
 
 ranged-for loop 可以幫助我們很簡單的遍歷一個可以使用 `std::begin` 與 `std::end` 的容器，在 C\+\+98 時我們會這樣寫：  
 
@@ -243,7 +243,7 @@ void travel_thing(const std::vector<int> &vec)
 ```
 
 如此一來可讀性便增加了許多，非常簡潔，不過速度並不會差太多。  
-## lambda  
+### lambda  
 
 lambda 可以幫助我們增加可讀性與便利性，看一下這個例子：  
 
@@ -309,7 +309,7 @@ void count_value(const T &vec, int value)
 
 這裡 value 利用一個 double 轉型後的結果初始化，只是告訴大家這樣合法，長的很酷，但不要這樣寫，你的同事可能會把你打死  
 
-## variadic templates  
+### variadic templates  
 
 variadic template 讓模板用起來更加的便利，可以讓 compiler 幫助我們展開一些 code，一個簡單的應用是傳遞不定個數的參數，看起來會像這樣：  
 ```cpp
@@ -322,7 +322,7 @@ void caller(const Func &func, const T &...param)
 
 如此一來無論我們傳了多少參數進 `caller`，他都會幫我們轉送進我們指定的函式。  
 
-## 智慧指標 (smart pointer)  
+### 智慧指標 (smart pointer)  
 
 智慧指標可以幫助我們控制物件的資源，這邊挑了比較有代表性的 `unique_ptr` 介紹，`unique_ptr` 是一種 move only types，也就是說不能複製只能移動，用起來會像這樣：  
 
@@ -349,7 +349,7 @@ void allocate_memory()
 
 額外閱讀：[Advantages of using std::make_unique over new operator](https://stackoverflow.com/questions/37514509/advantages-of-using-stdmake-unique-over-new-operator)  
 
-## constexpr  
+### constexpr  
 
 `constexpr` 在 C\+\+11 時限制非常的多，任何跟其有關的東西都需要也是 `constexpr` 的，這在後面的版本有放寬使用條件，用 `constexpr` 修飾表示這個東西可以在編譯期就被確定內容，用法大概會像這樣：  
 
@@ -377,11 +377,11 @@ constexpr int get_value()
 
 這在 C\+\+11 的時候是不合法的，但在 C\+\+14 合法。  
 
-# C\+\+17  
+## C\+\+17  
 
 source：[C++ Weekly - Ep 190 - The Important Parts of C++17 in 10 Minutes](https://www.youtube.com/watch?v=QpFjOlzg1r4)  
 
-## Copy / Move Elision 的保證  
+### Copy / Move Elision 的保證  
 
 在 C\+\+17 時 Copy Elision 被保證了：  
 
@@ -406,7 +406,7 @@ int main()
 
 上面這個例子中只會有一個物件被建構。  
 
-## constexpr 於 Stdlib 中開始被普遍支援  
+### constexpr 於 Stdlib 中開始被普遍支援  
 
 在 C\+\+17 後一些我們常用的東西開始支援 `constexpr` 的版本了，這可以幫助我們更好的利用 `constexpr`：  
 
@@ -414,7 +414,7 @@ int main()
 
 上例中較常使用的 `operator[]` 在 C\+\+17 後開始被支援。  
 
-## constexpr lambda  
+### constexpr lambda  
 
 在 C\+\+17 後可以用 `constexpr` 來修飾 lambda 了：  
 
@@ -424,7 +424,7 @@ constexpr auto l = [](){};
 
 這在 C\+\+17 後是合法的了。  
 
-## string_view  
+### string_view  
 
 `string_view` 是 `string` 的一個 「view」，也就是說唯讀，不可修改，以往可能會利用 `const std::string&` 來傳遞，C\+\+17 後可以使用 `string_view` 來更好的符合語意，且更解簡潔：  
 
@@ -437,7 +437,7 @@ constexpr std::string_view name = "Hello";
 
 額外閱讀：[How exactly is std::string_view faster than const std::string&?](https://stackoverflow.com/questions/40127965/how-exactly-is-stdstring-view-faster-than-const-stdstring)  
 
-## Class Template Argument Deduction  
+### Class Template Argument Deduction  
 
 在 C\+\+17 後可以自動推斷 template argument 了：  
 
@@ -448,7 +448,7 @@ std::array data{1, 2, 3, 4, 5};
 
 這裡 Compiler 會自動幫你推斷出他的 template argument 為 `<int, 5>`。  
 
-## fold expression  
+### fold expression  
 
 在 C\+\+17 後，類似於之前 vairadic template 的功用，我們可以使用 fold expression 來幫助我們更有彈性的處理多個參數的傳遞：  
 
@@ -462,7 +462,7 @@ auto add(const T & param...)
 
 這件事在 C\+\+17 前我們需要在寫另外一個函式把參數列的第一項拉出來操作，有了 fold expression 可以更方便的做這件事了。  
 
-## Structured Bindings  
+### Structured Bindings  
 
 在 C\+\+17 後我們可以使用 structured bindings 來幫助我們使用 tuple-like 的容器，如 `std::pair`、`std::tuple` 等：  
 
@@ -473,7 +473,7 @@ auto [first, second] = values;
 
 上例中 `first` 會去連結到 `1`，而 `second` 會去連結到 `2`，類似於 reference 的概念，但內部不是 reference。  
 
-## if-init expressions  
+### if-init expressions  
 
 C\+\+17 後我們可以在 `if` statement 的圓括號內進行物件初始化了：  
 
@@ -489,7 +489,7 @@ void fn(int i, int t){
 
 這有個 scope 的優勢，以往我們需要手動在外層加上一個 scope 才可以如此利用 RAII，C\+\+17 後就不用了。  
 
-# 總結  
+## 總結  
 
 以上就是 C\+\+98 ~ C\+\+17 的重要概念了，其他東西，由於 C\+\+20 我還沒有太熟，所以就不在這裡亂講了，以免誤人子弟，未來有機會再補上。  
 

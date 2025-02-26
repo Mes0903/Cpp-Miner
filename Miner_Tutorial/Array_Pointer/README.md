@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# Array(陣列)  
+## Array(陣列)  
 
 Array 與 int、char、bool 一樣是一種型態，稱為 array type，不過 array 並不是 fundamental type，而是 compound type。  
 
@@ -21,7 +21,7 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
 
 > n4868(9.3.4.5)：An object of type “array of N U” consists of a contiguously allocated non-empty set of N subobjects of type U, known as the elements of the array, and numbered 0 to N-1.  
 
-## 語法  
+### 語法  
 
 我們可以透過 simple declaration 來宣告出一個陣列型態的變數，陣列的宣告語法會長：  
 
@@ -103,7 +103,7 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
     額外閱讀：[In the standard, what is "derived-declarator-type"?](https://stackoverflow.com/questions/13779273/in-the-standard-what-is-derived-declarator-type)  
     額外閱讀：[Why aren't variable-length arrays part of the C++ standard?](https://stackoverflow.com/questions/1887097/why-arent-variable-length-arrays-part-of-the-c-standard)  
 
-## 使用 Array  
+### 使用 Array  
 
 `T a[N];` 這樣宣告了一個變數叫 `a`，型態為 `T[N]`，念法為 `array of N T`，array 中的元素會從 0 到 N - 1 的被編號，我們可以利用 `[]` operator 來使用這些元素，`[]` 內放要使用的元素的編號。  
 
@@ -121,7 +121,7 @@ int main()
 }  
 ```
 
-## 多維陣列  
+### 多維陣列  
 
 我們一開始提到了陣列的 decl-specifier-seq，那段講的意思簡單來說就是陣列的元素可以是 fundamental type(除了 void)、pointer、pointer to member、classes、enumeration 或<span class = "yellow">已知元素數量的陣列</span>。  
 
@@ -152,7 +152,7 @@ int main()
 
 更高維的陣列規則都一樣，依樣畫葫蘆就好。  
 
-## 字元陣列  
+### 字元陣列  
 
 char array 是一種特殊的陣列，可以用來表示一組字串，一組字串以 `'\0'` 結尾，因此在使用字元陣列時記得要多加一個位址給 `'\0'`，舉個例子：  
 
@@ -173,7 +173,7 @@ int main()
 
 使用 list initialize 字元陣列時我們需要手動加上 `'\0'`，但如果是使用 string literal 來初始化就不用。  
 
-## 搭配 for 迴圈遍歷陣列  
+### 搭配 for 迴圈遍歷陣列  
 
 上週我們教了 for 迴圈，如果我們想要遍歷整個陣列，那搭配 for 迴圈來操作是個很好的選擇，能方便很多：  
 
@@ -193,7 +193,7 @@ int main()
 }  
 ```
 
-# Pointer 指標  
+## Pointer 指標  
 
 Pointer 型態的變數存的值有四種：  
 
@@ -247,7 +247,7 @@ int main()
 
 後面我會簡單複習一下語法，然後討論一下第一項與第三項，但先跳過函式。  
 
-## 語法  
+### 語法  
 
 宣告的語法之前宣告器的部分有提過了，這邊正式且詳細的再寫一次，宣告的語法長這樣：  
 
@@ -291,7 +291,7 @@ int main()
 
 `i` 是一個整數變數，儲存的值為 20；`p1` 是個整數的指標，指向 `i`，儲存的值為 `&i`；`p2` 是個整數的指標的指標，指向 `p1`，儲存的值為 `&p1`。  
 
-## Pointer to objects  
+### Pointer to objects  
 
 我們可以用 `address-of operator` 的回傳值或別的指標來初始化指標變數，舉個例子：  
 
@@ -312,7 +312,7 @@ int *sp = &s.n;    // pointer to the int that is a member of s
 
 source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Pointers_to_objects)  
 
-### 指標的運算  
+#### 指標的運算  
 
 指標的運算，如 `+`、`-` 等 operator 有自己的定義，這邊簡單講一下 `+`、`-` 與 `==`：  
 
@@ -356,7 +356,7 @@ source：改自 [cppreference](https://en.cppreference.com/w/cpp/language/operat
 
 而比較運算子的話只有 `==` 與 `!=` 能用在 pointer 上，詳細的狀況可以到 [cppreference](https://en.cppreference.com/w/cpp/language/operator_comparison#Pointer_comparison_operators) 上看，但簡單來說，如果兩者儲存的位址一樣，那 `==` 回傳 `true`，否則為 `false`。  
 
-## Null pointers  
+### Null pointers  
 
 就像 int 有 0，char 有空字元這種基本單位一樣，pointer 也有，它是一個特殊的值，叫做 null pointer value，基本上它有三種表示方法，`NULL`、`nullptr` 與 `0`。  
 
@@ -375,7 +375,7 @@ int a = *p;    // undefined behavior
 
 通常一個指標被宣告出來，但不需要初始化時，我們通常會把指標初始化為 `nullptr`，又或是一個指標指向的物件已經被解構時，我們也會將其值設為 `nullptr`，這稱為指標歸位，能夠避免我們不小心用到儲存亂數的指標，後者這種指標稱為野指標(dangling pointer)  
 
-## Constness on Pointer  
+### Constness on Pointer  
 
 之前講宣告的時候我們有在宣告器與說明符的部分同時看到 `const`，也就是說一個宣告述句裡面就有兩個 `const` 出現，當時我們有簡單介紹一下，現在我們來詳細看一下情況：  
 
@@ -420,7 +420,7 @@ int main()
 
 如果想要看 pointer of pointer 的版本的話，可以看一下上面這篇，主要是有個規則叫做 RTL Rule(right-to-left rule)。  
 
-# Array to pointer decay(conversion)  
+## Array to pointer decay(conversion)  
 
 array 在「需要指標，卻填入 array」的狀況時會發生轉型，轉型為一個「指向第一個元素」的指標。  
 
@@ -446,45 +446,45 @@ int main()
 
 延伸閱讀：[[重新理解 C++] Array 和 Pointer 的差異](https://zh-tw.coderbridge.com/series/9c0fd91d2bbb4986b0b451aed1319325/posts/eec6d2b3309e4cafbda712cae3b46f32?fbclid=IwAR1ZBMdoZ_nfQURvsDpZiqT9zgiTwYQJpH4nSEeDK04EvSwNZDERRsLUJv0)  
 
-## 何時發生?  
+### 何時發生?  
 
 基本上原則就是上面講的那樣，是不用記得太詳細，除非踩到坑，但如果想看詳細一點的可以看看以下幾個條例：  
 
-### Expressions  
+#### Expressions  
 
 > [n4868(7.2.1)](https://timsong-cpp.github.io/cppwp/n4868/basic.lval#6)：Whenever a glvalue appears as an operand of an operator that expects a prvalue for that operand, the lvalue-to-rvalue, array-to-pointer, or function-to-pointer standard conversions are applied to convert the expression to a prvalue.  
 
 > [n4868(7.2.3)](https://timsong-cpp.github.io/cppwp/n4868/expr.context#2)：In some contexts, an expression only appears for its side effects. Such an expression is called a discarded-value expression. The array-to-pointer and function-to-pointer standard conversions are not applied.  
 
-### Type identification  
+#### Type identification  
 
 > [n4868(7.6.1.8)](https://timsong-cpp.github.io/cppwp/n4868/expr.typeid#3)：When typeid is applied to an expression other than a glvalue of a polymorphic class type, the result refers to a std::type_info object representing the static type of the expression. Lvalue-to-rvalue, array-to-pointer, and function-to-pointer conversions are not applied to the expression.  
 
-### sizeof operator  
+#### sizeof operator  
 
 > [n4868(7.6.2.5)](https://timsong-cpp.github.io/cppwp/n4868/expr.sizeof#3)：The lvalue-to-rvalue ([conv.lval]), array-to-pointer ([conv.array]), and function-to-pointer ([conv.func]) standard conversions are not applied to the operand of sizeof. If the operand is a prvalue, the temporary materialization conversion is applied.  
 
-### Three-way comparison operator  
+#### Three-way comparison operator  
 
 > [n4868(7.6.8)](https://timsong-cpp.github.io/cppwp/n4868/expr.spaceship#6)：If at least one of the operands is of object pointer type and the other operand is of object pointer or array type, array-to-pointer conversions ([conv.array]), pointer conversions ([conv.ptr]), and qualification conversions are performed on both operands to bring them to their composite pointer type ([expr.type]). After the conversions, the operands shall have the same type.  
 >   
 > [Note 1: If both of the operands are arrays, array-to-pointer conversions are not applied. — end note]  
 
-### 關係運算子  
+#### 關係運算子  
 
 > [(7.6.9)](https://timsong-cpp.github.io/cppwp/n4868/expr.rel#1)：The lvalue-to-rvalue ([conv.lval]), array-to-pointer ([conv.array]), and function-to-pointer ([conv.func]) standard conversions are performed on the operands. The comparison is deprecated if both operands were of array type prior to these conversions ([depr.array.comp]).  
 
-### 比較運算子  
+#### 比較運算子  
 
 > [(7.6.10)](https://timsong-cpp.github.io/cppwp/n4868/expr.eq#1)：The == (equal to) and the != (not equal to) operators group left-to-right. The lvalue-to-rvalue ([conv.lval]), array-to-pointer ([conv.array]), and function-to-pointer ([conv.func]) standard conversions are performed on the operands. The comparison is deprecated if both operands were of array type prior to these conversions ([depr.array.comp]).  
 
-### 三元運算子  
+#### 三元運算子  
 
 這要點進去看一下  
 
 > [(7.6.16)](https://timsong-cpp.github.io/cppwp/n4868/expr.cond#4.3.3)：...otherwise, the target type is the type that E2 would have after applying the lvalue-to-rvalue, array-to-pointer, and function-to-pointer standard conversions.  
 
-# Subscript operator and Pointer  
+## Subscript operator and Pointer  
 
 除了計算順序上的不同，`[]` 基本上可以用 `*()` 來代替，`E1[E2]` 與 `*(E1 + E2)` 基本上完全等價。  
 

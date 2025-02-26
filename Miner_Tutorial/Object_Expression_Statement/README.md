@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言  
+## 前言  
 
 這是 C\+\+ 礦坑系列的前篇，為了讓大家能夠看懂礦坑系列在寫什麼，決定從 0 開始做一整個系列的教學。  
 
@@ -35,7 +35,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 2022/02/25 by Mes  
 
-# Hello World  
+## Hello World  
 
 我們的 code 寫好後會經過前處理器處理，然後把檔案交給編譯器編譯，變成組合語言，再透過組譯器轉換為機械語言，也就是一堆指令，存在硬碟裡面，這樣的東西我們稱之為 Program。  
 
@@ -115,9 +115,9 @@ int main() {
 
 這邊 `main` function 裡面有一行 `std::cout << "Hello world"`，這行是拿來輸出東西在終端機上的，關於這行後面會再進行更多說明，最後有一個 `return 0;`，代表這個函式結束後會回傳 `0`，對於程式來說，main function 執行完，程式基本上就結束了，所以 `main` function 的回傳值還有一些特殊意義，`0` 代表程式正常結束。  
 
-# Object and Variable  
+## Object and Variable  
 
-## Definition of object  
+### Definition of object  
 
 接下來要正式進入教學了，我們從生活化的例子來切入，假設今天你跟朋友到早餐店，點餐的時候跟店員說了要兩杯大冰奶，於是店員就拿出了一張小便條紙寫了 `2*15`，放在桌上，然後你又點了兩個吐司夾蛋，此時店員又拿了<span class = "yellow">另外一張便條紙</span>，上面寫了 `2*30`，接著你說這樣就好，於是他便算出 `30+60 = 90`，跟你收了 90 元，然後把兩張便條紙丟掉。  
 
@@ -129,7 +129,7 @@ int main() {
 
 也就是說一個物件會經過三個時期：建構、建構後解構前、解構，在這期間物件都會佔有一段空間，也就是邏輯上的記憶體空間，以上面的例子來說，就是便條紙被撕下的那一瞬間，放在桌上的那一段期間，把便條紙丟掉的那一瞬間，這個便條紙都會「存在」且在桌上佔有空間。  
 
-## Type  
+### Type  
 
 而我們會利用型態(type) 對儲存的資料進行分類，就像一個標籤一樣，拿來形容物件、引用、函式與表達式  
 
@@ -161,15 +161,15 @@ bool 是一種特殊的型態，bool 型態的物件只能儲存兩種值：true
 
 而 signed interger 與 unsigned integer 則都是整數，不過前者有分正負號，而後者則只有正號，  
 
-### Data size  
+#### Data size  
 
 資料型態會影響物件在記憶體空間佔有的大小，最常見的模型中，`int` 佔 4 bytes，`char` 佔 8 bits，`bool` 佔 1 byte，`float` 佔 4 bytes，`double` 佔 8 bytes。  
 
 但這只是最常見的模型，實際上不同的環境下可能會有不同的結果，以 `int` 來說，在 C99 標準，64-bits 的 Unix 環境下 `int` 就佔 8 bytes，可以看看 wiki 上的[表格](https://en.wikipedia.org/wiki/Integer_(computer_science)#Long_integer)。  
 
-# Declaration  
+## Declaration  
 
-## Simple-declaration  
+### Simple-declaration  
 
 而我們還可以給物件取名字，習慣上我們會稱有名字的物件為「變數 (variable)」，但 spec 裡面有寫道：  
 
@@ -209,7 +209,7 @@ int main()
 > init-declarator:  
 >> declarator initializer(opt)  
 >> declarator requires-clause  
-## Declare Specifier  
+### Declare Specifier  
 
 第一部分是 decl-specifier-seq，由 Declare Specifier 組成，[cppreference](https://en.cppreference.com/w/cpp/language/declarations#Specifiers) 上有列表可以看，裡面有很多關鍵字，像是 `inline`、`constexpr` 等等，但我們這邊最主要要討論的是 type specifiers，也就是我們上面講到的型態，像是 `int`、`char` 或 `bool` 之類的，也可以是你自己定義的型態，還有 cv-qualifiers。  
 
@@ -221,7 +221,7 @@ int main()
 
 要注意 type specifier 跟 type 是不一樣的，可以看一下簡單的[例子](https://timsong-cpp.github.io/cppwp/n4868/tab:dcl.type.simple)，可以看見有些不同的 type specifier 所指定的 type 是相同的，如 `unsigned` 與 `unsigned int`。  
 
-## Declarator  
+### Declarator  
 
 第二個部分是 init-declarator-list，由宣告器(declarators) 組成，宣告器之間以逗號分割，每個宣告器裡面可能會有初始化器(initializer)。  
 
@@ -233,7 +233,7 @@ declarator 可以擁有很複雜的語法，以便我們宣告更複雜的東西
 
 延伸閱讀：[What are declarations and declarators and how are their types interpreted by the standard?](https://stackoverflow.com/questions/13808932/what-are-declarations-and-declarators-and-how-are-their-types-interpreted-by-the)  
 
-## Definition  
+### Definition  
 
 而我們前面說宣告的意義在於告訴編譯器有某個東西的存在，但對物件來說，這不代表他現在存在，他可能等等才會出現，只是先告訴了編譯器有這個東西而已，也就是說可能有了名字，卻還沒有記憶體空間。  
 
@@ -280,7 +280,7 @@ class T;
 
 > [n4659(6.9)](https://timsong-cpp.github.io/cppwp/n4659/basic.types#5) : A class that has been declared but not defined, an enumeration type in certain contexts, or an array of unknown bound or of incomplete element type, is an incompletely-defined object type.46 Incompletely-defined object types and cv void are incomplete types. Objects shall not be defined to have an incomplete type.  
 
-## Scope  
+### Scope  
 
 C++ 裡面所有的 name 都只能在某個範圍內可以被看見，這個範圍我們稱為 Scope，口語上稱為可視範圍。  
 
@@ -312,7 +312,7 @@ int main() {
 
 延伸閱讀：[What are qualified-id/name and unqualified-id/name?](https://stackoverflow.com/questions/7257563/what-are-qualified-id-name-and-unqualified-id-name)  
 
-# Expression  
+## Expression  
 
 講完宣告了，接下來要講表達式(expression)，Expression 用來描述一段計算過程，由運算元(operand) 與運算子 (operator) 組成，Expression 會有一個計算(Evaluation) 的結果，且可能會有 side-effect。  
 
@@ -324,7 +324,7 @@ int main() {
 
 Expression 有兩個特性：Type 與 Value Category，Type 就是前面講的那個 Type，而 Value Category 講起來非常複雜，這個系列應該是不會講到，有興趣的可以去看礦坑系列的文章。  
 
-## 運算子  
+### 運算子  
 
 根據運算元的數目，我們可以簡單將運算子區分為單元運算子(unary operator)、二元運算子(binary operator) 和三元運算子(ternary operator)。  
 
@@ -332,7 +332,7 @@ Expression 有兩個特性：Type 與 Value Category，Type 就是前面講的�
 
 後面我把一些比較常用的運算子挑出來討論，每個類別裡面還會有其他的運算子，記得點進 cppreference 看全部的運算子。  
 
-### 指派運算子 Assignment operators  
+#### 指派運算子 Assignment operators  
 
 指派運算子用來修改物件儲存的值，像是前面已經看過幾次的 `=` 就是一種指派運算子，叫做 simple assignment operator，如 `a = 5`，這樣我們會說將數字 5 賦值給變數 `a`。  
 
@@ -351,13 +351,13 @@ int main() {
 
 這裡有一個重點，<span class = "yellow">初始化與賦值是不同的操作</span>，如果把物件想像為一個箱子，那麼初始化就是將箱子拿出來時便順便把東西放進箱子裡，而賦值則是箱子拿出來後先放在桌上一段時間，隨後再把東西丟進箱子，雖然兩者看起來很像，但性質上完全不同，賦值可以有很多次，我們可以不斷的更改變數裡面儲存的資料，但初始化只會有一次，發生在物件生成時。  
 
-### 算術運算子 Arithmetic operator  
+#### 算術運算子 Arithmetic operator  
 
 一般的加減乘除、模除，取正負等數學運算，在 C++ 中可以利用算術運算子來操作，這些運算子基本上由左至右運算，而遇到加減乘除等問題時也是先乘除後加減，需要時可以利用括號來讓某段子運算式先算。  
 
 舉幾個簡單的例子：`1 + 1`、`i * 2`、`i / 3`。  
 
-### 遞增遞減運算子 Increment/decrement operators  
+#### 遞增遞減運算子 Increment/decrement operators  
 
 寫程式的時候對變數遞增 1 或遞減 1 是很常見的事，例如計數器就會用到這種操作，遞增遞減運算子有四種：pre-increment operator、post-increment operator、pre-decrement operator、post-decrement operator，前兩者的符號都為 `++`，後兩者的符號都為 `--`  
 
@@ -387,7 +387,7 @@ int main() {
 
 換句話說 `int b = a++;` 這行的外顯行為與 `int b = a;  a += 1;` 是一樣的。  
 
-### 比較運算子 Comparison operator  
+#### 比較運算子 Comparison operator  
 
 比較運算子用來比較運算元的關係，像是常見的大於 `>`、小於 `<`，還有相等 `==` 和不相等 `!=`，注意 equal-to operator `==` 是兩個等號，一個等號的是簡單指派運算子。  
 
@@ -411,7 +411,7 @@ two-way 比較運算子，也就是上面常見的那些，會回傳 bool type �
 + 型態為 arithmetic 或 enumeration  
 + 型態為 pointer type  
 
-### 成員訪問運算子 Member access operators  
+#### 成員訪問運算子 Member access operators  
 
 常見的有 subscript-operator `[]`、indirection `*` 和 address-of operator `&`，第一個之後講 array 時會更詳細的講  
 
@@ -451,7 +451,7 @@ int main() {
 
 有關指標，之後會專門有一小節來講。  
 
-## Conversion  
+### Conversion  
 
 當我們使用不同型態的值來賦值給變數時會發生型態的轉換，舉幾個例子：  
 
@@ -476,7 +476,7 @@ double pi = i; // pi 的值為 3.0
 
 在 [n4868(7.4)](https://timsong-cpp.github.io/cppwp/n4868/expr.arith.conv) 內可以看到更詳細的解釋，裡面有詳細寫了會發生 arithmetic conversion 的情況。  
 
-# Statement  
+## Statement  
 
 上面簡單介紹完 Expression 了，Expression 你可以把它想像成一段完整操作的「組件」，假設我們今天的完整操作是 `(2 + 5) * 2`，則 `(2 + 5)` 與 `2` 都是整個 Expression 其中一個的組件。  
 
@@ -508,7 +508,7 @@ C++ 的 Statement 主要有下面這些：
 
 也就是說一個完整的 C++ Program 幾乎只會用上面 8 種 Statement 來完成，而每個 statement 裡面可能還可以包含另一個 statement，比較小的 statement 我們稱為 substatement。  
 
-## 運算式陳述句 Expression statements  
+### 運算式陳述句 Expression statements  
 
 一個運算式陳述句以一個 expression 加上分號組成，語法像這樣：  
 
@@ -531,7 +531,7 @@ int main() {
 
 第 4 行之後的都是運算式陳述句。  
 
-## 複合陳述句 Compound statements  
+### 複合陳述句 Compound statements  
 
 compound statement 又稱為 block，由一些小的 statement 組成，小的 statement 稱為 substatement，語法像這樣：  
 
@@ -573,11 +573,11 @@ int main() {
 
 我們利用 `{}` 將兩組 expression statement 包裝成單一一個 compound statement，接在 if-statement 後面，如此一來就可以執行多組操作了。  
 
-## 宣告陳述句 Declaration statements  
+### 宣告陳述句 Declaration statements  
 
 宣告本身就是一個 Statement，會在 block 內引入一個以上的 identifier。  
 
-## 選擇陳述句 Selection statements  
+### 選擇陳述句 Selection statements  
 
 選擇陳述句能幫我們進行流程控制，建立分支，語法長這樣：  
 
@@ -693,13 +693,13 @@ int main() {
 }  
 ```
 
-## 疊代陳述句 Iteration statements  
+### 疊代陳述句 Iteration statements  
 
 疊代陳述句可以幫助我們重複執行一段程式碼，口語上我們稱之為迴圈，總共有四種，while 迴圈、do-while 迴圈、for 迴圈、range for 迴圈，range for 迴圈我會在之後講容器時一併介紹。  
 
 `break` statement 可以幫助我們離開迴圈，而 `continue` statement 可以幫助我們跳過當次疊代，直接開始下一次疊代。  
 
-### while loop  
+#### while loop  
 
 語法長這樣：  
 
@@ -781,7 +781,7 @@ while(++x) {
 
 在迴圈開始前我先把 x 賦值為 0 了，每次迴圈開始前 x 先遞增 1，而在 while 的 body 裡面有一個 if-else statement，當 `x == 6` 時會跳過此次疊代，直接開始下一次疊代，而當 `x == 8` 時，會直接結束這個迴圈，因此這段迴圈裡 x 的輸出結果為 1 2 3 4 5 7。  
 
-### do-while loop  
+#### do-while loop  
 
 語法長這樣：  
 
@@ -835,7 +835,7 @@ while(--x > 0);
 
 do-while 會先執行一次 statement，然後再去判斷，所以這個迴圈的 body 總共會被執行 5 次，condition 被計算了 5 次。  
 
-### for loop  
+#### for loop  
 
 語法長這樣：  
 
@@ -925,13 +925,13 @@ for(int i = 0;;)
 
 > n4868(6.4.3) : Names declared in the init-statement, the for-range-declaration, and in the condition of if, while, for, and switch statements are local to the if, while, for, or switch statement (including the controlled statement), and shall not be redeclared in a subsequent condition of that statement nor in the outermost block (or, for the if statement, any of the outermost blocks) of the controlled statement.  
 
-## 跳躍陳述句 Jump statements  
+### 跳躍陳述句 Jump statements  
 
 Jump Statements 可以無條件的改變程式執行的順序，有 4 種：`break` statement、`continue` statement、`return` statement、`goto` statement。  
 
 前兩個是用來控制迴圈的流程使用的，上面講迴圈時已經介紹了，`return` statement 會在之後講 function 時介紹，而 `goto` statement 會在後面講 Labeled Statements 時介紹。  
 
-## 標記陳述句 Labeled Statements  
+### 標記陳述句 Labeled Statements  
 
 標記陳述句用來製造一個 label ，label 可以拿來幫助控制程式的執行順序，label 主要是給兩種 statement 看的，一是 `goto`(一種 jump statement)，二是 `switch`(一種 selection statement)。一個 statement 裡面可能會有很多個 label。  
 
@@ -943,7 +943,7 @@ Jump Statements 可以無條件的改變程式執行的順序，有 4 種：`bre
 
 可以看見後面都需要接 statement，但如果在邏輯上不需要，就可以使用 null statement 來幫忙。  
 
-### goto (一種 jump statement)  
+#### goto (一種 jump statement)  
 
 (1) 是給 `goto` 看的，同一個 function 內的 lable `goto` 都看的到，且在宣告前也可以看的到，function 後面的章節會教到，這邊可以先當作 `main` function 裡面。  
 
@@ -1011,7 +1011,7 @@ end:
 
 這樣就可以編譯過了。  
 
-### switch (一種 selection statement)  
+#### switch (一種 selection statement)  
 
 (2) 與 (3) 是給 `switch` 看的，語法是   
 

@@ -10,7 +10,7 @@ category: C++ Miner
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-# 前言 
+## 前言 
 
 `std::function` 是 C\+\+11 時加入的東西，它基本上是一個類型模板(Class Template)，目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用，像是函式、lambda、`std::bind`、Functor(function object) 等等
 
@@ -18,7 +18,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 `std::function` 在 C\+\+17 時有做了一些修正，遺棄了一些東西，這篇文章會以新版的規則來記錄
 
-## 為什麼要有 std::function? 
+### 為什麼要有 std::function? 
 
 也許有人想問為什麼需要有 `std::function` ? 直接用 function pointer 之類的不行嗎? 其實 `std::function` 的設計初衷就是保證泛用性，看一下這個例子：
 
@@ -164,11 +164,11 @@ int main() {
 
 記得要引入標頭檔 `<functional>`
 
-# 語法與相關函式 
+## 語法與相關函式 
 
 這次試著改了文章的順序，先教大家怎麼用，再去講內部實現的概念，主要是因為有些人比較在意該怎麼用與何時使用，並不是太在意裡面怎麼實作的。再來雖然核心概念差不多，但不同編譯器實作的方法還是會稍微不太一樣
 
-## 語法與重要定義 
+### 語法與重要定義 
 
 語法其實挺簡單的，基本上就是
 > std::function<回傳型態(參數列)> 實例名 = 初始化器
@@ -265,7 +265,7 @@ int main() {
 
 複雜的定義大概就這樣，那麼 `std::function` 的使用時機在前言的地方也提到了，`std::function` 主要就是為了泛用性，消除型態上面的差異而出現的東西。 代價也不大，`std::function` 並不肥，能使用的話就盡量使用吧
 
-## 相關函式 
+### 相關函式 
 
 在 C\+\+17、C\+\+20 時有部分的相關函式被刪除了，那些被刪除的函式本篇就不介紹了，主要介紹那些仍可使用的，有興趣的可以到 cppreference 上看
 
@@ -562,7 +562,7 @@ int main() {
     }
     ```
 
-## Deduction Guides 模板推導指引 
+### Deduction Guides 模板推導指引 
 
 在 C\+\+17 時有個叫 CTAD 的東西出現了，不知道的朋友可以先到 <a href = "https://en.cppreference.com/w/cpp/language/class_template_argument_deduction" class = "pinklink">cppreference</a> 上看，或看一下 <a href = "https://tjsw.medium.com/%E6%BD%AE-c-17-class-template-argument-deduction-%E5%92%8C-deduction-guide-%E9%A1%9E%E5%88%A5%E6%A8%A3%E7%89%88%E5%8F%83%E6%95%B8%E6%8E%A8%E5%B0%8E-70cc36307a42" class = "pinklink">TSJW的文章</a>
 
@@ -600,13 +600,13 @@ int main() {
 ```
 
 不過未來這個 Deduction Guides 可能還會改變，尤其是在 `std::function` 支援 `noexcept` 之後
-# 內部概念
+## 內部概念
 
 內部概念我大概會講一下架構，然後帶大家看一下 GCC 上的優化與 code
 
 接下來的內容主要參考了 Raymond 的兩篇文章、 Stackoverflow 上的講解與 jerrt_fuyi 的文章：<a href = "https://devblogs.microsoft.com/oldnewthing/20200513-00/?p=103745" class = "pinklink">連結 1</a>、<a href = "https://devblogs.microsoft.com/oldnewthing/20200514-00/?p=103749" class = "pinklink">連結 2</a>、<a href = "https://stackoverflow.com/questions/18453145/how-is-stdfunction-implemented" class = "pinklink">連結 3</a>、<a href = "https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html" class = "pinklink">連結 4</a>，有興趣的可以進去看看原文
 
-## 架構
+### 架構
 
 我們的目的是消除型態，雖然有很多不同的方法能達到這個目的，但概念上的架構上主要會有一個可呼叫物件的基類，之後利用模板，由這個基類衍生出不同的可呼叫物件的實例，之後 `std::function` 再去存取這個實例的指標，大概會像這樣：
 
@@ -775,9 +775,9 @@ int main() {
 
 雖然因為簡化的關係和 gcc 裡面寫的已經有點不太一樣了，但主要的核心概念仍一樣，就是透過模板來消除型態
 
-## 內部實作與優化
+### 內部實作與優化
 
-### 前言
+#### 前言
 
 接下來的內容有很多地方都來自 <a href = "https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html" class = "pinklink">jerry_fuyi</a> 的文章，基本上是引用過來，改寫一些部分，自己讀了很久，希望多加一些解釋，抓一些重點出來後，大家能更容易理解，如果看不習慣我的也很建議回去讀讀原文，因為真的寫得蠻好蠻詳細的
 
@@ -785,7 +785,7 @@ int main() {
 
 看完了前面約略的概念後各位可能覺得這個東西就這樣了，其實沒那麼簡單，還有很多隱藏的問題(雖然前面可能先講了答案XD，但大家可能沒想過會有這些問題)，例如，函式不是一個固定大小的對象，但 class 是，我們用 class 來包裝不同的函式，卻要有相同的大小，不會有問題嗎? 還有其他很多的小問題，導致這個東西一直到 C\+\+23 都還拿出來被討論，前面的建構子就是其中一項，有些東西可能會牽扯到 ABI Break，蠻複雜的
 
-### 實作前的想法
+#### 實作前的想法
 
 `std::function` 能儲存不同的可呼叫物件，表示有多態性，這我們前面使用了 virtual function 與繼承解決了，這是個簡單、直覺且有效的方法，但這個方法會用到動態記憶體，很多情況下這是種浪費，像是一個沒捕捉東西的 lambda，這種情況下他只有一個 char 的大小，但我們卻為了它去呼叫了分配動態記憶體的函式
 
@@ -803,7 +803,7 @@ int main() {
 
 發現了嗎? 就是函式指標，函式指標也是一個能幫助我們實現多態性的東西，如果你是想在 C 裡面實現多態，比較方便的方法也是在 struct 內直接放 function pointer，因此我們主要會使用 function pointer 來實作
 
-### 開始實作
+#### 開始實作
 
 基本上 `std::function` 是個模板類，模板參數就是一個 type，注意是一個 type，不是好幾種 type，以這個例子來說：
 
@@ -815,7 +815,7 @@ std::function<int(double)> f;
 
 接下來我會帶大家看一下 gcc 的實作 (待補，被高微殘害中QQ)
 
-# 參考資料 
+## 參考資料 
 
 **<a href = "https://en.cppreference.com/w/cpp/utility/functional/function" class = "redlink">1. std::function</a> (cppreference) (文章部分來源)**
 

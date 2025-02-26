@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言
+## 前言
 
 ぼっち・ざ・ろっく！ 實在太棒了，標題致敬一下ギターと孤独と蒼い惑星 XD
 
@@ -27,7 +27,7 @@ Detection Idiom 中文翻譯為偵測語意，其他的名字還有 Member Detec
 
 從這邊可以預見，這篇基本上都是在講模板的東西，對模板不熟的可以先去讀讀模板怎麼用，這篇會先簡單介紹一下 C\+\+20 的 Concept，再接著講 C\+\+20 前利用 SFINAE 的方法
 
-# Concept
+## Concept
 
 C\+\+20 時新增了一個語言特性叫 Concept，它是一種 requires expression，可以對 template argument 設定需要符合的條件。 要做這件事，首先需要先定義一個 Concept，然後定義我們的條件
 
@@ -169,7 +169,7 @@ int main()
 
 可以看見錯誤訊息變得十分乾淨，debug 變的很方便
 
-## Conjunction 與 Disjunction
+### Conjunction 與 Disjunction
 
 Concept 可以進行組合，所謂的 Conjunction 指的就是邏輯上的 and，而 Disjunction 指的則是邏輯上的 or，以前面 `valid_model` 的例子來說，可以將它細分為 `has_fit`、`has_predict` 與 `has_confusion` 三種 concept，再由 `valid_model` 對這三個進行組合：
 ```cpp
@@ -249,9 +249,9 @@ int main()
 
 到這裡我們把 concept 的基本操作講了一遍，可以看見概念和語法其實都很簡單，但畢竟並不是每個人環境都有 C\+\+20，因此接下來就繼續講 C\+\+20 前要怎麼做 Detection Idiom
 
-# 背景知識
+## 背景知識
 
-## 前言
+### 前言
 
 C++20 前要做 Detection Idiom 需要使用 function overloading，而 SFINAE 則是針對 function template overloading 做的~~億些規則~~，因此我們要先搞懂 SFINAE 的概念與 function overloading 的大致流程
 
@@ -302,7 +302,7 @@ switch (argument type) {
 
 但實際上當然沒這麼簡單，所以我們在這邊要提一下 Overload Resolution，因為我們要做的事基本上就是 Overload Resolution
 
-## Overload Resolution
+### Overload Resolution
 
 Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Function Matching，中文為函式匹配，從名字可以看出來他就是在解析函式多載的過程，目的是在有多個同名的函式時決定要呼叫哪個函式
 
@@ -507,7 +507,7 @@ int main()
 
 可以看見 candidate set 的確有這三個函式
 
-## SFINAE
+### SFINAE
 
 而 SFINAE 的概念基本上就是對於模板的 overload 解析，在 overload resolution 第一個 name lookup 的階段，compiler 會把所有的 function template 包含進 overload set，這也包括 template specialization。但並不是所有的 function template instance 都是有意義的，有些 function 可能含有無法被 evaluated 的 expression，這時候就會需要 SFINAE
 
@@ -541,7 +541,7 @@ void callFoo() {
 
 同樣的，對於 `foo<Y>(10)`，Foo0 替換失敗，因為 `Y` 裡面沒有 `type`；Foo1 成功替換為 `void foo(int)`，加到 candidate set 內；Foo2 替換失敗，因為 `10` 無法被轉換為 `Y`
 
-## std::enable_if
+### std::enable_if
 
 `std::enable_if` 是個 template struct，可能的定義如下(一種實作方式)：
 ```cpp
@@ -620,7 +620,7 @@ void func(char t, /* ill-formed expression */); // B
 
 在這裡的例子我們使用的是 `std::is_same_v` 來幫助我們製作 `std::enable_if` 的參數，若想要處理更複雜的狀況，往往需要 `decltype` 與 `std::declval` 來幫助我們
 
-## decltype 與 std::declval
+### decltype 與 std::declval
 
 `decltype` 可以幫助我們獲得某個 entity 的 type，或是某個 expression 的 type 與 value category，用法大致上如下：
 ```cpp
@@ -714,7 +714,7 @@ int main()
 }
 ```
 
-## std::false_type 與 std::true_type
+### std::false_type 與 std::true_type
 
 這兩個東西基本上就是 `false` 和 `true`，定義大概長這樣:
 ```cpp
@@ -806,9 +806,9 @@ int main()
 }
 ```
 
-# 簡單的例子
+## 簡單的例子
 
-## 例 1 檢查型態是否為 double 或 int
+### 例 1 檢查型態是否為 double 或 int
 
 讀到這裡我們已經可以寫一些例子了，像是我們現在想要檢查一個型態是不是 `doble` 或 `float`，那我們可以簡單的利用 constexpr bool 來做：
 ```cpp
@@ -832,7 +832,7 @@ int main()
 
 非常簡單，不需要用到太多東西，但隨著東西的複雜度上升，需要的東西就越來越多了，讓我們看看下個例子
 
-## 例 2：ToString 與 `std::to_string`
+### 例 2：ToString 與 `std::to_string`
 
 TJSW 舉了一個很棒的[例子](https://tjsw.medium.com/%E6%BD%AE-c-detection-idiom-%E5%81%B5%E6%B8%AC%E8%AA%9E%E7%BE%A9-%E7%89%A9%E4%BB%B6%E8%83%BD%E4%B8%8D%E8%83%BD%E8%BD%89%E5%9E%8B%E6%88%90%E5%AD%97%E4%B8%B2-expression-sfinae-1f1d05e72cc7)，我這邊引用一下並補充一些東西，假設今天我們想針對擁有 `ToString()` 成員函式的實例自動呼叫 `ToString()`；其他型別則是呼叫 `std::to_string()`，這樣根據編譯期傳入型別的不同，去特化不同 function template，這便是 SFINAE 可以進來幫助我們的地方
 
@@ -994,7 +994,7 @@ using void_t = void;
 
 核心概念就是 <span class = "yellow">`void_t` 檢查 member 是否存在，`std::is_same` 檢查 type 是否一樣</span>
 
-## 例 3：ML Model
+### 例 3：ML Model
 
 最後回到最一開始講 `concept` 的例子，讓大家多看幾個例子熟悉一下，我們有一個函式 `check`，它的 template parameter 是一個 ML Model，一個有效的 ML Model 需要有 `fit` 和 `predict` 這兩個 function，同時需要有個 confusion table，那在 C\+\+20 前我們可以這樣寫：
 ```cpp
@@ -1075,7 +1075,7 @@ int main()
 }
 ```
 
-## 例 4: 檢查是否含有指定的 member function
+### 例 4: 檢查是否含有指定的 member function
 
 這是一個 stackoverflow 上的[例子](https://stackoverflow.com/questions/87372/check-if-a-class-has-a-member-function-of-a-given-signature)，寫得很漂亮，所以這邊也拿過來講解一下：
 ```cpp
@@ -1146,7 +1146,7 @@ int main()
 
 從這邊你可以發現其實 Detection Idiom 的寫法很多，像這邊就只用到了 `std::declval`，且彈性很高且寫起來也可以很乾淨
 
-## constexpr if
+### constexpr if
 
 前面這種「符合某個條件的時候呼叫 A，不符合的時候呼叫 B」的事情我們是在 function template parameter 加上 `std::enable_if`，利用 SFINAE 來完成的，在 C\+\+17 後我們可以使用 
 `constexpr if` 來做這件事情，使用方法很簡單，直接把原本塞在 `std::enable_if` 裡面的 CONDITION 放到 `constexpr if` 的圓括號裡面就好，寫起來像這樣：
@@ -1199,9 +1199,9 @@ int main()
 
 可以發現 `ToString` 變得簡潔許多，可以避免我們寫很多 `std::enable_if_t` 去做樣板特化 (雖然我還是比較習慣用 `std::enable_if` 啦)
 
-# 自己做一個簡單的 concept
+## 自己做一個簡單的 concept
 
-## 實作例子
+### 實作例子
 
 看了這麼多例子，大家應該比較熟悉這些工具的運用了，現在我們可以試著做一個自己的 concept 看看，這邊我寫了一個例子，先看看沒有包裝的版本：
 ```cpp
@@ -1295,7 +1295,7 @@ int main()
 }
 ```
 
-## Concept 部分
+### Concept 部分
 
 我們分幾個部分來看，首先是 concept 的部分，我用 struct 來實作：
 ```cpp
@@ -1340,7 +1340,7 @@ constexpr std::enable_if_t<std::is_same_v<T, TARGET>, bool> same_return = true; 
 
 可以看見 `same_return` 的型態用到了 `std::enable_if_t`，因此當 `std::is_same_v<T, TARGET>` 為 `false` 時 `same_return` 的 return type 為 non-valid 的，而這將會觸發替換失敗
 
-## Checker
+### Checker
 
 Checker 用來幫助我們使用 SFINAE，也就是我們前面的例子所用到的技巧，先看看這裡的實作例子：
 ```cpp
@@ -1369,7 +1369,7 @@ public:
 `RequiresChecker` 裡面有個 traits class 叫 `Checker`，特化的版本使用了
 `decltype(std::declval<T>().template REQUIRES<SUBJECT>(std::declval<SUBJECT>()))` 來檢查 `CONCEPT` 裡面的 `REQUIRES` 是否 valid，若 valid，代表 `REQUIRES` 的要求都有被滿足，則 `RequiresChecker::value` 為 `true`，否則為 `false`
 
-## 如何使用
+### 如何使用
 
 我為了方便，同時為了支援 variadic template型別，最後使用了一個 `satisfied` 來存 `RequiresChecker::value`，定義如下：
 
@@ -1416,7 +1416,7 @@ bool check_valid(T... t) { return true; }
 template <typename... T, typename std::enable_if_t<!satisfied<valid_model, T...>> * = nullptr>
 bool check_valid(T... t) { return false; }
 ```
-## 進行包裝
+### 進行包裝
 
 我們可以對它做包裝，讓其使用起來方便一點：
 ```cpp
@@ -1528,7 +1528,7 @@ int main()
 
 用起來就很像 C\+\+20 的 concept 了
 
-# std::is_detected
+## std::is_detected
 
 `std::is_detected` 實際上應該寫為 `std::experimental::is_detected`，是個還沒正式納入 STL 的東西，它的用法長這樣：
 
@@ -1587,7 +1587,7 @@ using detected_or = detail::detector<Default, void, Op, Args...>;
 
 可以看見它實際上就只是另一種包裝的方法，內部就是個 traits class，只是做了一點調整變得更 general 了
 
-# 古典 C\+\+ 的做法(C\+\+11 以前)
+## 古典 C\+\+ 的做法(C\+\+11 以前)
 
 如果你有嘗試找過 Detected Idiom 相關的東西，像是 google 搜尋 「C\+\+ check if template class has member」之類的，你可能會發現還有另一種神奇的作法，用了兩個 char array，並以 array 大小判斷是否有指定 member，這其實是 C\+\+11 前還沒有 `std::enable_if` 的精典做法，我們通常稱之為 Member Detector
 
@@ -1624,7 +1624,7 @@ int main() {
 
 所以你可以發現它基本上就是個 traits class，只不過只用了古典 C\+\+ 的東西
 
-### Fallback 與 Derived
+#### Fallback 與 Derived
 
 那這邊就來講一下這份東西到底在幹嘛，首先是這兩個 `struct`：
 
@@ -1635,7 +1635,7 @@ struct Derived : T, Fallback { };
 
 `Fallback` 是個 Mixin class，而 `Derived` 繼承了 `T` 和 `Fallback`，這裡有個重點就是 `Fallback` 裡面有個 member 叫 `x`，而 `T` 裡面也有可能有個 member 叫 `x`，這在後面可能會導致 ambiguous，以此來利用 SFINAE 達成目的
 
-### struct ChT
+#### struct ChT
 
 再來是 `ChT`：
 ```cpp
@@ -1645,7 +1645,7 @@ struct ChT;
 
 這個 `ChT` 在 `f` 裡面會用到，他的第一個參數為一般的 template parameter，而第二個則是 non-type template parameter，型態為前面引入的 `C`
 
-### function template `f`
+#### function template `f`
 
 `f` 有兩個：
 ```cpp
@@ -1660,7 +1660,7 @@ static char (&f(...))[2];
 
 上面那個 function 的參數是 `ChT<int Fallback::*, &C::x>*`，`int Fallback::*` 是個 pointer to `int` data member，也就是指向整數的成員指標，而 `&C::x` 則是 `ChT` 的第二個 template parameter，等等在呼叫時我們會使用 `f<Derived>(0)`，因此這邊才會是 `Fallback` 的 pointer to data member
 
-### 使用 SFINAE 之處：`f<Derived>(0)`
+#### 使用 SFINAE 之處：`f<Derived>(0)`
 
 最後是 `value`：
 ```cpp
@@ -1671,7 +1671,7 @@ static bool const value = sizeof(f<Derived>(0)) == 2;
 
 而若 `T` 內沒有成員 `x`，則根據 overload resolution，會呼叫到上面的 `f`，換句話說就是 `sizeof(f<Derived>(0))` 為「1」
 
-### 小結
+#### 小結
 
 由此你可以發現它繞了一些圈子去使用 SFINAE 來判斷，而且它並沒有辦法檢查型態，且要檢查的成員，也就是 `Fallback` 內的成員是寫死的，所以我們通常會結合 macro 來使用：
 ```cpp
@@ -1745,7 +1745,7 @@ int main()
 }
 ```
 
-# 總結
+## 總結
 
 恭喜你看完了，幫大家整理一下脈絡，我們一開始講了 C\+\+20 的 concept，接著以在使用 C++11~C++17 的前提下講解了該如何做 Detection Idiom，其中包含了：
 
@@ -1766,7 +1766,7 @@ template 真的是個大坑，畢竟~~實作泛型就是為了接受更多的苦
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti2.png?raw=true">
 
-# 參考資料
+## 參考資料
 
 **<a href = "https://zhuanlan.zhihu.com/p/21314708" class = "redlink">1. C++模板进阶指南：SFINAE</a>**
 

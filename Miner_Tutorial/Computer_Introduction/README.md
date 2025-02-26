@@ -5,13 +5,13 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-# <center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</center>
+## <center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</center>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言
+## 前言
 
 首先對於這系列的文，如果有什麼寫錯的地方，都歡迎直接修改或與我討論，文章有被修改我都會收到 email 通知，這部分我想老生常談了，因此就不再多做展開
 
@@ -49,7 +49,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 這個礦坑系列的教學會時不時地引用 spec 內的定義，來教新手 C\+\+，由於 C\+\+ 相對其他語言來說較為底層，也就是說比較接近硬體，抽象化的程度比較少，因此在進入 C\+\+ 的教學之前，我覺得最好先寫一篇對電腦運作的簡述，帶大家簡單學習一下計算機概論
 
-# 如何學習一樣東西
+## 如何學習一樣東西
 
 因為這系列的文是針對新手在寫的，但我後來發現其實新手很常有不知道如何學習的狀況，甚至是不知道如何 google，想 google 卻不知道從何下手，因此這邊來簡單講一下這件事
 
@@ -98,9 +98,9 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 以上都為個人經驗與理解，如果你已經有自己的學習方式了，那照你自己舒服的方式繼續你的旅程就好！ 接下來就開始進到計概的內容~~
 
-# 抽象化 Abstraction
+## 抽象化 Abstraction
 
-## 抽象化是什麼
+### 抽象化是什麼
 
 工程的目的是使用科學，科學提供了對自然現象的理解，而抽象則是對現象做包裝的一種方法，例如生活中的「顏色」，顏色是人的感官對於特定波長的電磁波的解釋，但當我們平常聊天在講「紅色」時不會特別地去強調「620-750nm 的電磁波」的這個資訊，更多是在強調人的感官的解釋
 
@@ -120,7 +120,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 我不在乎中間那個框框(黑箱)內做了什麼，我只在乎我的錢進去框框後，我的飯會從框框內出來
 
-## 電路科學的抽象化
+### 電路科學的抽象化
 
 學電機的人會利用 Maxwell's equations 來研究電磁現象，然後在 Maxwell's equations 之上創建一個新的抽象層，稱為集總電路(lumped circuit abstraction)，利用集總電路我們可以再增加一個新的抽象層，稱為數位層(Digital abstraction)，而利用數位電路又可以再增加一層邏輯閘層(Logic gate abstraction)：
 
@@ -136,7 +136,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 然後我大概把資工、電機系內對應的課大概寫了一下，只寫了我有摸過、聽說過的，有些理解的不深，如果有錯麻煩再糾正我一下XD
 
-# 圖靈機 Turing machine
+## 圖靈機 Turing machine
 
 圖靈機基本上是一系列的自動機所建構出來的理論模型，因為是計概所以我這邊就不講太多，也不寫它的數學定義，有興趣的可以看一下自動機理論和計算理論的課：
 
@@ -207,9 +207,9 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 這邊 spec 用的詞是「abstract machine」，在這邊可以先簡單理解為差不多的東西
 
-# CPU & RAM & Bus
+## CPU & RAM & Bus
 
-## RAM (random-access memory)
+### RAM (random-access memory)
 
 從圖靈機我們可以看出，其實只要有 CPU、RAM、Bus，就差不多可以完成一台計算機了，現在我們就來針對這三個硬體來做介紹，幫助大家更理解計算機的運作。 這邊有一部很好的影片，大家也可以看看：[How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA)
 
@@ -244,7 +244,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 </center>
 
-## CPU (Central processing unit)
+### CPU (Central processing unit)
 
 CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為何，都是執行一連串被儲存的指令，這些指令會被保存在記憶體中。 而執行的步驟主要分為提取(Fetch)、解碼(Decode)、執行(Execute)和儲存(Write Back)：
 
@@ -277,7 +277,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 而對於 cache 的部分，我個人覺得這部分不是我們這篇計概(了解電腦運作的 map )的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
 
-## 舊時代的南北橋
+### 舊時代的南北橋
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
@@ -304,7 +304,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 </center>
 
-## 現代 intel PCH / AMD FCH
+### 現代 intel PCH / AMD FCH
 
 於上面的圖中我們可以看到北橋還會接一些較高速的周邊裝置，通常使用的是 AGP 或是 PCIe 協定。 後來，CPU 持續的在變快，導致 FSB 的頻寬跟不上上了，這個瓶頸導致大概在 2008 年時 FSB 就被淘汰了
 
@@ -328,7 +328,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 很諷刺的是之前有駭客扁進了 Intel Management Engine 然後把所有資訊倒了出來，有興趣的可以看一下：[36C3 - Intel Management Engine deep dive](https://www.youtube.com/watch?v=3CQUNd3oKBM)
 
-## Bus
+### Bus
 
 Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address Bus、Control Bus
 
@@ -367,9 +367,9 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 然後要注意這是一個教學用的簡化模型，實際情況不長這樣，有興趣的可以去翻一下 [DDR4 之類的 spec](https://xdevs.com/doc/Standards/DDR4/JESD79-4%20DDR4%20SDRAM.pdf) 看看
 
-# BIOS & OS
+## BIOS & OS
 
-## BIOS
+### BIOS
 
 透過上面那些知識，我們知道了 CPU 要如何與 memory 溝通，和如何運行一個程式(一系列的指令)，現在我們終於要開始看一下電腦開機後到底發生了什麼
 
@@ -414,7 +414,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 </center>
 
-## 作業系統(OS)
+### 作業系統(OS)
 
 前面講完了 BIOS，BIOS 正常情況下最終會將作業系統(OS) 給啟動，並將電腦的控制權交給 OS，所以我們現在就來看一下什麼是 OS，這邊抄一下之前的 OS 筆記XD...
 
@@ -461,7 +461,7 @@ Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一�
 
 因此這個過程中我們會先呼叫 `printf`，然後會呼叫到 system call，再去呼叫到 driver 這樣一層一層下去
 
-# 二進制檔案 Binary File
+## 二進制檔案 Binary File
 
 現在我們有了 OS 的概念，也就可以跟硬體打交道了，所以最後我們來看一下我們到底要怎麼執行一個程式。 我們的執行檔都是一種二進制檔案，目的是使計算機根據機器碼執行指定的任務
 
@@ -499,7 +499,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 </center>
 
-## 可執行檔 Executable File
+### 可執行檔 Executable File
 
 從剛剛的圖中，我們可以看見最一開始的地方擁有 `4D 5A` 這個簽名，這是 windows 上的執行檔簽名，格式被稱為 PE-file format。 現今的執行檔主要有兩種格式，一種為 ELF，主要在 Unix 與 Unix-like 的 OS 上被使用；另一種則為 PE，主要用在 windows 的 OS 上
 
@@ -525,7 +525,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 </center>
 
-# Reference
+## Reference
 
 - [(Wikipedia) AMD Fusion Controller Hub](https://zh.wikipedia.org/zh-tw/AMD_Fusion_Controller_Hub)
 - [(Wikipedia) Arithmetic logic unit](https://en.wikipedia.org/wiki/Arithmetic_logic_unit)

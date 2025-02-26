@@ -13,13 +13,13 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 #
 
-# <span class = "orange">前言</span> 
+## <span class = "orange">前言</span> 
 
 Structured binding declaration 是 C++17 加入的一個新特性，它讓我們能夠更簡單地去處理多個回傳值或多變數的情況，通常會在要接 tuple_like 的容器或 Struct 回傳值時搭配 auto 來使用
 
 我盡量將原裡理解並寫在了「介紹及原理」的部分，有些部分是翻譯了官方的文件，原先只是想弄個翻譯，結果翻著翻著發現官方有些地方講的不是讓人很明白，於是就又加上了自己的文字，漸漸地就變一篇文件了，如果只想知道如何使用的朋友可以直接跳到下方的應用部分
 
-# <span class = "orange">語法</span> 
+## <span class = "orange">語法</span> 
 
 主要有三種初始化的方式：
 > **1. attr(opt) cv(opt) auto ref-qualifier(opt) \[idendentifier-list] = expression;** [color=#30DCD8]  
@@ -43,7 +43,7 @@ Structured binding declaration 是 C++17 加入的一個新特性，它讓我們
 + **expression** :whale:
     表達式，通常會放 array、tuple-like 容器或是個沒有 union 成員的 Class，語法上會是 assignment-expression，它們不能是 `throw` 表達式，並且在 top-level 不能有逗號運算符，這裡應該是指 expression 能夠有 sub-expression，而它要的是最上層的那個 (感謝marty大佬)。 另外，expression 內的變數名不能和 identifier-list 內的變數名相同，簡單來說就是不能重複宣告同樣名字的變數
 
-# <span class = "orange">介紹及原理</span> 
+## <span class = "orange">介紹及原理</span> 
 
 Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/language/scope) 內採用你 identifier-list 裡給的標示符，並且將其連結到你 expression 裡寫的元素或子物件。採用時它會先創造出一個特殊的變數來存取你的初始化敘述(initializer)，型態取決於你的 expression，這個變數的名稱這裡我們先取作 `__e` ，由於 `__e` 可能是個容器或參考，所以我們給他取叫 initializer，沒看過這個詞的朋友不用太擔心，而 `__e` 在存取時有一些規則：
 
@@ -204,7 +204,7 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
 
     x 會是個整數左值標示符，連結到一個 2-bit 的整數元素 x1，y 會連結到 const volatile double 的元素 y1
 
-# <span class = "orange">使用 Structured Binding</span> 
+## <span class = "orange">使用 Structured Binding</span> 
 
 > 記得要切換成 C++17 才能夠使用
 
@@ -279,7 +279,7 @@ for (const auto& [id, _] : owners) {
 
 以往 C++ 函數的回傳值多是單一型別，如 bool, int。有了 Structured Binding 再搭配其他技巧，在處理回傳值時更有彈性
 
-# <span class = "orange">補充</span> 
+## <span class = "orange">補充</span> 
 
 + 對成員的 `get` 進行查找時會忽略可訪問性與非類型模板參數的確切類型。像是 `template<char*> void get();` ，成員將導致使用成員解釋，即使格式是錯的
 
@@ -321,7 +321,7 @@ for (const auto& [id, _] : owners) {
     }
     ```
 
-# <span class = "orange">參考資料</span> 
+## <span class = "orange">參考資料</span> 
 
 **<a href = "https://en.cppreference.com/w/cpp/language/structured_binding" class = "redlink">1. Structured binding declaration (since C++17)</a>** (文章部分來源，例子來源)
 

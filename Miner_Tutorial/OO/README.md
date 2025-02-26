@@ -11,11 +11,11 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言  
+## 前言  
 
 物件導向有三個很重要的特性：資料抽象化、繼承與動態連結。資料抽象化上章有提到，就是將介面與實作分開；繼承的話則可以幫助我們建立相似模型之間的關係；動態連結則可以讓我們使用某些型態的物件時不用在意其內部細節。  
 
-# 繼承(inheritance)  
+## 繼承(inheritance)  
 
 使用繼承的 Class 會構成一個階層架構(hierachy)，通常這個架構會有一個基類(base class)，其他類別再繼承自此基類，這些其他類別稱為衍生類(derived class)。基類會定義大家都需要的共通成員，而衍生類則會額外定義專屬於自己的成員。  
 
@@ -25,7 +25,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 但不是只有 is-a 的關係會用繼承，在某些時候，如 mixins 或 policy-based 設計，甚至是某些 has-a 關係也會用到繼承，也就是說還是要看你的實作細節來決定，但如果有用到多態繼承(polymorphic inheritance)，也就是有 `virtual` function 的，那就應該永遠都是 is-a 的關係。  
 
-# Base Class and derived class  
+## Base Class and derived class  
 
 要定義一個基類很簡單，基本上跟上章的 Class 定義方法差不多，差別就是基類可能會使用到 `protected` 關鍵字，表示這個成員可讓衍生類使用：  
 
@@ -200,7 +200,7 @@ int main()
 }  
 ```
 
-# Operator of Derived Class  
+## Operator of Derived Class  
 
 如果衍生類有 operator overloading 的需求，那他必須顯式的寫出來，無法調用基類的 operator overloading：  
 
@@ -284,7 +284,7 @@ int main() {
 }  
 ```
 
-# friend  
+## friend  
 
 friend 的關係並沒有辦法被繼承，基類的 friend 並不會有衍生類的存取權，衍生類的 friend 也不會有基類的存取權：  
 
@@ -321,7 +321,7 @@ void DerivedFriend(D d)
 }  
 ```
 
-# 建構子(Constructor)  
+## 建構子(Constructor)  
 
 雖然衍生類內含有基類的成員，但一般來說衍生類不應該直接初始化那些成員，需要透過基類的建構子來初始化他們，因此建構時會先呼叫基類的建構子，再呼叫衍生類的建構子：  
 ```cpp
@@ -373,7 +373,7 @@ int main()
 
 這樣比較好的原因是因為每個 Class 都會有自己的 interface，我們應該透過這些 interface 來跟 Class 互動，即使它是你的基類也是。另外一點就是 Class 有自己的 scope，在繼承底下衍生類的 scope 為巢狀的範疇(nested scope)，如果你使用衍生類的建構子來初始化基類的成員，可能讓 code 變得較為複雜。  
 
-# Hiding Base Class Member  
+## Hiding Base Class Member  
 
 有時候我們會有禁用基類的 member 需求，然而在 C++ 中我們無法將基類的 member function 刪掉，但是我們能夠透過更改存取權將「單一個」 member 「隱藏」起來，我們有幾種方式可以更改存取權，首先是使用 `using` 關鍵字：  
 
@@ -540,7 +540,7 @@ int main()
 }  
 ```
 
-# Derived-to-Based Conversion  
+## Derived-to-Based Conversion  
 
 上例中我們透過 `static_cast` 將衍生類轉型為基類，藉此呼叫基類的 member function，這邊我們要講一下衍生類與基類的轉型  
 
@@ -683,7 +683,7 @@ int main()
 
 這都是因為物件的「解讀方式」不同  
 
-## Object Slicing  
+### Object Slicing  
 
 讀到這裡你應該知道基類與衍生類是不同的型態，但有轉型可以幫助它們做轉換  
 
@@ -724,7 +724,7 @@ int main()
 
 > 題外話：這種從大的 type 轉型到小的 type 的轉換被稱為 narrowing conversion  
 
-# Override Base Class Method  
+## Override Base Class Method  
 
 上面提到了我們可以透過 function overloading 來隱藏基類的 member function，從而讓透過衍生類呼叫時使用的會是衍生類自己定義的版本；在這樣做的情況下，我們要的效果通常會是想以一般化的方式來操作實例，無論該實例是基類或衍生類實例  
 
@@ -826,7 +826,7 @@ int main()
 
 因此我們這裡需要一個機制，讓我們在執行期呼叫時可以透過傳入的物件的型態來決定要呼叫哪個 function  
 
-## static binding 與 dynamic binding  
+### static binding 與 dynamic binding  
 
 之前有提到 function 有所謂的「宣告」與「定義」，宣告可以有很多個，但定義只能有一個，最終宣告會連結到其對應的單一個的定義，在呼叫 function 的時候會利用 function 的 signature 尋找對應的定義，進而執行 function 的內容  
 
@@ -844,7 +844,7 @@ int main()
 
 我們的需求是在執行期呼叫時可以透過傳入的物件的型態來決定要呼叫哪個 function，因此要使用的是跟以前不一樣的 dynamic binding 的方式，所以接下來就要開始講 virtual function 了  
 
-## virtual function  
+### virtual function  
 
 在基類中，我們可以在「預期會被衍生類覆寫的函式」定義為 `virtual`，這種成員函式被稱為虛擬函式(virtual function)，擁有虛擬函式的 class 被稱為 polymorphic class  
 
@@ -893,7 +893,7 @@ int main()
 
 > [n4659(footnote-111)](https://timsong-cpp.github.io/cppwp/n4659/class.virtual#footnote-111)：A function with the same name but a different parameter list (Clause [over]) as a virtual function is not necessarily virtual and does not override. The use of the virtual specifier in the declaration of an overriding function is legal but redundant (has empty semantics). Access control is not considered in determining overriding.  
 
-## override  
+### override  
 
 在我們要覆寫基類的虛擬函式時，最好可以顯式的將 `override` 寫上去，這會避免我們沒有覆寫到基類的虛擬函式，考慮以下狀況：  
 
@@ -967,7 +967,7 @@ int main() {
 
 > 額外閱讀： [What are the differences between overriding virtual functions and hiding non-virtual functions?](https://stackoverflow.com/questions/19736281/what-are-the-differences-between-overriding-virtual-functions-and-hiding-non-vir)  
 
-## final  
+### final  
 
 在我們不希望、或不確定一個 Class 會不會被其他人繼承的時候，我們可以利用 `final` 這個 keyword 來防止繼承：  
 
@@ -994,7 +994,7 @@ class D2 : public D1 {
 };  
 ```
 
-# Static Type and Dynamic Type  
+## Static Type and Dynamic Type  
 
 在使用有繼承關係的型態時，我們要特別注意變數，或說其 expression 的靜態型態(static type) 與動態型態(dynamic type)  
 
@@ -1064,7 +1064,7 @@ int main()
 
 因此對於一個指標或 reference 的變數/expression 而言，他們的靜態型態與動態型態不一定會一樣；但相反的，一個不是指標或 reference 的變數/expression 就沒有這種問題，他們的靜態型態與動態型態就永遠都一樣  
 
-## Dynamic Polymorphism  
+### Dynamic Polymorphism  
 
 首先先看看 wiki：  
 
@@ -1153,7 +1153,7 @@ int main()
 + [多型的本質二](https://www.ithome.com.tw/voice/75186)  
 + [多型的本質三](https://www.ithome.com.tw/voice/75352)  
 
-# Pure Virtual Function  
+## Pure Virtual Function  
 
 如果我們仔細思考了一下上面交通工具的例子，你可能會想到一件事：Transportation 可以被實例化  
 
@@ -1218,7 +1218,7 @@ int main()
 
 至於何時會有定義純虛擬函式的需求，可以參考 Effective C++ 的 Item 34，這邊不鼓勵盜版，推薦大家可以買書來看  
 
-# Virtual Destructor  
+## Virtual Destructor  
 
 當一個物件的 static type 與 dynamic type 不一樣的時候，也就是有在使用多型的時候，如果我們「需要對物件做 `delete`」，則基類的解構子必須要是 virtual 的，否則對此物件的 `delete` 行為被定義為 UB；但再提醒一下，建構子是沒有 virtual 的  
 
@@ -1315,7 +1315,7 @@ int main() {
 2. 你<span class = "yellow">沒有</span>利用 Base Class Pointer 去 delete 衍生類的需求  
     這種情境下，你的解構子可以不用是虛擬的，但最好是 protected 的，以防意外呼叫到它  
 
-# RTTI  
+## RTTI  
 
 RTTI 的全名叫做 Run-Time Type Information，意思是執行階段類型辨識，一開始是為了讓程式在運行時能根據基類的指標或 reference 來獲得該指標或 reference 所指的物件的實際類型  
 
@@ -1500,7 +1500,7 @@ int main()
 + 第 19 行：由於是 downcasting，因此無法直接轉換  
 + 第 20 行：由於 `B2` 是 polymorphic class，因此可以使用 `dynamic_cast` 來做 downcasting，由於 `b2` 的動態型態為 `D2`，所以可以成功地執行轉型  
 
-# Virtual Table  
+## Virtual Table  
 
 標準裡面只定義了整個動態型態的外顯行為，也就是這個系統動起來應該要符合哪些規範，該長怎樣，但是實際上底層是怎麼實作這整個動態型態的系統的呢?  
 

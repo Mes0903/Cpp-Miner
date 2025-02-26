@@ -11,7 +11,7 @@ category: C++ Miner
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
 
-# 前言
+## 前言
 
 這是黑魔法系列的第一篇，基本上就是把那些篇幅不長，但又很有趣的東西另外開一個地方放，內容可能是有關 coding 上的建議，或者是一些很酷的語言端優化，然而有些可能<span class = "yellow">實用性很小</span>，什麼時候該用主要還是要大家自己判斷，<span class = "yellow">我盡量不讓篇幅太長</span>，分多篇一點講，大家讀起來比較輕鬆，我也可以拖稿 (x
 
