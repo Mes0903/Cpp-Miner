@@ -535,7 +535,7 @@ int main() {
 
 compound statement 又稱為 block，由一些小的 statement 組成，小的 statement 稱為 substatement，語法像這樣：  
 
-> { statement...(opt) }  
+> \{ statement...(opt) \}  
 
 我們會利用 `{}` 來建立 block，當一個預期只能擺一個 statement 的地方，需要多個 statement 時，我們就能夠利用複合陳述句來包裝，每個複合陳述句會建立自己的 scope，變數離開 scope 時會被解構，忘記的可以回到上面複習一下。  
 
