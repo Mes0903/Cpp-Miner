@@ -53,7 +53,7 @@ int main() {
 
 另外變數並不一定要有記憶體位址，因為 C++11 後變數的定義多了 Reference，而 Reference 可能沒有記憶體位址。 簡單來說，變數只是一個在妳程式中，能夠存取一個值的識別字(identifier)，至於實際上有沒有 memory allocate 則不是這麼重要，因為這很看編譯器優化與作業系統，但他肯定會有 logic address
 
-> 這邊的物件照著 C++ 標準的規定：
+> 這邊的物件照著 C++ 標準的規定：<br><br>
 >
 > 在 C++ 中，物件(object) 一定要有
 > + 大小 (可以用 `sizeof` 來檢查)
@@ -61,7 +61,7 @@ int main() {
 > + 儲存期限 (自動、靜態、動態、執行緒局部儲存)
 > + 生命週期 (暫時或根據儲存期限來決定)
 > + 型態(type)
-> + 值 (可能是不確定的，像是有預設初始化的 non-class types) 
+> + 值 (可能是不確定的，像是有預設初始化的 non-class types)<br><br>
 >
 > 而名字則不一定要有
 
@@ -125,6 +125,7 @@ int main() {
 然後我們將運算陳述句拿出來講一下，因為要分清楚運算式跟陳述句的差別，可以直接用這個例子來看，其實就只差了一個分號，因此一個可執行，一個不行。 其他的大家有興趣可以到 <strong>[cppreference](https://en.cppreference.com/w/cpp/language/statements)</strong> 上看
 
 運算陳述句的結構長這樣：
+
 > expression(optional);
 
 attr 是<strong>[屬性識別字](https://en.cppreference.com/w/cpp/language/attributes)</strong>，用來告訴編譯器一些事情，妳可以想像成給編譯器看的註解，可加可不加
@@ -1502,6 +1503,7 @@ Test test_fn() {
 我省略了很多繁瑣的過程，但大致上就長這樣
 
 如果你有自己在建構子和解構子裡面加上輸出，會看到輸出長這樣，然後我幫大家加一下註解：
+
 ```cpp
 Test()    // B 建構
 Test( const Test &other )    // X建構

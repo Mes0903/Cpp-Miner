@@ -171,6 +171,7 @@ int main() {
 ### 語法與重要定義 
 
 語法其實挺簡單的，基本上就是
+
 > std::function<回傳型態(參數列)> 實例名 = 初始化器
 
 初始化器就是拿來初始化的東西，前面也提到了只要是可呼叫的物件都可以拿來用，看看 <a href = "https://en.cppreference.com/w/cpp/utility/functional/function" class = "pinklink">cppreference</a> 上的例子：
@@ -247,12 +248,15 @@ int main() {
 從上例可見可儲存的東西挺多的，只要是可呼叫物件基本上都可以儲存。不過不知道大家有沒有覺得有其中一個很奇怪，那就是 `std::function<int( const Foo & )> f_num = &Foo::num_;`，右邊的這個 `&Foo::num_` 是個資料成員指標，那為什麼這個可以拿來初始化 `std::function` 呢?
 
 讓我們回顧一下最一開始的<a href = "https://timsong-cpp.github.io/cppwp/n4868/func.wrap.func#general-1" class = "pinklink">定義</a>：
+
 > std::funtion 這個類別模板提供了多型的 wrapper，通常拿來包函式指標。 這個 Wrapper 可以儲存，複製，和透過 `()` 呼叫任何的可呼叫物件，並允許 function 為一級函式
 
 接下來就有個問題了，到底什麼是可呼叫物件呢? 定義如下：
+
 > 一個可呼叫物件指的是一個物件擁有可呼叫的型態 ( <a href = "" class = "pinklink">20.14.3-4</a> )
 
 所以接下來的問題就變成「什麼是可呼叫的型態」了，定義如下：
+
 > 可呼叫型態指的是 function object type 或是一個資料成員的指標 ( <a href = "https://timsong-cpp.github.io/cppwp/n4868/func.def#3" class = "pinklink">20.14.3-3</a> )
 
 這樣答案就很明顯了，`&Foo::num_` 是個資料成員指標，代表他是可呼叫的物件，因此可以拿來初始化 `std::function`

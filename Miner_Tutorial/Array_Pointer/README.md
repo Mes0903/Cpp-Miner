@@ -466,8 +466,8 @@ int main()
 
 #### Three-way comparison operator  
 
-> [n4868(7.6.8)](https://timsong-cpp.github.io/cppwp/n4868/expr.spaceship#6)：If at least one of the operands is of object pointer type and the other operand is of object pointer or array type, array-to-pointer conversions ([conv.array]), pointer conversions ([conv.ptr]), and qualification conversions are performed on both operands to bring them to their composite pointer type ([expr.type]). After the conversions, the operands shall have the same type.  
->   
+> [n4868(7.6.8)](https://timsong-cpp.github.io/cppwp/n4868/expr.spaceship#6)：If at least one of the operands is of object pointer type and the other operand is of object pointer or array type, array-to-pointer conversions ([conv.array]), pointer conversions ([conv.ptr]), and qualification conversions are performed on both operands to bring them to their composite pointer type ([expr.type]). After the conversions, the operands shall have the same type.<br><br>
+>
 > [Note 1: If both of the operands are arrays, array-to-pointer conversions are not applied. — end note]  
 
 #### 關係運算子  
@@ -500,6 +500,6 @@ int i2 = *(arr + 2);
 
 > [n4861(9.3.4.5)](https://timsong-cpp.github.io/cppwp/n4861/dcl.array#9)：  
 > [Example 4:  
->> int x3d[3][5][7];  
->  
+>> int x3d[3][5][7];<br><br>
+>
 > ... The expression x3d[i] is equivalent to *(x3d + i); in that expression, x3d is subject to the array-to-pointer conversion ([conv.array]) and is first converted to a pointer to a 2-dimensional array with rank 5×7 that points to the first element of x3d. Then i is added, which on typical implementations involves multiplying i by the length of the object to which the pointer points, which is sizeof(int)×5×7. ... — end example]  

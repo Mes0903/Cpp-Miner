@@ -28,10 +28,10 @@ Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都
 ### Aggregates
 
 #### 什麼是 Aggregate?
+
 一般我們理解的定義來自於 Standard 的定義：
 
-> (C++03 8.5.1 §1)：
->
+> (C++03 8.5.1 §1)：  
 > An aggregate is an array or a class (clause 9) with no user-declared constructors (12.1), no private or protected non-static data members (clause 11), no base classes (clause 10), and no virtual functions (10.3).
 
 較新的定義(C\+\+17)：
@@ -41,7 +41,7 @@ Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都
 > ── no user-provided, explicit, or inherited constructors ([class.ctor]),  
 > ── no private or protected non-static data members (Clause [class.access]),   
 > ── no virtual functions, and  
-> ── no virtual, private, or protected base classes ([class.mi]).   
+> ── no virtual, private, or protected base classes ([class.mi]).<br><br>
 >
 > [ Note: Aggregate initialization does not allow accessing protected and private base class' members or constructors.  — end note ]
 
@@ -190,10 +190,11 @@ Z z = { 0.0 }; // error
 
 POD 全名叫 Plain Old Data，一般我們理解的 POD 與 C++03 標準內的定義相同：
 
-> (C++ 03 9 §4)：
+> (C++ 03 9 §4)：  
 > A POD-struct is an aggregate class that has no non-static data members of type non-POD-struct, non-POD-union (or array of such types) or reference, and has no user-defined copy assignment operator and no user-defined destructor. Similarly, a POD-union is an aggregate union that has no non-static data members of type non-POD-struct, non-POD-union (or array of such types) or reference, and has no user-defined copy assignment operator and no user-defined destructor. A POD class is a class that is either a POD-struct or a POD-union.
 
 先不看 union 與 enum，把上面的文字稍微過濾一下：
+
 > An aggregate class is called a POD if it has no user-defined copy-assignment operator and destructor and none of its nonstatic members is a non-POD class, array of non-POD, or a reference.
 
 這段話基本上表達了幾件事：
@@ -204,7 +205,7 @@ POD 全名叫 Plain Old Data，一般我們理解的 POD 與 C++03 標準內的�
 
 順便看一下比較新的例子 (C++17)：
 
-> [n4659 (12 - 10)](https://timsong-cpp.github.io/cppwp/n4659/class#10)：
+> [n4659 (12 - 10)](https://timsong-cpp.github.io/cppwp/n4659/class#10)：  
 > A POD struct109 is a non-union class that is both a trivial class and a standard-layout class, and has no non-static data members of type non-POD struct, non-POD union (or array of such types). Similarly, a POD union is a union that is both a trivial class and a standard-layout class, and has no non-static data members of type non-POD struct, non-POD union (or array of such types). A POD class is a class that is either a POD struct or a POD union.
 
 舉一些 POD 的例子：
@@ -242,7 +243,7 @@ int main()
 
 而對於 POD-class、POD-union、scalar types 和它們的 array，C\+\+ 給了他們一個名字叫 POD type
 
-> [n4659 (6.9 - 9)](https://timsong-cpp.github.io/cppwp/n4659/basic.types#9)：
+> [n4659 (6.9 - 9)](https://timsong-cpp.github.io/cppwp/n4659/basic.types#9)：  
 > Arithmetic types, enumeration types, pointer types, pointer to member types, std::nullptr_t, and cv-qualified versions of these types are collectively called scalar types. Scalar types, POD classes, arrays of such types and cv-qualified versions of these types are collectively called POD types.
 
 #### POD Type 的好處

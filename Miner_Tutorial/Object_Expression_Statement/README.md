@@ -22,7 +22,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 若能讀懂 spec，將來在一些討論區，如 Discord、Stackoverflow 與別人討論時也才能夠聽懂別人在說什麼，在回答問題時我們時常會直接將 spec 的內容搬出來，直接說因為哪個條款，所以有怎樣的結果，若看不懂 spec，很有可能連與別人討論都做不到。  
 
 <center>
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/discussion1.png?raw=true">(熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因)<br><br>  
+<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/discussion1.png?raw=true">(熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因)<br><br>
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/discussion2.png?raw=true">(在問問題時引用 spec 條例也能有效幫助別人理解你的疑惑點)
 </center><br>  

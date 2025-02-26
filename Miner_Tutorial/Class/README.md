@@ -853,13 +853,12 @@ int main() {
 
 > [11.9.3-9](http://www.eel.is/c++draft/class#base.init-9)：  
 In a non-delegating constructor other than an implicitly-defined copy/move constructor ([class.copy.ctor]), **if a given potentially constructed subobject is not designated by a mem-initializer-id** (including the case where there is no mem-initializer-list because the constructor has no ctor-initializer), then  
->   (9.1)  
-    if the entity is a non-static data member that has a default member initializer ([class.mem]) and either  
-        >> (9.1.1)  
-        the constructor's class is a union ([class.union]), and no other variant member of that union is designated by a mem-initializer-id or  
-        (9.1.2)  
-        the constructor's class is not a union, and, if the entity is a member of an anonymous union, no other member of that union is designated by a mem-initializer-id,  
-    the entity is initialized from its default member initializer as specified in [dcl.init];  
+> (9.1)  
+> if the entity is a non-static data member that has a default member initializer ([class.mem]) and either  
+>> (9.1.1)  
+>> the constructor's class is a union ([class.union]), and no other variant member of that union is designated by a mem-initializer-id or  
+>> (9.1.2)  
+>> the constructor's class is not a union, and, if the entity is a member of an anonymous union, no other member of that union is designated by a mem-initializer-id, the entity is initialized from its default member initializer as specified in [dcl.init];  
 
 <center>(感謝群裡的 DXPower 幫找 ><)</center><br>  
 

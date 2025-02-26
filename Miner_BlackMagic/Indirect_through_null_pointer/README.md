@@ -31,6 +31,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 ## Implicit Undefined Behavior?
 
 Implicit Undefined Behavior 是口語的說法，不是標準內的用語，其表達的意義就如前言所說：
+
 > standard 沒有要求的東西歸為 UB
 
 C 和 C++ 都有於 standard 內列下這個規則，下面是 C 與 C++ 對於 undefined behavior 的定義：

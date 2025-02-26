@@ -80,7 +80,7 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 其實 cppreference 給的解釋就差不多了：
 
-> [Unqualified name lookup](https://en.cppreference.com/w/cpp/language/unqualified_lookup): For an unqualified name, that is a name that does not appear to the right of a scope resolution operator `::`
+> [Unqualified name lookup](https://en.cppreference.com/w/cpp/language/unqualified_lookup): For an unqualified name, that is a name that does not appear to the right of a scope resolution operator `::`  
 > [Qualified name lookup](https://en.cppreference.com/w/cpp/language/qualified_lookup): A qualified name is a name that appears on the right hand side of the scope resolution operator `::` (see also qualified identifiers)
 
 所以判斷方法很直覺，前面有 `::` 的是 qualified name，沒有的就是 unqualified name

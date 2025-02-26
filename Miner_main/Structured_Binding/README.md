@@ -22,7 +22,7 @@ Structured binding declaration 是 C++17 加入的一個新特性，它讓我們
 ## <span class = "orange">語法</span> 
 
 主要有三種初始化的方式：
-> **1. attr(opt) cv(opt) auto ref-qualifier(opt) \[idendentifier-list] = expression;** [color=#30DCD8]  
+> **1. attr(opt) cv(opt) auto ref-qualifier(opt) \[idendentifier-list] = expression;**  
 > **2. attr(opt) cv(opt) auto ref-qualifier(opt) \[idendentifier-list]{ expression };**	  
 > **3. attr(opt) cv(opt) auto ref-qualifier(opt) \[idendentifier-list]( expression );**  
 
@@ -54,7 +54,7 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
     若你使用的是第二或第三種方法，那麼 `__e` 內的元素會使用[直接初始化](https://en.cppreference.com/w/cpp/language/direct_initialization)來初始化為你 expression 內相對應的元素
 
 + **如果不是上面的那種情況，那麼編譯器先將 Structured Binding 改寫，直接使用 `__e` 這個名稱作為原先 expression 的複本，像這樣：**
-    > **1. attr(opt) cv(opt) auto ref-qualifier(opt) __e = expression;** [color=#30DCD8]  
+    > **1. attr(opt) cv(opt) auto ref-qualifier(opt) __e = expression;**  
     > **2. attr(opt) cv(opt) auto ref-qualifier(opt) __e{ expression };**  
     > **3. attr(opt) cv(opt) auto ref-qualifier(opt) __e( expression );**  
 
