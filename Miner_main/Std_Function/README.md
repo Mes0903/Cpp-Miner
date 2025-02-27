@@ -10,6 +10,7 @@ category: C++ Miner
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
 hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
+
 ## 前言 
 
 `std::function` 是 C\+\+11 時加入的東西，它基本上是一個類型模板(Class Template)，目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用，像是函式、lambda、`std::bind`、Functor(function object) 等等
