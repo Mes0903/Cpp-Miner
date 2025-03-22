@@ -35,7 +35,7 @@ struct basic_string {
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/string-begin-layout.png?raw=true">  
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/image/string-begin-layout.png?raw=true">  
 
 （layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
 
@@ -67,7 +67,7 @@ struct basic_string
 
 <center>
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/basic-string-layout.png?raw=true">
+<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/image/basic-string-layout.png?raw=true">
 
 （layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
 
@@ -493,7 +493,7 @@ _CONSTEXPR20 void _Construct_empty() {
 
 讀書會後原本還想多補 [gcc](https://github.com/gcc-mirror/gcc/blob/master/libstdc++-v3/include/bits/basic_string.h) & [clang](https://github.com/llvm-mirror/libcxx/blob/master/include/string) 的版本，但太忙了，之後再補XD
 
-## 為 std::string 提供自定義 std::allocator
+## 為 `std::string` 提供自定義 `std::allocator`
 
 原本會有這篇是因為 MISRA C/C++ spec 內規定不能用 heap allocation，所以朋朋來問了一下能不能把 data 全部放在 stack 段上的 memory pool，而我想到序列化那裏去了，所以才看了一下 SSO 的實作
 
