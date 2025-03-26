@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-# <center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</center>
+# <div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</div>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -112,11 +112,11 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 畫成圖來說就是這樣：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction.png?raw=true"><br> 
 
-</center>
+</div>
 
 我不在乎中間那個框框(黑箱)內做了什麼，我只在乎我的錢進去框框後，我的飯會從框框內出來
 
@@ -126,11 +126,11 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction-2.png?raw=true"><br> 
 
-</center>
+</div>
 
 這邊的分類是我照著我電子電路學課本「foundation of analog & digital electronic circuits by anant agarwal」內的分類畫出來的，課本的分類我覺得合理。 這中間的每一層都可以再各自有其細分下去的抽象層，而 Programming language 的上方就是各式各樣的程式了    
 
@@ -140,13 +140,13 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 圖靈機基本上是一系列的自動機所建構出來的理論模型，因為是計概所以我這邊就不講太多，也不寫它的數學定義，有興趣的可以看一下自動機理論和計算理論的課：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src ="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/automata.png?raw=true"> 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Combinational_logic))
 
-</center>
+</div>
 
 這裡可以提一下的是上圖中最內層的組合邏輯(Combinational logic)，這是一種由 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 所組成的數位邏輯，這裡的 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 是一種於計算理論中的數學模型，用來描述形式語言，所以並非真實的電路。 提這個的主要原因是，計算機內部的電路為組合邏輯與時序邏輯([Sequential logic](https://en.wikipedia.org/wiki/Sequential_logic))混合的實作，所以可以稍微知道一下有這個東西
 
@@ -179,11 +179,11 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 注意這個機器的每一部分都是有限的，但它有一個潛在的無限長的紙帶，因此這種機器只是一個理想的裝置。 圖靈認為這樣的一台機器就能類比人類所能進行的任何計算過程
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/turing-machine.png?raw=true"><br> 
 
-</center>
+</div>
 
 另外這篇也寫得很好，有興趣的也可以讀一下：[搞懂「通用圖靈機」的終站——它的誕生與意義](https://pansci.asia/archives/203152)
 
@@ -215,7 +215,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，我們個人電腦上的 main memory 全名為 DDR SDRAM，屬於一種 DRAM，因此相較於 SRAM 來說速度就比較慢，而 SRAM 通常我們會將其使用在 CPU 內的 cache 上。 在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/ddr4.png?raw=true" width = 60%>
 
@@ -227,7 +227,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 (任天堂 NES 內的 SRAM，容量為 2Kx8 bit)   
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg))
 
-</center>
+</div>
 
 而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 Byte，並且我們會給記憶體標上位址：
 
@@ -236,13 +236,13 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 假設是 4G 的 memory，那它的記憶體位址就可以從 0 一路寫到 4 \* 1024 \* 1024 \* 1024，換句話說就是從 0 到 4,294,967,295（我這裡從 0 開始）。 我們通常喜歡用 16 進位表示，所以會寫成 0 ~ 0xFFFFFFFF：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/memory-address.png?raw=true"> 
 
 (source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
 
-</center>
+</div>
 
 ### CPU (Central processing unit)
 
@@ -259,13 +259,13 @@ CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為
 
 CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫存器(Register) 與算術邏輯單元(ALU)，下圖是一個簡單的擁有單處理器 CPU 的計算機架構示意圖，紅線表示 data flow，黑線表示 control flow：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/uniprocessor-CPU.png?raw=true" width = 60%> 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
 
-</center>
+</div>
 
 暫存器負責儲存指令，operator 和計算的中間結果的數據，速度非常快。 而 ALU 則負責執行算術運算、邏輯運算和位移運算等，是 CPU 執行運算的主要元件
 
@@ -281,16 +281,16 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CPU.png?raw=true" width = 40%><br> 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
-</center>
+</div>
 
 以前會把記憶體控制器做在北橋裡面，北橋再拉 Bus 到 memory 上，因此 CPU 想要跟 memory 溝通，就需要先到北橋，再到 memory 去。 其中 CPU 到北橋的這段 Bus 有個名字被稱為 Front-side bus(FSB)，而記憶體控制器到 memory 的這段 Bus 叫 memory bus：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/chipset-layout.png?raw=true" width=50%> 
 
@@ -302,7 +302,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 (我覺得這張寫得更清楚一點)    
 (source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
 
-</center>
+</div>
 
 ### 現代 intel PCH / AMD FCH
 
@@ -314,13 +314,13 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 在 Intel 的術語中，其以 memory controller hub(MCH) 稱呼北橋，以 I/O controller hub(ICH) 稱呼南橋，在將北橋的剩餘功能移到南橋內之後，其將 ICH 改名為了 Platform Controller Hub(PCH)；而在 AMD 的架構中，與 PCH 對應的晶片組被稱為 FCH
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/pch.png?raw=true"> 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
-</center>
+</div>
 
 除了南橋的所有功能之外，PCH 還合併了一些剩餘的北橋功能（例如 clock）。系統時脈以前是與專用晶片連接的，但現在被合到了 PCH 裡面。 PCH 和 CPU 之間有兩種不同的連接：Flexible Display Interface(FDI)和 Direct Media Interface(DMI)，不過這我也不熟，就不展開了
 
@@ -345,21 +345,21 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 [How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA) 這部影片裏面引用了一個簡單的 CPU 模型，稱為 Scott's CPU，其 Address Bus 和 Data Bus 各有 8 個 bit，Control Bus 則有 set 與 enable 這兩個 bit，對於讀取來說就會長這樣：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-read.gif?raw=true" width=90%><br> 
 
-</center>
+</div>
 
 先在 Address Bus 上將要操作的 address 設為高位，接著將 Control Bus 上的 enable 設為高位，最後將資料讀進來
 
 寫入則長這樣：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-write.gif?raw=true" width=90%><br> 
 
-</center>
+</div>
 
 順序稍微不一樣，先將 Address Bus 設好，然後將 data 送上 Data Bus，最後將 Control Bus 的 set 設為高位
 
@@ -395,24 +395,24 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 底下是一張簡單的啟動示意圖：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/boot-process.png?raw=true">
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png))
 
-</center>
+</div>
 
 另外 BIOS 會使用 CMOS 來儲存一些 BIOS 的設定，像是系統時間、硬體配置和你的開機順序等。 而 CMOS 使用的是揮發性的 SRAM，換句話說斷電後儲存的設定會消失，因此主機板上通常會配一顆小型的電池來使其不斷電，這顆電池我們叫他 CMOS 電池。 小時候在修電腦的時候，我們如果想要重置 BIOS 的設定，就會把這顆電池拔掉，如此一來存的設定消失，就會重置 BIOS 的設定了
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CMOS.png?raw=true" width = 70%>
 
 (Pico ITX 主機板中的 CMOS 電池，右邊那顆銀色圓圓的就是)    
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg))
 
-</center>
+</div>
 
 ### 作業系統(OS)
 
@@ -443,13 +443,13 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 我們看一個例子：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Mes_Note/blob/main/Operating_System/Ch1_Introduction/Image/General_Purpose_Operating_Systems.jpg?raw=true" width = 70%>
 
 (source：[清大周志遠教授的 OS 講義](https://ocw.nthu.edu.tw/ocw/index.php?page=course_news_content&cid=141&id=999))
 
-</center>
+</div>
 
 最下面是硬體，上面則是我們寫的程式，程式大致上可以分成「和作業系統相關的」與「和作業系統無關的」，也就是圖上的 user mode 與 kernel mode，這在後面的章節會再提更多
 
@@ -471,11 +471,11 @@ Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一�
 
 另外這邊分享一個有趣的小故事：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/von-Neumann-machine-code.png?raw=true" width = 80%><br>
 
-</center>
+</div>
 
 > von Neumann 認為直接用機器碼來寫程式就好了。 von Neumann 有一個博士班學生，因為用機器碼太煩了，著手設計組合語言。 von Neumann 知道了以後大為惱火，認為他不該把寶貴的時間浪費在這種無用的工具上<br><br>
 >
@@ -493,11 +493,11 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 我們能夠使用 HxD 或是 Vscode 內的 Hex Viewer 等工具來觀察二進制檔，這些工具會將 Byte sequence 利用八進制/十六進制等方式顯示出來。 假設我們於 windows 系統上利用 HxD 打開一個會印出 "Hello World!" 字串的 `.exe` 檔，那結果會像這樣：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/binary-file.png?raw=true" width = 70%><br>
 
-</center>
+</div>
 
 ### 可執行檔 Executable File
 
@@ -511,7 +511,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 最後附上兩種執行檔格式的細節，我們通常會稱這個為 File ayout：
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/ELF-format.png?raw=true" width = 80%>
 
@@ -523,7 +523,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 (PE File layout)    
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg))
 
-</center>
+</div>
 
 ## Reference
 

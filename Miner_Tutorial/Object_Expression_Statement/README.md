@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Object、Expression、Statement</center></h1>  
+<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Object、Expression、Statement</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -21,11 +21,11 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 若能讀懂 spec，將來在一些討論區，如 Discord、Stackoverflow 與別人討論時也才能夠聽懂別人在說什麼，在回答問題時我們時常會直接將 spec 的內容搬出來，直接說因為哪個條款，所以有怎樣的結果，若看不懂 spec，很有可能連與別人討論都做不到。  
 
-<center>
+<div style="display: flex; justify-content: center;">
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/discussion1.png?raw=true">(熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因)<br><br>
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/discussion2.png?raw=true">(在問問題時引用 spec 條例也能有效幫助別人理解你的疑惑點)
-</center><br>  
+</div><br>  
 
 講義主要參考了 SICP、C++ Primer 的編排方式，並參考[語言技術：C++ Gossip](https://openhome.cc/Gossip/CppGossip/index.html)、spec 與 cppreference 來撰寫內容。  
 
@@ -151,13 +151,13 @@ bool 是一種特殊的型態，bool 型態的物件只能儲存兩種值：true
 
 而 character types 則是字元型態，character types 的物件所儲存的數字會被對應到字元集去解釋和實作，字元集又稱字元編碼，常見的有 ASCII、Big5、UTF-8 等等，下面這是 ASCII 字元編碼表  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/ascii.png?raw=true">
 
 (source : http://kevin.hwai.edu.tw/~kevin/material/JAVA/Sample2016/ASCII.htm  )
 
-</center><br>
+</div><br>
 
 而 signed interger 與 unsigned integer 則都是整數，不過前者有分正負號，而後者則只有正號，  
 

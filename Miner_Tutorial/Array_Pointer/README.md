@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Array 與 Pointer</center></h1>  
+<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Array 與 Pointer</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -283,11 +283,11 @@ int main()
 
 圖解就會長這樣：  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Array_Pointer/image/pointer.png?raw=true"><br>
 
-</center>
+</div>
 
 `i` 是一個整數變數，儲存的值為 20；`p1` 是個整數的指標，指向 `i`，儲存的值為 `&i`；`p2` 是個整數的指標的指標，指向 `p1`，儲存的值為 `&p1`。  
 

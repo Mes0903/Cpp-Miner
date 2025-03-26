@@ -5,7 +5,7 @@ tag: C++ Miner-BlackMagic
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br> 用 "explicit" 來偵測複製</center></h1>
+<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br> 用 "explicit" 來偵測複製</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
@@ -183,4 +183,4 @@ int main(int argc, char *argv[])
 
 總之最後的結果就是可以用這個來測試、偵測，若要拿來<span class = "yellow">避免</span>複製還是有一些難度，但至少可以拿來避免隱式轉型，在 one single argument 的建構子前加上 `explicit` 會是個很好的習慣
 
-<center>(感謝社團內的 <I>Actual Wizard</I> wreien 提供例子)</center><br>
+<div style="display: flex; justify-content: center;">(感謝社團內的 <I>Actual Wizard</I> wreien 提供例子)</div><br>

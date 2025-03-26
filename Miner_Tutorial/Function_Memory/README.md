@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Function 與 Memory</center></h1>  
+<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Function 與 Memory</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -177,13 +177,13 @@ reference 也同理。
 
 一般的 C/C++ 程式在執行時記憶體的配置會長的像下圖那樣，主要可分為 text、data、bss、stack、heap 與 system 這幾個部分。  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout1.png?raw=true">
 
 (source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/programming/memory-layout-of-c-program/))
 
-</center><br>
+</div><br>
 
 + text 段  
     text 也被稱為 code 段，存放可執行的 cpu 指令，這裡的資料是可以共用的，並且是唯讀的。  
@@ -254,11 +254,11 @@ int main()
 
 程式執行的流程會長：  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout2.png?raw=true"><br>  
 
-</center>
+</div>
 
 一開始先分配好 main function 需要的大小，然後將 `fn(1)` 的 frame 推到 stack 內，之後因為要回傳值，所以會將要回傳的值儲存到暫存器或 stack 中，再把 `fn(1)` 的 frame 刪除，並把剛剛儲存的值拿去給 `i1` 初始化。  
 
@@ -308,11 +308,11 @@ int main()
 
 上面這裡用 `new` 在 heap 段建構了一個整數物件，初始化為 20，並將其位址回傳給 p，圖看起來會長這樣：  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/new.png?raw=true"><br>
 
-</center>  
+</div>  
 
 而如果物件的型態為 array type，我們通常會用空括號 `()` 來進行 value initialized，在 C\+\+11 後，則可以使用 `{}` 來初始化物件，舉個例子：  
 
@@ -478,11 +478,11 @@ int main
 
 `i` 是一個物件，而我們最一開始有舉過一個例子說物件就像一個箱子，名字就是箱子上的標籤，而 reference 又像被連結到的東西的別名，換句話說 reference 就是另外一張標籤：  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/reference1.png?raw=true"><br>
 
-</center> 
+</div> 
 
 直接操作 `r` 就等同於對物件 `i` 操作，所以才會說 `r` 是 `i` 的別名。  
 
@@ -525,11 +525,11 @@ std::cout << std::boolalpha
 
 可以看見 Compiler 可以分出來兩者的差別，因為兩者的 type 是不同的。那麼我們來看看一個有編譯器優化的狀況：  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/reference2.png?raw=true"><br>
 
-</center>  
+</div>  
 
 <a href = "https://godbolt.org/z/8KqxsKrPM" class = "pinklink">連結</a>在這裡，記得要把編譯器優化打開。 我們可以看見 `std::cin >> r;` 像是被替換成 `std::cin >> a;` 了，跟 `inline` 類似。 <span class = "yellow">(感謝Cy大神補充)</span>  
 

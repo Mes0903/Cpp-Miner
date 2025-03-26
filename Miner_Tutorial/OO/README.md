@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><center><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class & 物件導向</center></h1>  
+<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class & 物件導向</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -118,11 +118,11 @@ int main()
 
 另外，access specifier 如果寫 public，那基類內的成員訪問許可權不會變，如果寫 protected，則原先是 public 的會變為 protected，寫 private 的話 public 與 protected 都會變為 private，因此第二層繼承的 class 將無法使用基類的 member：  
 
-<center>
+<div style="display: flex; justify-content: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/based_derived.png?raw=true">
 
-</center><br>  
+</div><br>  
 
 ```cpp
 #include <iostream>
@@ -562,13 +562,13 @@ public:
 
 則其 memory layout 通常會如下圖：  
 
-<center>  
+<div style="display: flex; justify-content: center;">  
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
 
 (順序不一定會一樣，要看電腦的架構與編譯器，但一定會有個排列的規則)      
 
-</center>  
+</div>  
 
 我們可以使用 `reinterpret_cast` 來做簡單的驗證：  
 
@@ -1521,11 +1521,11 @@ public:
   int i3 = 3, i4 = 4;  
 };  
 ```
-<center>  
+<div style="display: flex; justify-content: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
 
-</center>  
+</div>  
 
 透過下面這個 code 可以看見 `ptr` 與 `&ptr->i1` 的位址是一樣的：  
 
@@ -1552,11 +1552,11 @@ int main()
 
 這裡在做的事情是將 `ptr` 與 `&ptr->i1` 這兩段記憶體上面的值以 `int` 的形式讀出來，因為我們在 `B` 內將 `i1` 初始化為 `1` 了，因此兩個顯示出來的結果都會是 `1`：  
 
-<center>  
+<div style="display: flex; justify-content: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table1.png?raw=true"><br>  
 
-</center>  
+</div>  
 
 當我們讓這個 class 變為 polymorphic class 後，由於多了一個 vtable pointer，結果就會不一樣了：  
 
@@ -1585,11 +1585,11 @@ int main()
 
 這是因為多了一個 vtable pointer，導致 `ptr` 與 `&ptr->i1` 指向的位址不一樣了：  
 
-<center>  
+<div style="display: flex; justify-content: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table2.png?raw=true"><br>  
 
-</center>  
+</div>  
 
 而現在我們來看一下 virtual table 的運作模式，考慮以下範例：  
 
@@ -1635,11 +1635,11 @@ int main()
 
 此例中的 virtual table 樣貌如下：  
 
-<center>  
+<div style="display: flex; justify-content: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table3.png?raw=true"><br>  
 
-</center>  
+</div>  
 
 每一個實例都擁有自己的 vtable pointer，但同一種 class type 會共用同一張 virtual table，在進行虛擬函式的呼叫時會利用自己的這張表去找對應的函式定義  
 
