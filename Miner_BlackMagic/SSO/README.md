@@ -5,7 +5,7 @@ tag: C++ Miner-BlackMagic
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Small String Optimization (SSO)</div></h1>
+<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Small String Optimization (SSO)</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -33,7 +33,7 @@ struct basic_string {
   - 這個「不包含 `'\0'`」是一個比較巧妙的設計，編譯器會利用這點來做一些優化，後面會提
 - `capacity`：字串的容量，一樣<span class = "yellow">不包含 `'\0'`</span>
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/image/string-begin-layout.png?raw=true">  
 
@@ -65,7 +65,7 @@ struct basic_string
 
 如果字串的容量小於等於我們設定的值，以這邊來說是 `8`，那就可以將 `ptr` 指向內部的 `buf`，從而省去 heap allocation，這樣有一個很大的好處是我們不需要任何的 heap allocation 就可以建立空字串了
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/image/basic-string-layout.png?raw=true">
 

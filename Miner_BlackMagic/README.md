@@ -5,7 +5,7 @@ tag: C++ Miner-BlackMagic
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>黑魔法前言</div></h1>
+<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>黑魔法前言</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -23,4 +23,4 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 話說今天是 ina 生日，ina 生日快樂 :D
 
-<div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/auJ1VTp.png" width = 400></div>
+<div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/auJ1VTp.png" width = 400></div>

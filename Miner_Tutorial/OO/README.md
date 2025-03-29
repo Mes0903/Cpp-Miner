@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class & 物件導向</div></h1>  
+<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class & 物件導向</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -118,7 +118,7 @@ int main()
 
 另外，access specifier 如果寫 public，那基類內的成員訪問許可權不會變，如果寫 protected，則原先是 public 的會變為 protected，寫 private 的話 public 與 protected 都會變為 private，因此第二層繼承的 class 將無法使用基類的 member：  
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/based_derived.png?raw=true">
 
@@ -562,7 +562,7 @@ public:
 
 則其 memory layout 通常會如下圖：  
 
-<div style="display: flex; justify-content: center;">  
+<div style="display: flex; flex-direction: column; align-items: center;">  
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
 
@@ -1521,7 +1521,7 @@ public:
   int i3 = 3, i4 = 4;  
 };  
 ```
-<div style="display: flex; justify-content: center;">  
+<div style="display: flex; flex-direction: column; align-items: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
 
@@ -1552,7 +1552,7 @@ int main()
 
 這裡在做的事情是將 `ptr` 與 `&ptr->i1` 這兩段記憶體上面的值以 `int` 的形式讀出來，因為我們在 `B` 內將 `i1` 初始化為 `1` 了，因此兩個顯示出來的結果都會是 `1`：  
 
-<div style="display: flex; justify-content: center;">  
+<div style="display: flex; flex-direction: column; align-items: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table1.png?raw=true"><br>  
 
@@ -1585,7 +1585,7 @@ int main()
 
 這是因為多了一個 vtable pointer，導致 `ptr` 與 `&ptr->i1` 指向的位址不一樣了：  
 
-<div style="display: flex; justify-content: center;">  
+<div style="display: flex; flex-direction: column; align-items: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table2.png?raw=true"><br>  
 
@@ -1635,7 +1635,7 @@ int main()
 
 此例中的 virtual table 樣貌如下：  
 
-<div style="display: flex; justify-content: center;">  
+<div style="display: flex; flex-direction: column; align-items: center;">  
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table3.png?raw=true"><br>  
 

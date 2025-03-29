@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Function 與 Memory</div></h1>  
+<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Function 與 Memory</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -177,7 +177,7 @@ reference 也同理。
 
 一般的 C/C++ 程式在執行時記憶體的配置會長的像下圖那樣，主要可分為 text、data、bss、stack、heap 與 system 這幾個部分。  
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout1.png?raw=true">
 
@@ -254,7 +254,7 @@ int main()
 
 程式執行的流程會長：  
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout2.png?raw=true"><br>  
 
@@ -308,7 +308,7 @@ int main()
 
 上面這裡用 `new` 在 heap 段建構了一個整數物件，初始化為 20，並將其位址回傳給 p，圖看起來會長這樣：  
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/new.png?raw=true"><br>
 
@@ -478,7 +478,7 @@ int main
 
 `i` 是一個物件，而我們最一開始有舉過一個例子說物件就像一個箱子，名字就是箱子上的標籤，而 reference 又像被連結到的東西的別名，換句話說 reference 就是另外一張標籤：  
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/reference1.png?raw=true"><br>
 
@@ -525,7 +525,7 @@ std::cout << std::boolalpha
 
 可以看見 Compiler 可以分出來兩者的差別，因為兩者的 type 是不同的。那麼我們來看看一個有編譯器優化的狀況：  
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/reference2.png?raw=true"><br>
 

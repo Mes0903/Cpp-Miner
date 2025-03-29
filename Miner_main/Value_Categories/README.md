@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; justify-content: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>值類別 Value Categoraries</div></h1>
+<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>值類別 Value Categoraries</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
@@ -115,7 +115,7 @@ int main() {
 
 錯誤訊息：
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image1.png?raw=true">
 
@@ -141,7 +141,7 @@ attr 是<strong>[屬性識別字](https://en.cppreference.com/w/cpp/language/att
 
 運算式有兩種獨立的特性，分別是「[Type](https://en.cppreference.com/w/cpp/language/type)」和「[Value Catories](https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo)」，Type 不是我們今天討論的主題，我們直接來看 Value Categories
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image2.png?raw=true">
 
@@ -151,7 +151,7 @@ attr 是<strong>[屬性識別字](https://en.cppreference.com/w/cpp/language/att
 
 Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</strong> 和 <strong>Prvalue</strong>。如果你曾讀過值類別，可能還會聽過 glvalue 與 rvalue，那這兩個又是什麼呢? 這其實與運算式發展的歷史有關，是一個方便記憶而創造出的名詞，glvalue = Lvalue + Xvalue，rvalue = Prvalue + Xvalue。讀到這裡妳可能有點頭花，我們看這兩張圖來方便自己記憶：
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image3.png?raw=true">
 
@@ -724,7 +724,7 @@ std::cout << std::boolalpha
 
 可以看見 Compiler 可以分出來兩者的差別，因為兩者的 type 是不同的。那麼我們來看看一個有編譯器優化的狀況：
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image5.png?raw=true">
 
@@ -1456,7 +1456,7 @@ Test test_fn() {
 
 為了方便大家理解，附上一張手寫圖：
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; flex-direction: column; align-items: center;">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image6.png?raw=true">
 
@@ -1637,7 +1637,7 @@ int main() {
     ```
     附上我精美的手寫圖：
 
-    <div style="display: flex; justify-content: center;">
+    <div style="display: flex; flex-direction: column; align-items: center;">
     
     <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Value_Categories/image/image7.png?raw=true">
     
