@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-# <div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</div>
+# <div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</div>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -112,7 +112,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 畫成圖來說就是這樣：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction.png?raw=true"><br> 
 
@@ -126,7 +126,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction-2.png?raw=true"><br> 
 
@@ -140,7 +140,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 圖靈機基本上是一系列的自動機所建構出來的理論模型，因為是計概所以我這邊就不講太多，也不寫它的數學定義，有興趣的可以看一下自動機理論和計算理論的課：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src ="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/automata.png?raw=true"> 
 
@@ -179,7 +179,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 注意這個機器的每一部分都是有限的，但它有一個潛在的無限長的紙帶，因此這種機器只是一個理想的裝置。 圖靈認為這樣的一台機器就能類比人類所能進行的任何計算過程
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/turing-machine.png?raw=true"><br> 
 
@@ -215,7 +215,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，我們個人電腦上的 main memory 全名為 DDR SDRAM，屬於一種 DRAM，因此相較於 SRAM 來說速度就比較慢，而 SRAM 通常我們會將其使用在 CPU 內的 cache 上。 在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/ddr4.png?raw=true" width = 60%>
 
@@ -236,7 +236,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 假設是 4G 的 memory，那它的記憶體位址就可以從 0 一路寫到 4 \* 1024 \* 1024 \* 1024，換句話說就是從 0 到 4,294,967,295（我這裡從 0 開始）。 我們通常喜歡用 16 進位表示，所以會寫成 0 ~ 0xFFFFFFFF：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/memory-address.png?raw=true"> 
 
@@ -259,7 +259,7 @@ CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為
 
 CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫存器(Register) 與算術邏輯單元(ALU)，下圖是一個簡單的擁有單處理器 CPU 的計算機架構示意圖，紅線表示 data flow，黑線表示 control flow：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/uniprocessor-CPU.png?raw=true" width = 60%> 
 
@@ -281,7 +281,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CPU.png?raw=true" width = 40%><br> 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
@@ -290,7 +290,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 以前會把記憶體控制器做在北橋裡面，北橋再拉 Bus 到 memory 上，因此 CPU 想要跟 memory 溝通，就需要先到北橋，再到 memory 去。 其中 CPU 到北橋的這段 Bus 有個名字被稱為 Front-side bus(FSB)，而記憶體控制器到 memory 的這段 Bus 叫 memory bus：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/chipset-layout.png?raw=true" width=50%> 
 
@@ -314,7 +314,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 在 Intel 的術語中，其以 memory controller hub(MCH) 稱呼北橋，以 I/O controller hub(ICH) 稱呼南橋，在將北橋的剩餘功能移到南橋內之後，其將 ICH 改名為了 Platform Controller Hub(PCH)；而在 AMD 的架構中，與 PCH 對應的晶片組被稱為 FCH
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/pch.png?raw=true"> 
 
@@ -345,7 +345,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 [How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA) 這部影片裏面引用了一個簡單的 CPU 模型，稱為 Scott's CPU，其 Address Bus 和 Data Bus 各有 8 個 bit，Control Bus 則有 set 與 enable 這兩個 bit，對於讀取來說就會長這樣：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-read.gif?raw=true" width=90%><br> 
 
@@ -355,7 +355,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 寫入則長這樣：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-write.gif?raw=true" width=90%><br> 
 
@@ -395,7 +395,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 底下是一張簡單的啟動示意圖：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/boot-process.png?raw=true">
 
@@ -405,7 +405,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 另外 BIOS 會使用 CMOS 來儲存一些 BIOS 的設定，像是系統時間、硬體配置和你的開機順序等。 而 CMOS 使用的是揮發性的 SRAM，換句話說斷電後儲存的設定會消失，因此主機板上通常會配一顆小型的電池來使其不斷電，這顆電池我們叫他 CMOS 電池。 小時候在修電腦的時候，我們如果想要重置 BIOS 的設定，就會把這顆電池拔掉，如此一來存的設定消失，就會重置 BIOS 的設定了
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CMOS.png?raw=true" width = 70%>
 
@@ -443,7 +443,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 我們看一個例子：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Mes_Note/blob/main/Operating_System/Ch1_Introduction/Image/General_Purpose_Operating_Systems.jpg?raw=true" width = 70%>
 
@@ -471,7 +471,7 @@ Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一�
 
 另外這邊分享一個有趣的小故事：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/von-Neumann-machine-code.png?raw=true" width = 80%><br>
 
@@ -493,7 +493,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 我們能夠使用 HxD 或是 Vscode 內的 Hex Viewer 等工具來觀察二進制檔，這些工具會將 Byte sequence 利用八進制/十六進制等方式顯示出來。 假設我們於 windows 系統上利用 HxD 打開一個會印出 "Hello World!" 字串的 `.exe` 檔，那結果會像這樣：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/binary-file.png?raw=true" width = 70%><br>
 
@@ -511,7 +511,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 最後附上兩種執行檔格式的細節，我們通常會稱這個為 File ayout：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/ELF-format.png?raw=true" width = 80%>
 

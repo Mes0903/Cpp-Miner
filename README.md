@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-<h1 class><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 序 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></div></h1>
+<h1 class><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 序 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
@@ -157,4 +157,4 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 前言差不多就這樣啦，我是 Mes，一個喜愛 C++ 的人，主推 ina (x
 
-<div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/SLfT4YJ.png" height = 400></div>
+<div class = "center-column"><img src = "https://i.imgur.com/SLfT4YJ.png" height = 400></div>

@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>Concept と SFINAE と Detection Idiom</div></h1>
+<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>Concept と SFINAE と Detection Idiom</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -15,7 +15,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 ぼっち・ざ・ろっく！ 實在太棒了，標題致敬一下ギターと孤独と蒼い惑星 XD
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti1.png?raw=true">
 
@@ -161,7 +161,7 @@ int main()
 }
 ```
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/concept_error.png?raw=true">
 
@@ -499,7 +499,7 @@ int main()
 
 如此一來編譯器便會給予錯誤訊息，並把 candidate set 給印出來：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/candidate_set.png?raw=true">
 

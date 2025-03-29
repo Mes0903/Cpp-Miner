@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>Dependent Name & Name lookup</div></h1>
+<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>Dependent Name & Name lookup</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -91,7 +91,7 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 [n4861(7.5.4.1)](https://timsong-cpp.github.io/cppwp/n4861/expr.prim.id#unqual)：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Dependent_Name/image/unqualified_id.png?raw=true">
 
@@ -99,7 +99,7 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 [n4861(7.5.4.2)](https://timsong-cpp.github.io/cppwp/n4861/expr.prim.id#qual)：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Dependent_Name/image/qualified_id.png?raw=true">
 
@@ -420,7 +420,7 @@ void f(T* p) {
 
 標準依照 types 與 expressions 的依賴對象進行了分類，其中 types 依賴於 type，而 expressions 則可依賴於 type 與 value，因此可以簡單的將分類畫成下圖：
 
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class = "center-column">
 
 <img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Dependent_Name/image/dependencies.png?raw=true">
 

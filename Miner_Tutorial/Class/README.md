@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><div style="display: flex; flex-direction: column; align-items: center;"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class</div></h1>  
+<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -860,6 +860,6 @@ In a non-delegating constructor other than an implicitly-defined copy/move const
 >> (9.1.2)  
 >> the constructor's class is not a union, and, if the entity is a member of an anonymous union, no other member of that union is designated by a mem-initializer-id, the entity is initialized from its default member initializer as specified in [dcl.init];  
 
-<div style="display: flex; flex-direction: column; align-items: center;">(感謝群裡的 DXPower 幫找 ><)</div><br>  
+<div class = "center-column">(感謝群裡的 DXPower 幫找 ><)</div><br>  
 
 額外閱讀：[C++11 member initializer list vs in-class initializer?](https://stackoverflow.com/questions/27352021/c11-member-initializer-list-vs-in-class-initializer)  
