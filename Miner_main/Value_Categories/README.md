@@ -866,7 +866,7 @@ int main() {
 
 組語輸出：
 
-```armasm
+```asm
 main:
         push    rbp
         mov     rbp, rsp
