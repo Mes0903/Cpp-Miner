@@ -655,7 +655,7 @@ int main() {
 
 組語輸出：  
 
-```assembly  
+```asm  
 main:  
         push    rbp  
         mov     rbp, rsp  
