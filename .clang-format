@@ -1,57 +1,31 @@
-BasedOnStyle: Chromium
+---
 Language: Cpp
-MaxEmptyLinesToKeep: 3
-IndentCaseLabels: false
-AllowShortIfStatementsOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-DerivePointerAlignment: false
-PointerAlignment: Right
-SpaceAfterCStyleCast: true
-TabWidth: 2
-UseTab: Never
-IndentWidth: 2
-AlignConsecutiveAssignments: false
-IndentGotoLabels: true
-AccessModifierOffset: -2
-AlignConsecutiveMacros: false
-AlignTrailingComments: false
-SpacesInParentheses: false
-SpacesBeforeTrailingComments : 4
-SpaceBeforeParens: ControlStatements
-SpaceBeforeAssignmentOperators: true
-SortIncludes: false
-Cpp11BracedListStyle: false
-ContinuationIndentWidth: 2
-AllowShortLoopsOnASingleLine: false
-BinPackArguments: true
-ColumnLimit: 0
+BasedOnStyle: LLVM
+AlwaysBreakTemplateDeclarations: Yes
+BreakBeforeBraces: Attach
+ColumnLimit: 160
+SpaceAfterTemplateKeyword: true
+Standard: c++20
+TabWidth: 4
+IndentWidth: 4
+UseTab: Always
 AllowShortEnumsOnASingleLine: true
-AllowAllParametersOfDeclarationOnNextLine: true
-BreakBeforeBraces: Custom
-NamespaceIndentation: All
-Cpp11BracedListStyle: false
-ForEachMacros:   
-- foreach
-- Q_FOREACH
-- BOOST_FOREACH
-- list_for_each
-- list_for_each_safe
-- list_for_each_entry
-- list_for_each_entry_safe
-- hlist_for_each_entry
-- rb_list_foreach
-- rb_list_foreach_safe
-- EV_FOREACH
-- LIST_FOREACH
-BraceWrapping:
-  AfterClass:	false
-  AfterStruct: false
-  AfterControlStatement:	false
-  AfterEnum:	false
-  AfterFunction:	true
-  AfterObjCDeclaration:	false
-  AfterUnion:	false
-  BeforeCatch:	false
-  BeforeElse:	true
-  IndentBraces:	false
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortLambdasOnASingleLine: All
+AllowShortBlocksOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortLoopsOnASingleLine: true
+IndentRequires: true
+IncludeCategories:
+    # Headers in <> with .h extension.
+    - Regex: '<([A-Za-z0-9\/-_])+\.h>'
+      Priority: 10
+    # Headers in <> with .hpp extension.
+    - Regex: '<([A-Za-z0-9\/-_])+\.hpp>'
+      Priority: 20
+    # Headers in <> without extension.
+    - Regex: '<([A-Za-z0-9\/-_])+>'
+      Priority: 30
+PointerAlignment: Left
+QualifierAlignment: Right
