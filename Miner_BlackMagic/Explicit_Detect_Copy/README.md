@@ -183,4 +183,8 @@ int main(int argc, char *argv[])
 
 總之最後的結果就是可以用這個來測試、偵測，若要拿來<span class = "yellow">避免</span>複製還是有一些難度，但至少可以拿來避免隱式轉型，在 one single argument 的建構子前加上 `explicit` 會是個很好的習慣
 
-<div class = "center-column">(感謝社團內的 <I>Actual Wizard</I> wreien 提供例子)</div><br>
+<div class = "center-column">
+
+(感謝社團內的 <em>Actual Wizard</em> wreien 提供例子)
+
+</div><br>
