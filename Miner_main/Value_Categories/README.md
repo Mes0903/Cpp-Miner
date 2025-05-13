@@ -1399,7 +1399,7 @@ cnt = 1
 
     在 [throw 表達式](https://en.cppreference.com/w/cpp/language/throw)中，如果妳的運算元是一個 non-volatile 的物件，而且這個物件不是函式的參數或 [catch clause](https://en.cppreference.com/w/cpp/language/try_catch) (不會翻QQ) 的參數，然後它的 scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)，然後！ 運算元有[自動的儲存期限](https://en.cppreference.com/w/cpp/language/storage_duration#Storage_duration)，那他可能發生 Copy Elision
 
-    「scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)」這句我翻得不太確定，因為我自己不常用例外處理，相對沒那麼熟，他的原文是「whose scope does not extend past the innermost try-block (if there is a try-block).」，如果有翻錯還請幫忙糾正一下，謝謝！ <img src = "https://cdn.discordapp.com/emojis/784176641428553777.gif?v=1" height = 30>
+    「scope 範圍沒有超過最裡面的 try-block (如果裡面有 try-block 的話)」這句我翻得不太確定，因為我自己不常用例外處理，相對沒那麼熟，他的原文是「whose scope does not extend past the innermost try-block (if there is a try-block).」，如果有翻錯還請幫忙糾正一下，謝謝！ <img src = "https://cdn.discordapp.com/emojis/784176641428553777.gif?v=1" width = 30>
 
 + 某些狀況下的 catch clause
 
