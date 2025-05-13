@@ -17,7 +17,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti1.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti1.png">
 
 </div><br>
 
@@ -163,7 +163,7 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/concept_error.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/concept_error.png">
 
 </div><br>
 
@@ -501,7 +501,7 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/candidate_set.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/candidate_set.png">
 
 </div>
 
@@ -1764,7 +1764,7 @@ int main()
 
 template 真的是個大坑，畢竟~~實作泛型就是為了接受更多的苦難~~，沒有啦是更多型態啦ㄏㄏ
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti2.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti2.png">
 
 ## 參考資料
 

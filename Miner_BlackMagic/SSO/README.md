@@ -35,7 +35,7 @@ struct basic_string {
 
 <div class = "center-column">
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/image/string-begin-layout.png?raw=true">  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_BlackMagic/SSO/image/string-begin-layout.png">  
 
 （layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
 
@@ -67,7 +67,7 @@ struct basic_string
 
 <div class = "center-column">
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_BlackMagic/SSO/image/basic-string-layout.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_BlackMagic/SSO/image/basic-string-layout.png">
 
 （layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
 

@@ -179,7 +179,7 @@ reference 也同理。
 
 <div class = "center-column">
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout1.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout1.png">
 
 (source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/programming/memory-layout-of-c-program/))
 
@@ -256,7 +256,7 @@ int main()
 
 <div class = "center-column">
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout2.png?raw=true"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout2.png"><br>  
 
 </div>
 
@@ -310,7 +310,7 @@ int main()
 
 <div class = "center-column">
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/new.png?raw=true"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/new.png"><br>
 
 </div>  
 
@@ -480,7 +480,7 @@ int main
 
 <div class = "center-column">
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/reference1.png?raw=true"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference1.png"><br>
 
 </div> 
 
@@ -527,7 +527,7 @@ std::cout << std::boolalpha
 
 <div class = "center-column">
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/reference2.png?raw=true"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference2.png"><br>
 
 </div>  
 
@@ -817,7 +817,7 @@ int main()
 
 圖解起來長這樣：  
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/reference3.png?raw=true"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference3.png"><br>  
 
 整體步驟大概是：  
 
@@ -1021,7 +1021,7 @@ int main()
 
 我們可以把樹畫出來看，以 `fib(4)` 為例，會長的像這樣：  
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/main_function.png?raw=true"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/main_function.png"><br>  
 
 額外閱讀：[Tail recursion in C++](https://stackoverflow.com/questions/2693683/tail-recursion-in-c)  
 
@@ -1093,4 +1093,4 @@ int main(int argc, char *argv[])
 
 假設我們的執行檔名稱為 test.exe，那麼當我執行指令 `./test.exe 1 2 3` 時，argc 就為 4，第一個參數為程式的名稱，第二三四個參數則為 `1 2 3`，因此上面的例子會輸出 `4 C:\Mescpp\test\test.exe 1 2 3` (我這邊執行檔位置在 Mescpp\\test 下)  
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Function_Memory/image/main_function.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/main_function.png">

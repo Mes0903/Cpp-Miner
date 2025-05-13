@@ -120,7 +120,7 @@ int main()
 
 <div class = "center-column">
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/based_derived.png?raw=true">
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/based_derived.png">
 
 </div><br>  
 
@@ -564,7 +564,7 @@ public:
 
 <div class = "center-column">  
 
-<img src="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png"><br>
 
 (順序不一定會一樣，要看電腦的架構與編譯器，但一定會有個排列的規則)      
 
@@ -1523,7 +1523,7 @@ public:
 ```
 <div class = "center-column">  
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png?raw=true"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png"><br>
 
 </div>  
 
@@ -1554,7 +1554,7 @@ int main()
 
 <div class = "center-column">  
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table1.png?raw=true"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table1.png"><br>  
 
 </div>  
 
@@ -1587,7 +1587,7 @@ int main()
 
 <div class = "center-column">  
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table2.png?raw=true"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table2.png"><br>  
 
 </div>  
 
@@ -1637,7 +1637,7 @@ int main()
 
 <div class = "center-column">  
 
-<img src = "https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/OO/image/virtual_table3.png?raw=true"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table3.png"><br>  
 
 </div>  
 
