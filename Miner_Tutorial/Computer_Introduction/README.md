@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-# <div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> C++ 教學系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50>淺談計算機概論</div>
+# C++ 教學系列 ── 淺談計算機概論
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 

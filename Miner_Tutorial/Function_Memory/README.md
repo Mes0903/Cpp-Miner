@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> C++ 教學系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50>Function 與 Memory</div></h1>  
+# C++ 教學系列 ── Function 與 Memory
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
