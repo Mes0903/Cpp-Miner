@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>值類別 Value Categoraries</div></h1>
+<h1><div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> 礦坑系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50>值類別 Value Categoraries</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
@@ -119,7 +119,7 @@ int main() {
 
 <img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Value_Categories/image/image1.png">
 
-</div><br>
+</div>
 
 原因是因為 `int b = 5` 本身就是一個 Statement 了，所以 Compiler 並不希望妳把 `int b = 5` 放在 `int a = ` 的右邊，它原先預期右邊要是一個 Expression，所以就噴了這個錯
 
@@ -147,7 +147,7 @@ attr 是<strong>[屬性識別字](https://en.cppreference.com/w/cpp/language/att
 
 ([圖源](https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c))
 
-</div><br>
+</div>
 
 Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</strong> 和 <strong>Prvalue</strong>。如果你曾讀過值類別，可能還會聽過 glvalue 與 rvalue，那這兩個又是什麼呢? 這其實與運算式發展的歷史有關，是一個方便記憶而創造出的名詞，glvalue = Lvalue + Xvalue，rvalue = Prvalue + Xvalue。讀到這裡妳可能有點頭花，我們看這兩張圖來方便自己記憶：
 
@@ -161,7 +161,7 @@ Value Categories 主要分三種：<strong>Lvalue</strong>、<strong>Xvalue</str
 
 [圖源](https://openhome.cc/Gossip/CppGossip/RvalueReference.html)
 
-</div><br>
+</div>
 
 是不是清楚多了，那麼這邊我先將每個的翻譯名稱都給大家，以免之後在閱讀的時候搞混：
 
@@ -728,7 +728,7 @@ std::cout << std::boolalpha
 
 <img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Value_Categories/image/image5.png">
 
-</div><br>
+</div>
 
 [連結](https://godbolt.org/z/8KqxsKrPM)在這裡，記得要把編譯器優化打開。 我們可以看見 `std::cin >> r;` 像是被替換成 `std::cin >> a;` 了，跟 `inline` 類似 (感謝Cy大神補充)
 
@@ -1169,10 +1169,14 @@ cnt = 1
 
 我們來統整一下這三個例子，用個表格來看：
 
+<div class = "center-column">
+
 |                      |   C++14  | C++17    |
 | --------             | -------- | -------- |
 | 關掉 Copy Elision     | 3 次     | 2 次     |
 | 打開 Copy Elision     | ?        | 1 次     |
+
+</div>
 
 這樣是關掉了 Copy Elision，從 C\+\+14 換到 C\+\+17 時少呼叫了一次建構子，這證明了 C\+\+17 「保證」了部分 Copy Elision 的發生，而同樣是 C\+\+17，關掉與打開 Copy Elision，也少呼叫了一次建構子，這則證明了 C\+\+17 只保證「部分」的 Copy Elision 會發生，其餘的部分則看 Compiler 如何處理，標準也有將這些狀況列下來，等等會談到
 
@@ -1191,10 +1195,14 @@ cnt = 1
 
 一樣只有一次! 所以表格變成了這樣：
 
+<div class = "center-column">
+
 |                      |   C++14  | C++17    |
 | --------             | -------- | -------- |
 | 關掉 Copy Elision     | 3 次     | 2 次     |
 | 打開 Copy Elision     | 1 次     | 1 次     |
+
+</div>
 
 可以看見 Compiler 一直以來其實都默默地在幫我們做事，只是妳可能都沒發現 XD
 
@@ -1460,7 +1468,7 @@ Test test_fn() {
 
 <img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Value_Categories/image/image6.png">
 
-</div><br>
+</div>
 
 今天熟組語的朋友真是有福了，每個例子旁邊都配了組語讓你看 XD，但不會組語的朋友不用擔心，我照順序翻譯成中文敘述給你們看，`test_fn()` 回傳的物件我們暫時叫他 `X`，妳可能會想說他不是 `return B` 嗎? 怎麼會多一個 `X`? 欸沒錯，它們其實不一樣，想不到吧ㄏㄏ，如果大家想跟著確認，可以在建構子裡面，像是一開始的例子那樣把正在呼叫的建構子印出來看：
 
@@ -1641,7 +1649,7 @@ int main() {
     
     <img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Value_Categories/image/image7.png">
     
-    </div><br>
+    </div>
 
     可以看見有暫時物件的產生。我在每一個操作結束時都加上 `a = 0;`，並用粉色的螢光筆標起來了，當作區間的紀錄點，方便大家閱讀
 

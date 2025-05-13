@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Class & 物件導向</div></h1>  
+<h1><div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> C++ 教學系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50>Class & 物件導向</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -122,7 +122,7 @@ int main()
 
 <img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/based_derived.png">
 
-</div><br>  
+</div>
 
 ```cpp
 #include <iostream>
@@ -564,7 +564,7 @@ public:
 
 <div class = "center-column">  
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png">
 
 (順序不一定會一樣，要看電腦的架構與編譯器，但一定會有個排列的規則)      
 
@@ -1523,7 +1523,7 @@ public:
 ```
 <div class = "center-column">  
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/memory_layout.png">
 
 </div>  
 
@@ -1554,7 +1554,7 @@ int main()
 
 <div class = "center-column">  
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table1.png"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table1.png">  
 
 </div>  
 
@@ -1587,7 +1587,7 @@ int main()
 
 <div class = "center-column">  
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table2.png"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table2.png">  
 
 </div>  
 
@@ -1637,7 +1637,7 @@ int main()
 
 <div class = "center-column">  
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table3.png"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/OO/image/virtual_table3.png">  
 
 </div>  
 

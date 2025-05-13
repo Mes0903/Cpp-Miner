@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-<h1 class><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> 礦坑系列 ── 序 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50></div></h1>
+<h1 class><div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> 礦坑系列 ── 序 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50></div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
 
@@ -13,7 +13,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 文章一覽：[連結](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)
 
-## 前言 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## 前言 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif?w=930" height = 50>
 
 這是一本介紹 Modern C++ 與一些 C++ 深度解析的書，從我的 hackmd 搬運而來，你可以從[這裡](https://github.com/Mes0903/Cpp-Miner/blob/main/SUMMARY.md)看見文章一覽。 如果您是 C++ 新手，我會建議您先去看 Miner Tutorial 的部分，裡面對初學者會學到的東西做了簡單的介紹，可以幫助大家理解、回憶一些基礎知識，同時可以讓你習慣本書風格
 
@@ -27,7 +27,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 感謝一路上教我許多東西的老師、朋友與 Stackoverflow、Discord 上那些不認識但十分熱心的人們
 
-## Summary 文章一覽 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## Summary 文章一覽 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif?w=930" height = 50>
 
 ### Miner Tutorial 新手教學
 
@@ -63,7 +63,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 + [四個不該用 "const" 的時機](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/NoConst)
 + [Indirect through null pointer 是 UB 嗎?](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_BlackMagic/Indirect_through_null_pointer)
 
-## 貢獻此書 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## 貢獻此書 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif?w=930" height = 50>
 
 如果你有任何想討論的內容、想看的內容，或是想添加章節等，歡迎你來聯絡我 [email](mailto:mes900903@gmail.com)，也可以加我 Discord `mes_0903`
 
@@ -71,7 +71,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 如果由於版本更新導致文章內容已與事實不符，也歡迎進行更新，文章有時內容會過於艱澀導致我無法翻譯，若你有能力且樂意幫忙翻譯，也很歡迎您修改
 
-## 關於我 <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## 關於我 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif?w=930" height = 50>
 
 我是 Mes，一個喜愛 C++ 的人，寫文的現在(2021/04/02) 就讀中央大學數學系，目前大一，~~成績很差，盡量不要問我數學~~，如果想一起討論程式問題的話可以加我的 Discord、FB 或 IG，我主要用這三個，程式方面的討論我主要都在 Discord 找人問和回答問題：
 
@@ -81,7 +81,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 興趣是寫作、Compiler、OS、C++、Assembly，偶爾會去攝影，會在 IG 上寫雜記和分享家裡的貓咪照片，FB 版上全是分享別人動物的貼文，~~愜意的生活~~
 
-## <span class = "orange">一些資源</span> <img src = "https://i.imgur.com/thmVmX6.png?w=930" height = 50>
+## <span class = "orange">一些資源</span> <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif?w=930" height = 50>
 
 下面這些是我可能會出現的 Discord 群，我通常會在這些群裡面回答問題或問問題：
 

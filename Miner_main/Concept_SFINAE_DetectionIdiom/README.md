@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?" height = 50> 礦坑系列 <img src = "https://i.imgur.com/thmVmX6.png?" height = 50><br>Concept と SFINAE と Detection Idiom</div></h1>
+<h1><div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif?" height = 50> 礦坑系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif?" height = 50>Concept と SFINAE と Detection Idiom</div></h1>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -19,7 +19,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/botti1.png">
 
-</div><br>
+</div>
 
 Detection Idiom 中文翻譯為偵測語意，其他的名字還有 Member Detector 和 Template type constraint 等等
 
@@ -165,7 +165,7 @@ int main()
 
 <img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Concept_SFINAE_DetectionIdiom/image/concept_error.png">
 
-</div><br>
+</div>
 
 可以看見錯誤訊息變得十分乾淨，debug 變的很方便
 

@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-# <div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>淺談計算機概論</div>
+# <div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> C++ 教學系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50>淺談計算機概論</div>
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -114,7 +114,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction.png"><br> 
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction.png"> 
 
 </div>
 
@@ -128,7 +128,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction-2.png"><br> 
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction-2.png"> 
 
 </div>
 
@@ -181,7 +181,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/turing-machine.png"><br> 
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/turing-machine.png"> 
 
 </div>
 
@@ -283,7 +283,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CPU.png" width = 40%><br> 
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CPU.png" width = 40%> 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
 </div>
@@ -347,7 +347,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-read.gif" width=90%><br> 
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-read.gif" width=90%> 
 
 </div>
 
@@ -357,7 +357,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-write.gif" width=90%><br> 
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-write.gif" width=90%> 
 
 </div>
 
@@ -473,7 +473,7 @@ Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/von-Neumann-machine-code.png" width = 80%><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/von-Neumann-machine-code.png" width = 80%>
 
 </div>
 
@@ -495,7 +495,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/binary-file.png" width = 70%><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/binary-file.png" width = 70%>
 
 </div>
 

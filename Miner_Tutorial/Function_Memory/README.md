@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Function 與 Memory</div></h1>  
+<h1><div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> C++ 教學系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50>Function 與 Memory</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -183,7 +183,7 @@ reference 也同理。
 
 (source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/programming/memory-layout-of-c-program/))
 
-</div><br>
+</div>
 
 + text 段  
     text 也被稱為 code 段，存放可執行的 cpu 指令，這裡的資料是可以共用的，並且是唯讀的。  
@@ -256,7 +256,7 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout2.png"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/memory_layout2.png">  
 
 </div>
 
@@ -310,7 +310,7 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/new.png"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/new.png">
 
 </div>  
 
@@ -480,7 +480,7 @@ int main
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference1.png"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference1.png">
 
 </div> 
 
@@ -527,7 +527,7 @@ std::cout << std::boolalpha
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference2.png"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference2.png">
 
 </div>  
 
@@ -817,7 +817,7 @@ int main()
 
 圖解起來長這樣：  
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference3.png"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/reference3.png">  
 
 整體步驟大概是：  
 
@@ -1021,7 +1021,7 @@ int main()
 
 我們可以把樹畫出來看，以 `fib(4)` 為例，會長的像這樣：  
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/main_function.png"><br>  
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Function_Memory/image/main_function.png">  
 
 額外閱讀：[Tail recursion in C++](https://stackoverflow.com/questions/2693683/tail-recursion-in-c)  
 

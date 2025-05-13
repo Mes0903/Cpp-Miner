@@ -5,7 +5,7 @@ tag: C++ Miner-tutorial
 category: C++ Miner
 ---
 
-<h1><div class = "center-column"><img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50> C++ 教學系列 <img src = "https://i.imgur.com/thmVmX6.png?w=1000" height = 50><br>Array 與 Pointer</div></h1>  
+<h1><div class = "center-column"><img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50> C++ 教學系列 <img src = "https://walfiegif.wordpress.com/wp-content/uploads/2023/07/out-transparent-122.gif" width=50>Array 與 Pointer</div></h1>  
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -285,7 +285,7 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Array_Pointer/image/pointer.png"><br>
+<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Array_Pointer/image/pointer.png">
 
 </div>
 
@@ -384,6 +384,8 @@ int a = *p;    // undefined behavior
 
 所以我們可以簡單寫一個表出來：  
 
+<div class = "center-column">
+
 | 語法             | 意思                                     |
 | ---------------- | ---------------------------------------- |
 | `const T*`       | 指向 「constant 物件」的指標             |
@@ -392,7 +394,9 @@ int a = *p;    // undefined behavior
 | `const T* const` | 指向「constant 物件」的「constant 指標」 |
 | `T const* const` | 指向「constant 物件」的「constant 指標」 |
 
-source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Constness)  
+source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Constness)
+
+</div>
 
 可以看見就分三種，不寫法有五種，判斷方法建議大家記一下，接下來我們簡單看個例子：  
 
