@@ -1,11 +1,11 @@
 ---
-title: (WIP) 礦坑系列 ── Allocator & PMR
+title: 礦坑系列 ── Allocator & PMR
 date: 2025-04-12
 tag: C++ Miner-main
 category: C++ Miner
 ---
 
-# (WIP) 礦坑系列 ── Allocator & PMR
+# 礦坑系列 ── Allocator & PMR
 
 礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
 
@@ -48,7 +48,7 @@ BENCHMARK(PmrList);
 
 輸出結果：
 
-![alt text](image/quick_bench.png)
+![](image/quick_bench.png)
 
 你可以看到，由於不需要 heap allocation，因此效能提升了許多。 那我們就先講如何使用，後面再來談談一些標準內的內容
 
@@ -103,7 +103,7 @@ int main() {
 }
 ```
 
-[輸出（`-std=c++11`）]（(https://godbolt.org/z/16x4rPE3z)）：
+[輸出（`-std=c++11`）](https://godbolt.org/z/16x4rPE3z)：
 
 ```
 sizeof(T): 16
@@ -139,7 +139,7 @@ POD type 在 C++20 時正式被 `trivial` 與 `standard-layout` 這兩種型態�
 
 簡單來說，Allocator 提供了抽象記憶體的機制，封裝了 memory model 的資訊。 其動機是讓容器能夠完全獨立於底層的 memory model，原本是打算讓 Allocator 完全封裝 memory model，但後來因為效率問題導致加了「億些」限制，在當時被稱為 Allocator Requirement（[N1804](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2005/n1804.pdf) 20.1.6）
 
-對此 Stepanov 在另一場訪談中也有提到一些感想（[連結](http://www.stlport.org/resources/StepanovUSA.html)），再到更後來的 C++11，Allocator 的變化可以說是已經完全與當初的目的不同了。 在目前，Allocator 的作用主要是讓工程師可以控制容器內的記憶體配置，一樣是負責封裝了記憶體管理，但就不是當初的調整底層 memory model 的目的了
+對此 Stepanov 有在另一場訪談中提了一些感想（[連結](http://www.stlport.org/resources/StepanovUSA.html)）。 而再到更後來的 C++11，Allocator 的變化可以說是已經完全與當初的目的不同了，現如今，Allocator 的作用主要是讓工程師可以控制容器內的記憶體配置。 一樣是負責封裝記憶體管理，但就不是當初要調整底層 memory model 的目的了
 
 ::: info  
 Al Stevens 的這篇訪談紀錄侯捷有轉載翻譯版到他的網站上，但禁止二次轉載，因此這邊就貼上連結給大家去讀讀，是篇很好但很舊的文章（比我還老XD）
@@ -182,7 +182,7 @@ int main() {
 :::warning  
 另外，我不確定是不是所有的編譯器實作中 Allocator 底層都會呼叫到 `new`，也許有些編譯器會直接跳過 new 用 malloc（純猜測），這待商榷，但能確定的是大部分的編譯器底層都會用到 operator new
 
-<details> <summary>[點開]：一個簡單的 uftrace log 範例</summary>
+<details> <summary>[點開]：一個簡單的 uftrace log 範例，你可以看到當中有呼叫 operator new</summary>
 
 ```
             [210003] |           std::allocator_traits::construct() {
@@ -247,28 +247,21 @@ int main() {
 ```cpp
 std::string* const p = new std::string[n]; // 建構 n 個空的 std::string
 std::string s;
-std::string* q = p;							  // q 指向第一個 std::string
-while (std::cin >> s && q != p + n) 
+std::string* q = p; // q 指向第一個 std::string
+while (std::cin >> s && q != p + n)
   *q++ = s; // 指定一個新的值給 *q
 
-size_t const size = q - p;					  // 記住我們讀取了多少個 std::string
+size_t const size = q - p; // 記住我們讀取了多少個 std::string
 delete[] p;
 ```
 
-這個 `new` operator 配置並初始化了 `n` 個 `std::string`，但我們可能不需要這麼多，這樣一來我們就有可能會建構從未被使用的物件。 而對於有用到的物件，我們需要再做一次額外的賦值，因此一個元素被寫入了兩次。 最後，沒有 default constructor 的類別沒有辦法用這種方法來配置一個陣列
+這個 `new` operator 配置並初始化了 `n` 個 `std::string`，但我們可能不需要這麼多，這樣一來我們就有可能會建構從未被使用的物件。 而對於有用到的物件，我們則需要再做一次額外的賦值，因此一個元素被寫入了兩次。 最後一個缺點是，沒有 default constructor 的類別沒有辦法用這種方法來配置成一個陣列
 
 使用 Allocator 時能讓我們將 allocation 與 construction 分開，讓我們可以操作一塊有 type info 且還沒被建構的原始記憶體。 前面也提到 Allocator 封裝了記憶體管理，STL 容器（像是 `std::vector`、`std::map` 等）在分配記憶體時都是透過 Allocator 提供的介面 `std::allocator_traits` 在操作的，因此流程基本上長這樣：
 
-![alt text](image/STL_container.png)
+![](image/STL_container.png)
 
-對於 STL 容器，我們可以使用 `std::allocator` 來配置記憶體：
-
-```cpp
-std::allocator<std::string> alloc; // 能夠配置 std::string 的物件
-auto const p = alloc.allocate(n);  // 配置 n 個未建構的 std::string
-```
-
-並透過 `allocate` 來分配記憶體：
+對於 STL 容器，我們可以使用 `std::allocator` 與 `allocate` 來配置記憶體：
 
 ```cpp
 std::allocator<std::string> alloc;		  // 能夠配置 std::string 的物件
@@ -301,7 +294,7 @@ int main() {
 }
 ```
 
-[輸出（`-std=c++11`）](https://godbolt.org/z/sW4fjTMP3)）：
+[輸出（`-std=c++11`）](https://godbolt.org/z/sW4fjTMP3)：
 
 ```
 Hello 0
@@ -324,14 +317,14 @@ Hello 4
 :::
 
 :::tip  
-[N4950（24.2.1）](https://timsong-cpp.github.io/cppwp/n4950/container.requirements#pre-3)：Allocator-aware containers ([container.alloc.reqmts]) other than `basic_string` construct elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​construct` and destroy elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​destroy` ([allocator.traits.members]), where U is either allocator_type​::​value_type or an internal type used by the container. These functions are called only for the container's element type, not for internal types used by the container.
+[N4950（24.2.1）](https://timsong-cpp.github.io/cppwp/n4950/container.requirements#pre-3)：Allocator-aware containers ([container.alloc.reqmts]) other than `basic_string` construct elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​construct` and destroy elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​destroy` ([allocator.traits.members]), where U is either `allocator_type​::​value_type` or an internal type used by the container. These functions are called only for the container's element type, not for internal types used by the container.
 
 [Note 1: This means, for example, that a node-based container would need to construct nodes containing aligned buffers and call construct to place the element into the buffer. — end note]  
 :::
 
-這麼做是因為標準對 Allocator 洋洋灑灑的列了許多要求，基本上就是規定要有哪些成員變數與成員函式，而且不同的成員還有各自需要滿足的要求，可以從 [cppreference](https://en.cppreference.com/w/cpp/named_req/Allocator) 上面看到許多表格來描述它們
+這麼做是因為標準對 Allocator 洋洋灑灑的列了許多要求，基本上就是規定要有哪些成員變數與成員函式，而且不同的成員還有各自需要滿足的要求，你可以在 [cppreference](https://en.cppreference.com/w/cpp/named_req/Allocator) 上面看到許多表格來描述它們
 
-但如果每次客製化時都要把這些要求一個一個完成，那就太麻煩了，畢竟真的很多，因此才需要 `std::allocator_trait` 這個中介層，這個東西對大部分的需求提供了一個「預設」的版本，如此一來我們只需要對在意的操作進行客製化，其他的部分使用 `std::allocator_trait` 的版本即可
+但如果每次客製化時都要把這些要求一個一個完成，那就太麻煩了，畢竟真的很多，因此才需要 `std::allocator_trait` 這個中介層，這個東西對大部分的需求提供了一個「預設」的版本，如此一來我們只需要對在意的操作進行客製化，其他的部分則使用 `std::allocator_trait` 的預設版本即可
 
 因此，在我們需要自己管理容器的記憶體時，可以通過自己寫一個 Allocator，套用給 `std::allocator_traits` 來達到目的，不知道大家還記不記得這篇文的初衷，我們不想要 heap allocation
 
@@ -433,7 +426,7 @@ class Allocator {
 - `value_type`
 - `allocate`
 - `deallocate`
-- 基本上預設建構子和複製建構子都要有，因為你寫的東西高機率會用到 rebind 相關的函式（真的用不到還是可以不寫）
+- 預設建構子和複製建構子「建議」都要有，但非必要，因為你寫的東西高機率會用到 rebind 相關的函式（真的用不到還是可以不寫）
 
 下面是一個簡單的最簡（幾乎）自定義 Allocator：
 
@@ -677,7 +670,7 @@ Hello, StackAllocator2!
 v.push_back(CustomString("Hello, StackAllocator2!"));
 ```
 
-就會整個爛掉，此時就可以使用 `std::scoped_allocator_adaptor` 來讓 Allocator 能夠「自動向巢狀物件傳遞」，此時上方的例子會變為：
+就會整個爛掉（少傳了參數 `allocator_str`），此時就可以使用 `std::scoped_allocator_adaptor` 來讓 Allocator 能夠「自動向巢狀物件傳遞」，此時上方的例子會變為：
 
 ```cpp
 using CustomString = std::basic_string<char, std::char_traits<char>, StackAllocator<char>>;
@@ -696,16 +689,16 @@ StackAllocator<CustomString> allocator_vec(pool);
 }
 ```
 
-在 `CustomVector` 處我們加上了 `std::scoped_allocator_adaptor`，此時 `std::vector` 的 Allocator 會自動被用來建構它的元素，即使被插入的物件 `CustomString("Hello!")` 和 `CustomString("Hello2!")` 並不是用相同的 Allocator 建構的（你可以看見不再需要 `allocator_str` 了）
+在 `CustomVector` 處我們加上了 `std::scoped_allocator_adaptor`，此時 `std::vector` 的 Allocator 會自動被用來建構它的元素，即使被插入的物件 `CustomString("Hello!")` 和 `CustomString("Hello2!")` 並不是用相同的 Allocator 建構的（你可以看見不再需要傳 `allocator_str` 進去了）
 
-另外，由於 basic_string 可以從 const char* 隱含地製造出來，所以最後那兩行可以進一步簡化為：
+另外，由於 `basic_string` 可以從 `const char*` 隱含地建構出來，所以最後那兩行可以進一步簡化為：
 
 ```cpp
 v.push_back("Hello!");
 v.push_back("Hello2!");
 ```
 
-當 `std::vector` 要建構一個元素（比如 `push_back(obj)`）時，他會呼叫：
+通常，如前面所述，當一般的 `std::vector` 要建構一個元素（比如 `push_back(obj)`）時，他會呼叫：
 
 ```cpp
 std::allocator_traits<allocator_type>::construct(get_allocator(), void_ptr, obj);
@@ -739,19 +732,25 @@ std::allocator_traits<outer_allocator_type>::construct(outer_allocator(), void_p
 
 換句話說，Adaptor 會於其嵌套的 Allocator 呼叫 `construct()` 時會傳送額外的參數，因此物件才也會以 Allocator 來建構
 
-上例中的 `inner_allocator_type` 會是 `std::scoped_allocator_adaptor` 的另一個特化，所以如果元素類型也是容器，它就會使用相同的方法來建構它的元素，而且分配器可以被下傳到每個元素，以滿足你有容器的容器的容器等需求
+上例中的 `inner_allocator_type` 會是 `std::scoped_allocator_adaptor` 的另一個特化，所以如果元素類型也是容器，它就會使用相同的方法來建構它的元素，而且分配器可以被往下傳遞到每個元素，以滿足你有容器的容器的容器等需求
 
 ## PMR
 
-### Allocator 的不完美之處
+### Allocator 的不完美之處（[N1850 Section 4.3](https://www.open-std.org/JTC1/SC22/WG21/docs/papers/2005/n1850.pdf)）
 
-如果你有看完前面的例子，你一定會覺得有個東西很麻煩，那就是你每用一個 Allocator，就會多一個 Static Type，舉個例子，假設有以下 `std::vector`：
+Pablo Halpern 在 PMR 的提案（[N3916](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3916.pdf) ）中提到：
+
+> Although N1850 conflated them, the proposals in that paper could be broken down into two separate principles:
+> 1. The allocator used to construct a container should also be used to construct the elements within that container.
+> 2. An object’s type should be independent of the allocator it uses to obtain memory.
+
+第一點我們透過前方的 `scoped_allocator_adaptor` 解決了，而如果你有看完前面的例子，你應該也能看懂第二點：你每用一個 Allocator，就會多一個 static type，舉個例子，假設有以下 `std::vector`：
 
 ```cpp
 auto my_vector = std::vector<int,my_allocator>();
 ```
 
-此時這一整個 `std::vector<int,my_allocator>` 是他的 Static Type，而如果我們又用了另一個 `std::vector`，這時候會發生一個問題：
+此時這一整個 `std::vector<int,my_allocator>` 是他的 static type，而如果我們又用了另一個 `std::vector`，這時候會發生一個問題：
 
 ```cpp
 auto my_vector = std::vector<int,my_allocator>();
@@ -760,15 +759,26 @@ auto vec = my_vector; // ok
 vec = my_vector2; // error
 ```
 
-因為兩個 `std::vector` 的 Static Type 不同，所以 `operator=` 自然就不能用了
+因為兩個 `std::vector` 的 static type 不同，所以 `operator=` 自然就不能用了
 
 再來，因為 Allocator 是在編譯期決定的，如果你想換一種配置策略，例如從 malloc 換成 memory pool，那你必須要把整個容器的型態改掉
 
-### PMR 的解答
+在 N3916 中提到這可以透過 Type erasure 的手法解決，例如 `std::function` 對外永遠是一個函式包裝器，裡面到底存了什麼 Functor，外部是看不到的，但這會有幾個問題：
 
-在 C++17 時為了解決這個問題引入了 PMR，為 Polymorphic Memory Resource 的縮寫，它會利用 Runtime 的 Polymorphism 來做到相同的 Static Type，但卻能在執行時做到類似用了不同的 Allocator 一樣的效果。 也因此他不是透過 template 在做，他是單一的 Static Type，通過 dynamic dispatch 來定義 Allocator 的行為，以達到我們的目的
+- 生命期外洩：被抹除的 allocator 有可能被傳到超出其有效範圍的地方
+- 無法查詢：物件建立後，你拿不到它真正使用的 allocator
+- 不向下相容：若想把同樣手法套用到既有容器（`vector` 等），會破壞舊有介面與二進位相容性
+- 實作成本高：自己手動做型別抹除，要建立一套多型階層，工作量和 `memory_resource` / `resource_adaptor` 這類標準化方案差不多
 
-他仍然是個 Allocator，你完全可以自己做出 PMR 的行為，用了之後 STL 容器底層也還是一樣依賴於 `std::allocator_traits` 已擁有的實作。 因此基本邏輯於上方一樣，要寫一個自定義的 Allocator，只是要用動態多型來做，實作上這通常會利用 virtual function 來做（應該很好猜?），以 PMR 來說，其還多弄了一個中間層 `std::pmr::memory_resource`，他是一個 virtual base class，PMR 當中衍生出的 Allocator 全部都基於它，其在 llvm frontend 的實作很簡單（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/include/__memory_resource/memory_resource.h)）：
+總之，Type erasure 的手法不是萬精油，若想普遍解決「容器想用 allocator，但不想讓 allocator 汙染模板顯式型別」的問題，還是得尋求其他機制
+
+#### PMR 的解答
+
+在 N3916 中為了解決這個問題引入了 PMR，為 Polymorphic Memory Resource 的縮寫，在 C++17 中被引入。 它會利用 Runtime 的 Polymorphism 來做到相同的 static type，但卻能在執行時做到類似用了不同的 Allocator 一樣的效果。 也因此他不是透過 template 在做，他是單一的 static type，通過 dynamic dispatch 來定義 Allocator 的行為，以達到我們的目的
+
+他仍然是個 Allocator，所以你還是可以自定義 PMR 的行為，用了之後 STL 容器底層也還是一樣依賴於 `std::allocator_traits` 已擁有的實作。 因此基本邏輯於上方一樣，要寫一個自定義的 Allocator，只是要用動態多型來做，實作上這通常會利用 virtual function 來做（應該很好猜?）
+
+而 PMR 還多弄了一個中間層 `std::pmr::memory_resource`，他是一個 virtual base class，PMR 當中衍生出的 Allocator 全部都基於它，我們先不提它的用處，可以先看看其在 llvm frontend 的實作（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/include/__memory_resource/memory_resource.h)）：
 
 ```cpp
 class _LIBCPP_AVAILABILITY_PMR _LIBCPP_EXPORTED_FROM_ABI memory_resource {
@@ -796,7 +806,7 @@ private:
 };
 ```
 
-可以看到 `std::pmr::memory_resource` 定義了三個 private 的虛擬函式與三個 public 成員函式，與 cppreference 上列出的完全一致（[連結](https://en.cppreference.com/w/cpp/memory/memory_resource)），但要注意它本身不是 Allocator，他沒有符合 Allocator 的要求，例如它並沒有定義 `value_type`
+實作很簡單，可以看到 `std::pmr::memory_resource` 定義了三個 private 的純虛擬函式與三個 public 成員函式，與 cppreference 上列出的完全一致（[連結](https://en.cppreference.com/w/cpp/memory/memory_resource)），但要注意它本身不是 Allocator，他沒有符合 Allocator 的要求，例如它並沒有定義 `value_type`
 
 而標準 PMR 中自定義的 Allocator 叫做 `std::pmr::polymorphic_allocator<T>`，其繼承自 `std::pmr::memory_resource`，你可以看到一樣有模板，這是因為 PMR 是讓記憶體資源實現動態多型，而容器的型態仍然依賴 template allocator 來實例化
 
@@ -811,14 +821,13 @@ private:
 
 而與之前 Allocator 不同的是，原本我們都是在 Allocator 的 `allocate` 函式內操作記憶體，可能會用 placement new 或其他手段操作已經開好的 memory pool。 PMR 將這個步驟利用中間層 `memory_resource` 分了出去，`memory_resource` 負責主要的記憶體操作，而 `std::pmr::polymorphic_allocator` 雖然是一個完全符合 STL allocator requirement 的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
 
-換句話說，`polymorphic_allocator` 內的 `allocate` 會去直接/間接呼叫 `memory_resource->allocate`，其裡面會再去呼叫 `do_allocate`，這是一個純虛擬函式，每個子類都需要實作，利用這個達到動態多型的效果。 在實作上通常還會有個型態為 `memory_resource*` 的指標指向實際使用的 `memory_resource`，幫助 `polymorphic_allocator` 與 `memory_resource` 溝通
+換句話說，`polymorphic_allocator` 是一個 `memory_resource` 的包裝，用以符合 Allocator 的要求。 其內的 `allocate` 會去直接/間接呼叫 `memory_resource->allocate`，其裡面會再去呼叫 `do_allocate`，如同前面看到的，這是一個純虛擬函式，每個子類都需要實作，利用這個達到動態多型的效果。 在實作上通常會有個型態為 `memory_resource*` 的指標指向實際使用的 `memory_resource`，幫助 `polymorphic_allocator` 與 `memory_resource` 溝通
 
 :::info  
 可以搭配上方 llvm frontend 的例子觀看，有實際的 code 應該一看就懂
 
 另外，對於記憶體資源不依賴執行時變數的簡單情況，好的編譯器會將記憶體資源 devirtualize，最後就會有一個沒有額外成本的 `polymorphic_allocator`（除了儲存指標的成本，很低XD）  
 :::
-
 
 下面是一個利用 `uftrace` 生的 call graph 範例，用來釐清呼叫流程：
 
@@ -904,7 +913,7 @@ int main() {
 
 上例中我們自定義的 Allocator 為 `MiniPolymorphicAllocator`，`memory_resource` 為 `monotonic_buffer_resource`。 在 `MiniPolymorphicAllocator` 的 `allocate` 中我們直接利用指向 `memory_resource` 本體的指標 `res` 來呼叫真正的 `allocate`。 雖然少做了很多東西，但最基礎的記憶體配置流程是一樣的
 
-在 llvm fronted 內的實作也長得幾乎一模一樣（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/include/__memory_resource/polymorphic_allocator.h#L65)）：
+在 llvm frontend 內的實作也長得幾乎一模一樣（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/include/__memory_resource/polymorphic_allocator.h#L65)）：
 
 ```cpp
 [[nodiscard]] _LIBCPP_HIDE_FROM_ABI _ValueType* allocate(size_t __n) {
@@ -921,7 +930,7 @@ int main() {
 
 #### memory resource
 
-如同前面講的 `memory_resource` 是實際在操控記憶體的 class，在 PMR lib 中它提供了五個 `memory_resource`：
+如同前面講的 `memory_resource` 是實際在操控記憶體的 class，是一個抽象的介面，可能的實作在上面已經給了，這邊就不再貼一次。 在 PMR lib 中它提供了五種預設的 `memory_resource`（繼承自它）：
 
 - `new_delete_resource()`：回傳一個調用 `new` 和 `delete` 的記憶體資源的指標
 - `synchronized_pool_resource`：一個更少碎片化、Thread Safe 的 `memory_resource`
@@ -929,11 +938,25 @@ int main() {
 - `monotonic_buffer_resource`：一個從不釋放、可以傳遞一個可選的緩衝區、Thread Unsafe 的 `memory_resource`
 - `null_memory_resource()`：傳回一個每次分配都會失敗的記憶體資源的指標
 
-我們就從第一個開始開始看
+其中 `new_delete_resource()` 和 `null_memory_resource()` 是函式，其會回傳 Singleton 的全域 `memory_resource` 的指標。 另外三個是 class，你需要建構出對應的物件，然後把其指標傳給目標 PMR，後面再帶例子
+
+另外，你可以用 `get_default_resource()` 取得目前預設的 `memory_resource`，也可以用 `set_default_resource` 來設定預設的 `memory_resource`（這個設定是全域的），像是：
+
+```cpp
+static std::pmr::synchronized_pool_resource new_pool;
+
+std::pmr::memory_resource* old_pool = std::pmr::set_default_resource(&new_pool);
+...
+std::pmr::set_default_resource(old_pool); // reset to old resource
+```
+
+記得注意你 memory pool 物件的生命週期，不要 pool 本身已經被解構了你還在繼續使用，導致 UB
+
+接下來我們回來看這五個 resource
 
 ##### `new_delete_resource()`
 
-`new_delete_resource` 是預設的 `memory_resource`，也是 `get_default_resource` 的回傳值。 `new_delete_resource`和最一般在配置記憶體的方法一樣：
+`new_delete_resource` 是預設的 `memory_resource`，其和一般在配置記憶體的方法一樣：
 
 - `allocate()` 函式使用 `::operator new` 來分配記憶體
 - `deallocate()` 函式使用 `::operator delete` 來刪除記憶體
@@ -949,7 +972,7 @@ void* do_allocate(size_t bytes, size_t alignment) override {
 
 也就是直接呼叫標準的 global placement new，因此會有 heap allocation
 
-簡單的例子：
+下面是個簡單的使用範例：
 
 ```cpp
 std::pmr::memory_resource* r = std::pmr::new_delete_resource();
@@ -961,49 +984,6 @@ std::cout << "memory allocated at: " << p << '\n';
 
 // 回收記憶體
 r->deallocate(p, 3 * sizeof(int), alignof(int));
-```
-
-##### `synchronized_pool_resource` 與 `unsynchronized_pool_resource`
-
-- `(un)synchronized_pool_resource` 會嘗試在相鄰位置分配所有 `memory_resource` class，以減緩碎片化
-- `(un)synchronized_pool_resource` 會將記憶體分成多個 `fixed-size pool`，並依據分配大小自動分類到不同 bucket，每個 bucket 對應一種 block size（例如 8B、16B、32B...）
-- 兩者的差距主要在 Thread Safety，因此 `synchronized_pool_resource` 的效能會比較差一點
-- 當你反覆分配、釋放相同大小的記憶體時，它會重複使用 memory pool 中已釋放的區塊，因此能進一步有效減緩 heap 的碎片化問題
-- 若請求的大小超過某個閾值（如 4KB 以上），則會直接轉交給 upstream_resource（預設是 `new_delete_resource()`）
-
-簡單的例子：
-
-```cpp
-std::pmr::unsynchronized_pool_resource pool;
-std::pmr::polymorphic_allocator<int> alloc(&pool);
-
-int* a = alloc.allocate(10); // 分配 10 * sizeof(int)
-alloc.deallocate(a, 10);     // 回收給 pool
-
-int* b = alloc.allocate(10); // 可能會從 pool 中的 free list 重複使用 a
-```
-
-##### `monotonic_buffer_resource`
-
-- 以「單向遞增」的方式配置記憶體，一但分配出去，就永遠不會釋放回個別使用者，只有在整個 resource 被銷毀時才會一次釋放（這種 Allocator 有個別名叫 Bump Allocator）
-  - 因此非常快，其 `deallocate` 實際上什麼都不會做
-- Thread Unsafe
-- 支援自動向 upstream memory resource 要更多記憶體（預設是 `new_delete_resource`）
-
-簡單的例子：
-
-```cpp
-std::byte buffer[1024]; // 自訂固定大小的緩衝區
-
-std::pmr::monotonic_buffer_resource pool(buffer, sizeof(buffer));
-
-std::pmr::vector<int> vec(&pool); // 使用此 pool 作為 allocator
-for (int i = 0; i < 10; ++i) vec.push_back(i * 10);
-
-for (int i : vec) std::cout << i << " ";
-std::cout << '\n';
-
-// 不需要手動釋放 vec 的記憶體，pool 的記憶體會在作用域結束時整體釋放
 ```
 
 ##### `null_memory_resource()`
@@ -1042,9 +1022,376 @@ int main() {
 
 透過傳遞 `null_memory_resource()` 作為備選記憶體資源，我們可以確保任何嘗試分配過多記憶體的行為都會拋出異常，而不是在 heap 上分配記憶體
 
+##### `monotonic_buffer_resource`
+
+- 可以傳遞一個 buffer 來當作其 memory pool，達到不使用 heap 的目的
+- 以「單向遞增」的方式配置記憶體，一但分配出去，就永遠不會釋放回個別使用者，只有在整個 resource 被銷毀時才會一次釋放（這種 Allocator 有個別名叫 Bump Allocator）
+  - 因此非常快，其 `deallocate` 實際上什麼都不會做
+- Thread Unsafe
+- 支援自動向 upstream memory resource 要更多記憶體（預設是 `new_delete_resource`）
+
+簡單的例子：
+
+```cpp
+std::byte buffer[1024]; // 自訂固定大小的緩衝區
+
+std::pmr::monotonic_buffer_resource pool(buffer, sizeof(buffer));
+
+std::pmr::vector<int> vec(&pool); // 使用此 pool 作為 allocator
+for (int i = 0; i < 10; ++i) vec.push_back(i * 10);
+
+for (int i : vec) std::cout << i << " ";
+std::cout << '\n';
+
+// 不需要手動釋放 vec 的記憶體，pool 的記憶體會在作用域結束時整體釋放
+```
+
+在提案中提到 `monotonic_buffer_resource` 的一個理想用途是替 local container 或 string 之類的物件提供記憶體，例如下方的程式碼會將兩個 `std::string` 串接起來，接著會檢查字串中是否含有 `hello` 字串，最後解構串接的字串：
+
+```cpp
+bool find_hello(std::pmr::string const s1, std::pmr::string const s2)
+{
+  char buffer[80];
+  monotonic_buffer_resource m(buffer, 80);
+  std::pmr::string s(&m);
+  s.reserve(s1.length() + s2.length());
+  s += s1;
+  s += s2;
+  return s.find("hello") != pmr::string::npos;
+  // s goes out of scope, then m and buffer go out of scope
+}
+```
+
+這個函式預期串接後的字串不會超過 80 bytes，因此程式碼使用一個小型 `monotonic_buffer_resource` 針對短字串進行最佳化，但如果串接的字串超過 80 bytes 還是可以運作，其會以預設配置器作為後援資源
+
+另外在下方也可以看到 `monotonic_buffer_resource` 可以搭配 `(un)synchronized_pool_resource` 使用
+
+##### `synchronized_pool_resource` 與 `unsynchronized_pool_resource`
+
+這兩個 memory resource 在提案中被簡稱為 pool resource，因此本文也會以這種方式簡稱，其特性如下：
+
+- 需要依賴另一個 `memory_resource` 作為 upstream resource，預設為 `new_delete_resource`
+  - 若請求的大小超過某個閾值（如 4KB 以上），則會直接轉交給 upstream_resource（預設是 `new_delete_resource()`）
+  - 原因在於 pool-resource 的運作模式需要「隨用隨取」地向上游申請「額外的、大 chunk」來補充各個小區塊池。 若只給定一塊固定大小的緩衝區，它無法保證後續還能再要到空間，因此標準乾脆要求「交給它一個會 allocate 的上游，空間不夠該怎麼辦由上游決定」
+- `(un)synchronized_pool_resource` 會嘗試在相鄰位置分配所有 `memory_resource` class，以減緩碎片化
+- `(un)synchronized_pool_resource` 會將記憶體分成多個 `fixed-size pool`，並依據分配大小自動分類到不同 bucket，每個 bucket 對應一種 block size（例如 8B、16B、32B...）
+- 兩者的差別主要在 Thread Safety，因此 `synchronized_pool_resource` 的效能會比較差一點
+- 當你反覆分配、釋放相同大小的記憶體時，它會重複使用 memory pool 中已釋放的區塊，因此能進一步有效減緩 heap 的碎片化問題
+
+提案中的描述是，pool resource 由一組 pools 組成，用來處理不同區塊大小的配置請求，每個 pool 各自管理若干個 chunks，每個 chunks 會再被切分成固定大小的 blocks，並透過 `do_allocate` 返還給呼叫端：
+
+![](image/pool_resource.png)
+
+每一次呼叫 `do_allocate(size, alignment)` 時，實作會將請求派送到「可容納至少 size 位元組」的最小區塊大小池。 當某一個 pool 用盡可用 block 時，若再次從該 pool 配置 block，會導致其向上游配置器（於建構時提供）再申請一個新的 chunk，以補充該 pool。 之後每次補充時，取得的 chunk 大小將以幾何級數增加。 
+透過以 chunk 為單位申請記憶體，池化策略提高了「連續兩次配置彼此在記憶體中相鄰」的機率
+
+下面是一個以 `monotonic_buffer_resource` 當 upstream 的例子：
+
+```cpp
+#include <array>
+#include <memory_resource>
+#include <vector>
+
+int main()
+{
+  // 1. 準備一塊原始緩衝區（必須符合 max_align_t 對齊）
+  alignas(std::max_align_t)
+  std::array<std::byte, 1 << 20> arena{}; // 1 MiB
+
+  // 2. 把它包成 monotonic_buffer_resource
+  //    - 第 3 個參數指定「再要不到時」改用哪個上游；
+  //      這裡給 null_resource 表示「超過就丟 bad_alloc」
+  std::pmr::monotonic_buffer_resource mono{
+    arena.data(), arena.size(), 
+    std::pmr::null_memory_resource()
+  };
+
+  // 3. 再用 mono 當 pool_resource 的 upstream
+  std::pmr::synchronized_pool_resource pool{&mono};
+
+  // 4. 給容器用
+  std::pmr::vector<int> v{&pool};
+  for (int i = 0; i < 1000; ++i)
+    v.push_back(i);
+}
+```
+
+也可以搭配自定義的 `memory_resource` 使用，下面這個例子演示了 pool resource 的特性：
+
+```cpp
+#include <iomanip>
+#include <iostream>
+#include <memory_resource>
+#include <vector>
+
+class LoggingResource : public std::pmr::memory_resource {
+  std::pmr::memory_resource* upstream_ = std::pmr::new_delete_resource();
+
+  void* do_allocate(size_t bytes, size_t align) override
+  {
+    void* p = upstream_->allocate(bytes, align);
+    std::cout << "[CHUNK] Upstream allocated " << std::setw(6) << bytes << " bytes -> " << p << std::endl;
+    return p;
+  }
+
+  void do_deallocate(void* p, size_t bytes, size_t align) override
+  {
+    std::cout << "[CHUNK] Upstream deallocated " << std::setw(6) << bytes << " bytes <- " << p << std::endl;
+    upstream_->deallocate(p, bytes, align);
+  }
+
+  bool do_is_equal(memory_resource const& other) const noexcept override { return this == &other; }
+} log_resource;
+
+void demonstrate_chunking()
+{
+  std::cout << "=== Pool Resource Chunking Behavior ===\n\n";
+
+  std::pmr::unsynchronized_pool_resource pool{&log_resource};
+  std::vector<void*> small_ptrs;
+
+  std::cout << "--- Allocating 10 small blocks (64 bytes each) ---\n";
+
+  for (int i = 0; i < 10; ++i) {
+    std::cout << "\nRequest " << i + 1 << ": pool.allocate(64)\n";
+    void* p = pool.allocate(64);
+    small_ptrs.push_back(p);
+    std::cout << "Got: " << p << std::endl;
+  }
+
+  std::cout << "\n--- Address Analysis ---\n";
+  for (size_t i = 0; i < small_ptrs.size(); ++i) {
+    std::cout << "Block " << i + 1 << ": " << small_ptrs[i];
+    if (i > 0) {
+      long long curr = reinterpret_cast<long long>(small_ptrs[i]);
+      long long prev = reinterpret_cast<long long>(small_ptrs[i - 1]);
+      long long distance = curr - prev;
+      std::cout << " (+" << distance << " bytes from previous)";
+    }
+    std::cout << std::endl;
+  }
+
+  std::cout << "\n--- Cleanup (deallocating small blocks) ---\n";
+  for (size_t i = 0; i < small_ptrs.size(); ++i) {
+    pool.deallocate(small_ptrs[i], 64);
+    // Note: No upstream deallocation happens here!
+  }
+
+  std::cout << "\n--- Pool destruction (releases chunks) ---\n";
+  // Destructor will call release() which deallocates chunks
+}
+
+void compare_with_direct_allocation()
+{
+  std::cout << "\n\n=== Comparison: Direct heap allocation ===\n\n";
+
+  std::vector<void*> direct_ptrs;
+
+  std::cout << "--- Allocating 10 blocks directly from heap ---\n";
+  for (int i = 0; i < 10; ++i) {
+    void* p = operator new(64);
+    direct_ptrs.push_back(p);
+    std::cout << "Direct allocation " << i + 1 << ": " << p << std::endl;
+  }
+
+  std::cout << "\n--- Address Analysis ---\n";
+  for (size_t i = 0; i < direct_ptrs.size(); ++i) {
+    std::cout << "Block " << i + 1 << ": " << direct_ptrs[i];
+    if (i > 0) {
+      long long curr = reinterpret_cast<long long>(direct_ptrs[i]);
+      long long prev = reinterpret_cast<long long>(direct_ptrs[i - 1]);
+      long long distance = curr - prev;
+      std::cout << " (+" << distance << " bytes from previous)";
+    }
+    std::cout << std::endl;
+  }
+
+  std::cout << "\n--- Cleanup (each deallocation goes to heap) ---\n";
+  for (void* p : direct_ptrs) {
+    std::cout << "Deleting: " << p << std::endl;
+    operator delete(p);
+  }
+}
+
+int main()
+{
+  demonstrate_chunking();
+  compare_with_direct_allocation();
+  return 0;
+}
+```
+
+[輸出（gcc）](https://godbolt.org/z/bv1x1bb8T)：
+
+```
+=== Pool Resource Chunking Behavior ===
+
+[CHUNK] Upstream allocated    528 bytes -> 0x2e7366c0
+--- Allocating 10 small blocks (64 bytes each) ---
+
+Request 1: pool.allocate(64)
+[CHUNK] Upstream allocated    968 bytes -> 0x2e736900
+[CHUNK] Upstream allocated    192 bytes -> 0x2e736cd0
+Got: 0x2e736900
+
+Request 2: pool.allocate(64)
+Got: 0x2e736940
+
+Request 3: pool.allocate(64)
+Got: 0x2e736980
+
+Request 4: pool.allocate(64)
+Got: 0x2e7369c0
+
+Request 5: pool.allocate(64)
+Got: 0x2e736a00
+
+Request 6: pool.allocate(64)
+Got: 0x2e736a40
+
+Request 7: pool.allocate(64)
+Got: 0x2e736a80
+
+Request 8: pool.allocate(64)
+Got: 0x2e736ac0
+
+Request 9: pool.allocate(64)
+Got: 0x2e736b00
+
+Request 10: pool.allocate(64)
+Got: 0x2e736b40
+
+--- Address Analysis ---
+Block 1: 0x2e736900
+Block 2: 0x2e736940 (+64 bytes from previous)
+Block 3: 0x2e736980 (+64 bytes from previous)
+Block 4: 0x2e7369c0 (+64 bytes from previous)
+Block 5: 0x2e736a00 (+64 bytes from previous)
+Block 6: 0x2e736a40 (+64 bytes from previous)
+Block 7: 0x2e736a80 (+64 bytes from previous)
+Block 8: 0x2e736ac0 (+64 bytes from previous)
+Block 9: 0x2e736b00 (+64 bytes from previous)
+Block 10: 0x2e736b40 (+64 bytes from previous)
+
+--- Cleanup (deallocating small blocks) ---
+
+--- Pool destruction (releases chunks) ---
+[CHUNK] Upstream deallocated    968 bytes <- 0x2e736900
+[CHUNK] Upstream deallocated    192 bytes <- 0x2e736cd0
+[CHUNK] Upstream deallocated    528 bytes <- 0x2e7366c0
+
+
+=== Comparison: Direct heap allocation ===
+
+--- Allocating 10 blocks directly from heap ---
+Direct allocation 1: 0x2e736df0
+Direct allocation 2: 0x2e736ed0
+Direct allocation 3: 0x2e736f20
+Direct allocation 4: 0x2e736f70
+Direct allocation 5: 0x2e736fc0
+Direct allocation 6: 0x2e737060
+Direct allocation 7: 0x2e7370b0
+Direct allocation 8: 0x2e737100
+Direct allocation 9: 0x2e737150
+Direct allocation 10: 0x2e737010
+
+--- Address Analysis ---
+Block 1: 0x2e736df0
+Block 2: 0x2e736ed0 (+224 bytes from previous)
+Block 3: 0x2e736f20 (+80 bytes from previous)
+Block 4: 0x2e736f70 (+80 bytes from previous)
+Block 5: 0x2e736fc0 (+80 bytes from previous)
+Block 6: 0x2e737060 (+160 bytes from previous)
+Block 7: 0x2e7370b0 (+80 bytes from previous)
+Block 8: 0x2e737100 (+80 bytes from previous)
+Block 9: 0x2e737150 (+80 bytes from previous)
+Block 10: 0x2e737010 (+-320 bytes from previous)
+
+--- Cleanup (each deallocation goes to heap) ---
+Deleting: 0x2e736df0
+Deleting: 0x2e736ed0
+Deleting: 0x2e736f20
+Deleting: 0x2e736f70
+Deleting: 0x2e736fc0
+Deleting: 0x2e737060
+Deleting: 0x2e7370b0
+Deleting: 0x2e737100
+Deleting: 0x2e737150
+Deleting: 0x2e737010
+```
+
+從上面的例子中你可以看到，它會先向 upstream 要一塊 buffer，在這邊是 968 bytes，接著利用這塊 buffer 為接下來的 `allocate` 分配空間，每個 `allocate` 分配出來的空間都是相鄰的。 但如果直接使用 `operator new`，那分配出來的空間就不會是相鄰的
+
+另外如果你點進上方輸出的連結看，你會發現用 llvm frontend 編出來的結果與 gcc 的輸出不同，前者在建構 pool resource 時並不會先呼叫一次 `allocate`，但 gcc 的會，因此上方的輸出一開始才會有個 528 bytes 的記憶體配置
+
+透過這個對比你也可以知道標準並沒有規定 buffer 該如何被分配（也不該規定），如果對 llvm frontend 的實作有興趣，可以直接看 source code 即可（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/src/memory_resource.cpp#L298)）
+
+另外在使用的時候要注意，如果你要重複使用 pool resource 的資源，那應該是要像這樣：
+
+```cpp
+std::pmr::monotonic_buffer_resource monotonic{1'024};
+std::pmr::synchronized_pool_resource pool{&monotonic};
+
+for (int j = 0; j < 3; ++j) {
+  std::pmr::vector<std::pmr::string> coll{&pool};
+  coll.emplace_back("123");
+  std::cout << "Allocated at: " << coll.data() << "\n";
+}
+```
+
+輸出：
+
+```cpp
+Allocated at: 0x18e0680
+Allocated at: 0x18e0680
+Allocated at: 0x18e0680
+```
+
+而不是每次都解構建構 pool resource：
+
+```cpp
+std::pmr::monotonic_buffer_resource monotonic{10'000};
+
+for (int j = 0; j < 100; ++j) {
+  std::pmr::synchronized_pool_resource pool{&monotonic}; // wrong usage
+
+  std::pmr::vector<std::pmr::string> coll{&pool};
+  for (int i = 0; i < 100; ++i) {
+    coll.emplace_back("123");
+  }
+}
+```
+
+pool resource 會重複使用其自身的分配。 因此如果銷毀了目標 `vector`，其記憶體會自己返回到池中，並且可以從同一池中使用相同的記憶體建立新的 `vector`。 當池中的快取記憶體分配用完時，它會從 `monotonic_buffer_resource` 請求更多內存，只要池存在，它就可以重複使用這些記憶體
+
+但如果你解構了 pool resource。 它會將其所有記憶體釋放給 `monotonic_buffer_resource`，但如同前面所述，它的 `do_deallocate` 不會做任何事，所以它不會重複使用這部分記憶體。 因此在使用的時候記得要將兩個物件<span class = "yellow">保持在相同的生命週期範圍內</span>
+
 #### Allocator（`polymorphic_allocator`）
 
-前面已經看過很多 use case 了，我們可以再來多看幾個，熟悉一下怎麼用：
+如同前面所述，`std::pmr::polymorphic_allocato<T>` 的任何特化都完全符合 STL allocator requirement ，是個貨真價實的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
+
+因此就算在編譯期屬於同一個靜態 allocator 型別，透過在建構時傳入不同的 `memory_resource`，該特化的不同實體便能展現完全不同的配置行為。 這種執行期多型讓使用 `polymorphic_allocator` 的物件在執行時，就像使用了不同的 allocator 型別一樣靈活：
+
+```cpp
+// Classic style: changing the allocator → container’s type changes too
+using VecA = std::vector<int, MyPoolAllocator<int>>;
+using VecB = std::vector<int, BumpAllocator<int>>;   // different type
+
+// PMR style: same container type, allocation strategy chosen at run time
+std::pmr::vector<int> v1 { &pool_resource };   // uses a pool_resource
+std::pmr::vector<int> v2 { &mono_resource };   // uses a monotonic_buffer_resource
+// v1 and v2 have the same static type: std::pmr::vector<int>
+```
+
+上例中的 `VecA` 和 `VecB` 是不同的型別，但 `v1` 和 `v2` 是相同的型別
+
+你可能會好奇明明 `std::pmr::polymorphic_allocato<T>` 也有個模板參數，為什麼可以達到相同型別的效果。 這是因為他的模板參數是用來表示「元素型別」的，例如上方 `vector` 的 element type 為 `int`，因此其模板參數就為 `int`，所以 `v1` 和 `v2` 使用的都是 `std::pmr::polymorphic_allocato<int>`，事實上，這邊的 `std::pmr::vector` 是下面的縮寫：
+
+```cpp
+std::vector<int, std::pmr::polymorphic_allocator<int>>
+```
+
+再來多看一個範例熟悉一下怎麼用：
 
 ```cpp
 std::array<std::byte, 200000> buf;
@@ -1058,7 +1405,7 @@ for (int i = 0; i < 1000; ++i)
 
 可以看到使用方法非常簡單，用 array 開個 memory pool，綁定給 `memory_resource`，在餵給 `std::pmr::vector` 就好
 
-其中 `std::pmr::vector` 是下面的縮寫
+與上方一樣，其中的 `std::pmr::vector` 是下面的縮寫
 
 ```cpp
 std::vector<std::string, std::pmr::polymorphic_allocator<std::string>> coll{&pool};
@@ -1091,3 +1438,5 @@ std::vector<std::string, std::pmr::polymorphic_allocator<std::string>> coll{&poo
 - [What is the purpose of std::scoped_allocator_adaptor?](https://stackoverflow.com/questions/22148258/what-is-the-purpose-of-stdscoped-allocator-adaptor)
 - [What is the purpose of allocator_traits\<T\> in C++0x?](https://stackoverflow.com/questions/4502691/what-is-the-purpose-of-allocator-traitst-in-c0x)
 - [Should every fancy pointer be an iterator?](https://stackoverflow.com/questions/45132546/should-every-fancy-pointer-be-an-iterator)
+- [How does a synchronized pool allocator (re)use a monotonic one?](https://stackoverflow.com/questions/77822494/how-does-a-synchronized-pool-allocator-reuse-a-monotonic-one?utm_source=chatgpt.com)
+- [C++ type erasure](https://cplusplus.com/forum/articles/18756/)
