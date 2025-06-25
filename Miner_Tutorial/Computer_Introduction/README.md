@@ -114,7 +114,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction.png"> 
+![](image/abstraction.png) 
 
 </div>
 
@@ -128,7 +128,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/abstraction-2.png"> 
+![](image/abstraction-2.png) 
 
 </div>
 
@@ -181,7 +181,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/turing-machine.png"> 
+![](image/turing-machine.png) 
 
 </div>
 
@@ -238,7 +238,7 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/memory-address.png"> 
+![](image/memory-address.png) 
 
 (source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
 
@@ -316,7 +316,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/pch.png"> 
+![](image/pch.png) 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
 
@@ -397,7 +397,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/boot-process.png">
+![](image/boot-process.png)
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png))
 

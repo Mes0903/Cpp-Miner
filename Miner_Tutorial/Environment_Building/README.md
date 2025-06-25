@@ -33,7 +33,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/download1.png">
+![](image/download1.png)
 
 </div>  
 
@@ -41,7 +41,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/download2.png">
+![](image/download2.png)
 
 </div>  
 
@@ -49,7 +49,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/download3.png">
+![](image/download3.png)
 
 </div>  
 
@@ -57,7 +57,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/download4.png">
+![](image/download4.png)
 
 </div>  
 
@@ -65,7 +65,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/download5.png">
+![](image/download5.png)
 
 </div>  
 
@@ -75,7 +75,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/mingw1.png">
+![](image/mingw1.png)
 
 </div>  
 
@@ -83,7 +83,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/mingw2.png">
+![](image/mingw2.png)
 
 </div>  
 
@@ -91,7 +91,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/mingw3.png">
+![](image/mingw3.png)
 
 </div>  
 
@@ -99,7 +99,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/mingw4.png">
+![](image/mingw4.png)
 
 </div>  
 
@@ -107,7 +107,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/mingw5.png">
+![](image/mingw5.png)
 
 </div>  
 
@@ -115,7 +115,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/mingw6.png">
+![](image/mingw6.png)
 
 </div>  
 
@@ -123,7 +123,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/mingw7.png">
+![](image/mingw7.png)
 
 </div>  
 
@@ -135,13 +135,13 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp1.png">
+![](image/test-cpp1.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp2.png">
+![](image/test-cpp2.png)
 
 </div>  
 
@@ -149,7 +149,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp3.png">
+![](image/test-cpp3.png)
 
 </div>  
 
@@ -157,7 +157,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp4.png">
+![](image/test-cpp4.png)
 
 </div>  
 
@@ -165,13 +165,13 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp5.png">
+![](image/test-cpp5.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp6.png">
+![](image/test-cpp6.png)
 
 </div>  
 
@@ -181,7 +181,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp7.png">
+![](image/test-cpp7.png)
 
 </div>  
 
@@ -189,13 +189,13 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp8.png">
+![](image/test-cpp8.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp9.png">
+![](image/test-cpp9.png)
 
 </div>  
 
@@ -213,13 +213,13 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp10.png">
+![](image/test-cpp10.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp11.png">
+![](image/test-cpp11.png)
 
 </div>  
 
@@ -227,13 +227,13 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp12.png">
+![](image/test-cpp12.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp13.png">
+![](image/test-cpp13.png)
 
 </div>  
 
@@ -241,13 +241,13 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp14.png">
+![](image/test-cpp14.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp15.png">
+![](image/test-cpp15.png)
 
 </div>  
 
@@ -255,19 +255,19 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp16.png">
+![](image/test-cpp16.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp17.png">
+![](image/test-cpp17.png)
 
 </div>  
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Environment_Building/image/test-cpp18.png">
+![](image/test-cpp18.png)
 
 </div>  
 

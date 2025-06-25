@@ -285,7 +285,7 @@ int main()
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Array_Pointer/image/pointer.png">
+![](image/pointer.png)
 
 </div>
 

@@ -23,7 +23,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/discussion1.png">
+![](image/discussion1.png)
 
 (熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因)
 
@@ -31,7 +31,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/discussion2.png">
+![](image/discussion2.png)
 
 (在問問題時引用 spec 條例也能有效幫助別人理解你的疑惑點)
 
@@ -53,7 +53,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/hello_world1.png">
+![](image/hello_world1.png)
 
 </div>
 
@@ -97,7 +97,7 @@ int main() {
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/hello_world2.png">
+![](image/hello_world2.png)
 
 </div>
 
@@ -109,7 +109,7 @@ int main() {
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/hello_world3.png">
+![](image/hello_world3.png)
 
 </div>
 
@@ -117,7 +117,7 @@ int main() {
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/hello_world4.png">
+![](image/hello_world4.png)
 
 </div>
 
@@ -125,7 +125,7 @@ int main() {
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/hello_world5.png">
+![](image/hello_world5.png)
 
 </div>
 
@@ -133,7 +133,7 @@ int main() {
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/hello_world6.png">
+![](image/hello_world6.png)
 
 </div>
 
@@ -141,7 +141,7 @@ int main() {
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/hello_world7.png">
+![](image/hello_world7.png)
 
 </div>
 
@@ -191,7 +191,7 @@ bool 是一種特殊的型態，bool 型態的物件只能儲存兩種值：true
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Object_Expression_Statement/image/ascii.png">
+![](image/ascii.png)
 
 (source : http://kevin.hwai.edu.tw/~kevin/material/JAVA/Sample2016/ASCII.htm  )
 

@@ -93,7 +93,7 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Dependent_Name/image/unqualified_id.png">
+![](image/unqualified_id.png)
 
 </div>
 
@@ -101,7 +101,7 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Dependent_Name/image/qualified_id.png">
+![](image/qualified_id.png)
 
 </div>
 
@@ -422,7 +422,7 @@ void f(T* p) {
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_main/Dependent_Name/image/dependencies.png">
+![](image/dependencies.png)
 
 </div>
 
