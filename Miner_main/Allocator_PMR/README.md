@@ -310,7 +310,7 @@ Hello 4
 
 ### 自定義 Allocator
 
-在標準中，允許使用自定義 Allocator 的容器被稱為 [AllocatorAwareContainer](https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer)，基本上除了 `std::array` 以外的容器都是，它們在使用 Allocator 時不是只接使用 Allocator 本身，而是透過 `std::allocator_trait` 這個介面來去間接地使用 Allocator
+在標準中，允許使用自定義 Allocator 的容器被稱為 [AllocatorAwareContainer](https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer)，STL 中基本上除了 `std::array` 以外的容器都是，它們在使用 Allocator 時不是只接使用 Allocator 本身，而是透過 `std::allocator_trait` 這個介面來去間接地使用 Allocator
 
 :::info  
 對於 `std::string` 來說比較特別，因為它有 SSO，所以在標準內算是個特例  
@@ -484,70 +484,77 @@ v[0] = 42, v[1] = 99
 
 template <typename T, size_t PoolSize>
 class StackAllocator {
-  public:
-	using value_type = T;
+public:
+  using value_type = T;
 
-	StackAllocator() : pool{}, offset(0) {}
+  StackAllocator() : pool{}, offset(0) {}
 
-	template <typename U>
-	StackAllocator(StackAllocator<U, PoolSize> const&) {}
+  template <typename U>
+  StackAllocator(StackAllocator<U, PoolSize> const&) {}
 
-	T* allocate(size_t n) {
-		size_t bytes = n * sizeof(T);
-		if (offset + bytes > PoolSize) { throw std::bad_alloc(); }
+  T* allocate(size_t n)
+  {
+    size_t bytes = n * sizeof(T);
+    if (offset + bytes > PoolSize) {
+      throw std::bad_alloc();
+    }
 
-		T* ptr = reinterpret_cast<T*>(&pool[offset]);
-		offset += bytes;
-		return ptr;
-	}
+    T* ptr = reinterpret_cast<T*>(&pool[offset]);
+    offset += bytes;
+    return ptr;
+  }
 
-	void deallocate(T* p, size_t n) {
-		// Stack memory does not need to be deallocated in this simple example.
-		// Optionally, you could implement a reset mechanism to reuse memory.
-	}
+  void deallocate(T* p, size_t n)
+  {
+    // Stack memory does not need to be deallocated in this simple example.
+    // Optionally, you could implement a reset mechanism to reuse memory.
+  }
 
-	template <typename U>
-	struct rebind {
-		using other = StackAllocator<U, PoolSize>;
-	};
+  template <typename U>
+  struct rebind {
+    using other = StackAllocator<U, PoolSize>;
+  };
 
-  private:
-	alignas(T) std::array<unsigned char, PoolSize> pool;
-	size_t offset;
+private:
+  alignas(T) std::array<unsigned char, PoolSize> pool;
+  size_t offset;
 };
 
 // Comparison operators for the Allocator
 template <typename T1, typename T2, size_t S1, size_t S2>
-bool operator==(StackAllocator<T1, S1> const&, StackAllocator<T2, S2> const&) {
-	return S1 == S2; // Same pool size
+bool operator==(StackAllocator<T1, S1> const&, StackAllocator<T2, S2> const&)
+{
+  return S1 == S2; // Same pool size
 }
 
 template <typename T1, typename T2, size_t S1, size_t S2>
-bool operator!=(StackAllocator<T1, S1> const&, StackAllocator<T2, S2> const&) {
-	return !(S1 == S2);
+bool operator!=(StackAllocator<T1, S1> const&, StackAllocator<T2, S2> const&)
+{
+  return !(S1 == S2);
 }
 
-int main() {
-	constexpr size_t PoolSize = 1024; // 1 KB stack pool
+int main()
+{
+  constexpr size_t PoolSize = 1024; // 1 KB stack pool
 
-	// Create a string with custom allocator
-	using CustomString = std::basic_string<char, std::char_traits<char>, StackAllocator<char, PoolSize>>;
+  // Create a string with custom allocator
+  using CustomString = std::basic_string<char, std::char_traits<char>, StackAllocator<char, PoolSize>>;
 
-	// Stack memory pool allocator
-	StackAllocator<char, PoolSize> allocator;
+  // Stack memory pool allocator
+  StackAllocator<char, PoolSize> allocator;
 
-	{
-		// Create a string
-		CustomString s("Hello, StackAllocator!", allocator);
+  {
+    // Create a string
+    CustomString s("Hello, StackAllocator!", allocator);
 
-		std::cout << "String: " << s << std::endl;
+    std::cout << "String: " << s << std::endl;
 
-		// Modify the string
-		s += " Nice to meet you!";
-		std::cout << "Modified String: " << s << std::endl;
-	}
+    // Modify the string
+    s += " Nice to meet you!";
+    std::cout << "Modified String: " << s << std::endl;
+  }
 
-	return 0;
+  return 0;
 }
 ```
 
@@ -778,7 +785,7 @@ vec = my_vector2; // error
 
 他仍然是個 Allocator，所以你還是可以自定義 PMR 的行為，用了之後 STL 容器底層也還是一樣依賴於 `std::allocator_traits` 已擁有的實作。 因此基本邏輯於上方一樣，要寫一個自定義的 Allocator，只是要用動態多型來做，實作上這通常會利用 virtual function 來做（應該很好猜?）
 
-而 PMR 還多弄了一個中間層 `std::pmr::memory_resource`，他是一個 virtual base class，PMR 當中衍生出的 Allocator 全部都基於它，我們先不提它的用處，可以先看看其在 llvm frontend 的實作（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/include/__memory_resource/memory_resource.h)）：
+而 PMR 還多弄了一個中間層 `std::pmr::memory_resource`，他是一個 virtual base class，PMR 當中衍生出的 Allocator 全部都基於它，我們先不提它的用處，可以先看看其在 llvm frontend 的實作（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory_resource/memory_resource.h)）：
 
 ```cpp
 class _LIBCPP_AVAILABILITY_PMR _LIBCPP_EXPORTED_FROM_ABI memory_resource {
@@ -913,7 +920,7 @@ int main() {
 
 上例中我們自定義的 Allocator 為 `MiniPolymorphicAllocator`，`memory_resource` 為 `monotonic_buffer_resource`。 在 `MiniPolymorphicAllocator` 的 `allocate` 中我們直接利用指向 `memory_resource` 本體的指標 `res` 來呼叫真正的 `allocate`。 雖然少做了很多東西，但最基礎的記憶體配置流程是一樣的
 
-在 llvm frontend 內的實作也長得幾乎一模一樣（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/include/__memory_resource/polymorphic_allocator.h#L65)）：
+在 llvm frontend 內的實作也長得幾乎一模一樣（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory_resource/polymorphic_allocator.h#L65)）：
 
 ```cpp
 [[nodiscard]] _LIBCPP_HIDE_FROM_ABI _ValueType* allocate(size_t __n) {
@@ -924,11 +931,11 @@ int main() {
 }
 ```
 
-### PMR Usage
+## PMR Usage
 
 粗略的介紹完整體的思想後我們就來看看該如何使用吧，主要可以分為兩個部分 ― Allocator 與 memory resource
 
-#### memory resource
+### memory resource
 
 如同前面講的 `memory_resource` 是實際在操控記憶體的 class，是一個抽象的介面，可能的實作在上面已經給了，這邊就不再貼一次。 在 PMR lib 中它提供了五種預設的 `memory_resource`（繼承自它）：
 
@@ -954,7 +961,7 @@ std::pmr::set_default_resource(old_pool); // reset to old resource
 
 接下來我們回來看這五個 resource
 
-##### `new_delete_resource()`
+#### `new_delete_resource()`
 
 `new_delete_resource` 是預設的 `memory_resource`，其和一般在配置記憶體的方法一樣：
 
@@ -986,7 +993,7 @@ std::cout << "memory allocated at: " << p << '\n';
 r->deallocate(p, 3 * sizeof(int), alignof(int));
 ```
 
-##### `null_memory_resource()`
+#### `null_memory_resource()`
 
 - 會使每一次記憶體配置都拋出 `bad_alloc` 異常
 - 最主要的應用在於確保使用 stack 上的 memory pool 時不會突然意外在 heap 上分配額外的記憶體
@@ -1022,7 +1029,7 @@ int main() {
 
 透過傳遞 `null_memory_resource()` 作為備選記憶體資源，我們可以確保任何嘗試分配過多記憶體的行為都會拋出異常，而不是在 heap 上分配記憶體
 
-##### `monotonic_buffer_resource`
+#### `monotonic_buffer_resource`
 
 - 可以傳遞一個 buffer 來當作其 memory pool，達到不使用 heap 的目的
 - 以「單向遞增」的方式配置記憶體，一但分配出去，就永遠不會釋放回個別使用者，只有在整個 resource 被銷毀時才會一次釋放（這種 Allocator 有個別名叫 Bump Allocator）
@@ -1066,7 +1073,7 @@ bool find_hello(std::pmr::string const s1, std::pmr::string const s2)
 
 另外在下方也可以看到 `monotonic_buffer_resource` 可以搭配 `(un)synchronized_pool_resource` 使用
 
-##### `synchronized_pool_resource` 與 `unsynchronized_pool_resource`
+#### `synchronized_pool_resource` 與 `unsynchronized_pool_resource`
 
 這兩個 memory resource 在提案中被簡稱為 pool resource，因此本文也會以這種方式簡稱，其特性如下：
 
@@ -1324,7 +1331,7 @@ Deleting: 0x2e737010
 
 另外如果你點進上方輸出的連結看，你會發現用 llvm frontend 編出來的結果與 gcc 的輸出不同，前者在建構 pool resource 時並不會先呼叫一次 `allocate`，但 gcc 的會，因此上方的輸出一開始才會有個 528 bytes 的記憶體配置
 
-透過這個對比你也可以知道標準並沒有規定 buffer 該如何被分配（也不該規定），如果對 llvm frontend 的實作有興趣，可以直接看 source code 即可（[連結](https://github.com/llvm/llvm-project/blob/main/libcxx/src/memory_resource.cpp#L298)）
+透過這個對比你也可以知道標準並沒有規定 buffer 該如何被分配（也不該規定），如果對 llvm frontend 的實作有興趣，可以直接看 source code 即可（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/src/memory_resource.cpp#L298)）
 
 另外在使用的時候要注意，如果你要重複使用 pool resource 的資源，那應該是要像這樣：
 
@@ -1366,7 +1373,7 @@ pool resource 會重複使用其自身的分配。 因此如果銷毀了目標 `
 
 但如果你解構了 pool resource。 它會將其所有記憶體釋放給 `monotonic_buffer_resource`，但如同前面所述，它的 `do_deallocate` 不會做任何事，所以它不會重複使用這部分記憶體。 因此在使用的時候記得要將兩個物件<span class = "yellow">保持在相同的生命週期範圍內</span>
 
-#### Allocator（`polymorphic_allocator`）
+### Allocator（`polymorphic_allocator`）
 
 如同前面所述，`std::pmr::polymorphic_allocato<T>` 的任何特化都完全符合 STL allocator requirement ，是個貨真價實的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
 
@@ -1410,6 +1417,537 @@ for (int i = 0; i < 1000; ++i)
 ```cpp
 std::vector<std::string, std::pmr::polymorphic_allocator<std::string>> coll{&pool};
 ```
+
+### 自定義 memory resource
+
+在有了 PMR 之後，我們就不再會去做各種 allocator 了，而是會寫一個 `memory_resource`，再把他交給 `std::pmr::polymorphic_allocator`
+
+要自訂 `memory_resource`，有幾個步驟：
+
+- 繼承 `std::pmr::memory_resource`
+- 實現下面這三個 private member function
+  - `void* do_allocate(size_t, size_t)`：用來分配記憶體
+  - `void do_deallocate(void*, size_t, size_t)`：用來釋放記憶體
+  - `bool do_is_equal(memory_resource const&) const noexcept`：用來判斷什麼情況下你的型別可以和其他的 `memory_resource` 實例交換分配的記憶體
+
+下面會把本文前段自定義的 `StackAllocator` 改成以自定義 `memory_resource` 的方式來做：
+
+```cpp
+#include <array>
+#include <cstddef>
+#include <cstdlib>
+#include <iostream>
+#include <memory_resource>
+#include <new>
+#include <string>
+
+// 1. A fixed-size “stack arena” that satisfies pmr::memory_resource
+class StackMemoryResource : public std::pmr::memory_resource {
+public:
+  // buf  : pointer to user-supplied buffer
+  // size : total bytes available
+  StackMemoryResource(void* buf, std::size_t size) : pool_{static_cast<std::byte*>(buf)}, cap_{size}, cur_{0} {}
+
+private:
+  // bump-pointer allocate; throws std::bad_alloc on overflow
+  void* do_allocate(std::size_t bytes, std::size_t align) override
+  {
+    std::size_t aligned = (cur_ + align - 1) & ~(align - 1); // align up
+    if (aligned + bytes > cap_)
+      std::__throw_bad_alloc();
+    void* p = pool_ + aligned;
+    cur_ = aligned + bytes;
+    return p;
+  }
+
+  // monotonic style: individual deallocation is ignored
+  void do_deallocate(void*, std::size_t, std::size_t) override
+  {
+    // Stack memory does not need to be deallocated in this simple example.
+    // Optionally, you could implement a reset mechanism to reuse memory.
+  }
+
+  // two resources are equal only if they are the same object
+  bool do_is_equal(memory_resource const& other) const noexcept override { return this == &other; }
+
+  std::byte* pool_;
+  std::size_t cap_;
+  std::size_t cur_;
+};
+
+int main()
+{
+  [[maybe_unused]] auto* old = std::pmr::set_default_resource(std::pmr::null_memory_resource());
+
+  constexpr std::size_t PoolSize = 1024;                           // 1 KiB arena
+  alignas(std::max_align_t) std::array<std::byte, PoolSize> buf{}; // stack buffer
+
+  StackMemoryResource arena(buf.data(), buf.size());
+
+  // 2. Use a pmr::string whose allocator points to our arena
+  std::pmr::string s{"Hello, StackMemoryResource!", &arena}; // uses pmr::polymorphic_allocator<char>
+
+  s += " Nice to meet you!";
+  std::cout << "Modified String: " << s << '\n';
+
+  // When main returns:
+  //   - s is destroyed (no individual frees)
+  //   - arena is destroyed
+  //   - buf goes out of scope
+  return 0;
+}
+```
+
+這邊我們透過了 `set_default_resource` 來確保它不會使用到 heap，[輸出（gcc）](https://godbolt.org/z/zd6fxrbo3)：
+
+```
+String: Hello, StackMemoryResource!
+Modified String: Hello, StackMemoryResource! Nice to meet you!
+```
+
+uftrace 的結果：
+
+```
+...
+            [2278877] | main() {
+   3.747 us [2278877] |   std::pmr::null_memory_resource();
+   0.412 us [2278877] |   std::pmr::set_default_resource();
+            [2278877] |   StackMemoryResource::StackMemoryResource() {
+   0.041 us [2278877] |     std::pmr::memory_resource::memory_resource();
+   0.195 us [2278877] |   } /* StackMemoryResource::StackMemoryResource */
+   0.029 us [2278877] |   std::pmr::polymorphic_allocator::polymorphic_allocator();
+            [2278877] |   std::__cxx11::basic_string::basic_string() {
+
+...
+
+   0.028 us [2278877] |         std::__cxx11::basic_string::_M_get_allocator();
+            [2278877] |         std::__cxx11::basic_string::_S_allocate() {
+            [2278877] |           std::allocator_traits::allocate() {
+            [2278877] |             std::pmr::polymorphic_allocator::allocate() {
+            [2278877] |               std::pmr::memory_resource::allocate() {
+   0.038 us [2278877] |                 StackMemoryResource::do_allocate(); /* <- this one! */
+   0.027 us [2278877] |                 operator new();
+   0.304 us [2278877] |               } /* std::pmr::memory_resource::allocate */
+   0.382 us [2278877] |             } /* std::pmr::polymorphic_allocator::allocate */
+   0.444 us [2278877] |           } /* std::allocator_traits::allocate */
+   0.507 us [2278877] |         } /* std::__cxx11::basic_string::_S_allocate */
+   0.921 us [2278877] |       } /* std::__cxx11::basic_string::_M_create */
+...
+```
+
+重點在中間的 `_S_allocate`，你可以看見 string 嘗試透過 `allocator_traits::allocate` 來配置記憶體，而其底層使用了 `std::pmr::polymorphic_allocator::allocate`，底下就是我們做的 `StackMemoryResource::do_allocate();` 了（後方的 operator new 是 placement new）
+
+要注意的是 `do_is_equal` 這個函式，它的作用是來判斷「我（`this`）配出來的記憶體，交給 `other` 釋放是否安全？」，這可能會用在移動語意之類的地方，因此通常期望使用的是同一個 `memory_resource` 實例，或是不同實例但背後用了完全相同的配置策略（如舊式相等的 allocator 或型態相同的 memory resource）
+
+這邊我們只處理了同一個實例的狀況，因此只需要回傳：
+
+```cpp
+this == &other;
+```
+
+即可，這也是個常見的作法
+
+## 於自定義 class 內使用 Allocator/`memory_resource`
+
+前面的部分我們都是在想辦法讓 STL 容器使用我們自己定義的 Allocator/`memory_resource`，而這些 STL 容器的 element type 不外乎就是些 `int` 或是 `char`。 依照上面的教學，我們只能做到讓 `std::string` 或是 `std::vector<int>` 之類的 STL 容器不使用 heap，但卻還無法達到一開始的需求：把自定義 class 的 data 全部放在 stack 段上的 memory pool
+
+假設我們有個自定義的 class 叫 `Data`，那我們的目的就是讓 `std::vector<Data>` 之類的實例也不會使用到 heap。 為了達到這件事，我們需要讓 `Data` 本身也可以使用自定義的 Allocator/`memory_resource` 來分配記憶體，而且還要能讓 `std::vector` 可以把內部元素需要的目標 Allocator/`memory_resource` 傳遞進去
+
+在上方，我們有個使用 `std::scoped_allocator_adaptor` 的例子，在那裏我們的情境是由於使用的是舊式的自定義 Allocator，因此 `std::vector` 所使用的 Allocator（`StackAllocator<CustomString>`）與 `std::string` 所使用的 Allocator（`StackAllocator<char>`）的 static type 並不相同，因此我們用了 `std::scoped_allocator_adaptor` 來讓 Allocator 能夠「自動向巢狀物件（如成員變數或巢狀容器）傳遞」
+
+但如果你在讀完了 PMR 後，有嘗試使用 `std::pmr::vector` 來裝 `std::pmr::string`，你會發現不需要使用 `std::scoped_allocator_adaptor` 就直接可以 work 了，看下面的例子：
+
+```cpp
+#include <array>
+#include <cstddef>
+#include <cstdlib>
+#include <iostream>
+#include <memory_resource>
+#include <new>
+#include <string>
+#include <type_traits>
+#include <vector>
+
+// 1. A fixed-size "stack arena" that satisfies pmr::memory_resource
+class StackMemoryResource : public std::pmr::memory_resource {
+public:
+  // buf  : pointer to user-supplied buffer
+  // size : total bytes available
+  StackMemoryResource(void* buf, std::size_t size) : pool_{static_cast<std::byte*>(buf)}, cap_{size}, cur_{0} {}
+
+  // Add a method to check current usage
+  std::size_t bytes_used() const { return cur_; }
+  std::size_t bytes_available() const { return cap_ - cur_; }
+
+private:
+  // bump-pointer allocate; throws std::bad_alloc on overflow
+  void* do_allocate(std::size_t bytes, std::size_t align) override
+  {
+    std::size_t aligned = (cur_ + align - 1) & ~(align - 1); // align up
+    if (aligned + bytes > cap_)
+      std::__throw_bad_alloc();
+    void* p = pool_ + aligned;
+    cur_ = aligned + bytes;
+
+    std::cout << "Allocated " << bytes << " bytes (aligned to " << aligned << "), "
+              << "used: " << cur_ << "/" << cap_ << " bytes\n";
+    return p;
+  }
+
+  // monotonic style: individual deallocation is ignored
+  void do_deallocate(void*, std::size_t, std::size_t) override
+  {
+    // Stack memory does not need to be deallocated in this simple example.
+    // Optionally, you could implement a reset mechanism to reuse memory.
+  }
+
+  // two resources are equal only if they are the same object
+  bool do_is_equal(memory_resource const& other) const noexcept override { return this == &other; }
+
+  std::byte* pool_;
+  std::size_t cap_;
+  std::size_t cur_;
+};
+
+int main()
+{
+  [[maybe_unused]] auto* old = std::pmr::set_default_resource(std::pmr::null_memory_resource());
+
+  constexpr std::size_t PoolSize = 2048;                           // 2 KiB arena (increased for more data)
+  alignas(std::max_align_t) std::array<std::byte, PoolSize> buf{}; // stack buffer
+
+  StackMemoryResource arena(buf.data(), buf.size());
+
+  std::cout << "=== Demonstrating uses_allocator_v behavior ===\n";
+
+  // Check if types support allocators
+  std::cout << "std::pmr::string uses allocators: " << std::boolalpha << std::uses_allocator_v<std::pmr::string, std::pmr::memory_resource*> << '\n';
+  std::cout << "std::pmr::vector<std::pmr::string> uses allocators: "
+            << std::uses_allocator_v<std::pmr::vector<std::pmr::string>, std::pmr::memory_resource*> << std::noboolalpha << '\n';
+
+  std::cout << "\n=== Creating pmr::vector<pmr::string> ===\n";
+
+  // 2. Create a pmr::vector of pmr::strings - both use the same arena
+  std::pmr::vector<std::pmr::string> vec{&arena};
+
+  std::cout << "\n=== Adding strings to vector ===\n";
+
+  // When we use emplace_back, the vector will automatically pass the allocator
+  // to the std::pmr::string constructor because uses_allocator_v is true
+  vec.emplace_back("Hello, World!");
+  vec.emplace_back("This is a PMR string");
+  vec.emplace_back("All memory comes from our stack arena");
+
+  // We can also push pre-constructed strings
+  std::pmr::string temp{"Temporary string", &arena};
+  vec.push_back(std::move(temp));
+
+  // Add more strings to see memory allocation
+  vec.emplace_back("Another string to demonstrate memory usage");
+  vec.emplace_back("Uses-allocator construction is working!");
+
+  std::cout << "\n=== Final Results ===\n";
+  std::cout << "Vector contains " << vec.size() << " strings:\n";
+  for (size_t i = 0; i < vec.size(); ++i) {
+    std::cout << "  [" << i << "]: " << vec[i] << '\n';
+  }
+
+  std::cout << "\nMemory usage: " << arena.bytes_used() << "/" << PoolSize << " bytes\n";
+  std::cout << "Available: " << arena.bytes_available() << " bytes\n";
+
+  // Demonstrate that both vector and strings use the same memory resource
+  std::cout << "\n=== Memory Resource Verification ===\n";
+  std::cout << "Vector's memory resource: " << vec.get_allocator().resource() << '\n';
+  std::cout << "String's memory resource: " << vec[0].get_allocator().resource() << '\n';
+  std::cout << "Our arena address: " << &arena << '\n';
+  std::cout << "All point to same resource: " << (vec.get_allocator().resource() == &arena && vec[0].get_allocator().resource() == &arena ? "YES" : "NO")
+            << '\n';
+
+  // When main returns:
+  //   - vec and all strings are destroyed (no individual frees due to monotonic allocator)
+  //   - arena is destroyed
+  //   - buf goes out of scope
+  return 0;
+}
+```
+
+[輸出（gcc）](https://godbolt.org/z/hbbhW6h3o)：
+
+```
+=== Demonstrating uses_allocator_v behavior ===
+std::pmr::string uses allocators: true
+std::pmr::vector<std::pmr::string> uses allocators: true
+
+=== Creating pmr::vector<pmr::string> ===
+
+=== Adding strings to vector ===
+Allocated 40 bytes (aligned to 0), used: 40/2048 bytes
+Allocated 80 bytes (aligned to 40), used: 120/2048 bytes
+Allocated 21 bytes (aligned to 120), used: 141/2048 bytes
+Allocated 160 bytes (aligned to 144), used: 304/2048 bytes
+Allocated 38 bytes (aligned to 304), used: 342/2048 bytes
+Allocated 17 bytes (aligned to 342), used: 359/2048 bytes
+Allocated 320 bytes (aligned to 360), used: 680/2048 bytes
+Allocated 43 bytes (aligned to 680), used: 723/2048 bytes
+Allocated 40 bytes (aligned to 723), used: 763/2048 bytes
+
+=== Final Results ===
+Vector contains 6 strings:
+  [0]: Hello, World!
+  [1]: This is a PMR string
+  [2]: All memory comes from our stack arena
+  [3]: Temporary string
+  [4]: Another string to demonstrate memory usage
+  [5]: Uses-allocator construction is working!
+
+Memory usage: 763/2048 bytes
+Available: 1285 bytes
+
+=== Memory Resource Verification ===
+Vector's memory resource: 0x7ffffe787e60
+String's memory resource: 0x7ffffe787e60
+Our arena address: 0x7ffffe787e60
+All point to same resource: YES
+```
+
+### `std::use_allocator_v`
+
+要解釋這個現象，我們要再回來看一下 STL 在配置記憶體的時候到底做了什麼，在前方「Allocator usage」的小節，我們有貼過一張圖，很顯然那張圖雖然是對的，並不夠精細
+
+在標準中的確提到：
+
+> [N4950（24.2.2.2-64）](https://timsong-cpp.github.io/cppwp/n4950/containers#container.reqmts-64)：Unless otherwise specified, all containers defined in this Clause obtain memory using an allocator (see [allocator.requirements]).  
+> ...  
+> A copy of this allocator is used for any memory allocation and element construction performed, by these constructors and by all member functions, during the lifetime of each container object or until the allocator is replaced.
+
+> [N4950（24.2.2.5-2）](https://timsong-cpp.github.io/cppwp/n4950/containers#container.alloc.reqmts-note-2)：[Note 2: A container calls `allocator_traits<A>​::​construct(m, p, args)` to construct an element at `p` using `args`, with `m == get_allocator()`. The default construct in allocator will call ​`::​new((void*)p) T(args)`, but specialized allocators can choose a different definition. — end note]
+
+意思是只要是 container，就會利用 `allocator_traits<A>​::​construct(m, p, args)` 來建構元素，而且只要容器物件活著，而且你沒換 allocator，它所做的所有 `allocator_traits::construct()` 都會用同一份 allocator 的拷貝，這保證我們傳入的 Allocator 一定會被用到
+
+而標準還提到：
+
+> [N4950（20.2.9.3-6）](https://timsong-cpp.github.io/cppwp/n4950/allocator.traits.members#6)：Effects: Calls `a.construct(p, std​::​forward<Args>(args)...)` if that call is well-formed; otherwise, invokes `construct_at(p, std​::​forward<Args>(args)...)`.
+
+也就是說 `allocator_traits<A>​::​construct(m, p, args)` 的效果是呼叫 `a.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+
+標準就寫到這裡，但在標準內的另一個角落，其提供了一個工具叫做 `std::uses_allocator`，他是個 type traits，用來判斷目標 class 是否能用目標 Allocator 做記憶體配置：
+
+> [N4950（20.2.8.1）](https://timsong-cpp.github.io/cppwp/n4950/allocator.uses.trait)：
+> ```cpp
+> template<class T, class Alloc> struct uses_allocator;
+> ```
+> 
+> Remarks: Automatically detects whether `T` has a nested `allocator_type` that is convertible from `Alloc`. Meets the *Cpp17BinaryTypeTrait* requirements ([meta.rqmts]). The implementation shall provide a definition that is derived from `true_type` if the qualified-id `T​::​allocator_type` is valid and denotes a type ([temp.deduct]) and `is_convertible_v<Alloc, T​::​allocator_type> != false`, otherwise it shall be derived from `false_type`.<br><br>
+> 
+> A program may specialize this template to derive from `true_type` for a program-defined type `T` that does not have a nested `allocator_type` but nonetheless can be constructed with an allocator where either:
+> - (1.1) the first argument of a constructor has type allocator_arg_t and the second argument has type Alloc or
+> - (1.2) the last argument of a constructor has type Alloc.
+
+這段講述了 `std::uses_allocator` 什麼時候會是 `true_type`，什麼時候會是 `false_type`，基本上你就當它是個布林值就行了。 
+
+### Uses-allocator construction
+
+`std::uses_allocator` 能用來幫助 Uses-allocator construction 的執行，其是一個協定，最初在 [N2982](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2982.pdf) 中被提出來（我找好久），當時主要有三個地方使用了這個協定，全都和「讓容器把自己的 allocator 傳遞給元素或子容器」有關：
+
+1. [N3337（20.12.4-9）](https://timsong-cpp.github.io/cppwp/n3337/allocator.adaptor#members-9)：利用 `std::scoped_allocator_adaptor` 把外層 allocator 透傳給巢狀元素
+2. [N3337（20.6.7.2](https://timsong-cpp.github.io/cppwp/n3337/allocator.uses.construction#1)、[20.4.2）](https://timsong-cpp.github.io/cppwp/n3337/tuple.tuple#tuple.cnstr-27)：處理 `emplace`/`tuple`/`pair` 等參數變長的問題
+    - C++0x 起容器支援 `emplace_back(args...)`，另外 `tuple/pair` 有可變長度的建構子。 若元素型別 `T` 其實想要 `(allocator_arg, alloc, args...)` 而不是純 `(args...)`，就需要一套可檢測並自動切換的協議； 這套協議就是 `uses_allocator` trait + 三種慣例 (leading / trailing / 不用)
+3. 統一 AllocatorAwareContainer 內部的配置方法
+   - 如當時的 `std::packaged_task`、`std::promise`、`std::tuple`、`std::pair` 等
+   - 這些類別在 C++11 時代就得配置「控制區塊」或「子成員」。 N2982 把之前分散的做法統一為：
+     - 宣告 `uses_allocator<T, Alloc>`
+     - 若 trait 成立，就規定它們的 allocator 版建構子必須以 uses-allocator construction 建構自己的內部資料
+     - 如 [N3337（20.4.2.1）](https://timsong-cpp.github.io/cppwp/n3337/tuple.cnstr#27)
+
+而到了現在（C++23），其用處其實差不多，而 Uses-allocator consturction 本身的定義在 [N4950（20.2.8.2）](https://timsong-cpp.github.io/cppwp/n4950/allocator.uses.construction) 中，下面我就以 cppreference 上比較口語的定義為主
+
+定義如下，如果遵守 Uses-allocator construction，則將 Allocator `alloc` 傳遞給某個類型 `T` 的建構子時，有三個約定：
+
+- 如果 `T` 不使用相容的 Allocator（`std::uses_allocator_v<T, Alloc>` 為 `false_type`），則忽略 `alloc`
+- 否則 `std::uses_allocator_v<T, Alloc>` 為 `true_type`，並且
+  - 如果第一個參數是 `std::allocator_arg`（一個 tag），則第 2 個參數是要傳進來的 `alloc`，後續的參數為其他建構參數 `args...`，那就會使用這個建構子
+    - 只要 `T` 有定義這種建構子，便會優先選用這種
+    - 這被稱為 leading-allocator，形式為 `T(std::allocator_arg, alloc, args...)`
+  - 或是可以把 `alloc` 放在最後一個參數
+    - 在找不到 leading-allocator 的情況下，會使用這種建構子
+    - 被稱為 trailing-allocator，形式為 `T(args..., Alloc)`
+  - 如果上述兩種建構子都沒有被實作，則程式為 ill-formed（編譯時應要給出 error/warning）
+    - 這代表雖然 `std::uses_allocator_v<T, Alloc>` 為 `true_type`，但實際上 `T` 根本不能用這個 allocator
+
+這個定義與 C++11（N3337）的差別不大。 至此，對於 `tuple`、`pair` 等容器，還有 `scoped_allocator_adaptor`，他們背後套用 Allocator 的流程就有了個專有名詞「Uses-allocator construction」
+
+然而此時的 `tuple`、`pair` 與 `scoped_allocator_adaptor`，甚至是 `pmr` 內的實作，都需要經過
+
+1. 查 `uses_allocator_v`
+2. 選 leading / trailing / no-alloc
+3. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+
+同一套邏輯的程式碼到處都是，因此在 [P0591 R4](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0591r4.pdf) （於 C++20 引入）中就提了三個 utility function 幫助各家 compiler 實作 Uses-allocator construction：
+
+- `uses_allocator_construction_args`：生成與目標類型所需的 uses-allocator construction 風格相符的參數列表
+- `make_obj_using_allocator`：透過 uses-allocator construction 建立給定類型的對象
+- `uninitialized_construct_using_allocator`：透過 uses-allocator construction 在指定的記憶體位置建立給定類型的對象
+
+這樣標準庫的作者只要呼叫這三個函式，不用再重複複雜判定了。 雖然對我們來說不是很重要，但等等帶會簡單看一下 llvm frontend 的實作，所以可以稍微有個印象就好
+
+### 以 `std::vector` 為例來看 STL Container 的建構
+
+這邊用 llvm frontend 的實作為例，看看 `std::vector` 的建構過程到底長怎樣。 首先是 `std::vector` 的建構子（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__vector/vector.h#L157)）：
+
+```cpp
+_LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI explicit vector(size_type __n, const allocator_type& __a)
+    : __alloc_(__a) {
+  auto __guard = std::__make_exception_guard(__destroy_vector(*this));
+  if (__n > 0) {
+    __vallocate(__n);
+    __construct_at_end(__n);
+  }
+  __guard.__complete();
+}
+```
+
+這邊以 `vector(size_type, const allocator_type)` 為例，因為它同時有 allocator 與初始化的需求。 這邊首先是利用 initializer lists 初始化了 Allocator，接著在 `__vallocate` 內做了 raw memory allocation，沒有建構任何元素：
+
+```cpp
+//  Allocate space for __n objects
+//  throws length_error if __n > max_size()
+//  throws (probably bad_alloc) if memory run out
+//  Precondition:  __begin_ == __end_ == __cap_ == nullptr
+//  Precondition:  __n > 0
+//  Postcondition:  capacity() >= __n
+//  Postcondition:  size() == 0
+_LIBCPP_CONSTEXPR_SINCE_CXX20 _LIBCPP_HIDE_FROM_ABI void __vallocate(size_type __n) {
+  if (__n > max_size())
+    this->__throw_length_error();
+  auto __allocation = std::__allocate_at_least(this->__alloc_, __n);
+  __begin_          = __allocation.ptr;
+  __end_            = __allocation.ptr;
+  __cap_            = __begin_ + __allocation.count;
+  __annotate_new(0);
+}
+```
+
+它把一塊能放下至少 `__n` 個 `_Tp` 的未初始化儲存區指標寫進 `__begin_` 與 `__cap_`，但 `__end_` 仍指向 `__begin_`，所以此時
+
+```cpp
+size() == (__end_ - __begin_) && size() == 0            // 沒有元素被建構
+capacity() == (__cap_  - __begin_) && capacity() >= __n // 可用空間已備好
+```
+
+接下來會做元素的建構：
+
+```cpp
+//  Default constructs __n objects starting at __end_
+//  throws if construction throws
+//  Precondition:  __n > 0
+//  Precondition:  size() + __n <= capacity()
+//  Postcondition:  size() == size() + __n
+template <class _Tp, class _Allocator>
+_LIBCPP_CONSTEXPR_SINCE_CXX20 void vector<_Tp, _Allocator>::__construct_at_end(size_type __n) {
+  _ConstructTransaction __tx(*this, __n);
+  const_pointer __new_end = __tx.__new_end_;
+  for (pointer __pos = __tx.__pos_; __pos != __new_end; __tx.__pos_ = ++__pos) {
+    __alloc_traits::construct(this->__alloc_, std::__to_address(__pos));
+  }
+}
+```
+
+可以看到如同我們預想的，呼叫了 `__alloc_traits::construct`，這部分利用了 SFINAE 做了分支（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_traits.h#L292)）：
+
+```cpp
+template <class _Tp, class... _Args, __enable_if_t<__has_construct_v<allocator_type, _Tp*, _Args...>, int> = 0>
+_LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX20 static void
+construct(allocator_type& __a, _Tp* __p, _Args&&... __args) {
+  _LIBCPP_SUPPRESS_DEPRECATED_PUSH
+  __a.construct(__p, std::forward<_Args>(__args)...);
+  _LIBCPP_SUPPRESS_DEPRECATED_POP
+}
+
+template <class _Tp, class... _Args, __enable_if_t<!__has_construct_v<allocator_type, _Tp*, _Args...>, int> = 0>
+_LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX20 static void
+construct(allocator_type&, _Tp* __p, _Args&&... __args) {
+  std::__construct_at(__p, std::forward<_Args>(__args)...);
+}
+```
+
+如同我們前面所學的，如果 `a.construct(p, std​::​forward<Args>(args)...)` 是合法的呼叫，就會使用它，否則使用 `std::construct_at`
+
+此時如果沒有指定 Allocator，則目前（C++23）`std::vector` 的預設 Allocator 仍是 `std::allocator`，但由於 `std::allocator::construct` 已經在 C++20 時 removed 了，因此這裡的 SFINAE 會選到 `std::construct_at` 的版本
+
+而如果我們用的是 PMR，那自然就會用到 `__a.construct(__p, std::forward<_Args>(__args)...)` 的版本，因此我們現在來看 `std::pmr::polymorphic_allocator` 的 `construct`（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory_resource/polymorphic_allocator.h#L120)）：
+
+```cpp
+template <class _Tp, class... _Ts>
+_LIBCPP_HIDE_FROM_ABI void construct(_Tp* __p, _Ts&&... __args) {
+  std::__user_alloc_construct_impl(
+      typename __uses_alloc_ctor<_Tp, polymorphic_allocator&, _Ts...>::type(),
+      __p,
+      *this,
+      std::forward<_Ts>(__args)...);
+}
+```
+
+這個 `__user_alloc_construct_impl` 基本上是一個 placement new（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_arg_t.h#L51)）：
+
+```cpp
+template <class _Tp, class _Allocator, class... _Args>
+inline _LIBCPP_HIDE_FROM_ABI void
+__user_alloc_construct_impl(integral_constant<int, 0>, _Tp* __storage, const _Allocator&, _Args&&... __args) {
+  new (__storage) _Tp(std::forward<_Args>(__args)...);
+}
+
+// FIXME: This should have a version which takes a non-const alloc.
+template <class _Tp, class _Allocator, class... _Args>
+inline _LIBCPP_HIDE_FROM_ABI void
+__user_alloc_construct_impl(integral_constant<int, 1>, _Tp* __storage, const _Allocator& __a, _Args&&... __args) {
+  new (__storage) _Tp(allocator_arg, __a, std::forward<_Args>(__args)...);
+}
+
+// FIXME: This should have a version which takes a non-const alloc.
+template <class _Tp, class _Allocator, class... _Args>
+inline _LIBCPP_HIDE_FROM_ABI void
+__user_alloc_construct_impl(integral_constant<int, 2>, _Tp* __storage, const _Allocator& __a, _Args&&... __args) {
+  new (__storage) _Tp(std::forward<_Args>(__args)..., __a);
+}
+```
+
+可以看見他是以 `__uses_alloc_ctor` 的模板參數來區分要用哪種建構子的，而 `__uses_alloc_ctor` 的定義如下（[連結](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_arg_t.h#L40)）：
+
+```cpp
+template <class _Tp, class _Alloc, class... _Args>
+struct __uses_alloc_ctor_imp {
+  using _RawAlloc _LIBCPP_NODEBUG = __remove_cvref_t<_Alloc>;
+  static const bool __ua          = uses_allocator<_Tp, _RawAlloc>::value;
+  static const bool __ic          = is_constructible<_Tp, allocator_arg_t, _Alloc, _Args...>::value;
+  static const int value          = __ua ? 2 - __ic : 0;
+};
+
+template <class _Tp, class _Alloc, class... _Args>
+struct __uses_alloc_ctor : integral_constant<int, __uses_alloc_ctor_imp<_Tp, _Alloc, _Args...>::value> {};
+```
+
+可以看到他用 `uses_allocator` 偵測 `_Tp` 能不能使用 `_RawAlloc`，用 `is_constructible` 偵測 `_Tp` 是否有 leading-allocator 版本的建構子。 最後，其用 `value` 這個整數代表他會走 Uses-allocator construction 的哪條路徑
+
+- 0：`_Tp` 沒有 Allocator
+- 1：leading-allocator
+- 2：trailing-allocator
+
+對應到 `__user_alloc_construct_impl` 的三個重載版本
+
+::: tips  
+- `2 - __ic`：
+  - 若 `__ua == false` → 0
+  - 若 `__ua == true` 且 `__ic == 1` → 1
+  - 若 `__ua == true` 且 `__ic == 0` → 2  
+:::
+
+因此你可以看見 llvm frontend 目前還沒有使用 P0591 R4 內提出的三個 utility function 來實作這部分，仍是舊式的
+
+1. 查 `uses_allocator_v`
+2. 選 leading / trailing / no-alloc
+3. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+
+
 
 ## References
 
