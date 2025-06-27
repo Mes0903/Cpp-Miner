@@ -13,6 +13,8 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 
 ## 前言
 
+![（ろあ 快回歸了，悠針れい 昨天宣布出道，感覺整個日子又都好起來了）](image/roa.png)
+
 原本會有這篇是因為 MISRA C/C++ spec 內規定不能用 heap allocation，朋朋剛好遇到了這個需求，所以來問了一下能不能把 data 全部放在 stack 段上的 memory pool，剛好要讀書會了，就拿這個主題來寫一篇
 
 Allocator 與 PMR 讓你能在 stack 上開一個 memory pool，利用 STL 給的 API 去操控它，STL 的容器也可以將 data 配置於其中，不必再使用到 heap，進而避免 heap allocation，帶來一些加速的效果，尤其是對樹狀結構的 heap allocation 而言，在 free memory 時其也會有一定的負擔，對於這種結構的加速會更好
