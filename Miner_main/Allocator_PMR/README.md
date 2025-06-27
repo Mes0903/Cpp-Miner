@@ -1995,7 +1995,7 @@ struct __uses_alloc_ctor : integral_constant<int, __uses_alloc_ctor_imp<_Tp, _Al
 template <typename T>
 class MyOldAllocator {
 private:
-  static inline std::array<std::byte, 4096> memory_pool_{}; // Much larger pool
+  static inline std::array<std::byte, 1024> memory_pool_{};
   static inline std::size_t offset_ = 0;
 
 public:
@@ -2009,7 +2009,9 @@ public:
   MyOldAllocator() = default;
 
   template <typename U>
-  MyOldAllocator(MyOldAllocator<U> const&) noexcept {}
+  MyOldAllocator(MyOldAllocator<U> const&) noexcept
+  {
+  }
 
   T* allocate(std::size_t n)
   {
@@ -2051,7 +2053,7 @@ public:
 // Custom memory resource with stack-based memory pool
 class MyMemoryResource : public std::pmr::memory_resource {
 private:
-  std::array<std::byte, 4096> memory_pool_{}; // Much larger pool
+  std::array<std::byte, 1024> memory_pool_{};
   std::size_t offset_ = 0;
 
 protected:
@@ -2094,41 +2096,24 @@ private:
   std::vector<int, Allocator> data_;
 
 public:
-  // Default constructor
+  // Default, Copy, Move constructor
   MyOldClass() : data_() { std::cout << "MyOldClass default constructor\n"; }
-
-  // Copy constructor
   MyOldClass(MyOldClass const& other) : data_(other.data_) { std::cout << "MyOldClass copy constructor\n"; }
-
-  // Move constructor
   MyOldClass(MyOldClass&& other) noexcept : data_(std::move(other.data_)) { std::cout << "MyOldClass move constructor\n"; }
 
   // Uses-allocator construction (leading allocator convention)
-  template <typename Alloc>
-  MyOldClass(std::allocator_arg_t, Alloc const& alloc) : data_(alloc)
-  {
-    std::cout << "MyOldClass uses-allocator constructor (leading)\n";
-  }
+  MyOldClass(std::allocator_arg_t, allocator_type const& alloc) : data_(alloc) { std::cout << "MyOldClass uses-allocator constructor (leading)\n"; }
 
   // Uses-allocator construction with copy (leading allocator convention)
-  template <typename Alloc>
-  MyOldClass(std::allocator_arg_t, Alloc const& alloc, MyOldClass const& other) : data_(other.data_, alloc)
+  MyOldClass(std::allocator_arg_t, allocator_type const& alloc, MyOldClass const& other) : data_(other.data_, alloc)
   {
     std::cout << "MyOldClass uses-allocator copy constructor (leading)\n";
   }
 
   // Uses-allocator construction with move (leading allocator convention)
-  template <typename Alloc>
-  MyOldClass(std::allocator_arg_t, Alloc const& alloc, MyOldClass&& other) : data_(std::move(other.data_), alloc)
+  MyOldClass(std::allocator_arg_t, allocator_type const& alloc, MyOldClass&& other) : data_(std::move(other.data_), alloc)
   {
     std::cout << "MyOldClass uses-allocator move constructor (leading)\n";
-  }
-
-  // Trailing allocator constructors for better compatibility
-  template <typename Alloc>
-  MyOldClass(Alloc const& alloc, typename std::enable_if_t<std::is_convertible_v<Alloc, Allocator>>* = nullptr) : data_(alloc)
-  {
-    std::cout << "MyOldClass uses-allocator constructor (trailing)\n";
   }
 
   void add_data(int value) { data_.push_back(value); }
@@ -2159,55 +2144,36 @@ struct uses_allocator<MyOldClass<Alloc>, Alloc> : std::true_type {};
 // Custom class using PMR allocator
 class MyPMRClass {
 public:
-  using allocator_type = std::pmr::polymorphic_allocator<int>;
+  using allocator_type = std::pmr::polymorphic_allocator<>;
 
 private:
   std::pmr::vector<int> data_;
 
 public:
-  // Default constructor - should not be used when uses-allocator construction is available
-  MyPMRClass() : data_(std::pmr::null_memory_resource()) { std::cout << "MyPMRClass default constructor (should not be called with PMR containers!)\n"; }
-
-  // Copy constructor
+  // Default, Copy, Move constructor
+  MyPMRClass() : data_(std::pmr::null_memory_resource() /*For throw exception*/)
+  {
+    std::cout << "MyPMRClass default constructor (should not be called with PMR containers!)\n";
+  }
   MyPMRClass(MyPMRClass const& other) : data_(other.data_) { std::cout << "MyPMRClass copy constructor\n"; }
-
-  // Move constructor
   MyPMRClass(MyPMRClass&& other) noexcept : data_(std::move(other.data_)) { std::cout << "MyPMRClass move constructor\n"; }
 
   // Uses-allocator construction with polymorphic_allocator
-  template <typename T>
-  MyPMRClass(std::allocator_arg_t, std::pmr::polymorphic_allocator<T> const& alloc) : data_(alloc.resource())
+  MyPMRClass(std::allocator_arg_t, allocator_type const& alloc) : data_(alloc.resource())
   {
     std::cout << "MyPMRClass uses-allocator constructor (polymorphic_allocator)\n";
   }
 
-  // Uses-allocator construction with memory_resource* (for bridge allocator)
-  MyPMRClass(std::allocator_arg_t, std::pmr::memory_resource* mr) : data_(mr) { std::cout << "MyPMRClass uses-allocator constructor (memory_resource*)\n"; }
-
   // Uses-allocator construction with copy (polymorphic_allocator)
-  template <typename T>
-  MyPMRClass(std::allocator_arg_t, std::pmr::polymorphic_allocator<T> const& alloc, MyPMRClass const& other) : data_(other.data_, alloc.resource())
+  MyPMRClass(std::allocator_arg_t, allocator_type const& alloc, MyPMRClass const& other) : data_(other.data_, alloc.resource())
   {
     std::cout << "MyPMRClass uses-allocator copy constructor (polymorphic_allocator)\n";
   }
 
   // Uses-allocator construction with move (polymorphic_allocator)
-  template <typename T>
-  MyPMRClass(std::allocator_arg_t, std::pmr::polymorphic_allocator<T> const& alloc, MyPMRClass&& other) : data_(std::move(other.data_), alloc.resource())
+  MyPMRClass(std::allocator_arg_t, allocator_type const& alloc, MyPMRClass&& other) : data_(std::move(other.data_), alloc.resource())
   {
     std::cout << "MyPMRClass uses-allocator move constructor (polymorphic_allocator)\n";
-  }
-
-  // Uses-allocator construction with copy (memory_resource*)
-  MyPMRClass(std::allocator_arg_t, std::pmr::memory_resource* mr, MyPMRClass const& other) : data_(other.data_, mr)
-  {
-    std::cout << "MyPMRClass uses-allocator copy constructor (memory_resource*)\n";
-  }
-
-  // Uses-allocator construction with move (memory_resource*)
-  MyPMRClass(std::allocator_arg_t, std::pmr::memory_resource* mr, MyPMRClass&& other) : data_(std::move(other.data_), mr)
-  {
-    std::cout << "MyPMRClass uses-allocator move constructor (memory_resource*)\n";
   }
 
   void add_data(int value) { data_.push_back(value); }
@@ -2233,7 +2199,7 @@ int main()
 
   MyMemoryResource my_pmr_resource;
 
-  std::cout << "Starting demo with 4KB stack-based memory pools...\n";
+  std::cout << "Starting demo with 1KB stack-based memory pools...\n";
   std::cout << "Default PMR resource set to null_memory_resource to prevent heap usage.\n";
 
   std::cout << "\n=== Case 1: Old Class + Old Allocator (with scoped_allocator_adaptor) ===\n";
@@ -2284,47 +2250,47 @@ int main()
 }
 ```
 
-[輸出（clang）](https://godbolt.org/z/aT7E9xY4G)：
+[輸出（clang）](https://godbolt.org/z/fYWbojra9)：
 
 ```
-Starting demo with 4KB stack-based memory pools...
+Starting demo with 1KB stack-based memory pools...
 Default PMR resource set to null_memory_resource to prevent heap usage.
 
 === Case 1: Old Class + Old Allocator (with scoped_allocator_adaptor) ===
-MyOldAllocator::allocate 1 objects of 24 bytes (total: 24 bytes, remaining: 4072 bytes)
+MyOldAllocator::allocate 1 objects of 24 bytes (total: 24 bytes, remaining: 1000 bytes)
 MyOldClass uses-allocator constructor (leading)
-MyOldAllocator::allocate 1 objects of 4 bytes (total: 4 bytes, remaining: 4092 bytes)
-MyOldAllocator::allocate 2 objects of 4 bytes (total: 8 bytes, remaining: 4084 bytes)
+MyOldAllocator::allocate 1 objects of 4 bytes (total: 4 bytes, remaining: 1020 bytes)
+MyOldAllocator::allocate 2 objects of 4 bytes (total: 8 bytes, remaining: 1012 bytes)
 MyOldAllocator::deallocate 1 objects
 MyOldClass data: 1 2 
 MyOldAllocator::deallocate 2 objects
 MyOldAllocator::deallocate 1 objects
 
 === Case 2: Old Class + PMR Container ===
-MyMemoryResource::do_allocate 24 bytes (remaining: 4072 bytes)
+MyMemoryResource::do_allocate 24 bytes (remaining: 1000 bytes)
 MyOldClass default constructor
-MyOldAllocator::allocate 1 objects of 4 bytes (total: 4 bytes, remaining: 4080 bytes)
-MyOldAllocator::allocate 2 objects of 4 bytes (total: 8 bytes, remaining: 4072 bytes)
+MyOldAllocator::allocate 1 objects of 4 bytes (total: 4 bytes, remaining: 1008 bytes)
+MyOldAllocator::allocate 2 objects of 4 bytes (total: 8 bytes, remaining: 1000 bytes)
 MyOldAllocator::deallocate 1 objects
 MyOldClass data: 3 4 
 MyOldAllocator::deallocate 2 objects
 MyMemoryResource::do_deallocate 24 bytes
 
 === Case 3: PMR Class + Old Allocator (with bridge allocator) ===
-MyMemoryResource::do_allocate 32 bytes (remaining: 4040 bytes)
-MyPMRClass uses-allocator constructor (memory_resource*)
-MyMemoryResource::do_allocate 4 bytes (remaining: 4036 bytes)
-MyMemoryResource::do_allocate 8 bytes (remaining: 4028 bytes)
+MyMemoryResource::do_allocate 32 bytes (remaining: 968 bytes)
+MyPMRClass uses-allocator constructor (polymorphic_allocator)
+MyMemoryResource::do_allocate 4 bytes (remaining: 964 bytes)
+MyMemoryResource::do_allocate 8 bytes (remaining: 956 bytes)
 MyMemoryResource::do_deallocate 4 bytes
 MyPMRClass data: 5 6 
 MyMemoryResource::do_deallocate 8 bytes
 MyMemoryResource::do_deallocate 32 bytes
 
 === Case 4: PMR Class + PMR Container ===
-MyMemoryResource::do_allocate 32 bytes (remaining: 3992 bytes)
+MyMemoryResource::do_allocate 32 bytes (remaining: 920 bytes)
 MyPMRClass uses-allocator constructor (polymorphic_allocator)
-MyMemoryResource::do_allocate 4 bytes (remaining: 3988 bytes)
-MyMemoryResource::do_allocate 8 bytes (remaining: 3980 bytes)
+MyMemoryResource::do_allocate 4 bytes (remaining: 916 bytes)
+MyMemoryResource::do_allocate 8 bytes (remaining: 908 bytes)
 MyMemoryResource::do_deallocate 4 bytes
 MyPMRClass data: 7 8 
 MyMemoryResource::do_deallocate 8 bytes
@@ -2415,6 +2381,35 @@ void __user_alloc_construct_impl(integral_constant<int, 0>, _Tp* __storage, cons
 ```
 
 所以你在輸出的地方才會看到它用了 default constructor
+
+最後，如果你仔細看 [Jason Turner 的影片](https://www.youtube.com/watch?v=2LAsqp7UrNs)，你會發現他寫的 custom class 長得不太一樣，如下：
+
+```cpp
+struct S {
+  std::pmr::string str;
+
+  using allocator_type = std::pmr::polymorphic_allocator<>;
+
+  // default constructor, delegate to aa constructor
+  S() : S(allocator_type{}) {}
+  explicit S(allocator_type alloc) : str("Hello long string", alloc) {}
+
+  S(S const& other, allocator_type alloc = {}) : str(other.str, alloc) {}
+
+  S(S&&) = default;
+
+  S(S&& other, allocator_type alloc) : str(std::move(other.str), alloc) {}
+
+  S& operator=(S const& rhs) = default;
+  S& operator=(S&& rhs) = default;
+
+  ~S() = default;
+
+  allocator_type get_allocator() const { return str.get_allocator(); }
+};
+```
+
+這是因為它全部都寫成了 trailing 類型的建構子，而且我們為了 demo 把很多不必要的東西都加進來了。 如果你是用 trailing 的形式，那建議要在 `S(allocator_type alloc)` 這種只傳入單個 Allocator 的建構子的前方標上 `explicit`，避免隱式轉換，詳見 [Copy Initialization](https://en.cppreference.com/w/cpp/language/copy_initialization.html) 的原理，這裡不做展開
 
 ## References
 
