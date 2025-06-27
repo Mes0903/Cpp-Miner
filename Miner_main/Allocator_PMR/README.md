@@ -1547,7 +1547,7 @@ this == &other;
 
 即可，這也是個常見的作法
 
-## 於自定義 class 內使用 Allocator/`memory_resource`
+## 自定義 class 與 Allocator/`memory_resource`
 
 前面的部分我們都是在想辦法讓 STL 容器使用我們自己定義的 Allocator/`memory_resource`，而這些 STL 容器的 element type 不外乎就是些 `int` 或是 `char`。 依照上面的教學，我們只能做到讓 `std::string` 或是 `std::vector<int>` 之類的 STL 容器不使用 heap，但卻還無法達到一開始的需求：把自定義 class 的 data 全部放在 stack 段上的 memory pool
 
@@ -1740,10 +1740,15 @@ All point to same resource: YES
 > Remarks: Automatically detects whether `T` has a nested `allocator_type` that is convertible from `Alloc`. Meets the *Cpp17BinaryTypeTrait* requirements ([meta.rqmts]). The implementation shall provide a definition that is derived from `true_type` if the qualified-id `T​::​allocator_type` is valid and denotes a type ([temp.deduct]) and `is_convertible_v<Alloc, T​::​allocator_type> != false`, otherwise it shall be derived from `false_type`.<br><br>
 > 
 > A program may specialize this template to derive from `true_type` for a program-defined type `T` that does not have a nested `allocator_type` but nonetheless can be constructed with an allocator where either:
-> - (1.1) the first argument of a constructor has type allocator_arg_t and the second argument has type Alloc or
+> - (1.1) the first argument of a constructor has type `allocator_arg_t` and the second argument has type Alloc or
 > - (1.2) the last argument of a constructor has type Alloc.
 
-這段講述了 `std::uses_allocator` 什麼時候會是 `true_type`，什麼時候會是 `false_type`，基本上你就當它是個布林值就行了。 
+這段講述了 `std::uses_allocator` 什麼時候會是 `true_type`，什麼時候會是 `false_type`，基本上你就當它是個布林值就行了。 對於 `std::uses_allocator<T, Alloc>` 來說，他有兩種情況會是 `true_type`：
+
+1. 對於自定義型態 `T`，其內部需有一個 qualified-id `allocator_type`，且 `T::allocator_type` 與 `Alloc` 相容（可以做轉型）
+2. 手動特化目標型態的 `std::uses_allocator`，使其繼承自 `true_type`，這種操作在做 type traits 的處理時很常見
+    - 此時建構子的第一個參數的型態需為 `allocator_arg_t`，而第二個參數的型態需為 `Alloc`
+    - 或是建構子的最後一個參數型態為 `Alloc`
 
 ### Uses-allocator construction
 
@@ -1789,6 +1794,14 @@ All point to same resource: YES
 - `uninitialized_construct_using_allocator`：透過 uses-allocator construction 在指定的記憶體位置建立給定類型的對象
 
 這樣標準庫的作者只要呼叫這三個函式，不用再重複複雜判定了。 雖然對我們來說不是很重要，但等等帶會簡單看一下 llvm frontend 的實作，所以可以稍微有個印象就好
+
+值得一提的是，標準內只有保證透過 `std::pmr::polymorphic_allocator::construct` 時才一定會走 Uses-allocator construction 的流程：
+
+> [N4950（20.4.3.3 - 14,15）](https://timsong-cpp.github.io/cppwp/n4950/mem.poly.allocator.mem#15)：
+> - 14：*Mandates*: Uses-allocator construction of T with allocator `*this` (see [allocator.uses.construction]) and constructor arguments `std​::​forward<Args>(args)...` is well-formed.
+> - 15：*Effects*: Construct a T object in the storage whose address is represented by p by uses-allocator construction with allocator `*this` and constructor arguments `std​::​forward<Args>(args)...`.
+
+對於其他的 Allocator，如同前面所說的，標準只保證 STL 容器會使用 `allocator_traits​::​construct` 來建構元素，並不保證這個 construct 的底下會遵循 Uses-allocator construction，其底下到底會不會走這流程，由底層實作決定，只不過現在大部分的實作是都遵循 Uses-allocator construction 流程的，又或是直接走 `construct_at` 而沒用 `std::allocator`，這部分應該是歷史因素導致有些雜亂（我猜），下面就來看個實際的實作例子
 
 ### 以 `std::vector` 為例來看 STL Container 的建構
 
@@ -1870,7 +1883,7 @@ construct(allocator_type&, _Tp* __p, _Args&&... __args) {
 }
 ```
 
-如同我們前面所學的，如果 `a.construct(p, std​::​forward<Args>(args)...)` 是合法的呼叫，就會使用它，否則使用 `std::construct_at`
+如同我們前面所學的，如果 `alloc.construct(p, std​::​forward<Args>(args)...)` 是合法的呼叫，就會使用它，否則使用 `std::construct_at`
 
 此時如果沒有指定 Allocator，則目前（C++23）`std::vector` 的預設 Allocator 仍是 `std::allocator`，但由於 `std::allocator::construct` 已經在 C++20 時 removed 了，因此這裡的 SFINAE 會選到 `std::construct_at` 的版本
 
@@ -1932,7 +1945,7 @@ struct __uses_alloc_ctor : integral_constant<int, __uses_alloc_ctor_imp<_Tp, _Al
 - 1：leading-allocator
 - 2：trailing-allocator
 
-對應到 `__user_alloc_construct_impl` 的三個重載版本
+對應到上方 `__user_alloc_construct_impl` 的三個重載版本
 
 ::: tips  
 - `2 - __ic`：
@@ -1947,7 +1960,459 @@ struct __uses_alloc_ctor : integral_constant<int, __uses_alloc_ctor_imp<_Tp, _Al
 2. 選 leading / trailing / no-alloc
 3. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
 
+### 以自定義 class + Allocator 昨為有使用 Allocator 的 STL 容器的元素
 
+終於來到重點了，現在我們來看看要如何將自定義的 class 放到有使用 Allocator 的 STL 容器中。 讀完前面後，你應該可以知道對於 STL 容器來說，使用傳統 Allocator 和使用 PMR Allocator 的差異在於：
+
+- static type 一不一致
+- 是否保證會走 Uses-allocator construction 的流程
+  - 如果不走，那就要利用 `std::scoped_allocator_adaptor` 手動傳遞 Allocator 給元素
+
+所以組合可以分為
+
+- 自定義 class 使用傳統 Allocator，STL 容器使用傳統 Allocator
+  - 需使用 `std::scoped_allocator_adaptor` 將 Allocator 傳遞給內部自定義 class
+- 自定義 class 使用傳統 Allocator，STL 容器使用 PMR Allocator
+  - 保證使用 Uses-allocator construction，因此自定義 class 要能讓外部知道自己有使用 Allocator
+- 自定義 class 使用 PMR Allocator，STL 容器使用傳統 Allocator
+  - 這個比較難寫，因為你 class 用新的東西但卻強迫 STL 容器用舊的，等等看例子，我是寫了個橋接器
+- 自定義 class 使用 PMR Allocator，STL 容器使用 PMR Allocator
+  - 保證使用 Uses-allocator construction，因此自定義 class 要能讓外部知道自己有使用 Allocator
+
+而「自定義 class 要能讓外部知道自己有使用 Allocator」這件事，在標準內並沒有專有名詞來描述，標準內只會簡單的說「A type `T` that uses an allocator」，但這件事有個口語上的描述叫做 Allocator-aware type，在 [Jason Turner 的影片](https://www.youtube.com/watch?v=2LAsqp7UrNs)內用的也是這個詞。 但要注意這跟 AllocatorAwareContainer 是不同的事，前者是個口語上的描述，後者是個標準內的定義，如前面所述其要求十分嚴格
+
+而要讓自定義 class 能讓外部知道自己有使用 Allocator，需要使其能滿足 Uses-allocator construction 的流程，也就是說：
+
+- `std::uses_allocator<MyClass, Alloc>` 需為 `true_type`
+- 建構子需使 Uses-allocator construction 能正常運作
+
+現在我們就開始實作，首先我們先簡單實作一下自己的 Allocator 和 `memory_resource`：
+
+```cpp
+// Custom old-style allocator with stack-based memory pool
+template <typename T>
+class MyOldAllocator {
+private:
+  static inline std::array<std::byte, 4096> memory_pool_{}; // Much larger pool
+  static inline std::size_t offset_ = 0;
+
+public:
+  using value_type = T;
+
+  template <typename U>
+  struct rebind {
+    using other = MyOldAllocator<U>;
+  };
+
+  MyOldAllocator() = default;
+
+  template <typename U>
+  MyOldAllocator(MyOldAllocator<U> const&) noexcept {}
+
+  T* allocate(std::size_t n)
+  {
+    std::size_t bytes = n * sizeof(T);
+    std::size_t aligned_offset = (offset_ + alignof(T) - 1) & ~(alignof(T) - 1);
+
+    if (aligned_offset + bytes > memory_pool_.size()) {
+      std::cout << "MyOldAllocator: memory pool exhausted! Requested: " << bytes << " bytes, Available: " << (memory_pool_.size() - aligned_offset)
+                << " bytes\n";
+      throw std::bad_alloc{};
+    }
+
+    T* ptr = reinterpret_cast<T*>(memory_pool_.data() + aligned_offset);
+    offset_ = aligned_offset + bytes;
+    std::cout << "MyOldAllocator::allocate " << n << " objects of " << sizeof(T) << " bytes (total: " << bytes
+              << " bytes, remaining: " << (memory_pool_.size() - offset_) << " bytes)\n";
+    return ptr;
+  }
+
+  void deallocate([[maybe_unused]] T* ptr, [[maybe_unused]] std::size_t n) noexcept
+  {
+    std::cout << "MyOldAllocator::deallocate " << n << " objects\n";
+    // Simple allocator - no actual deallocation
+  }
+
+  template <typename U>
+  bool operator==(MyOldAllocator<U> const&) const noexcept
+  {
+    return true;
+  }
+
+  template <typename U>
+  bool operator!=(MyOldAllocator<U> const&) const noexcept
+  {
+    return false;
+  }
+};
+
+// Custom memory resource with stack-based memory pool
+class MyMemoryResource : public std::pmr::memory_resource {
+private:
+  std::array<std::byte, 4096> memory_pool_{}; // Much larger pool
+  std::size_t offset_ = 0;
+
+protected:
+  void* do_allocate(std::size_t bytes, std::size_t alignment) override
+  {
+    std::size_t aligned_offset = (offset_ + alignment - 1) & ~(alignment - 1);
+
+    if (aligned_offset + bytes > memory_pool_.size()) {
+      std::cout << "MyMemoryResource: memory pool exhausted! Requested: " << bytes << " bytes, Available: " << (memory_pool_.size() - aligned_offset)
+                << " bytes\n";
+      throw std::bad_alloc{};
+    }
+
+    void* ptr = memory_pool_.data() + aligned_offset;
+    offset_ = aligned_offset + bytes;
+    std::cout << "MyMemoryResource::do_allocate " << bytes << " bytes (remaining: " << (memory_pool_.size() - offset_) << " bytes)\n";
+    return ptr;
+  }
+
+  void do_deallocate([[maybe_unused]] void* ptr, [[maybe_unused]] std::size_t bytes, [[maybe_unused]] std::size_t alignment) noexcept override
+  {
+    std::cout << "MyMemoryResource::do_deallocate " << bytes << " bytes\n";
+    // Simple allocator - no actual deallocation
+  }
+
+  bool do_is_equal(std::pmr::memory_resource const& other) const noexcept override { return this == &other; }
+};
+```
+
+前面都講解過了，應該不難。 接下來是使用 Allocator 的自定義 class，為了讓其可以順利地與 `pmr::vector` 相容，我一樣讓他符合 Allocator-aware type 的要求：
+
+```cpp
+// Custom class using old-style allocator
+template <typename Allocator = std::allocator<int>>
+class MyOldClass {
+public:
+  using allocator_type = Allocator;
+
+private:
+  std::vector<int, Allocator> data_;
+
+public:
+  // Default constructor
+  MyOldClass() : data_() { std::cout << "MyOldClass default constructor\n"; }
+
+  // Copy constructor
+  MyOldClass(MyOldClass const& other) : data_(other.data_) { std::cout << "MyOldClass copy constructor\n"; }
+
+  // Move constructor
+  MyOldClass(MyOldClass&& other) noexcept : data_(std::move(other.data_)) { std::cout << "MyOldClass move constructor\n"; }
+
+  // Uses-allocator construction (leading allocator convention)
+  template <typename Alloc>
+  MyOldClass(std::allocator_arg_t, Alloc const& alloc) : data_(alloc)
+  {
+    std::cout << "MyOldClass uses-allocator constructor (leading)\n";
+  }
+
+  // Uses-allocator construction with copy (leading allocator convention)
+  template <typename Alloc>
+  MyOldClass(std::allocator_arg_t, Alloc const& alloc, MyOldClass const& other) : data_(other.data_, alloc)
+  {
+    std::cout << "MyOldClass uses-allocator copy constructor (leading)\n";
+  }
+
+  // Uses-allocator construction with move (leading allocator convention)
+  template <typename Alloc>
+  MyOldClass(std::allocator_arg_t, Alloc const& alloc, MyOldClass&& other) : data_(std::move(other.data_), alloc)
+  {
+    std::cout << "MyOldClass uses-allocator move constructor (leading)\n";
+  }
+
+  // Trailing allocator constructors for better compatibility
+  template <typename Alloc>
+  MyOldClass(Alloc const& alloc, typename std::enable_if_t<std::is_convertible_v<Alloc, Allocator>>* = nullptr) : data_(alloc)
+  {
+    std::cout << "MyOldClass uses-allocator constructor (trailing)\n";
+  }
+
+  void add_data(int value) { data_.push_back(value); }
+
+  void print() const
+  {
+    std::cout << "MyOldClass data: ";
+    for (int val : data_) {
+      std::cout << val << " ";
+    }
+    std::cout << "\n";
+  }
+};
+```
+
+前面有提到 `std::uses_allocator<MyClass, Alloc>` 為 `true_type` 的達成條件有兩種，這裡使用的是第一種，可以看到我們的 class 內有個 type alias `allocator_type`。 而第二種方法是手動特化 `uses_allocator`：
+
+```cpp
+template <typename Alloc>
+struct uses_allocator<MyOldClass<Alloc>, Alloc> : std::true_type {};
+```
+
+用第二種方法的話就不用定義 `allocator_type` 了，這通常會用在你有一個預設的 Allocator，但又想支援其他 Allocator 的時候，或是你想排除特定的 Allocator，所以直接把它特化成 `false_type` 的時候
+
+但總之我們的例子中用第一種方法，它比較好寫，也比較泛用。 接下來是使用 PMR Allocator 的自定義 class：
+
+```cpp
+// Custom class using PMR allocator
+class MyPMRClass {
+public:
+  using allocator_type = std::pmr::polymorphic_allocator<int>;
+
+private:
+  std::pmr::vector<int> data_;
+
+public:
+  // Default constructor - should not be used when uses-allocator construction is available
+  MyPMRClass() : data_(std::pmr::null_memory_resource()) { std::cout << "MyPMRClass default constructor (should not be called with PMR containers!)\n"; }
+
+  // Copy constructor
+  MyPMRClass(MyPMRClass const& other) : data_(other.data_) { std::cout << "MyPMRClass copy constructor\n"; }
+
+  // Move constructor
+  MyPMRClass(MyPMRClass&& other) noexcept : data_(std::move(other.data_)) { std::cout << "MyPMRClass move constructor\n"; }
+
+  // Uses-allocator construction with polymorphic_allocator
+  template <typename T>
+  MyPMRClass(std::allocator_arg_t, std::pmr::polymorphic_allocator<T> const& alloc) : data_(alloc.resource())
+  {
+    std::cout << "MyPMRClass uses-allocator constructor (polymorphic_allocator)\n";
+  }
+
+  // Uses-allocator construction with memory_resource* (for bridge allocator)
+  MyPMRClass(std::allocator_arg_t, std::pmr::memory_resource* mr) : data_(mr) { std::cout << "MyPMRClass uses-allocator constructor (memory_resource*)\n"; }
+
+  // Uses-allocator construction with copy (polymorphic_allocator)
+  template <typename T>
+  MyPMRClass(std::allocator_arg_t, std::pmr::polymorphic_allocator<T> const& alloc, MyPMRClass const& other) : data_(other.data_, alloc.resource())
+  {
+    std::cout << "MyPMRClass uses-allocator copy constructor (polymorphic_allocator)\n";
+  }
+
+  // Uses-allocator construction with move (polymorphic_allocator)
+  template <typename T>
+  MyPMRClass(std::allocator_arg_t, std::pmr::polymorphic_allocator<T> const& alloc, MyPMRClass&& other) : data_(std::move(other.data_), alloc.resource())
+  {
+    std::cout << "MyPMRClass uses-allocator move constructor (polymorphic_allocator)\n";
+  }
+
+  // Uses-allocator construction with copy (memory_resource*)
+  MyPMRClass(std::allocator_arg_t, std::pmr::memory_resource* mr, MyPMRClass const& other) : data_(other.data_, mr)
+  {
+    std::cout << "MyPMRClass uses-allocator copy constructor (memory_resource*)\n";
+  }
+
+  // Uses-allocator construction with move (memory_resource*)
+  MyPMRClass(std::allocator_arg_t, std::pmr::memory_resource* mr, MyPMRClass&& other) : data_(std::move(other.data_), mr)
+  {
+    std::cout << "MyPMRClass uses-allocator move constructor (memory_resource*)\n";
+  }
+
+  void add_data(int value) { data_.push_back(value); }
+
+  void print() const
+  {
+    std::cout << "MyPMRClass data: ";
+    for (int val : data_) {
+      std::cout << val << " ";
+    }
+    std::cout << "\n";
+  }
+};
+```
+
+接著是我們的測試：
+
+```cpp
+int main()
+{
+  // Prevent heap allocation by setting null resource as default
+  [[maybe_unused]] auto* old_default = std::pmr::set_default_resource(std::pmr::null_memory_resource());
+
+  MyMemoryResource my_pmr_resource;
+
+  std::cout << "Starting demo with 4KB stack-based memory pools...\n";
+  std::cout << "Default PMR resource set to null_memory_resource to prevent heap usage.\n";
+
+  std::cout << "\n=== Case 1: Old Class + Old Allocator (with scoped_allocator_adaptor) ===\n";
+  {
+    using OldAlloc = MyOldAllocator<MyOldClass<MyOldAllocator<int>>>;
+    using ScopedAlloc = std::scoped_allocator_adaptor<OldAlloc>;
+    std::vector<MyOldClass<MyOldAllocator<int>>, ScopedAlloc> vec(ScopedAlloc{});
+
+    vec.emplace_back();
+    vec[0].add_data(1);
+    vec[0].add_data(2);
+    vec[0].print();
+  }
+
+  std::cout << "\n=== Case 2: Old Class + PMR Container ===\n";
+  {
+    std::pmr::vector<MyOldClass<MyOldAllocator<int>>> vec(&my_pmr_resource);
+
+    vec.emplace_back(); // This should NOT use uses-allocator construction due to type mismatch
+    vec[0].add_data(3);
+    vec[0].add_data(4);
+    vec[0].print();
+  }
+
+  std::cout << "\n=== Case 3: PMR Class + Old Allocator (with bridge allocator) ===\n";
+  {
+    std::vector<MyPMRClass, BridgeAllocator> vec(BridgeAllocator{&my_pmr_resource});
+
+    vec.emplace_back();
+    vec[0].add_data(5);
+    vec[0].add_data(6);
+    vec[0].print();
+  }
+
+  std::cout << "\n=== Case 4: PMR Class + PMR Container ===\n";
+  {
+    std::pmr::vector<MyPMRClass> vec(&my_pmr_resource);
+
+    vec.emplace_back(); // This SHOULD use uses-allocator construction
+    vec[0].add_data(7);
+    vec[0].add_data(8);
+    vec[0].print();
+  }
+
+  std::cout << "\nDemo completed successfully - all memory allocated from stack-based pools!\n";
+
+  return 0;
+}
+```
+
+[輸出（clang）](https://godbolt.org/z/aT7E9xY4G)：
+
+```
+Starting demo with 4KB stack-based memory pools...
+Default PMR resource set to null_memory_resource to prevent heap usage.
+
+=== Case 1: Old Class + Old Allocator (with scoped_allocator_adaptor) ===
+MyOldAllocator::allocate 1 objects of 24 bytes (total: 24 bytes, remaining: 4072 bytes)
+MyOldClass uses-allocator constructor (leading)
+MyOldAllocator::allocate 1 objects of 4 bytes (total: 4 bytes, remaining: 4092 bytes)
+MyOldAllocator::allocate 2 objects of 4 bytes (total: 8 bytes, remaining: 4084 bytes)
+MyOldAllocator::deallocate 1 objects
+MyOldClass data: 1 2 
+MyOldAllocator::deallocate 2 objects
+MyOldAllocator::deallocate 1 objects
+
+=== Case 2: Old Class + PMR Container ===
+MyMemoryResource::do_allocate 24 bytes (remaining: 4072 bytes)
+MyOldClass default constructor
+MyOldAllocator::allocate 1 objects of 4 bytes (total: 4 bytes, remaining: 4080 bytes)
+MyOldAllocator::allocate 2 objects of 4 bytes (total: 8 bytes, remaining: 4072 bytes)
+MyOldAllocator::deallocate 1 objects
+MyOldClass data: 3 4 
+MyOldAllocator::deallocate 2 objects
+MyMemoryResource::do_deallocate 24 bytes
+
+=== Case 3: PMR Class + Old Allocator (with bridge allocator) ===
+MyMemoryResource::do_allocate 32 bytes (remaining: 4040 bytes)
+MyPMRClass uses-allocator constructor (memory_resource*)
+MyMemoryResource::do_allocate 4 bytes (remaining: 4036 bytes)
+MyMemoryResource::do_allocate 8 bytes (remaining: 4028 bytes)
+MyMemoryResource::do_deallocate 4 bytes
+MyPMRClass data: 5 6 
+MyMemoryResource::do_deallocate 8 bytes
+MyMemoryResource::do_deallocate 32 bytes
+
+=== Case 4: PMR Class + PMR Container ===
+MyMemoryResource::do_allocate 32 bytes (remaining: 3992 bytes)
+MyPMRClass uses-allocator constructor (polymorphic_allocator)
+MyMemoryResource::do_allocate 4 bytes (remaining: 3988 bytes)
+MyMemoryResource::do_allocate 8 bytes (remaining: 3980 bytes)
+MyMemoryResource::do_deallocate 4 bytes
+MyPMRClass data: 7 8 
+MyMemoryResource::do_deallocate 8 bytes
+MyMemoryResource::do_deallocate 32 bytes
+
+Demo completed successfully - all memory allocated from stack-based pools!
+```
+
+第一、四種 case 應該不難理解，尤其你可以發現使用了 PMR 後一切都乾淨了起來，而第一種 case 與前方 `scoped_allocator_adaptor` 小節內講得差不多
+
+對於第三種 case，由於我實在是想不到什麼情況會是 `std::vector` 要用舊特性，但自定義 class 可以用新特性的情況，所以橋接器的實作我就不貼 full code 了，只稍微講一下。 基本上由於傳統 Allocator 與新的 PMR Allocator 的介面不同，傳統 Allocator 的函式參數（如建構子）需要傳一整個 Allocator，但在使用 PMR Allocator 時我們傳的是 `memory_resource`，因此第三個 case 就需要手動做轉換
+
+我們以前方 llvm frontend 的實作來幫助理解，我們的定義為：
+
+```cpp
+std::vector<MyPMRClass, BridgeAllocator> vec(BridgeAllocator{&my_pmr_resource});
+```
+
+由於 `std::vector` 的第二個模板參數是 `BridgeAllocator`，因此在呼叫 `__alloc_traits::construct` 的時候其模板參數 `allocator_type` 為 `BridgeAllocator`，下面再貼一次 `__alloc_traits::construct` 的實作：
+
+```cpp
+template <class _Tp, class... _Args, __enable_if_t<__has_construct_v<allocator_type, _Tp*, _Args...>, int> = 0>
+_LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX20 static void
+construct(allocator_type& __a, _Tp* __p, _Args&&... __args) {
+  _LIBCPP_SUPPRESS_DEPRECATED_PUSH
+  __a.construct(__p, std::forward<_Args>(__args)...);
+  _LIBCPP_SUPPRESS_DEPRECATED_POP
+}
+
+template <class _Tp, class... _Args, __enable_if_t<!__has_construct_v<allocator_type, _Tp*, _Args...>, int> = 0>
+_LIBCPP_HIDE_FROM_ABI _LIBCPP_CONSTEXPR_SINCE_CXX20 static void
+construct(allocator_type&, _Tp* __p, _Args&&... __args) {
+  std::__construct_at(__p, std::forward<_Args>(__args)...);
+}
+```
+
+其中 SFINAE 內的 `__has_construct_v<allocator_type, _Tp*, _Args...>` 的模板實例化為：
+
+```cpp
+__has_construct_v<BridgeAllocator, MyPMRClass*, /* Args... */>
+```
+
+因此它是在檢查 `BridgeAllocator` 內有沒有定義 `construct` 方法，而我們確實定義了，因此會走上方的分支，進而呼叫 `BridgeAllocator.construct`，然後我們再於當中對 PMR Allocator 做處理：
+
+```cpp
+template <typename T, typename... Args>
+void construct(T* ptr, Args&&... args)
+{
+  if constexpr (std::uses_allocator_v<T, std::pmr::memory_resource*>) {
+    std::construct_at(ptr, std::allocator_arg, mr_, std::forward<Args>(args)...);
+  }
+  else {
+    std::construct_at(ptr, std::forward<Args>(args)...);
+  }
+}
+```
+
+基本上就是自己做了簡化版的 Uses-allocator construction 流程（沒做 Trailing）
+
+而對於第二種 case，由於情況反了過來，`pmr::vector` 用的是 `polymorphic_allocator`，其 `construct` 會走 Uses-allocator construction 的流程：
+
+```cpp
+// polymorphic_allocator::construct
+template <class _Tp, class... _Ts>
+void construct(_Tp* __p, _Ts&&... __args) {
+  std::__user_alloc_construct_impl(
+      typename __uses_alloc_ctor<_Tp, polymorphic_allocator&, _Ts...>::type(),
+      __p,
+      *this,
+      std::forward<_Ts>(__args)...);
+}
+```
+
+如同前面說的這會依賴於 `__uses_alloc_ctor` 的結果，結果有三種。 而因為這裡的元素使用的是傳統 Allocator，其 `std::uses_allocator` 的形式為：
+
+```cpp
+std::uses_allocator<MyOldClass<MyOldAllocator<int>>, 
+                    std::pmr::polymorphic_allocator<MyOldClass<MyOldAllocator<int>>>>::value
+```
+
+這個檢查為 `false`，因為 `polymorphic_allocator<MyOldClass<...>>` 不能轉換為 `MyOldAllocator<int>`，因此 `__ua` 為 `false`，走的是 `value` 為 0 的路徑：
+
+```cpp
+template <class _Tp, class _Allocator, class... _Args>
+void __user_alloc_construct_impl(integral_constant<int, 0>, _Tp* __storage, const _Allocator&, _Args&&... __args) {
+  new (__storage) _Tp(std::forward<_Args>(__args)...);
+}
+```
+
+所以你在輸出的地方才會看到它用了 default constructor
 
 ## References
 
