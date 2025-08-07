@@ -38,10 +38,10 @@ star: true
 此處為新手教學，可以幫助大家回憶以前的東西，並幫助理解基礎 C++ 與熟悉本書風格
 
 - [淺談計算機概論](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Computer_Introduction)
-- [Windows 內的 C++ 與 Vscode 環境建置](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Environment_Building) 
+- [Windows 內的 C++ 與 Vscode 環境建置](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Environment_Building)
 - [Object、Expression 與 Statement](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Object_Expression_Statement)
-- [Array 與 Pointer](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Array_Pointer) 
-- [Function 與 Memory](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Function_Memory) 
+- [Array 與 Pointer](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Array_Pointer)
+- [Function 與 Memory](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Function_Memory)
 - [Class](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Class)
 - [Class 與物件導向](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/OO)
 
