@@ -45,11 +45,11 @@ Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都
 
 我們詳細看一下有關 class 的幾個重點
 
-+ Aggregate class 不能有自己定義的建構函數或 copy constructor 等等的，但如果是 compiler 幫你生成的可以，不是 user-provided 的就好
-+ 不能有 `private` 或 `protected` 的 non-static data member，但如果是 static data member 就沒關係，非 constructor 的 member function 也沒關係，<span class = "yellow">但不能有 virtual function</span>
-+ 可以有 user-declared/user-defined 的 copy-assignment operator 或 destructor
-+ 就算是 array of non-aggregate class type 也是一個 Aggregate
-+ 不具有繼承關係
+- Aggregate class 不能有自己定義的建構函數或 copy constructor 等等的，但如果是 compiler 幫你生成的可以，不是 user-provided 的就好
+- 不能有 `private` 或 `protected` 的 non-static data member，但如果是 static data member 就沒關係，非 constructor 的 member function 也沒關係，<span class = "yellow">但不能有 virtual function</span>
+- 可以有 user-declared/user-defined 的 copy-assignment operator 或 destructor
+- 就算是 array of non-aggregate class type 也是一個 Aggregate
+- 不具有繼承關係
 用一個例子來確認一下 ([連結](https://godbolt.org/z/G1W43vcvs))：
 
 ```cpp
@@ -97,13 +97,13 @@ int main()
 
 根據 `n` 與 `m` 的不同會有幾個情況：
 
-+ `m == n`
+- `m == n`
     陣列裡的第 i 個元素 (i<sup>th</sup>) 會被初始化為 a<sub>i</sub>
-+ `m < n`
+- `m < n`
     陣列中的前 m 個元素會被初始化為 a<sub>1</sub>, a<sub>2</sub>, …, a<sub>m</sub>，而剩下的 n-m 個元素，如果可以的話會嘗試使用 value-initialized，如果 element 是 non-Aggregate type 的話可能會失敗
-+ `m > n`
+- `m > n`
     compiler 會報錯
-+ 沒有寫 n 的情況
+- 沒有寫 n 的情況
     n 會被設為 m，也就是說 `n == m`
 
 看個例子：
@@ -195,9 +195,9 @@ POD 全名叫 Plain Old Data，一般我們理解的 POD 與 C++03 標準內的�
 
 這段話基本上表達了幾件事：
 
-+ 所有的 POD class 都是 Aggregate，換句話說，如果一個 class 不是 Aggregate，那它也不會是 POD
-+ 即使術語是 POD-struct，class 也可以是 POD
-+ 跟前面 Aggregate 的情況一樣，判斷標準基本上跟 class 內的 static member 無關
+- 所有的 POD class 都是 Aggregate，換句話說，如果一個 class 不是 Aggregate，那它也不會是 POD
+- 即使術語是 POD-struct，class 也可以是 POD
+- 跟前面 Aggregate 的情況一樣，判斷標準基本上跟 class 內的 static member 無關
 
 順便看一下比較新的例子 (C++17)：
 
@@ -246,11 +246,11 @@ int main()
 
 POD 的好處就很多了，這邊舉幾個例子：
 
-+ POD-class 與 C struct 非常接近，但 POD class 可以有 member function、static member，不過這兩者並不會影響 memory layout。 所以如果你想要寫一個給 C 或甚至 .NET 用的 portable dll，你就需要讓你 exported function 的參數和回傳值都使用 POD-type，簡單來說就是 POD 對序列化很有幫助
+- POD-class 與 C struct 非常接近，但 POD class 可以有 member function、static member，不過這兩者並不會影響 memory layout。 所以如果你想要寫一個給 C 或甚至 .NET 用的 portable dll，你就需要讓你 exported function 的參數和回傳值都使用 POD-type，簡單來說就是 POD 對序列化很有幫助
 
-+ non-POD class 的生命週期從 constructor 完成開始，到 destructor 完成時結束；POD-class 的生命週期則是從物件占用記憶體開始，不用等到建構子執行完畢，而生命週期也是到其釋放記憶體結束
+- non-POD class 的生命週期從 constructor 完成開始，到 destructor 完成時結束；POD-class 的生命週期則是從物件占用記憶體開始，不用等到建構子執行完畢，而生命週期也是到其釋放記憶體結束
 
-+ 對於 POD types 的物件，標準保證其可以直接使用 `memcpy`，當你將 POD-class 的內容使用 `memcpy` 複製到 char/unsinged char array，再對陣列使用 `memcpy` 把內容複製回物件時，物件會維持原先的值，內容不變。 這件事對 non-POD type object 是沒有保證的
+- 對於 POD types 的物件，標準保證其可以直接使用 `memcpy`，當你將 POD-class 的內容使用 `memcpy` 複製到 char/unsinged char array，再對陣列使用 `memcpy` 把內容複製回物件時，物件會維持原先的值，內容不變。 這件事對 non-POD type object 是沒有保證的
 
   看個[例子](https://godbolt.org/z/YheTjYPeP)：
 
@@ -285,7 +285,7 @@ POD 的好處就很多了，這邊舉幾個例子：
   }
   ```
 
-+ goto 可以跳過 POD-type 物件的宣告，進入宣告後段的程式碼：
+- goto 可以跳過 POD-type 物件的宣告，進入宣告後段的程式碼：
 
   ```cpp
   int f()
@@ -314,7 +314,7 @@ POD 的好處就很多了，這邊舉幾個例子：
   }
   ```
 
-+ POD-type 物件的第一個成員位址會和物件本身的位址一樣，舉個[例子](https://godbolt.org/z/n4rYjMMzd)：
+- POD-type 物件的第一個成員位址會和物件本身的位址一樣，舉個[例子](https://godbolt.org/z/n4rYjMMzd)：
   ```cpp
   #include <iostream>
   #include <cassert>
@@ -452,18 +452,10 @@ placement new 的用處是於 `ptr` 處建構我們想要的物件，通常我�
 
 ## 參考資料
 
-**<a href = "https://www.dsi.fceia.unr.edu.ar/downloads/informatica/info_II/c++/Effective%20C++%20+%20More%20Effective%20C++.pdf" class = "redlink">1. Effective C++</a>**
+- [1. Effective C++](https://www.dsi.fceia.unr.edu.ar/downloads/informatica/info_II/c++/Effective%20C++%20+%20More%20Effective%20C++.pdf)
 
-**<a href = "https://stackoverflow.com/questions/184537/in-what-cases-do-i-use-malloc-and-or-new" class = "redlink">2. In what cases do I use malloc and/or new?</a>**
+- [2. In what cases do I use malloc and/or new?](https://stackoverflow.com/questions/184537/in-what-cases-do-i-use-malloc-and-or-new)
 
-**<a href = "https://stackoverflow.com/questions/146452/what-are-pod-types-in-c" class = "redlink">3. What are POD types in C++?</a>**
+- [3. What are POD types in C++?](https://stackoverflow.com/questions/146452/what-are-pod-types-in-c)
 
-**<a href = "https://stackoverflow.com/questions/4178175/what-are-aggregates-and-pods-and-how-why-are-they-special/7189821#7189821" class = "redlink">4. What are Aggregates and PODs and how/why are they special?</a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
+- [4. What are Aggregates and PODs and how/why are they special?](https://stackoverflow.com/questions/4178175/what-are-aggregates-and-pods-and-how-why-are-they-special/7189821#7189821)

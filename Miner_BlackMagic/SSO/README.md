@@ -31,7 +31,7 @@ struct basic_string {
 
 <div class = "center-column">
 
-![](image/string-begin-layout.png)  
+![](image/string-begin-layout.png)
 
 （layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
 

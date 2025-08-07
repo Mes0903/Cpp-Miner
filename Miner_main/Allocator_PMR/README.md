@@ -304,7 +304,7 @@ Hello 4
 
 ::: info  
 這邊我並不像 C++ Primer 內使用 `alloc.construct`，這是因為這東西在 C++17 後被遺棄，C++20 時被移除了，主要是因為它的功能與 `std::allocator_traits` 重複了，更詳細的請去看 [D0174R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0174r0.html#2.4) 或是這篇 stackoverflow：[Why are are std::allocator's construct and destroy functions deprecated in c++17?](https://stackoverflow.com/questions/39414610/why-are-are-stdallocators-construct-and-destroy-functions-deprecated-in-c17)  
-:::  
+:::
 
 ### 自定義 Allocator
 
@@ -965,7 +965,7 @@ std::pmr::set_default_resource(old_pool); // reset to old resource
 
 - `allocate()` 函式使用 `::operator new` 來分配記憶體
 - `deallocate()` 函式使用 `::operator delete` 來刪除記憶體
-- 對於任何 `memory_resource` r ，`p->is_equal(r)` 會返回 `&r == p`
+- 對於任何 `memory_resource` r，`p->is_equal(r)` 會返回 `&r == p`
 
 它底層做的事基本上就是像這樣：
 
@@ -1373,7 +1373,7 @@ pool resource 會重複使用其自身的分配。 因此如果銷毀了目標 `
 
 ### Allocator（`polymorphic_allocator`）
 
-如同前面所述，`std::pmr::polymorphic_allocato<T>` 的任何特化都完全符合 STL allocator requirement ，是個貨真價實的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
+如同前面所述，`std::pmr::polymorphic_allocato<T>` 的任何特化都完全符合 STL allocator requirement，是個貨真價實的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
 
 因此就算在編譯期屬於同一個靜態 allocator 型別，透過在建構時傳入不同的 `memory_resource`，該特化的不同實體便能展現完全不同的配置行為。 這種執行期多型讓使用 `polymorphic_allocator` 的物件在執行時，就像使用了不同的 allocator 型別一樣靈活：
 

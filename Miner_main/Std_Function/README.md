@@ -11,7 +11,7 @@ category: C++ Miner
 
 `std::function` 是 C\+\+11 時加入的東西，它基本上是一個類型模板(Class Template)，目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用，像是函式、lambda、`std::bind`、Functor(function object) 等等
 
-包裝起來的可呼叫物件我們稱它為 `target`，如果一個 `std::function` 還沒包裝任何物件，也就是沒有 target，我們稱它為空(empty)，此時我們如果使用了 target，它會丟出一個 <a href = "https://en.cppreference.com/w/cpp/utility/functional/bad_function_call" class = "pinklink">std::bad_function_call</a> 的例外處理
+包裝起來的可呼叫物件我們稱它為 `target`，如果一個 `std::function` 還沒包裝任何物件，也就是沒有 target，我們稱它為空(empty)，此時我們如果使用了 target，它會丟出一個 [std::bad_function_call](https://en.cppreference.com/w/cpp/utility/functional/bad_function_call) 的例外處理
 
 `std::function` 在 C\+\+17 時有做了一些修正，遺棄了一些東西，這篇文章會以新版的規則來記錄
 
@@ -171,7 +171,7 @@ int main() {
 
 > std::function<回傳型態(參數列)> 實例名 = 初始化器
 
-初始化器就是拿來初始化的東西，前面也提到了只要是可呼叫的物件都可以拿來用，看看 <a href = "https://en.cppreference.com/w/cpp/utility/functional/function" class = "pinklink">cppreference</a> 上的例子：
+初始化器就是拿來初始化的東西，前面也提到了只要是可呼叫的物件都可以拿來用，看看 [cppreference](https://en.cppreference.com/w/cpp/utility/functional/function) 上的例子：
 
 ```cpp
 #include <functional>
@@ -244,7 +244,7 @@ int main() {
 
 從上例可見可儲存的東西挺多的，只要是可呼叫物件基本上都可以儲存。不過不知道大家有沒有覺得有其中一個很奇怪，那就是 `std::function<int( const Foo & )> f_num = &Foo::num_;`，右邊的這個 `&Foo::num_` 是個資料成員指標，那為什麼這個可以拿來初始化 `std::function` 呢?
 
-讓我們回顧一下最一開始的<a href = "https://timsong-cpp.github.io/cppwp/n4868/func.wrap.func#general-1" class = "pinklink">定義</a>：
+讓我們回顧一下最一開始的[定義](https://timsong-cpp.github.io/cppwp/n4868/func.wrap.func#general-1)：
 
 > std::funtion 這個類別模板提供了多型的 wrapper，通常拿來包函式指標。 這個 Wrapper 可以儲存，複製，和透過 `()` 呼叫任何的可呼叫物件，並允許 function 為一級函式
 
@@ -254,11 +254,11 @@ int main() {
 
 所以接下來的問題就變成「什麼是可呼叫的型態」了，定義如下：
 
-> 可呼叫型態指的是 function object type 或是一個資料成員的指標 ( <a href = "https://timsong-cpp.github.io/cppwp/n4868/func.def#3" class = "pinklink">20.14.3-3</a> )
+> 可呼叫型態指的是 function object type 或是一個資料成員的指標 ( [20.14.3-3](https://timsong-cpp.github.io/cppwp/n4868/func.def#3) )
 
 這樣答案就很明顯了，`&Foo::num_` 是個資料成員指標，代表他是可呼叫的物件，因此可以拿來初始化 `std::function`
 
-至於 function object type 指的則是一種在 function call 內可以是後序表達式(<a href = "https://timsong-cpp.github.io/cppwp/n4868/expr.post.general#nt:postfix-expression" class = "pinklink">postfix-expression</a>) 的物件型態，至於什麼是後序表達式這邊就先不介紹了，再寫下去會有點偏題
+至於 function object type 指的則是一種在 function call 內可以是後序表達式([postfix-expression](https://timsong-cpp.github.io/cppwp/n4868/expr.post.general#nt:postfix-expression)) 的物件型態，至於什麼是後序表達式這邊就先不介紹了，再寫下去會有點偏題
 
 那麼既然知道了什麼是 function object type，那麼 function object 很直覺的就是那些型態是 function object type 的物件了
 
@@ -273,9 +273,9 @@ int main() {
 這邊的內容除了怎麼使用以外可能也會扯到內部的結構，
 
 接下來的 `fn` 代表某個 `std::function` 的 instance，簡單來說就是 `std::function<void()> fn = 某個 callable object` 這樣，只是一個代稱方便大家理解
-+ 建構子
+- 建構子
 
-    基本上內部寫好的建構子有五個，加上最新的 <a href = "https://cplusplus.github.io/LWG/issue2774" class = "pinklink">Defect Report(C\+\+23)</a> 內提出的方法有六個 
+    基本上內部寫好的建構子有五個，加上最新的 [Defect Report(C\+\+23)](https://cplusplus.github.io/LWG/issue2774) 內提出的方法有六個 
 
     1、2：
     ```cpp
@@ -317,23 +317,23 @@ int main() {
     function( F&& f );    // 6
     ```
 
-    最後這個是最近更新的，還不在標準裡面，但有在 <a href = "https://eel.is/c++draft/func.wrap.func#lib:function,constructor____" class = "pinklink">C\+\+23 的草案</a>裡面，如果想看舊版的規範可以到<a href = "https://timsong-cpp.github.io/cppwp/n4868/func.wrap.func.con#lib:function,constructor____" class = "pinklink">這裡</a>看，另外裡面還有對編譯器實作的建議、Postconditions 和 Preconditions 等等，有興趣的也可以進來看
+    最後這個是最近更新的，還不在標準裡面，但有在 [這裡](https://eel.is/c++draft/func.wrap.func#lib:function,constructor____)看，另外裡面還有對編譯器實作的建議、Postconditions 和 Preconditions 等等，有興趣的也可以進來看
 
-    具體上的原因可以到 <a href = "https://cplusplus.github.io/LWG/issue2774" class = "pinklink">Defect Report(C\+\+23)</a> 看，簡單來說就是 `operator=` 吃的是 `F&& f`，而如果 constructor 用複製的會有一些 Value Categories 上的影響
+    具體上的原因可以到 [Defect Report(C\+\+23)](https://cplusplus.github.io/LWG/issue2774) 看，簡單來說就是 `operator=` 吃的是 `F&& f`，而如果 constructor 用複製的會有一些 Value Categories 上的影響
 
     在新版的實作內，我們會利用 `std::forward<F>(f)` 來初始化 target，target 的型態會是 `std::decay<F>::type`
 
     如果 `f` 是個 null 的 function pointer、member pointer 或一個由 `std::function` 特化的空值，那麼 `*this` 會是一個空的 `std::function`
 
-    這個 constructor 不會參加多載解析(<a href = "https://en.cppreference.com/w/cpp/language/overload_resolution" class = "pinklink">Overload resolution</a>)，除非 target 的 type 不是 `std::function`，而且對於那些參數的型態 Args... 來說，它的 lvalue 是可呼叫的而且回傳的型態 R 也是可呼叫的型態
+    這個 constructor 不會參加多載解析([Overload resolution](https://en.cppreference.com/w/cpp/language/overload_resolution))，除非 target 的 type 不是 `std::function`，而且對於那些參數的型態 Args... 來說，它的 lvalue 是可呼叫的而且回傳的型態 R 也是可呼叫的型態
 
     如果 target 的 type 不能複製，或者初始化的格式不對，那麼這是個 ill-formed
 
-+ 解構子
+- 解構子
 
     destructor 就相對沒那麼複雜了，但要注意一下解構的時候的時候會連 target 一起解構
 
-+ operator=
+- operator=
 
     基本上內部寫好的有五個
 
@@ -376,7 +376,7 @@ int main() {
 
     上面這個會把 f 的 target 複製給 `*this` 的 target
 
-+ operator bool
+- operator bool
 
     `std::function` 的 operator bool 會檢查 `*this` 的 target 是否為空，如果非空就回傳 true，如果是空的就回傳 false
 
@@ -410,7 +410,7 @@ int main() {
     }
     ```
 
-+ operator()
+- operator()
 
     > R operator()( Args... args ) const;
 
@@ -443,9 +443,9 @@ int main() {
     }
     ```
 
-+ swap
-    語法： `fn.swap(目標)`
-    作用： 交換所存的 callable object
+- swap
+    語法：`fn.swap(目標)`
+    作用：交換所存的 callable object
     例子：
 
     ```cpp
@@ -473,7 +473,7 @@ int main() {
     }
     ```
 
-+ target_type
+- target_type
 
     > const std::type_info& target_type() const noexcept;
 
@@ -501,7 +501,7 @@ int main() {
     }
     ```
 
-+ target
+- target
 
     ```cpp
     template< class T >
@@ -565,7 +565,7 @@ int main() {
 
 ### Deduction Guides 模板推導指引 
 
-在 C\+\+17 時有個叫 CTAD 的東西出現了，不知道的朋友可以先到 <a href = "https://en.cppreference.com/w/cpp/language/class_template_argument_deduction" class = "pinklink">cppreference</a> 上看，或看一下 <a href = "https://tjsw.medium.com/%E6%BD%AE-c-17-class-template-argument-deduction-%E5%92%8C-deduction-guide-%E9%A1%9E%E5%88%A5%E6%A8%A3%E7%89%88%E5%8F%83%E6%95%B8%E6%8E%A8%E5%B0%8E-70cc36307a42" class = "pinklink">TSJW的文章</a>
+在 C\+\+17 時有個叫 CTAD 的東西出現了，不知道的朋友可以先到 [TSJW的文章](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction)
 
 簡單來說就是讓模板自己推定型態的技術，舉個例子：`std::vector<int> vec = {5};` 可以寫成 `std::vector vec = {5};` 這樣，int 可以由編譯器推導出來。雖然看起來好像很簡單，但後面牽扯到的東西挺多的，像是自訂的型態等等，這邊不討論太多，因為不是今天的主題
 
@@ -605,7 +605,7 @@ int main() {
 
 內部概念我大概會講一下架構，然後帶大家看一下 GCC 上的優化與 code
 
-接下來的內容主要參考了 Raymond 的兩篇文章、 Stackoverflow 上的講解與 jerrt_fuyi 的文章：<a href = "https://devblogs.microsoft.com/oldnewthing/20200513-00/?p=103745" class = "pinklink">連結 1</a>、<a href = "https://devblogs.microsoft.com/oldnewthing/20200514-00/?p=103749" class = "pinklink">連結 2</a>、<a href = "https://stackoverflow.com/questions/18453145/how-is-stdfunction-implemented" class = "pinklink">連結 3</a>、<a href = "https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html" class = "pinklink">連結 4</a>，有興趣的可以進去看看原文
+接下來的內容主要參考了 Raymond 的兩篇文章、Stackoverflow 上的講解與 jerrt_fuyi 的文章：[連結 4](https://devblogs.microsoft.com/oldnewthing/20200513-00/?p=103745)，有興趣的可以進去看看原文
 
 ### 架構
 
@@ -659,7 +659,7 @@ struct function {
 
 在上面使用了 `unique_ptr`，這會讓複製建構子有些難做，因為 `unique_ptr` 無法複製，因此在實作上通常會使用原生的指標，並自行管理資源的分配，比較複雜，但也比較方便我們優化
 
-可以看看另一個人幫忙做的簡化版本，這是 <a href = "https://stackoverflow.com/questions/18453145/how-is-stdfunction-implemented" class = "pinklink">StackOverflow</a> 上有人做的，他簡化的是 Ubuntu 14.04 gcc 4.8 上的 `std::function`，這邊他選擇將 `callable_base` 那些繼承的東西給簡化掉了，比較注重在內部消除型態的實現上，我幫忙整理了一下並加上了一些註解：
+可以看看另一個人幫忙做的簡化版本，這是 [StackOverflow](https://stackoverflow.com/questions/18453145/how-is-stdfunction-implemented) 上有人做的，他簡化的是 Ubuntu 14.04 gcc 4.8 上的 `std::function`，這邊他選擇將 `callable_base` 那些繼承的東西給簡化掉了，比較注重在內部消除型態的實現上，我幫忙整理了一下並加上了一些註解：
 
 ```cpp
 #include <iostream>
@@ -780,7 +780,7 @@ int main() {
 
 #### 前言
 
-接下來的內容有很多地方都來自 <a href = "https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html" class = "pinklink">jerry_fuyi</a> 的文章，基本上是引用過來，改寫一些部分，自己讀了很久，希望多加一些解釋，抓一些重點出來後，大家能更容易理解，如果看不習慣我的也很建議回去讀讀原文，因為真的寫得蠻好蠻詳細的
+接下來的內容有很多地方都來自 [jerry_fuyi](https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html) 的文章，基本上是引用過來，改寫一些部分，自己讀了很久，希望多加一些解釋，抓一些重點出來後，大家能更容易理解，如果看不習慣我的也很建議回去讀讀原文，因為真的寫得蠻好蠻詳細的
 
 而如果你已經看得很累了，那麼可以去休息一下，因為接下來的內容會比較生硬 XD
 
@@ -818,89 +818,52 @@ std::function<int(double)> f;
 
 ## 參考資料 
 
-**<a href = "https://en.cppreference.com/w/cpp/utility/functional/function" class = "redlink">1. std::function</a> (cppreference) (文章部分來源)**
+- [1. std::function](https://en.cppreference.com/w/cpp/utility/functional/function) (cppreference) (文章部分來源)
 
-**<a href = "https://timsong-cpp.github.io/cppwp/n4868/expr.post.general#nt:postfix-expression" class = "redlink">2. Expressions</a>**
+- [2. Expressions](https://timsong-cpp.github.io/cppwp/n4868/expr.post.general#nt:postfix-expression)
 
-**<a href = "https://timsong-cpp.github.io/cppwp/n4868/function.objects#def:function_object,type" class = "redlink">3. General utilities library</a>**
+- [3. General utilities library](https://timsong-cpp.github.io/cppwp/n4868/function.objects#def:function_object,type)
 
-**<a href = "https://timsong-cpp.github.io/cppwp/n4868/func.def" class = "redlink">4. Function Definitions</a>**
+- [4. Function Definitions](https://timsong-cpp.github.io/cppwp/n4868/func.def)
 
-**<a href = "https://stackoverflow.com/questions/18453145/how-is-stdfunction-implemented" class = "redlink">5. How is std::function implemented?
-</a>**
+- [5. How is std::function implemented?](https://stackoverflow.com/questions/18453145/how-is-stdfunction-implemented)
 
-**<a href = "https://devblogs.microsoft.com/oldnewthing/20200513-00/?p=103745" class = "redlink">6. Inside std::function, part 1: The basic idea</a>**
+- [6. Inside std::function, part 1: The basic idea](https://devblogs.microsoft.com/oldnewthing/20200513-00/?p=103745)
 
-**<a href = "https://stackoverflow.com/questions/1174169/function-passed-as-template-argument" class = "redlink">7. Function passed as template argument</a>**
+- [7. Function passed as template argument](https://stackoverflow.com/questions/1174169/function-passed-as-template-argument)
 
-**<a href = "https://dev.to/lesleylai/what-is-std-function-in-c-and-why-we-need-them-48d0" class = "redlink">8. What is std::function in C++, and why we need them?</a>**
+- [8. What is std::function in C++, and why we need them?](https://dev.to/lesleylai/what-is-std-function-in-c-and-why-we-need-them-48d0)
 
-**<a href = "https://stackoverflow.com/questions/25848690/should-i-use-stdfunction-or-a-function-pointer-in-c" class = "redlink">9. Should I use std::function or a function pointer in C++?</a>**
+- [9. Should I use std::function or a function pointer in C++?](https://stackoverflow.com/questions/25848690/should-i-use-stdfunction-or-a-function-pointer-in-c)
 
-**<a href = "https://www.796t.com/article.php?id=14448" class = "redlink">10. C++ 11 std::function和std::bind使用詳解</a>**
+- [10. C++ 11 std::function和std::bind使用詳解](https://www.796t.com/article.php?id=14448)
 
-**<a href = "https://stackoverflow.com/questions/35303332/what-are-preconditions-and-postconditions" class = "redlink">11. What are preconditions and postconditions?</a>**
+- [11. What are preconditions and postconditions?](https://stackoverflow.com/questions/35303332/what-are-preconditions-and-postconditions)
 
-**<a href = "https://en.cppreference.com/w/cpp/language/overload_resolution" class = "redlink">12. Overload resolution</a>**
+- [12. Overload resolution](https://en.cppreference.com/w/cpp/language/overload_resolution)
 
-**<a href = "https://en.cppreference.com/w/cpp/language/class_template_argument_deduction" class = "redlink">13. Class template argument deduction (CTAD)</a>**
+- [13. Class template argument deduction (CTAD)](https://en.cppreference.com/w/cpp/language/class_template_argument_deduction)
 
-**<a href = "https://tjsw.medium.com/%E6%BD%AE-c-17-class-template-argument-deduction-%E5%92%8C-deduction-guide-%E9%A1%9E%E5%88%A5%E6%A8%A3%E7%89%88%E5%8F%83%E6%95%B8%E6%8E%A8%E5%B0%8E-70cc36307a42" class = "redlink">14. 潮．C++17 | Class Template Argument Deduction 和 Deduction Guide 類別樣版參數推導</a>**
+- [14. 潮．C++17 | Class Template Argument Deduction 和 Deduction Guide 類別樣版參數推導](https://tjsw.medium.com/%E6%BD%AE-c-17-class-template-argument-deduction-%E5%92%8C-deduction-guide-%E9%A1%9E%E5%88%A5%E6%A8%A3%E7%89%88%E5%8F%83%E6%95%B8%E6%8E%A8%E5%B0%8E-70cc36307a42)
 
-**<a href = "https://stackoverflow.com/questions/22180312/difference-between-undefined-behavior-and-ill-formed-no-diagnostic-message-requ" class = "redlink">15. Difference between Undefined Behavior and Ill-formed, no diagnostic message required</a>**
+- [15. Difference between Undefined Behavior and Ill-formed, no diagnostic message required](https://stackoverflow.com/questions/22180312/difference-between-undefined-behavior-and-ill-formed-no-diagnostic-message-requ)
 
-**<a href = "https://iter01.com/553394.html" class = "redlink">16. C++ typeid關鍵字詳解</a>**
+- [16. C++ typeid關鍵字詳解](https://iter01.com/553394.html)
 
-**<a href = "https://stackoverflow.com/questions/17183761/c11-type-deduction-with-stdfunction" class = "redlink">17. C++11 Type Deduction With std::function</a>**
+- [17. C++11 Type Deduction With std::function](https://stackoverflow.com/questions/17183761/c11-type-deduction-with-stdfunction)
 
-**<a href = "https://stackoverflow.com/questions/12405102/template-argument-type-deduction-from-stdfunction-return-type-with-lambda" class = "redlink">18. template argument type deduction from std::function return type with lambda</a>**
+- [18. template argument type deduction from std::function return type with lambda](https://stackoverflow.com/questions/12405102/template-argument-type-deduction-from-stdfunction-return-type-with-lambda)
 
-**<a href = "https://stackoverflow.com/questions/5712826/argument-type-auto-deduction-and-anonymous-lambda-functions" class = "redlink">19. Argument type auto deduction and anonymous lambda functions</a>**
+- [19. Argument type auto deduction and anonymous lambda functions](https://stackoverflow.com/questions/5712826/argument-type-auto-deduction-and-anonymous-lambda-functions)
 
-**<a href = "https://stackoverflow.com/questions/42773202/type-deduction-for-stdfunction/42773516" class = "redlink">20. Type deduction for std::function</a>**
+- [20. Type deduction for std::function](https://stackoverflow.com/questions/42773202/type-deduction-for-stdfunction/42773516)
 
-**<a href = "https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html" class = "redlink">21. 剖析STD::FUNCTION接口与实现</a>** (文章部分來源)
+- [21. 剖析STD::FUNCTION接口与实现](https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html) (文章部分來源)
 
-**<a href = "https://stackoverflow.com/questions/4736044/checking-invariants-in-c" class = "redlink">22. checking invariants in C++</a>**
+- [22. checking invariants in C++](https://stackoverflow.com/questions/4736044/checking-invariants-in-c)
 
-**<a href = "https://advancedcppwithexamples.blogspot.com/2009/07/example-of-c-class-invariant.html" class = "redlink">23. Example of C++ class invariant</a>**
+- [23. Example of C++ class invariant](https://advancedcppwithexamples.blogspot.com/2009/07/example-of-c-class-invariant.html)
 
-**<a href = "https://stackoverflow.com/questions/14302834/when-to-make-a-type-non-movable-in-c11" class = "redlink">24. When to make a type non-movable in C++11?</a>**
+- [24. When to make a type non-movable in C++11?](https://stackoverflow.com/questions/14302834/when-to-make-a-type-non-movable-in-c11)
 
-**<a href = "http://llllkkkk.github.io/2014/04/26/-stdfunction-/" class = "redlink">25. 简析 std::function 实现原理</a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
-
-**<a href = "" class = "redlink"></a>**
+- [25. 简析 std::function 实现原理](http://llllkkkk.github.io/2014/04/26/-stdfunction-/)

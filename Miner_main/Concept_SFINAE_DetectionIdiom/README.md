@@ -571,7 +571,7 @@ template<>
 void func<int>(int) { puts("Hello"); } // (3)
 ```
 
-這個例子中 `(1)` 是個通用的版本，而 `(2)` 是對 `double` 的特化， `(3)` 是對 `int` 的特化，依照我們呼叫 `func()` 給的參數會執行這三個 function 的其中一種，目的在於給予 `double` 或 `int` 當參數時我們想要印出 `Hello`，其他想印出 `General`
+這個例子中 `(1)` 是個通用的版本，而 `(2)` 是對 `double` 的特化，`(3)` 是對 `int` 的特化，依照我們呼叫 `func()` 給的參數會執行這三個 function 的其中一種，目的在於給予 `double` 或 `int` 當參數時我們想要印出 `Hello`，其他想印出 `General`
 
 有了 `std::enable_if` 我們可以把 `(2)` 和 `(3)` 寫在一起：
 ```cpp
@@ -647,8 +647,8 @@ int main()
 
 `decltype(i)` 會回傳 `i` 的 type，`decltype((i))` 會對 type 加上一個 lvalue reference，若原型態為 reference type 則會進行 reference-collapsing，其[規則](https://isocpp.org/blog/2012/11/universal-references-in-c11-scott-meyers)如下：
 
-+ An rvalue reference to an rvalue reference becomes (“collapses into”) an rvalue reference.
-+ All other references to references (i.e., all combinations involving an lvalue reference) collapse into an lvalue reference.
+- An rvalue reference to an rvalue reference becomes (“collapses into”) an rvalue reference.
+- All other references to references (i.e., all combinations involving an lvalue reference) collapse into an lvalue reference.
 
 而這邊加的是 lvalue reference，因此基本上回傳的只會有 lvalue reference
 
@@ -834,8 +834,8 @@ TJSW 舉了一個很棒的[例子](https://tjsw.medium.com/%E6%BD%AE-c-detection
 
 我們用一個 `ToString` 來封裝，而邏輯大概是這樣的：
 
-+ 當傳入 ToString(t) 且呼叫 `t.ToString()` 合法，那便利用這個型別去特化一個 function template，在裡面呼叫 `t.ToString()`
-+ 否則檢查 `std::to_string(t)` 是否合法，合法的話便呼叫 `std::to_string(t)`
+- 當傳入 ToString(t) 且呼叫 `t.ToString()` 合法，那便利用這個型別去特化一個 function template，在裡面呼叫 `t.ToString()`
+- 否則檢查 `std::to_string(t)` 是否合法，合法的話便呼叫 `std::to_string(t)`
 
 重點是要怎麼知道 `t.ToString()` 合法呢? 方法也很簡單，嘗試利用 `std::declval` 去呼叫就可以了：
 
@@ -1585,7 +1585,7 @@ using detected_or = detail::detector<Default, void, Op, Args...>;
 
 ## 古典 C\+\+ 的做法(C\+\+11 以前)
 
-如果你有嘗試找過 Detected Idiom 相關的東西，像是 google 搜尋 「C\+\+ check if template class has member」之類的，你可能會發現還有另一種神奇的作法，用了兩個 char array，並以 array 大小判斷是否有指定 member，這其實是 C\+\+11 前還沒有 `std::enable_if` 的精典做法，我們通常稱之為 Member Detector
+如果你有嘗試找過 Detected Idiom 相關的東西，像是 google 搜尋「C\+\+ check if template class has member」之類的，你可能會發現還有另一種神奇的作法，用了兩個 char array，並以 array 大小判斷是否有指定 member，這其實是 C\+\+11 前還沒有 `std::enable_if` 的精典做法，我們通常稱之為 Member Detector
 
 我這邊從 [stack overflow](https://stackoverflow.com/questions/1005476/how-to-detect-whether-there-is-a-specific-member-variable-in-class) 上找到了一個還不錯的例子：
 ```cpp
@@ -1764,24 +1764,24 @@ template 真的是個大坑，畢竟~~實作泛型就是為了接受更多的苦
 
 ## 參考資料
 
-**<a href = "https://zhuanlan.zhihu.com/p/21314708" class = "redlink">1. C++模板进阶指南：SFINAE</a>**
+- [1. C++模板进阶指南：SFINAE](https://zhuanlan.zhihu.com/p/21314708)
 
-**<a href = "https://tjsw.medium.com/%E6%BD%AE-c-20-concepts-c-%E7%B7%A8%E8%AD%AF%E6%9C%9F%E6%AA%A2%E6%9F%A5%E7%9A%84%E6%AD%A3%E6%B4%BE%E9%81%93%E8%B7%AF-3db8bec914a4" class = "redlink">2. C\+\+20 | Concepts - C\+\+ 編譯期檢查的正派道路</a>**
+- [2. C\+\+20 | Concepts - C\+\+ 編譯期檢查的正派道路](https://tjsw.medium.com/%E6%BD%AE-c-20-concepts-c-%E7%B7%A8%E8%AD%AF%E6%9C%9F%E6%AA%A2%E6%9F%A5%E7%9A%84%E6%AD%A3%E6%B4%BE%E9%81%93%E8%B7%AF-3db8bec914a4)
 
-**<a href = "https://en.cppreference.com/w/cpp/language/constraints" class = "redlink">3. Constraints and concepts (since C++20)</a>**
+- [3. Constraints and concepts (since C++20)](https://en.cppreference.com/w/cpp/language/constraints)
 
-**<a href = "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1452r2.html" class = "redlink">4. P1452R2</a>**
+- [4. P1452R2](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2019/p1452r2.html)
 
-**<a href = "https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1084r2.pdf" class = "redlink">5. P1048R2</a>**
+- [5. P1048R2](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p1084r2.pdf)
 
-**<a href = "https://tjsw.medium.com/%E6%BD%AE-c-17-constexpr-if-part-2-%E5%86%8D%E6%9C%83%E4%BA%86-std-enable-if-%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E6%A8%A3%E7%89%88%E7%89%B9%E5%8C%96%E4%BA%86-86f06ac768da" class = "redlink">6. 潮．C++17 | constexpr if (2) 再會了 enable_if !? 再也不用樣版特化了</a>**
+- [6. 潮．C++17 | constexpr if (2) 再會了 enable_if !? 再也不用樣版特化了](https://tjsw.medium.com/%E6%BD%AE-c-17-constexpr-if-part-2-%E5%86%8D%E6%9C%83%E4%BA%86-std-enable-if-%E5%86%8D%E4%B9%9F%E4%B8%8D%E7%94%A8%E6%A8%A3%E7%89%88%E7%89%B9%E5%8C%96%E4%BA%86-86f06ac768da)
 
-**<a href = "https://www.youtube.com/watch?v=b5Kbzgx1w9A&t=2204s" class = "redlink">7. Back To Basics: Overload Resolution - CppCon 2021</a>**
+- [7. Back To Basics: Overload Resolution - CppCon 2021](https://www.youtube.com/watch?v=b5Kbzgx1w9A&t=2204s)
 
-**<a href = "https://hedzr.com/c++/algorithm/cxx-is_detected-and-detection-idioms/#%E5%85%B3%E4%BA%8E-stdis_detected" class = "redlink">8. 实作中的 std::is_detected 和 Detection Idioms (C++17)</a>**
+- [8. 实作中的 std::is_detected 和 Detection Idioms (C++17)](https://hedzr.com/c++/algorithm/cxx-is_detected-and-detection-idioms/#%E5%85%B3%E4%BA%8E-stdis_detected)
 
-**<a href = "https://stackoverflow.com/questions/87372/check-if-a-class-has-a-member-function-of-a-given-signature" class = "redlink">9. Check if a class has a member function of a given signature</a>**
+- [9. Check if a class has a member function of a given signature](https://stackoverflow.com/questions/87372/check-if-a-class-has-a-member-function-of-a-given-signature)
 
-**<a href = "https://stackoverflow.com/questions/1005476/how-to-detect-whether-there-is-a-specific-member-variable-in-class" class = "redlink">10. How to detect whether there is a specific member variable in class?</a>**
+- [10. How to detect whether there is a specific member variable in class?](https://stackoverflow.com/questions/1005476/how-to-detect-whether-there-is-a-specific-member-variable-in-class)
 
-**<a href = "https://cpptalk.wordpress.com/2009/09/12/substitution-failure-is-not-an-error-2/" class = "redlink">11. Substitution failure is not an error, part II</a>**
+- [11. Substitution failure is not an error, part II](https://cpptalk.wordpress.com/2009/09/12/substitution-failure-is-not-an-error-2/)

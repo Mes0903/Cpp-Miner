@@ -7,198 +7,198 @@ category: C++ Miner
 
 # C++ 教學系列 ── Windows 內的 C++ 與 VSCode 環境建置
 
-## 前言  
+## 前言
 
-這篇文章以 windows 為例，教大家如何建置 windows 上能寫 C++ 的環境。文字編輯器的部分我使用 Vscode，因為比較方便，擴充功能也挺多的，但這系列應該只會用到最基本的功能，擴充功能的部分大家可以自己多多摸索。  
+這篇文章以 windows 為例，教大家如何建置 windows 上能寫 C++ 的環境。文字編輯器的部分我使用 Vscode，因為比較方便，擴充功能也挺多的，但這系列應該只會用到最基本的功能，擴充功能的部分大家可以自己多多摸索。
 
-為了在 windows 上寫 C++，我們會需要兩個東西  
+為了在 windows 上寫 C++，我們會需要兩個東西
 
-1. 文字編輯器  
+1. 文字編輯器
 
-    本系列使用 Vscode，如果你有其他的選項當然也可以，自己習慣就好，甚至是記事本也 ok，或是你要用 IDE 也可以  
+    本系列使用 Vscode，如果你有其他的選項當然也可以，自己習慣就好，甚至是記事本也 ok，或是你要用 IDE 也可以
 
-2. 編譯器  
+2. 編譯器
 
-    編譯器是負責幫我們把 C++ code 翻譯給電腦看的軟體，本文使用 Mingw-gcc，如果你有其他選項也可以，一樣，習慣就好  
+    編譯器是負責幫我們把 C++ code 翻譯給電腦看的軟體，本文使用 Mingw-gcc，如果你有其他選項也可以，一樣，習慣就好
 
-之後的教學我可能是在 Linux 環境下撰寫的，但考慮到大多數人的環境可能還是 windows，所以寫了這篇讓大家能夠跟著建置可用的環境。  
+之後的教學我可能是在 Linux 環境下撰寫的，但考慮到大多數人的環境可能還是 windows，所以寫了這篇讓大家能夠跟著建置可用的環境。
 
-## Vscode 安裝  
+## Vscode 安裝
 
-首先到 Vscode 官網的[下載頁面](https://code.visualstudio.com/download)下載自己對應的系統版本，這邊我們選 Windows  
+首先到 Vscode 官網的[下載頁面](https://code.visualstudio.com/download)下載自己對應的系統版本，這邊我們選 Windows
 
 <div class = "center-column">
 
 ![](image/download1.png)
 
-</div>  
+</div>
 
-下載後開啟，並同意合約，然後下一步  
+下載後開啟，並同意合約，然後下一步
 
 <div class = "center-column">
 
 ![](image/download2.png)
 
-</div>  
+</div>
 
-這邊除了最後一個要勾之外其他的都看個人喜好，我自己是全勾，然後下一步並確認安裝，先不用重開機，後面裝完編譯器再重開就好。  
+這邊除了最後一個要勾之外其他的都看個人喜好，我自己是全勾，然後下一步並確認安裝，先不用重開機，後面裝完編譯器再重開就好。
 
 <div class = "center-column">
 
 ![](image/download3.png)
 
-</div>  
+</div>
 
-安裝好後開啟 Vscode，進到 Extension(圖片標示 1 處)，搜尋 `C++` (圖片標示 2 處)，然後安裝，我這邊是已經安裝好的畫面，各位左邊那條可能不會那麼多東西，數量不一樣是正常的，不用擔心。  
+安裝好後開啟 Vscode，進到 Extension(圖片標示 1 處)，搜尋 `C++` (圖片標示 2 處)，然後安裝，我這邊是已經安裝好的畫面，各位左邊那條可能不會那麼多東西，數量不一樣是正常的，不用擔心。
 
 <div class = "center-column">
 
 ![](image/download4.png)
 
-</div>  
+</div>
 
-如果看不習慣英文的可以下載中文模組，在剛剛那個搜尋欄裡面搜尋 Chinese，然後安裝：  
+如果看不習慣英文的可以下載中文模組，在剛剛那個搜尋欄裡面搜尋 Chinese，然後安裝：
 
 <div class = "center-column">
 
 ![](image/download5.png)
 
-</div>  
+</div>
 
-## 安裝 Mingw-gcc  
+## 安裝 Mingw-gcc
 
-本文使用的是 winlibs 提供的 Mingw-w64 GCC，你可以直接點[這裡](https://github.com/brechtsanders/winlibs_mingw/releases/download/11.2.0-9.0.0-ucrt-r5/winlibs-x86_64-posix-seh-gcc-11.2.0-mingw-w64ucrt-9.0.0-r5.7z)下載，或是進到 [winlibs](https://winlibs.com/) 的網站，在下方選擇你想要的版本，我上方連結給的版本是下圖紅圈圈起來的版本：  
+本文使用的是 winlibs 提供的 Mingw-w64 GCC，你可以直接點[這裡](https://github.com/brechtsanders/winlibs_mingw/releases/download/11.2.0-9.0.0-ucrt-r5/winlibs-x86_64-posix-seh-gcc-11.2.0-mingw-w64ucrt-9.0.0-r5.7z)下載，或是進到 [winlibs](https://winlibs.com/) 的網站，在下方選擇你想要的版本，我上方連結給的版本是下圖紅圈圈起來的版本：
 
 <div class = "center-column">
 
 ![](image/mingw1.png)
 
-</div>  
+</div>
 
-下載好後解壓縮，解壓縮出來的資料夾裡面會有一個叫 mingw 的資料夾：  
+下載好後解壓縮，解壓縮出來的資料夾裡面會有一個叫 mingw 的資料夾：
 
 <div class = "center-column">
 
 ![](image/mingw2.png)
 
-</div>  
+</div>
 
-把這個資料夾移到 C 槽或你想要的地方：  
+把這個資料夾移到 C 槽或你想要的地方：
 
 <div class = "center-column">
 
 ![](image/mingw3.png)
 
-</div>  
+</div>
 
-之後在 windows 搜尋「編輯系統環境變數」，點進去：  
+之後在 windows 搜尋「編輯系統環境變數」，點進去：
 
 <div class = "center-column">
 
 ![](image/mingw4.png)
 
-</div>  
+</div>
 
-在進階裡面有一個環境變數，點進去：  
+在進階裡面有一個環境變數，點進去：
 
 <div class = "center-column">
 
 ![](image/mingw5.png)
 
-</div>  
+</div>
 
-會發現下方系統變數的地方有一個 `Path`，連點它兩下，或選取後按編輯：  
+會發現下方系統變數的地方有一個 `Path`，連點它兩下，或選取後按編輯：
 
 <div class = "center-column">
 
 ![](image/mingw6.png)
 
-</div>  
+</div>
 
-點擊右方的新增，把剛剛的 mingw 下的 `bin` 資料夾位置貼進去：  
+點擊右方的新增，把剛剛的 mingw 下的 `bin` 資料夾位置貼進去：
 
 <div class = "center-column">
 
 ![](image/mingw7.png)
 
-</div>  
+</div>
 
-之後按確定出來，<strong><span class = "yellow">重開機</span></strong>。  
+之後按確定出來，<strong><span class = "yellow">重開機</span></strong>。
 
-## 測試第一個 C++ 程式  
+## 測試第一個 C++ 程式
 
-開啟 Vscode，選取左上方的檔案，然後選取開啟資料夾  
+開啟 Vscode，選取左上方的檔案，然後選取開啟資料夾
 
 <div class = "center-column">
 
 ![](image/test-cpp1.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp2.png)
 
-</div>  
+</div>
 
-然後創建一個資料夾，這個資料夾拿來放你要寫的 cpp 檔，名稱盡量用英文的比較好  
+然後創建一個資料夾，這個資料夾拿來放你要寫的 cpp 檔，名稱盡量用英文的比較好
 
 <div class = "center-column">
 
 ![](image/test-cpp3.png)
 
-</div>  
+</div>
 
-然後選取這個資料夾開啟，開啟後 Vscode 可能會問你是否要信任這個資料夾的作者，選是  
+然後選取這個資料夾開啟，開啟後 Vscode 可能會問你是否要信任這個資料夾的作者，選是
 
 <div class = "center-column">
 
 ![](image/test-cpp4.png)
 
-</div>  
+</div>
 
-此時你的畫面會長這樣，資料夾名稱的右邊有四個按鈕：  
+此時你的畫面會長這樣，資料夾名稱的右邊有四個按鈕：
 
 <div class = "center-column">
 
 ![](image/test-cpp5.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp6.png)
 
-</div>  
+</div>
 
-這四個按鈕的功能由左至右分別為新增檔案、新增資料夾、重新整理和摺疊資料夾。  
+這四個按鈕的功能由左至右分別為新增檔案、新增資料夾、重新整理和摺疊資料夾。
 
-我們選取新增檔案，檔名取為 `test.cpp`，`.cpp` 代表這是一個 C++ 的檔案，test 則是檔名，你可以取你喜歡的，但一樣檔名盡量取英文的：  
+我們選取新增檔案，檔名取為 `test.cpp`，`.cpp` 代表這是一個 C++ 的檔案，test 則是檔名，你可以取你喜歡的，但一樣檔名盡量取英文的：
 
 <div class = "center-column">
 
 ![](image/test-cpp7.png)
 
-</div>  
+</div>
 
-此時你的資料夾裡面應該長這樣：  
+此時你的資料夾裡面應該長這樣：
 
 <div class = "center-column">
 
 ![](image/test-cpp8.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp9.png)
 
-</div>  
+</div>
 
-在 Vscode 裡面點選剛剛創好的檔案，此時右邊會出現讓你編輯文字的畫面，輸入以下這段文字：  
+在 Vscode 裡面點選剛剛創好的檔案，此時右邊會出現讓你編輯文字的畫面，輸入以下這段文字：
 
 ```cpp
-#include <iostream>  
+#include <iostream>
 
 int main()  
 {  
@@ -211,61 +211,61 @@ int main()
 
 ![](image/test-cpp10.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp11.png)
 
-</div>  
+</div>
 
-按 ctrl+s 存檔後按 F5，此時會跳出一個選單，選取「C++ (GDB/LLDB)」：  
+按 ctrl+s 存檔後按 F5，此時會跳出一個選單，選取「C++ (GDB/LLDB)」：
 
 <div class = "center-column">
 
 ![](image/test-cpp12.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp13.png)
 
-</div>  
+</div>
 
-然後選取 「g++.exe - 建置及偵錯使用中的檔案」，後面的檔案位址要確認一下是不是剛剛安裝的 mingw：  
+然後選取「g++.exe - 建置及偵錯使用中的檔案」，後面的檔案位址要確認一下是不是剛剛安裝的 mingw：
 
 <div class = "center-column">
 
 ![](image/test-cpp14.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp15.png)
 
-</div>  
+</div>
 
-此時你的資料夾裡面會多一個叫做 `.vscode` 的資料夾，這個是 Vscode 的設定檔，然後右方(或下方)可能會跳出一個視窗，視窗上方由左至右分別為問題、輸出、偵錯主控台和終端機，這邊點選終端機，就可以看到剛剛程式執行的結果了  
+此時你的資料夾裡面會多一個叫做 `.vscode` 的資料夾，這個是 Vscode 的設定檔，然後右方(或下方)可能會跳出一個視窗，視窗上方由左至右分別為問題、輸出、偵錯主控台和終端機，這邊點選終端機，就可以看到剛剛程式執行的結果了
 
 <div class = "center-column">
 
 ![](image/test-cpp16.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp17.png)
 
-</div>  
+</div>
 
 <div class = "center-column">
 
 ![](image/test-cpp18.png)
 
-</div>  
+</div>
 
 這樣一來你的環境就建好了，好好享受 C++ ㄅ
 
