@@ -7,8 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── Small String Optimization (SSO)
 
-
-
 ## Small String Optimization (SSO)
 
 最近由於讀書會又把這個主題拿出來講了，想想再把這篇補得更詳細一點好了，因此就以 Raymond Chen 的文章為主體翻譯一下，再多補充一些資訊

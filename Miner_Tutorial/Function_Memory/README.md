@@ -7,8 +7,6 @@ category: C++ Miner
 
 # C++ 教學系列 ── Function 與 Memory
 
- 
-
 ## 函式 (Function)  
 
 函式是一個有名稱的程式碼區塊，通常拿來表示一個過程，可以接受參數並產生一個結果，我們可以透過呼叫(calling) 來使用函式。  
