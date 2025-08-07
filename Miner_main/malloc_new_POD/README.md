@@ -1,15 +1,11 @@
 ---
-title: 礦坑系列 ── malloc、new 與 POD Type
+title: （WIP）礦坑系列 ── malloc、new 與 POD Type
 date: 2022-09-19
 tag: C++ Miner-main
 category: C++ Miner
 ---
 
-# 礦坑系列 ── malloc、new 與 POD Type
-
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
+# （WIP）礦坑系列 ── malloc、new 與 POD Type
 
 ## 前言
 

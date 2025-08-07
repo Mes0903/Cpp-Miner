@@ -7,10 +7,6 @@ category: C++ Miner
 
 # C++ 教學系列 ── Object、Expression、Statement
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言  
 
 這是 C\+\+ 礦坑系列的前篇，為了讓大家能夠看懂礦坑系列在寫什麼，決定從 0 開始做一整個系列的教學。  
@@ -58,7 +54,7 @@ hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%
 </div>
 
 > source：[淺談 c++ 編譯到鏈結的過程](https://medium.com/@alastor0325/https-medium-com-alastor0325-compilation-to-linking-c07121e2803)  
-在[環境建置篇](https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FMinerT_enviroment)內有類似這樣的一段程式碼：  
+在[環境建置篇](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Environment_Building)內有類似這樣的一段程式碼：  
 
 ```cpp
 #include <iostream>  

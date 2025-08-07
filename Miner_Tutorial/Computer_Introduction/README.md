@@ -7,10 +7,6 @@ category: C++ Miner
 
 # C++ 教學系列 ── 淺談計算機概論
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言
 
 首先對於這系列的文，如果有什麼寫錯的地方，都歡迎直接修改或與我討論，文章有被修改我都會收到 email 通知，這部分我想老生常談了，因此就不再多做展開
@@ -142,7 +138,7 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 <div class = "center-column">
 
-<img src ="https://github.com/Mes0903/Cpp-Miner/blob/standard-markdown/Miner_Tutorial/Computer_Introduction/image/automata.png?raw=true"> 
+![](image/automata.png) 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Combinational_logic))
 
@@ -217,12 +213,12 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/ddr4.png" width = 60%>
+![](image/ddr4.png)
 
 (兩支美光 Crucial 8GB DDR4-2133 ECC 1.2V RDIMM)    
 (source：[Wikipedia](https://zh.wikipedia.org/zh-tw/DDR4_SDRAM#/media/File:Two_8_GB_DDR4-2133_ECC_1.2_V_RDIMMs.jpg))
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/NES-SRAM.png" width = 60%>
+![](image/NES-SRAM.png)
 
 (任天堂 NES 內的 SRAM，容量為 2Kx8 bit)   
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg))
@@ -261,7 +257,7 @@ CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/uniprocessor-CPU.png" width = 60%> 
+![](image/uniprocessor-CPU.png) 
 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
 
@@ -283,7 +279,7 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CPU.png" width = 40%> 
+![](image/CPU.png) 
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
 
 </div>
@@ -292,12 +288,12 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/chipset-layout.png" width=50%> 
+![](image/chipset-layout.png) 
 
 (Pentium II/III 時代的典型晶片組佈局)   
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/chipset-layout-2.png" width=50%> 
+![](image/chipset-layout-2.png) 
 
 (我覺得這張寫得更清楚一點)    
 (source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
@@ -347,7 +343,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-read.gif" width=90%> 
+![](image/scott-read.gif) 
 
 </div>
 
@@ -357,7 +353,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/scott-write.gif" width=90%> 
+![](image/scott-write.gif) 
 
 </div>
 
@@ -407,7 +403,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/CMOS.png" width = 70%>
+![](image/CMOS.png)
 
 (Pico ITX 主機板中的 CMOS 電池，右邊那顆銀色圓圓的就是)    
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg))
@@ -445,7 +441,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Mes_Note/refs/heads/main/Operating_System/Ch1_Introduction/Image/General_Purpose_Operating_Systems.jpg" width = 70%>
+![](image/General_Purpose_Operating_Systems.jpg)
 
 (source：[清大周志遠教授的 OS 講義](https://ocw.nthu.edu.tw/ocw/index.php?page=course_news_content&cid=141&id=999))
 
@@ -473,7 +469,7 @@ Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/von-Neumann-machine-code.png" width = 80%>
+![](image/von-Neumann-machine-code.png)
 
 </div>
 
@@ -495,7 +491,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/binary-file.png" width = 70%>
+![](image/binary-file.png)
 
 </div>
 
@@ -503,7 +499,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 從剛剛的圖中，我們可以看見最一開始的地方擁有 `4D 5A` 這個簽名，這是 windows 上的執行檔簽名，格式被稱為 PE-file format。 現今的執行檔主要有兩種格式，一種為 ELF，主要在 Unix 與 Unix-like 的 OS 上被使用；另一種則為 PE，主要用在 windows 的 OS 上
 
-對於這兩種格式，這邊不打算多做展開，因為這展開還蠻複雜的，但是之前因為我在數學系的專題是刻 boosting 演算法和 Random Forest 演算法去偵測一個 PE File 是否為惡意軟體，所以有稍微讀過 PE File 的細節，有興趣的可以看看我的筆記：[PE FILE](https://hackmd.io/@Mes/PE_File_Format)
+對於這兩種格式，這邊不打算多做展開，因為這展開還蠻複雜的，但是之前因為我在數學系的專題是刻 boosting 演算法和 Random Forest 演算法去偵測一個 PE File 是否為惡意軟體，所以有稍微讀過 PE File 的細節，有興趣的可以看看我的筆記：[PE FILE](https://mes0903.github.io/security/PE_file_format/)
 
 另外，如果對 windows 上的行為，包括這邊講的 PE File，又或是 windows OS 本身有興趣的，可以去讀讀看馬哥的書：[Windows-APT-Warfare](https://github.com/aaaddress1/Windows-APT-Warfare)
 
@@ -513,12 +509,12 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 <div class = "center-column">
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/ELF-format.png" width = 80%>
+![](image/ELF-format.png)
 
 (ELF File layout)   
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:ELF_Executable_and_Linkable_Format_diagram_by_Ange_Albertini.png))
 
-<img src = "https://raw.githubusercontent.com/Mes0903/Cpp-Miner/refs/heads/standard-markdown/Miner_Tutorial/Computer_Introduction/image/PE-format.png" width = 80%>
+![](image/PE-format.png)
 
 (PE File layout)    
 (source：[Wikipedia](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg))

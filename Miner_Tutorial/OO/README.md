@@ -7,10 +7,6 @@ category: C++ Miner
 
 # C++ 教學系列 ── Class & 物件導向
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言  
 
 物件導向有三個很重要的特性：資料抽象化、繼承與動態連結。資料抽象化上章有提到，就是將介面與實作分開；繼承的話則可以幫助我們建立相似模型之間的關係；動態連結則可以讓我們使用某些型態的物件時不用在意其內部細節。  
@@ -595,9 +591,9 @@ int main()
 }  
 ```
 
-對於這個 memory layout，有興趣的話可以到 [malloc、new 與 POD Type](https://hackmd.io/@Mes/Miner_malloc_new_pod) 看更多  
+對於這個 memory layout，有興趣的話可以到 [malloc、new 與 POD Type](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/malloc_new_POD) 看更多  
 
-而我們之前在 [Object、Expression、Statement](https://hackmd.io/@Mes/MinerT_Object_Expression_Statement#Type) 內，有提到 Type 的本質是對物件、reference 和函式的一種「解讀方式」，你可以理解為它是一種讓你知道「如何讀取一塊記憶體」的標籤，例如 `0x41` 這段 binary，如果我們使用 `char` 來解讀，那他的表現方式就是英文字母 `A`，但如果我們用 `int` 來解讀，他的表現方式則是 `65`  
+而我們之前在 [Object、Expression、Statement](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Object_Expression_Statement) 內，有提到 Type 的本質是對物件、reference 和函式的一種「解讀方式」，你可以理解為它是一種讓你知道「如何讀取一塊記憶體」的標籤，例如 `0x41` 這段 binary，如果我們使用 `char` 來解讀，那他的表現方式就是英文字母 `A`，但如果我們用 `int` 來解讀，他的表現方式則是 `65`  
 
 而在講 Class 時我們也有提到，Class 的本質是讓我們自訂義一個型態，也就是能夠自己定義一個物件的「解讀方式」，且在 C++ 中，<span class = "yellow">衍生類物件含有其對應基類的子物件</span>  
 

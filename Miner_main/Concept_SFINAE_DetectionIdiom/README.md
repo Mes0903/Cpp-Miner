@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── Concept と SFINAE と Detection Idiom
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言
 
 ぼっち・ざ・ろっく！ 實在太棒了，標題致敬一下ギターと孤独と蒼い惑星 XD
@@ -284,7 +280,7 @@ int main()
 }
 ```
 
-對於同樣 function name 的 function call，Compiler 會透過 return type 與 argument type 來判別要呼叫哪個 function，不熟的朋友可以看看之前的文章：[函式重載 Function Overloading](https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FMinerT_function_and_memory#%E5%87%BD%E5%BC%8F%E9%87%8D%E8%BC%89-Function-Overloading)
+對於同樣 function name 的 function call，Compiler 會透過 return type 與 argument type 來判別要呼叫哪個 function，不熟的朋友可以看看之前的文章：[函式重載 Function Overloading](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_Tutorial/Function_Memory#%E5%87%BD%E5%BC%8F%E9%87%8D%E8%BC%89-function-overloading)
 
 在這裡，你大概就可以感受到那個味道了，`fn(c)` 在嘗試 `fn(int i)` 時失敗了，但因為還有 `fn(char c)`，因此並沒有給出 compile error，只有當完全沒有可以使用的 function 時才會給出 compile error
 

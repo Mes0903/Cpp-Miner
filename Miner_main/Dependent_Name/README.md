@@ -7,10 +7,6 @@ category: C++ Miner
 
 # (WIP) 礦坑系列 ── Dependent Name 與 Name lookup
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言
 
 在對 C\+\+ 做語法解析的時候，編譯器需要知道某個名稱是不是一個型態，像是這個例子：

@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── Indirect through null pointer
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言
 
 事情起於 jserv 的講義裡面有個 `&((data*)0)->c)` 這樣的操作，作用是求 `c` 在 `data` 這個 struct 中的偏移量，但那個 `0` 實在是讓我覺得很不順眼，為了確定他到底是不是 UB，我翻了一個多禮拜的 standard 與 committee paper，甚至翻了 CWG issue 和 Standard Defect Report，才總算是有個結果 (翻到快吐了)
