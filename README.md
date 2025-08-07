@@ -18,7 +18,7 @@ star: true
 
 而取叫礦坑的原因是因為在寫這類文章的時候要挖的東西實在是太多了XD 常常需要挖到 C++ 會議的討論紀錄之類的，像是礦坑那樣深不見底，而想要的東西像鑽石一樣十分難找，自己就像個礦工一樣不停地往內部探索，所以就取叫礦坑系列啦!
 
-感謝一路上教我許多東西的老師、朋友與 Stackoverflow、Discord 上那些不認識但十分熱心的人們
+感謝一路上教我許多東西的老師、朋友與 Stackoverflow、Discord 上那些不認識但十分熱心的人們。 還有要感謝林信良老師的文章，我的整個資工之路是從林信良老師的 C++ 系列文開始的
 
 由於 hackmd 改了圖片庫，導致後來 github repo 上的圖片連結與 hackmd 上的無法共用，所以後來慢慢將本書改成了以此 repo 為主，放在我自己的 Blog 上也比較好閱讀
 
@@ -48,8 +48,8 @@ star: true
 ### Cpp Miner 礦坑系列本文
 
 - [Value Categories 值類別](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Value_Categories)
-- [（WIP）malloc、new 與 POD Type](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/malloc_new_POD) (部分待補)
-- [std::function](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Std_Function) (source code 解析部分尚未完成)
+- [（WIP）malloc、new 與 POD Type](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/malloc_new_POD)
+- [（WIP）std::function](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Std_Function)
 - [Structured Binding 結構化綁定](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Structured_Binding)
 - [Concept、SFINAE 與 Detection Idiom](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Concept_SFINAE_DetectionIdiom)
 - [（WIP）Dependent Name 與 Name lookup](https://github.com/Mes0903/Cpp-Miner/tree/main/Miner_main/Dependent_Name)
@@ -68,7 +68,7 @@ star: true
 
 下面是一些 C/C++ 的 spec：
 
-<span class = "burlywood">C/C++ Language References (final/current working drafts)</span>
+C/C++ Language References (final/current working drafts)
 
 - C89：(沒有 PDF 版本)、[HTML](http://port70.net/~nsz/c/c89/c89-draft.html)
 - C99 (N1256)：[PDF](http://port70.net/~nsz/c/c99/n1256.pdf)、[HTML](http://port70.net/~nsz/c/c99/n1256.html)

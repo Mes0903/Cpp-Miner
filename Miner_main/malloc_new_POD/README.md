@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── malloc、new 與 POD Type
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言
 
 `new` 是 C\+\+ 內一個幫助我們操作記憶體的工具，傳統的 pure C 內也有類似的工具 `malloc`，然而由於 C\+\+ 語言上內建多支援了物件導向的特性，導致 `new` 比 `malloc` 多做了一些事情

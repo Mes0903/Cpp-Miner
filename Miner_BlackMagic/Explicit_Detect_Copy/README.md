@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── 用 "explicit" 來偵測複製
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 用 "explicit" 來偵測複製
 
 source：[C++ Weekly - Ep 241 - Using explicit to Find Expensive Accidental Copies](https://www.youtube.com/watch?v=5wJ-jKK_Zy0)

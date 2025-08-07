@@ -7,10 +7,6 @@ category: C++ Miner
 
 # C++ 教學系列 ── Class
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言  
 
 Class 背後最核心的概念是資料的抽象化(data abstraction)與資料封裝(data encapsulation)。這些是一種程式設計上的技巧、想法，其清楚區分了介面(interface)和實作(implementation)的不同，介面是與使用者直接互動的運算，實作則是利用了 Class 內的資料成員與成員函式來寫出的演算法，而封裝則是強制分開了介面與實作，實作會被隱藏，使用者只看的到介面，但看不到實作。  

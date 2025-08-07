@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── 四個你不該用 "const" 的時機
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 四個你不該用 "const" 的時機
 
 source：[C++ Weekly - Ep 75 - Why You Cannot Move From Const](https://www.youtube.com/watch?v=ZKaoR3dP9uM)

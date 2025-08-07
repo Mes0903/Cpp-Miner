@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── Allocator & PMR
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner/tree/hackmd" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言
 
 ![（ろあ 快回歸了，悠針れい 昨天宣布出道，感覺整個日子又都好起來了）](image/roa.png)

@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── C++03 ~ C++17 主要變化介紹 
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## Modern Cpp 在追求什麼?  
 
 來到 Modern Cpp，Cpp 已經不僅僅是個有物件導向的 C 了，其還追求 type-safe, metaprograming 與 static/compile time error 等議題，並包含了如 functional language 的特性進來，已經與以往的 Cpp 長的完全不一樣了。  

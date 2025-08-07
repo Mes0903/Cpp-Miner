@@ -7,10 +7,6 @@ category: C++ Miner
 
 # 礦坑系列 ── 值類別 Value Categoraries
 
-礦坑系列首頁：<strong><a href = "https://github.com/Mes0903/Cpp-Miner" class = "redlink">首頁</a></strong>
-
-hackmd 版首頁：<strong><a href = "https://hackmd.io/@Mes/Cpp_Miner/https%3A%2F%2Fhackmd.io%2F%40Mes%2FPreface" class = "redlink">首頁</a></strong>
-
 ## 前言
 
 原本想說要一個禮拜寫一篇礦坑，結果發現這種文都要花很多的時間，好像一篇一個月就差不多了XD 這篇文章特別感謝 Kris van Rens，我寫信問了他許多問題，他也很耐心的回答我XD 文章內容有許多部份都參考了他的講稿，他也提供了授權給我，真ㄉ是太感謝了XD
