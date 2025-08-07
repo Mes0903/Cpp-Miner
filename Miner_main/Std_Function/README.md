@@ -1,11 +1,11 @@
 ---
-title: 礦坑系列 ── std::function
+title: （WIP）礦坑系列 ── std::function
 date: 2021-06-12
 tag: C++ Miner-main
 category: C++ Miner
 ---
 
-# 礦坑系列 ── std::function
+# （WIP）礦坑系列 ── std::function
 
 ## 前言 
 

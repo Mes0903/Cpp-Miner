@@ -1,11 +1,11 @@
 ---
-title: 礦坑系列 ── malloc、new 與 POD Type
+title: （WIP）礦坑系列 ── malloc、new 與 POD Type
 date: 2022-09-19
 tag: C++ Miner-main
 category: C++ Miner
 ---
 
-# 礦坑系列 ── malloc、new 與 POD Type
+# （WIP）礦坑系列 ── malloc、new 與 POD Type
 
 ## 前言
 
