@@ -2434,5 +2434,5 @@ struct S {
 - [What is the purpose of std::scoped_allocator_adaptor?](https://stackoverflow.com/questions/22148258/what-is-the-purpose-of-stdscoped-allocator-adaptor)
 - [What is the purpose of allocator_traits\<T\> in C++0x?](https://stackoverflow.com/questions/4502691/what-is-the-purpose-of-allocator-traitst-in-c0x)
 - [Should every fancy pointer be an iterator?](https://stackoverflow.com/questions/45132546/should-every-fancy-pointer-be-an-iterator)
-- [How does a synchronized pool allocator (re)use a monotonic one?](https://stackoverflow.com/questions/77822494/how-does-a-synchronized-pool-allocator-reuse-a-monotonic-one?utm_source=chatgpt.com)
+- [How does a synchronized pool allocator (re)use a monotonic one?](https://stackoverflow.com/questions/77822494/how-does-a-synchronized-pool-allocator-reuse-a-monotonic-one)
 - [C++ type erasure](https://cplusplus.com/forum/articles/18756/)
