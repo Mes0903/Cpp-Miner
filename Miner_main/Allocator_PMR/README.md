@@ -329,7 +329,7 @@ Hello 4
 另外在一個還不錯的系列文 [C/C++ 修道院](https://zhuanlan.zhihu.com/p/185611161) 中還提到一些特殊但合理的需求：
 
 - 有些嵌入式平台沒有提供預設的 `malloc`/`free` 等底層記憶體管理函式，你需要繼承 `std::allocator`，並封裝自訂版本的 `malloc`/`free` 等更底層的 heap 記憶體管理函式
-- 自己實作的資料結構，有時會需要擴充(繼承) `std::allocator`
+- 自己實作的資料結構，有時會需要擴充（繼承） `std::allocator`
 
 以 Design Pattern 來說，這在語言設計上用的是 Adapter Pattern，`std::allocator_traits` 是一個 Adapter，用來包裝我們自訂的 Allocator，以滿足較少的實作需求，一旦你把你的 Allocator 包進 `std::allocator_traits`，就等於你獲得了一個 stateless、無重複實作負擔、可共用的 Allocator 代理人；你寫的 custom Allocator 可能只提供了一些簡單功能，但 `std::allocator_traits` 可以幫你補齊介面
 
@@ -485,6 +485,7 @@ class StackAllocator {
 public:
   using value_type = T;
 
+  StackAllocator() = default;
   StackAllocator() : pool{}, offset(0) {}
 
   template <typename U>
@@ -586,7 +587,7 @@ template<
 
 ### `std::scoped_allocator_adaptor`
 
-對於巢狀容器，例如 `std::vector<std::vector<int>>` 等，我們需要使用 `std::scoped_allocator_adaptor` 來讓 Allocator 能夠「自動向巢狀物件（如成員變數或巢狀容器）傳遞」
+對於巢狀容器，例如 `std::vector<std::vector<int>>` 等，如果容器和它的元素都需要使用 Allocator，那我們就需要使用 `std::scoped_allocator_adaptor` 來讓 Allocator 能夠「自動向巢狀物件（如成員變數或巢狀容器）傳遞」
 
 在沒有 `std::scoped_allocator_adaptor` 的情況下，讓我們模改一下上面的例子，假設想要弄個 `CustomString` 的 `std::vector`，需要這麼寫：
 
@@ -604,49 +605,56 @@ struct SharedPool {
 
 template <typename T>
 class StackAllocator {
-  public:
+public:
 	using value_type = T;
 
-	StackAllocator(SharedPool& pool_ref) : shared(&pool_ref) {}
+  StackAllocator() = default;
+	StackAllocator(SharedPool &pool_ref) : shared(&pool_ref) {}
 
 	template <typename U>
-	StackAllocator(StackAllocator<U> const& other) noexcept : shared(other.shared) {}
+	StackAllocator(const StackAllocator<U> &other) noexcept : shared(other.shared) {}
 
-	T* allocate(size_t n) {
+	T *allocate(size_t n)
+	{
 		size_t bytes = n * sizeof(T);
-		if (shared->offset + bytes > shared->buffer.size()) { throw std::bad_alloc(); }
+		if (shared->offset + bytes > shared->buffer.size()) {
+			throw std::bad_alloc();
+		}
 
-		T* ptr = reinterpret_cast<T*>(&shared->buffer[shared->offset]);
+		T *ptr = reinterpret_cast<T *>(&shared->buffer[shared->offset]);
 		shared->offset += bytes;
 		return ptr;
 	}
 
-	void deallocate(T* p, size_t n) {}
+	void deallocate(T *p, size_t n) {}
 
 	template <typename U>
 	struct rebind {
 		using other = StackAllocator<U>;
 	};
 
-	SharedPool* shared;
+	SharedPool *shared;
 };
 
 // Comparison operators for the Allocator
 template <typename T1, typename T2>
-bool operator==(StackAllocator<T1> const& a, StackAllocator<T2> const& b) {
+bool operator==(const StackAllocator<T1> &a, const StackAllocator<T2> &b)
+{
 	return a.shared == b.shared;
 }
 
 template <typename T1, typename T2>
-bool operator!=(StackAllocator<T1> const& a, StackAllocator<T2> const& b) {
+bool operator!=(const StackAllocator<T1> &a, const StackAllocator<T2> &b)
+{
 	return !(a == b);
 }
 
-int main() {
+int main()
+{
 	SharedPool pool;
 
-	using CustomString = std::basic_string<char, std::char_traits<char>, StackAllocator<char>>;
-	using CustomVector = std::vector<CustomString, StackAllocator<CustomString>>;
+	using CustomString = std::basic_string<char, std::char_traits<char>, StackAllocator<char>>; // The element is char
+	using CustomVector = std::vector<CustomString, StackAllocator<CustomString>>;								// The element is CustomString
 
 	StackAllocator<char> allocator_str(pool);
 	StackAllocator<CustomString> allocator_vec(pool);
@@ -662,7 +670,7 @@ int main() {
 }
 ```
 
-[輸出（`-std=c++11`）](https://godbolt.org/z/cnrTsrvTe)：
+[輸出（`-std=c++11`）](https://godbolt.org/z/13aEhe57M)：
 
 ```
 Hello, StackAllocator!
@@ -694,7 +702,7 @@ StackAllocator<CustomString> allocator_vec(pool);
 }
 ```
 
-在 `CustomVector` 處我們加上了 `std::scoped_allocator_adaptor`，此時 `std::vector` 的 Allocator 會自動被用來建構它的元素，即使被插入的物件 `CustomString("Hello!")` 和 `CustomString("Hello2!")` 並不是用相同的 Allocator 建構的（你可以看見不再需要傳 `allocator_str` 進去了）
+在 `CustomVector` 處我們加上了 `std::scoped_allocator_adaptor`，此時 `std::vector` 的 Allocator 會自動被用來建構它的元素，即使被插入的物件 `CustomString("Hello!")` 和 `CustomString("Hello2!")` 與該 vector 用的 Allocator 不同，也不再需要傳 `allocator_str` 進去了（[Godbolt link](https://godbolt.org/z/54Knor7KE)）
 
 另外，由於 `basic_string` 可以從 `const char*` 隱含地建構出來，所以最後那兩行可以進一步簡化為：
 
@@ -715,7 +723,7 @@ std::allocator_traits<allocator_type>::construct(get_allocator(), void_ptr, obj)
 ::new (ptr) value_type(obj);
 ```
 
-但是如果這個 Allocator 是 `std::scoped_allocator_adaptor<A>`，那它會用 template metaprogramming（像 `std::uses_allocator<T, Alloc>`）去檢查你要建構的 `value_type` 是不是可以接收 Allocator，如果不行，其會 fallback 為正常的建構行為，也就是：
+但是如果這個 Allocator 是 `std::scoped_allocator_adaptor<A>`，那它會用 traits class（像 `std::uses_allocator<T, Alloc>`）去檢查你要建構的 `value_type` 是不是可以接收 Allocator，如果不行，其會 fallback 為正常的建構行為，也就是：
 
 ```cpp
 std::allocator_traits<outer_allocator_type>::construct(outer_allocator(), void_ptr, obj);
@@ -735,7 +743,7 @@ std::allocator_traits<outer_allocator_type>::construct(outer_allocator(), void_p
 std::allocator_traits<outer_allocator_type>::construct(outer_allocator(), void_ptr, std::allocator_arg, inner_allocator(), obj);
 ```
 
-換句話說，Adaptor 會於其嵌套的 Allocator 呼叫 `construct()` 時會傳送額外的參數，因此物件才也會以 Allocator 來建構
+換句話說，Adaptor 會在它嵌套的 Allocator 呼叫 `construct()` 時傳送額外的參數，因此物件才也會以 Allocator 來建構
 
 上例中的 `inner_allocator_type` 會是 `std::scoped_allocator_adaptor` 的另一個特化，所以如果元素類型也是容器，它就會使用相同的方法來建構它的元素，而且分配器可以被往下傳遞到每個元素，以滿足你有容器的容器的容器等需求
 
@@ -910,7 +918,7 @@ int main() {
 }
 ```
 
-[輸出（`-std=c++17`）](https://godbolt.org/)：
+[輸出（`-std=c++17`）](https://godbolt.org/z/s3eYGbYxx)：
 
 ```
 42
@@ -931,7 +939,7 @@ int main() {
 
 ## PMR Usage
 
-粗略的介紹完整體的思想後我們就來看看該如何使用吧，主要可以分為兩個部分 ― Allocator 與 memory resource
+粗略的介紹完整體的思想後我們就來看看該如何使用吧，主要可以分為兩個部分：Allocator 與 memory resource
 
 ### memory resource
 
@@ -1029,7 +1037,7 @@ int main() {
 
 #### `monotonic_buffer_resource`
 
-- 可以傳遞一個 buffer 來當作其 memory pool，達到不使用 heap 的目的
+- 可以傳入一個 buffer 來當作其 memory pool，達到不使用 heap 的目的
 - 以「單向遞增」的方式配置記憶體，一但分配出去，就永遠不會釋放回個別使用者，只有在整個 resource 被銷毀時才會一次釋放（這種 Allocator 有個別名叫 Bump Allocator）
   - 因此非常快，其 `deallocate` 實際上什麼都不會做
 - Thread Unsafe
@@ -1779,19 +1787,19 @@ All point to same resource: YES
 
 這個定義與 C++11（N3337）的差別不大。 至此，對於 `tuple`、`pair` 等容器，還有 `scoped_allocator_adaptor`，他們背後套用 Allocator 的流程就有了個專有名詞「Uses-allocator construction」
 
-然而此時的 `tuple`、`pair` 與 `scoped_allocator_adaptor`，甚至是 `pmr` 內的實作，都需要經過
+另外，此時的 `tuple`、`pair` 與 `scoped_allocator_adaptor`，甚至是 `pmr` 內的實作，都需要經過
 
-1. 查 `uses_allocator_v`
-2. 選 leading / trailing / no-alloc
-3. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+1. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+2. 查 `uses_allocator_v`
+3. 選 leading / trailing / no-alloc
 
-同一套邏輯的程式碼到處都是，因此在 [P0591 R4](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0591r4.pdf) （於 C++20 引入）中就提了三個 utility function 幫助各家 compiler 實作 Uses-allocator construction：
+因此同一套邏輯的程式碼重複被實作了很多次。 在 [P0591 R4](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0591r4.pdf) （於 C++20 引入）中提了三個 utility function 幫助各家 compiler 實作 Uses-allocator construction：
 
 - `uses_allocator_construction_args`：生成與目標類型所需的 uses-allocator construction 風格相符的參數列表
 - `make_obj_using_allocator`：透過 uses-allocator construction 建立給定類型的對象
 - `uninitialized_construct_using_allocator`：透過 uses-allocator construction 在指定的記憶體位置建立給定類型的對象
 
-這樣標準庫的作者只要呼叫這三個函式，不用再重複複雜判定了。 雖然對我們來說不是很重要，但等等帶會簡單看一下 llvm frontend 的實作，所以可以稍微有個印象就好
+這樣標準庫的作者只要呼叫這三個函式，不用再重複做複雜的判定了。 雖然對我們來說不是很重要，但等等帶會簡單看一下 llvm frontend 的實作，所以可以稍微有個印象就好
 
 值得一提的是，標準內只有保證透過 `std::pmr::polymorphic_allocator::construct` 時才一定會走 Uses-allocator construction 的流程：
 
@@ -1945,7 +1953,7 @@ struct __uses_alloc_ctor : integral_constant<int, __uses_alloc_ctor_imp<_Tp, _Al
 
 對應到上方 `__user_alloc_construct_impl` 的三個重載版本
 
-::: tips  
+::: tip  
 - `2 - __ic`：
   - 若 `__ua == false` → 0
   - 若 `__ua == true` 且 `__ic == 1` → 1
@@ -1954,11 +1962,11 @@ struct __uses_alloc_ctor : integral_constant<int, __uses_alloc_ctor_imp<_Tp, _Al
 
 因此你可以看見 llvm frontend 目前還沒有使用 P0591 R4 內提出的三個 utility function 來實作這部分，仍是舊式的
 
-1. 查 `uses_allocator_v`
-2. 選 leading / trailing / no-alloc
-3. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+1. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+2. 查 `uses_allocator_v`
+3. 選 leading / trailing / no-alloc
 
-### 以自定義 class + Allocator 昨為有使用 Allocator 的 STL 容器的元素
+### 以自定義 class + Allocator 作為有使用 Allocator 的 STL 容器的元素
 
 終於來到重點了，現在我們來看看要如何將自定義的 class 放到有使用 Allocator 的 STL 容器中。 讀完前面後，你應該可以知道對於 STL 容器來說，使用傳統 Allocator 和使用 PMR Allocator 的差異在於：
 
