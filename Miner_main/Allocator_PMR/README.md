@@ -15,6 +15,14 @@ category: C++ Miner
 
 Allocator 與 PMR 讓你能在 stack 上開一個 memory pool，利用 STL 給的 API 去操控它，STL 的容器也可以將 data 配置於其中，不必再使用到 heap，進而避免 heap allocation，帶來一些加速的效果，尤其是對樹狀結構的 heap allocation 而言，在 free memory 時其也會有一定的負擔，對於這種結構的加速會更好
 
+::: tip  
+不過這邊要先潑個冷水，我個人看完後覺得這個東西不是很好用，尤其是在大型專案中，你很難保證大家都宣告了正確的 type，像是有人隨便在一個 context 中宣告了 `std::string`，我們很難去擋它。 而就算是在嵌入式這種可能沒有 3rdparty 的環境下，這種問題還是有可能出現
+
+因此我認為這個東西主要還是用在一些較封閉（不會 expose 出去）且小的組件中，用來達到加速的效果，但是對於 global memory pool 這種用途來說，正規的作法應該還是要像 [jemalloc](https://github.com/jemalloc/jemalloc/blob/dev/src/jemalloc.c) 一樣透過 override `malloc` 跟 `free` 相關的函式，或是讓 linker 去用自己的實作之類的方法來達成
+
+不過無論如何，有這個東西存在，看看也是挺有趣的，上次奧義的 C++ 讀書會我就拿這篇出來報了（[PPT 檔案](./Allocator-PMR.pptx)），PPT 上的圖片有些小錯誤，本文中已經做了勘誤，因此請以本文為準  
+:::
+
 這篇文會參考 Jason Turner 的影片（應該很多人看過?），還有 C++17 Complete Guide 裡面的章節，順便再整理一下幾場 CppCon 與 [N3916](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3916.pdf) 的內容
 
 底下是一個 Jason Turner 在影片底下給的 `std::list` 的例子（[Quick C++ Benchmark 連結](https://quick-bench.com/q/gyRE6p5EdZ-2P0XOAUwO99JRN7g)）：
@@ -115,7 +123,7 @@ sizeof(buffer): 80
 00 00 00 00 | 00 00 00 00 | 00 00 00 00 | 00 00 00 00 | 
 ```
 
-:::info  
+::: tip  
 POD type 在 C++20 時正式被 `trivial` 與 `standard-layout` 這兩種型態取代了，傳統的 POD type 在 C++20 後被表達為 `trivial` 且 `standard-layout`，這邊就不展開了，可以看一下 [P0767R1](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0767r1.html) 提案的結論，或是[這篇 stackoverflow](https://stackoverflow.com/questions/48225673/why-is-stdis-pod-deprecated-in-c20)  
 :::
 
@@ -139,7 +147,7 @@ POD type 在 C++20 時正式被 `trivial` 與 `standard-layout` 這兩種型態�
 
 對此 Stepanov 有在另一場訪談中提了一些感想（[連結](http://www.stlport.org/resources/StepanovUSA.html)）。 而再到更後來的 C++11，Allocator 的變化可以說是已經完全與當初的目的不同了，現如今，Allocator 的作用主要是讓工程師可以控制容器內的記憶體配置。 一樣是負責封裝記憶體管理，但就不是當初要調整底層 memory model 的目的了
 
-::: info  
+::: tip  
 Al Stevens 的這篇訪談紀錄侯捷有轉載翻譯版到他的網站上，但禁止二次轉載，因此這邊就貼上連結給大家去讀讀，是篇很好但很舊的文章（比我還老XD）
 
 連結：[STL 之父訪談錄](https://web.archive.org/web/20140307111122fw_/http://jjhou.boolan.com/myan-alexander.htm)  
@@ -255,9 +263,17 @@ delete[] p;
 
 這個 `new` operator 配置並初始化了 `n` 個 `std::string`，但我們可能不需要這麼多，這樣一來我們就有可能會建構從未被使用的物件。 而對於有用到的物件，我們則需要再做一次額外的賦值，因此一個元素被寫入了兩次。 最後一個缺點是，沒有 default constructor 的類別沒有辦法用這種方法來配置成一個陣列
 
-使用 Allocator 時能讓我們將 allocation 與 construction 分開，讓我們可以操作一塊有 type info 且還沒被建構的原始記憶體。 前面也提到 Allocator 封裝了記憶體管理，STL 容器（像是 `std::vector`、`std::map` 等）在分配記憶體時都是透過 Allocator 提供的介面 `std::allocator_traits` 在操作的，因此流程基本上長這樣：
+Allocator 能<span class = "yellow">將 allocation 與 construction 分開</span>，讓我們可以操作一塊有 type info 且還沒被建構的原始記憶體。 前面也提到 Allocator 封裝了記憶體管理，標準中有提到 STL 容器（像是 `std::vector`、`std::map` 等）在分配記憶體時必須透過 Allocator 提供的介面 `std::allocator_traits` 來操作：
 
-![](image/STL_container.png)
+> [N4950（24.2.2.2-64）](https://timsong-cpp.github.io/cppwp/n4950/containers#container.reqmts-64)：Unless otherwise specified, all containers defined in this Clause obtain memory using an allocator (see [allocator.requirements]).  
+> ...  
+> A copy of this allocator is used for any memory allocation and element construction performed, by these constructors and by all member functions, during the lifetime of each container object or until the allocator is replaced.
+
+> [N4950（24.2.2.5-2）](https://timsong-cpp.github.io/cppwp/n4950/containers#container.alloc.reqmts-note-2)：[Note 2: A container calls `allocator_traits<A>​::​construct(m, p, args)` to construct an element at `p` using `args`, with `m == get_allocator()`. The default construct in allocator will call ​`::​new((void*)p) T(args)`, but specialized allocators can choose a different definition. — end note]
+
+因此流程基本上長這樣：
+
+![（此圖是簡化過的流程，標準中有提供非常詳細的流程敘述，後面我們會再詳細展開）](image/STL_container.png)
 
 對於 STL 容器，我們可以使用 `std::allocator` 與 `allocate` 來配置記憶體：
 
@@ -302,27 +318,25 @@ Hello 3
 Hello 4
 ```
 
-::: info  
+::: tip  
 這邊我並不像 C++ Primer 內使用 `alloc.construct`，這是因為這東西在 C++17 後被遺棄，C++20 時被移除了，主要是因為它的功能與 `std::allocator_traits` 重複了，更詳細的請去看 [D0174R0](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0174r0.html#2.4) 或是這篇 stackoverflow：[Why are are std::allocator's construct and destroy functions deprecated in c++17?](https://stackoverflow.com/questions/39414610/why-are-are-stdallocators-construct-and-destroy-functions-deprecated-in-c17)  
 :::
 
 ### 自定義 Allocator
 
-在標準中，允許使用自定義 Allocator 的容器被稱為 [AllocatorAwareContainer](https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer)，STL 中基本上除了 `std::array` 以外的容器都是，它們在使用 Allocator 時不是只接使用 Allocator 本身，而是透過 `std::allocator_trait` 這個介面來去間接地使用 Allocator
+在標準中，允許使用自定義 Allocator 的容器被稱為 [AllocatorAwareContainer](https://en.cppreference.com/w/cpp/named_req/AllocatorAwareContainer)，STL 中基本上除了 `std::array` 以外的容器都是。 而前面也有提到，它們在使用 Allocator 時不是只接使用 Allocator 本身，而是透過 `std::allocator_traits` 這個介面來去間接地使用 Allocator：
 
-:::info  
-對於 `std::string` 來說比較特別，因為它有 SSO，所以在標準內算是個特例  
-:::
+> [N4950（24.2.1）](https://timsong-cpp.github.io/cppwp/n4950/container.requirements#pre-3)：Allocator-aware containers ([container.alloc.reqmts]) other than `basic_string` construct elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​construct` and destroy elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​destroy` ([allocator.traits.members]), where U is either `allocator_type​::​value_type` or an internal type used by the container. These functions are called only for the container's element type, not for internal types used by the container.<br><br>
+> 
+> [Note 1: This means, for example, that a node-based container would need to construct nodes containing aligned buffers and call construct to place the element into the buffer. — end note]  
 
-:::tip  
-[N4950（24.2.1）](https://timsong-cpp.github.io/cppwp/n4950/container.requirements#pre-3)：Allocator-aware containers ([container.alloc.reqmts]) other than `basic_string` construct elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​construct` and destroy elements using the function `allocator_traits<allocator_type>​::​rebind_traits<U>​::​​destroy` ([allocator.traits.members]), where U is either `allocator_type​::​value_type` or an internal type used by the container. These functions are called only for the container's element type, not for internal types used by the container.
-
-[Note 1: This means, for example, that a node-based container would need to construct nodes containing aligned buffers and call construct to place the element into the buffer. — end note]  
+::: tip  
+`std::string` 比較特別，因為它有 SSO，所以在標準內算是個特例  
 :::
 
 這麼做是因為標準對 Allocator 洋洋灑灑的列了許多要求，基本上就是規定要有哪些成員變數與成員函式，而且不同的成員還有各自需要滿足的要求，你可以在 [cppreference](https://en.cppreference.com/w/cpp/named_req/Allocator) 上面看到許多表格來描述它們
 
-但如果每次客製化時都要把這些要求一個一個完成，那就太麻煩了，畢竟真的很多，因此才需要 `std::allocator_trait` 這個中介層，這個東西對大部分的需求提供了一個「預設」的版本，如此一來我們只需要對在意的操作進行客製化，其他的部分則使用 `std::allocator_trait` 的預設版本即可
+但如果每次客製化時都要把這些要求一個一個完成，那就太麻煩了，畢竟真的很多，因此才需要 `std::allocator_traits` 這個中介層，這個東西對大部分的需求提供了一個「預設」的版本，如此一來我們只需要對在意的操作進行客製化，其他的部分則使用 `std::allocator_traits` 的預設版本即可
 
 因此，在我們需要自己管理容器的記憶體時，可以通過自己寫一個 Allocator，套用給 `std::allocator_traits` 來達到目的，不知道大家還記不記得這篇文的初衷，我們不想要 heap allocation
 
@@ -417,16 +431,16 @@ class Allocator {
 // }
 ```
 
-其中註解的部分是 `std::allocator_traits` 有預設版本的成員，所以如果沒有用到你可以把他們都刪了。 不過這篇文章是 2016 寫的，所以是比較以前的版本，但基本上這個東西沒什麼太大的更動，所以還是很好用的
+其中註解的部分是 `std::allocator_traits` 有預設版本的成員，所以如果沒有用到你可以把它們都刪了。 不過這篇文章是 2016 寫的，因此是比較以前的版本，但因為基本上這個東西沒什麼太大的更動，所以還是很好用的
 
-因此你可以看到基本上你需要的實作部分有：
+從這裡可以看到基本上你需要的實作部分有：
 
 - `value_type`
 - `allocate`
 - `deallocate`
 - 預設建構子和複製建構子「建議」都要有，但非必要，因為你寫的東西高機率會用到 rebind 相關的函式（真的用不到還是可以不寫）
 
-下面是一個簡單的最簡（幾乎）自定義 Allocator：
+下面是一個最簡（幾乎）的自定義 Allocator：
 
 ```cpp
 #include <iostream>
@@ -485,7 +499,6 @@ class StackAllocator {
 public:
   using value_type = T;
 
-  StackAllocator() = default;
   StackAllocator() : pool{}, offset(0) {}
 
   template <typename U>
@@ -588,6 +601,10 @@ template<
 ### `std::scoped_allocator_adaptor`
 
 對於巢狀容器，例如 `std::vector<std::vector<int>>` 等，如果容器和它的元素都需要使用 Allocator，那我們就需要使用 `std::scoped_allocator_adaptor` 來讓 Allocator 能夠「自動向巢狀物件（如成員變數或巢狀容器）傳遞」
+
+::: tip  
+`std::scoped_allocator_adaptor` 本身也是一個 Allocator，滿足 Allocator requirement  
+:::
 
 在沒有 `std::scoped_allocator_adaptor` 的情況下，讓我們模改一下上面的例子，假設想要弄個 `CustomString` 的 `std::vector`，需要這麼寫：
 
@@ -711,7 +728,7 @@ v.push_back("Hello!");
 v.push_back("Hello2!");
 ```
 
-通常，如前面所述，當一般的 `std::vector` 要建構一個元素（比如 `push_back(obj)`）時，他會呼叫：
+通常，如前面所述，當一般的 `std::vector` 要建構一個元素（比如 `push_back(obj)`）時，它會呼叫：
 
 ```cpp
 std::allocator_traits<allocator_type>::construct(get_allocator(), void_ptr, obj);
@@ -730,6 +747,10 @@ std::allocator_traits<outer_allocator_type>::construct(outer_allocator(), void_p
 ```
 
 如剛剛所說，這通常底層會是個 placement new
+
+::: tip  
+詳細後面會再展開，也有不是 placement new 的狀況  
+:::
 
 而如果可以接收 Allocator，`std::scoped_allocator_adaptor` 就會自動在建構子中注入 Allocator，形式會像是：
 
@@ -760,19 +781,29 @@ Pablo Halpern 在 PMR 的提案（[N3916](https://www.open-std.org/jtc1/sc22/wg2
 第一點我們透過前方的 `scoped_allocator_adaptor` 解決了，而如果你有看完前面的例子，你應該也能看懂第二點：你每用一個 Allocator，就會多一個 static type，舉個例子，假設有以下 `std::vector`：
 
 ```cpp
-auto my_vector = std::vector<int,my_allocator>();
+auto my_vector = std::vector<int, my_allocator>();
 ```
 
-此時這一整個 `std::vector<int,my_allocator>` 是他的 static type，而如果我們又用了另一個 `std::vector`，這時候會發生一個問題：
+此時這一整個 `std::vector<int, my_allocator>` 是它的 static type，而如果我們又用了另一個 `std::vector`，這時候會發生一個問題：
 
 ```cpp
-auto my_vector = std::vector<int,my_allocator>();
-auto my_vector2 = std::vector<int,other_allocator>();
+auto my_vector = std::vector<int, my_allocator>();
+auto my_vector2 = std::vector<int, other_allocator>();
 auto vec = my_vector; // ok
 vec = my_vector2; // error
 ```
 
 因為兩個 `std::vector` 的 static type 不同，所以 `operator=` 自然就不能用了
+
+::: tip  
+這邊還有一個設計上的問題，再怎麼神奇的 allocator 它必然要知道 object type，一旦你的 allocator 不給 object type，那勢必就是我們默認寫死了某種 type，如上方的 `my_allocator` 與 `other_allocator`，那當這種 code 出現的時候，必然隱含某種蹊蹺的 bug
+
+這個問題的源頭是 container 的宣告中其 allocator type 的欄位需要接收的是整個 allocator type，而不是一個 template，這使寫 allocator 的人不會被動地意識到 object type 要跟 allocator 分離，很容易讓人在不知不覺中變成為某個特定的 element type 在設計 allocator
+
+但這是不對的，Allocator 不應該為特定的 type 設計，這種不正確的 allocator 可以傳到型別錯誤的 container 上，進而導致莫名其妙的 bug 出現
+
+這裡正確的寫法應為 `my_allocator<int>` 與 `other_allocator<int>`  
+:::
 
 再來，因為 Allocator 是在編譯期決定的，如果你想換一種配置策略，例如從 malloc 換成 memory pool，那你必須要把整個容器的型態改掉
 
@@ -787,13 +818,26 @@ vec = my_vector2; // error
 
 #### PMR 的解答
 
-在 N3916 中為了解決這個問題引入了 PMR，為 Polymorphic Memory Resource 的縮寫，在 C++17 中被引入。 它會利用 Runtime 的 Polymorphism 來做到相同的 static type，但卻能在執行時做到類似用了不同的 Allocator 一樣的效果。 也因此他不是透過 template 在做，他是單一的 static type，通過 dynamic dispatch 來定義 Allocator 的行為，以達到我們的目的
+在 N3916 中為了解決這個問題引入了 PMR，為 Polymorphic Memory Resource 的縮寫，在 C++17 中被引入。 它會利用 Runtime 的 Polymorphism 來做到相同的 static type，但卻能在執行時做到類似用了不同的 Allocator 一樣的效果。 也因此它不是透過 template 在做，它是單一的 static type，通過 dynamic dispatch 來定義 Allocator 的行為，以達到我們的目的
 
-他仍然是個 Allocator，所以你還是可以自定義 PMR 的行為，用了之後 STL 容器底層也還是一樣依賴於 `std::allocator_traits` 已擁有的實作。 因此基本邏輯於上方一樣，要寫一個自定義的 Allocator，只是要用動態多型來做，實作上這通常會利用 virtual function 來做（應該很好猜?）
-
-而 PMR 還多弄了一個中間層 `std::pmr::memory_resource`，他是一個 virtual base class，PMR 當中衍生出的 Allocator 全部都基於它，我們先不提它的用處，可以先看看其在 llvm frontend 的實作（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory_resource/memory_resource.h)）：
+下例中的 `VecA` 和 `VecB` 是不同的型別，但 `v1` 和 `v2` 是相同的型別：
 
 ```cpp
+// Classic style: changing the allocator → container’s type changes too
+using VecA = std::vector<int, MyPoolAllocator<int>>;
+using VecB = std::vector<int, BumpAllocator<int>>;   // different type
+
+// PMR style: same container type, allocation strategy chosen at run time
+std::pmr::vector<int> v1 { &pool_resource };   // uses a pool_resource
+std::pmr::vector<int> v2 { &mono_resource };   // uses a monotonic_buffer_resource
+// v1 and v2 have the same static type: std::pmr::vector<int>
+```
+
+PMR 仍然是個 Allocator，所以你還是可以自定義 PMR 的行為，用了之後 STL 容器底層也還是一樣依賴於 `std::allocator_traits` 已擁有的實作。 因此基本邏輯於上方一樣，要寫一個自定義的 Allocator，只是要用動態多型來做，實作上這通常會利用 virtual function 來做（應該很好猜?）
+
+而 PMR 還多弄了一個中間層 `std::pmr::memory_resource`，它是一個 virtual base class，PMR 當中衍生出的 Allocator 全部都基於它，我們先不提它的用處，可以先看看其在 llvm frontend 的實作（[連結](https://github.com/llvm/llvm-project/tree/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory_resource/memory_resource.h)）：
+
+```cpp {20,21}
 class _LIBCPP_AVAILABILITY_PMR _LIBCPP_EXPORTED_FROM_ABI memory_resource {
   static const size_t __max_align = alignof(max_align_t);
 
@@ -819,9 +863,9 @@ private:
 };
 ```
 
-實作很簡單，可以看到 `std::pmr::memory_resource` 定義了三個 private 的純虛擬函式與三個 public 成員函式，與 cppreference 上列出的完全一致（[連結](https://en.cppreference.com/w/cpp/memory/memory_resource)），但要注意它本身不是 Allocator，他沒有符合 Allocator 的要求，例如它並沒有定義 `value_type`
+實作很簡單，可以看到 `std::pmr::memory_resource` 定義了三個 private 的純虛擬函式與三個 public 成員函式，與 cppreference 上列出的完全一致（[連結](https://en.cppreference.com/w/cpp/memory/memory_resource)），但要注意它<span class = "yellow">本身不是 Allocator</span>，它沒有符合 Allocator 的要求，例如它並沒有定義 `value_type`
 
-而標準 PMR 中自定義的 Allocator 叫做 `std::pmr::polymorphic_allocator<T>`，其繼承自 `std::pmr::memory_resource`，你可以看到一樣有模板，這是因為 PMR 是讓記憶體資源實現動態多型，而容器的型態仍然依賴 template allocator 來實例化
+而標準 PMR 中的 Allocator 叫做 `std::pmr::polymorphic_allocator<T>`，其中 `T` 是元素型別。 它仍然是個 class template 是因為 STL 容器在實例化時需要一個帶有元素型別的 allocator，動態多型的部分由背後的 `memory_resource` 負責，`polymorphic_allocator` 本身只是它的包裝
 
 因為它是自定義的 Allocator，所以自然滿足剛剛要求的基本實作：
 
@@ -832,11 +876,15 @@ private:
 
 其他還定義了大大小小的東西，可以到 [cppreference](https://en.cppreference.com/w/cpp/memory/polymorphic_allocator) 上看
 
-而與之前 Allocator 不同的是，原本我們都是在 Allocator 的 `allocate` 函式內操作記憶體，可能會用 placement new 或其他手段操作已經開好的 memory pool。 PMR 將這個步驟利用中間層 `memory_resource` 分了出去，`memory_resource` 負責主要的記憶體操作，而 `std::pmr::polymorphic_allocator` 雖然是一個完全符合 STL allocator requirement 的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
+而與之前 Allocator 不同的是，原本我們都是在 Allocator 的 `allocate` 函式內操作記憶體，可能會用 placement new 或其他手段操作已經開好的 memory pool。 PMR 將這個步驟利用中間層 `memory_resource` 分了出去，`memory_resource` 負責主要的記憶體操作
 
-換句話說，`polymorphic_allocator` 是一個 `memory_resource` 的包裝，用以符合 Allocator 的要求。 其內的 `allocate` 會去直接/間接呼叫 `memory_resource->allocate`，其裡面會再去呼叫 `do_allocate`，如同前面看到的，這是一個純虛擬函式，每個子類都需要實作，利用這個達到動態多型的效果。 在實作上通常會有個型態為 `memory_resource*` 的指標指向實際使用的 `memory_resource`，幫助 `polymorphic_allocator` 與 `memory_resource` 溝通
+因此 `std::pmr::polymorphic_allocator` 雖然是一個完全符合 STL allocator requirement 的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource` 了
 
-:::info  
+如前所述，`polymorphic_allocator` 是一個 `memory_resource` 的包裝，用以符合 Allocator 的要求。 其內的 `allocate` 會去直接/間接呼叫 `memory_resource->allocate`，其裡面會再去呼叫 `do_allocate`，如同前面看到的，這是一個純虛擬函式，每個子類都需要實作，利用這個達到動態多型的效果。 在實作上通常會有個型態為 `memory_resource*` 的指標指向實際使用的 `memory_resource`，幫助 `polymorphic_allocator` 與 `memory_resource` 溝通
+
+![（一個簡化的架構圖）](image/pmr-arch.png)
+
+::: tip  
 可以搭配上方 llvm frontend 的例子觀看，有實際的 code 應該一看就懂
 
 另外，對於記憶體資源不依賴執行時變數的簡單情況，好的編譯器會將記憶體資源 devirtualize，最後就會有一個沒有額外成本的 `polymorphic_allocator`（除了儲存指標的成本，很低XD）  
@@ -943,7 +991,7 @@ int main() {
 
 ### memory resource
 
-如同前面講的 `memory_resource` 是實際在操控記憶體的 class，是一個抽象的介面，可能的實作在上面已經給了，這邊就不再貼一次。 在 PMR lib 中它提供了五種預設的 `memory_resource`（繼承自它）：
+如同前面講的，`memory_resource` 才是實際在操作記憶體的 class，其是一個抽象的介面，可能的實作在上面已經給了，這邊就不再貼一次。 在 PMR lib 中它提供了五種預設的 `memory_resource`（繼承自它）：
 
 - `new_delete_resource()`：回傳一個調用 `new` 和 `delete` 的記憶體資源的指標
 - `synchronized_pool_resource`：一個更少碎片化、Thread Safe 的 `memory_resource`
@@ -965,7 +1013,7 @@ std::pmr::set_default_resource(old_pool); // reset to old resource
 
 記得注意你 memory pool 物件的生命週期，不要 pool 本身已經被解構了你還在繼續使用，導致 UB
 
-接下來我們回來看這五個 resource
+接下來我們來簡單看一下這五個 resource，個人覺得稍微知道什麼時候可以用就好
 
 #### `new_delete_resource()`
 
@@ -1381,9 +1429,9 @@ pool resource 會重複使用其自身的分配。 因此如果銷毀了目標 `
 
 ### Allocator（`polymorphic_allocator`）
 
-如同前面所述，`std::pmr::polymorphic_allocato<T>` 的任何特化都完全符合 STL allocator requirement，是個貨真價實的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
+如同前面所述，`std::pmr::polymorphic_allocator<T>` 的任何特化都完全符合 STL allocator requirement，是個貨真價實的 Allocator，但它本身不負責實際記憶體分配，而是把所有分配/釋放的責任「委託」給指定的 `std::pmr::memory_resource`
 
-因此就算在編譯期屬於同一個靜態 allocator 型別，透過在建構時傳入不同的 `memory_resource`，該特化的不同實體便能展現完全不同的配置行為。 這種執行期多型讓使用 `polymorphic_allocator` 的物件在執行時，就像使用了不同的 allocator 型別一樣靈活：
+因此就算在編譯期屬於同一個靜態 allocator 型別，透過在建構時傳入不同的 `memory_resource`，該特化的不同實體便能展現完全不同的配置行為。 這種執行期多型讓使用 `polymorphic_allocator` 的物件在執行時，就像使用了不同的 allocator 型別一樣靈活，重新看一次這個例子：
 
 ```cpp
 // Classic style: changing the allocator → container’s type changes too
@@ -1396,9 +1444,9 @@ std::pmr::vector<int> v2 { &mono_resource };   // uses a monotonic_buffer_resour
 // v1 and v2 have the same static type: std::pmr::vector<int>
 ```
 
-上例中的 `VecA` 和 `VecB` 是不同的型別，但 `v1` 和 `v2` 是相同的型別
+如前所述，這邊 `VecA` 和 `VecB` 是不同的型別，但 `v1` 和 `v2` 是相同的型別
 
-你可能會好奇明明 `std::pmr::polymorphic_allocato<T>` 也有個模板參數，為什麼可以達到相同型別的效果。 這是因為他的模板參數是用來表示「元素型別」的，例如上方 `vector` 的 element type 為 `int`，因此其模板參數就為 `int`，所以 `v1` 和 `v2` 使用的都是 `std::pmr::polymorphic_allocato<int>`，事實上，這邊的 `std::pmr::vector` 是下面的縮寫：
+你可能會好奇明明 `std::pmr::polymorphic_allocator<T>` 也有個模板參數，為什麼可以達到相同型別的效果。 這是因為它的模板參數是用來表示「元素型別」的，例如上方 `vector` 的 element type 為 `int`，因此其模板參數就為 `int`，所以 `v1` 和 `v2` 使用的都是 `std::pmr::polymorphic_allocator<int>`，事實上，這邊的 `std::pmr::vector` 是下面的縮寫：
 
 ```cpp
 std::vector<int, std::pmr::polymorphic_allocator<int>>
@@ -1426,9 +1474,9 @@ std::vector<std::string, std::pmr::polymorphic_allocator<std::string>> coll{&poo
 
 ### 自定義 memory resource
 
-在有了 PMR 之後，我們就不再會去做各種 allocator 了，而是會寫一個 `memory_resource`，再把他交給 `std::pmr::polymorphic_allocator`
+有了 PMR 之後，我們就不再需要去做各種 allocator 了，而是會寫一個 `memory_resource`，再把它交給 `std::pmr::polymorphic_allocator`
 
-要自訂 `memory_resource`，有幾個步驟：
+要自訂 `memory_resource`，有兩個步驟：
 
 - 繼承 `std::pmr::memory_resource`
 - 實現下面這三個 private member function
@@ -1716,7 +1764,7 @@ Our arena address: 0x7ffffe787e60
 All point to same resource: YES
 ```
 
-### `std::use_allocator_v`
+### `std::uses_allocator_v`
 
 要解釋這個現象，我們要再回來看一下 STL 在配置記憶體的時候到底做了什麼，在前方「Allocator usage」的小節，我們有貼過一張圖，很顯然那張圖雖然是對的，並不夠精細
 
@@ -1734,9 +1782,9 @@ All point to same resource: YES
 
 > [N4950（20.2.9.3-6）](https://timsong-cpp.github.io/cppwp/n4950/allocator.traits.members#6)：Effects: Calls `a.construct(p, std​::​forward<Args>(args)...)` if that call is well-formed; otherwise, invokes `construct_at(p, std​::​forward<Args>(args)...)`.
 
-也就是說 `allocator_traits<A>​::​construct(m, p, args)` 的效果是呼叫 `a.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
+也就是說 `allocator_traits<A>​::​construct(a, p, args)` 的效果是呼叫 `a.construct(p, std​::​forward<Args>(args)...)`，如果其不是 well-formed，則呼叫 `construct_at(p, std​::​forward<Args>(args)...)`
 
-標準就寫到這裡，但在標準內的另一個角落，其提供了一個工具叫做 `std::uses_allocator`，他是個 type traits，用來判斷目標 class 是否能用目標 Allocator 做記憶體配置：
+標準就寫到這裡，但在標準內的另一個角落，其提供了一個工具叫做 `std::uses_allocator`，它是個 type traits，用來判斷目標 class 是否能用目標 Allocator 做記憶體配置：
 
 > [N4950（20.2.8.1）](https://timsong-cpp.github.io/cppwp/n4950/allocator.uses.trait)：
 > ```cpp
@@ -1749,14 +1797,14 @@ All point to same resource: YES
 > - (1.1) the first argument of a constructor has type `allocator_arg_t` and the second argument has type Alloc or
 > - (1.2) the last argument of a constructor has type Alloc.
 
-這段講述了 `std::uses_allocator` 什麼時候會是 `true_type`，什麼時候會是 `false_type`，基本上你就當它是個布林值就行了。 對於 `std::uses_allocator<T, Alloc>` 來說，他有兩種情況會是 `true_type`：
+這段講述了 `std::uses_allocator` 什麼時候會是 `true_type`，什麼時候會是 `false_type`，基本上你就當它是個布林值就行了。 對於 `std::uses_allocator<T, Alloc>` 來說，它有兩種情況會是 `true_type`：
 
 1. 對於自定義型態 `T`，其內部需有一個 qualified-id `allocator_type`，且 `T::allocator_type` 與 `Alloc` 相容（可以做轉型）
 2. 手動特化目標型態的 `std::uses_allocator`，使其繼承自 `true_type`，這種操作在做 type traits 的處理時很常見
     - 此時建構子的第一個參數的型態需為 `allocator_arg_t`，而第二個參數的型態需為 `Alloc`
     - 或是建構子的最後一個參數型態為 `Alloc`
 
-### Uses-allocator construction
+### Uses-allocator construction 與 STL 容器的建構
 
 `std::uses_allocator` 能用來幫助 Uses-allocator construction 的執行，其是一個協定，最初在 [N2982](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2009/n2982.pdf) 中被提出來（我找好久），當時主要有三個地方使用了這個協定，全都和「讓容器把自己的 allocator 傳遞給元素或子容器」有關：
 
@@ -1770,44 +1818,80 @@ All point to same resource: YES
      - 若 trait 成立，就規定它們的 allocator 版建構子必須以 uses-allocator construction 建構自己的內部資料
      - 如 [N3337（20.4.2.1）](https://timsong-cpp.github.io/cppwp/n3337/tuple.cnstr#27)
 
-而到了現在（C++23），其用處其實差不多，而 Uses-allocator consturction 本身的定義在 [N4950（20.2.8.2）](https://timsong-cpp.github.io/cppwp/n4950/allocator.uses.construction) 中，下面我就以 cppreference 上比較口語的定義為主
+而到了現在（C++23），其用處其實差不多，而 Uses-allocator construction 本身的定義在 [N4950（20.2.8.2）](https://timsong-cpp.github.io/cppwp/n4950/allocator.uses.construction) 中，下面我就以 cppreference 上比較口語的定義為主
 
-定義如下，如果遵守 Uses-allocator construction，則將 Allocator `alloc` 傳遞給某個類型 `T` 的建構子時，有三個約定：
+定義如下，如果遵守 Uses-allocator construction，則將 Allocator `alloc` 傳遞給某個類型 `T` 的建構子時，其流程如下：
 
-- 如果 `T` 不使用相容的 Allocator（`std::uses_allocator_v<T, Alloc>` 為 `false_type`），則忽略 `alloc`
-- 否則 `std::uses_allocator_v<T, Alloc>` 為 `true_type`，並且
+- 如果 `T` 不使用相容的 Allocator（`std::uses_allocator_v<T, Alloc>` 為 `false`），則忽略 `alloc`
+- 否則 `std::uses_allocator_v<T, Alloc>` 為 `true`，並且
   - 如果第一個參數是 `std::allocator_arg`（一個 tag），則第 2 個參數是要傳進來的 `alloc`，後續的參數為其他建構參數 `args...`，那就會使用這個建構子
     - 只要 `T` 有定義這種建構子，便會優先選用這種
     - 這被稱為 leading-allocator，形式為 `T(std::allocator_arg, alloc, args...)`
   - 或是可以把 `alloc` 放在最後一個參數
     - 在找不到 leading-allocator 的情況下，會使用這種建構子
     - 被稱為 trailing-allocator，形式為 `T(args..., Alloc)`
-  - 如果上述兩種建構子都沒有被實作，則程式為 ill-formed（編譯時應要給出 error/warning）
-    - 這代表雖然 `std::uses_allocator_v<T, Alloc>` 為 `true_type`，但實際上 `T` 根本不能用這個 allocator
+  - 如果上述兩種建構子都沒有被實作，則程式為 ill-formed（編譯時應要給出 error）
+    - 這代表雖然 `std::uses_allocator_v<T, Alloc>` 為 `true`，但實際上 `T` 根本不能用這個 allocator
 
-這個定義與 C++11（N3337）的差別不大。 至此，對於 `tuple`、`pair` 等容器，還有 `scoped_allocator_adaptor`，他們背後套用 Allocator 的流程就有了個專有名詞「Uses-allocator construction」
+這個定義與 C++11（N3337）的差別不大，總之就是一個「如何把 allocator 傳進建構子」的協定
 
-另外，此時的 `tuple`、`pair` 與 `scoped_allocator_adaptor`，甚至是 `pmr` 內的實作，都需要經過
+前面有提到，`allocator_traits<A>​::​construct(a, p, args)` 的效果是呼叫 `a.construct(p, std​::​forward<Args>(args)...)`，如果其不是 well-formed，則呼叫 `construct_at(p, std​::​forward<Args>(args)...)`
 
-1. 呼叫 `alloc.construct(p, std​::​forward<Args>(args)...)` 或 `construct_at(p, std​::​forward<Args>(args)...)`
-2. 查 `uses_allocator_v`
-3. 選 leading / trailing / no-alloc
+後者底下基本上就是走 placement new，因此我們的重點放在前者。 現在的問題就變成了，有哪些 allocator 的 `construct` 函式內會遵循 Uses-allocator construction 的協定？
 
-因此同一套邏輯的程式碼重複被實作了很多次。 在 [P0591 R4](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0591r4.pdf) （於 C++20 引入）中提了三個 utility function 幫助各家 compiler 實作 Uses-allocator construction：
+首先複習一下，`std::allocator<T>::construct` 在 C++17 後被遺棄，C++20 時被移除了，但在 STL 容器預設的 allocator 仍是 `std::allocator`，因此一般的 STL 容器會透過 SFINAE 走 `construct_at` 的路徑，與 Uses-allocator construction 無關
 
-- `uses_allocator_construction_args`：生成與目標類型所需的 uses-allocator construction 風格相符的參數列表
-- `make_obj_using_allocator`：透過 uses-allocator construction 建立給定類型的對象
-- `uninitialized_construct_using_allocator`：透過 uses-allocator construction 在指定的記憶體位置建立給定類型的對象
-
-這樣標準庫的作者只要呼叫這三個函式，不用再重複做複雜的判定了。 雖然對我們來說不是很重要，但等等帶會簡單看一下 llvm frontend 的實作，所以可以稍微有個印象就好
-
-值得一提的是，標準內只有保證透過 `std::pmr::polymorphic_allocator::construct` 時才一定會走 Uses-allocator construction 的流程：
+所以我們在乎那些特別的 Allocator 內所含的 `construct` 函式，而很自然地，標準內保證了 `std::pmr::polymorphic_allocator::construct` 會走 Uses-allocator construction 的流程：
 
 > [N4950（20.4.3.3 - 14,15）](https://timsong-cpp.github.io/cppwp/n4950/mem.poly.allocator.mem#15)：
 > - 14：*Mandates*: Uses-allocator construction of T with allocator `*this` (see [allocator.uses.construction]) and constructor arguments `std​::​forward<Args>(args)...` is well-formed.
 > - 15：*Effects*: Construct a T object in the storage whose address is represented by p by uses-allocator construction with allocator `*this` and constructor arguments `std​::​forward<Args>(args)...`.
 
-對於其他的 Allocator，如同前面所說的，標準只保證 STL 容器會使用 `allocator_traits​::​construct` 來建構元素，並不保證這個 construct 的底下會遵循 Uses-allocator construction，其底下到底會不會走這流程，由底層實作決定，只不過現在大部分的實作是都遵循 Uses-allocator construction 流程的，又或是直接走 `construct_at` 而沒用 `std::allocator`，這部分應該是歷史因素導致有些雜亂（我猜），下面就來看個實際的實作例子
+::: tip  
+`std::scoped_allocator_adaptor` 的 `construct` 也有保證（[N4950（20.5.4 - 9）](https://timsong-cpp.github.io/cppwp/n4950/allocator.adaptor.members#9)），但這邊的寫法是「等效於使用 `uses_allocator_construction_args`」，而 `uses_allocator_construction_args` 的敘述為：
+
+> [N4950（20.2.8.2 - 3）](https://timsong-cpp.github.io/cppwp/n4950/allocator.uses.construction#3)：The `uses_allocator_construction_args` function template takes an allocator and argument list and produces (as a tuple) a new argument list matching one of the above conventions.
+
+其中「above conventions」是它前面定義的三種 uses-allocator construction 慣例（ignore / leading / trailing）  
+:::
+
+因此，基本上 STL 容器的建構流程就為
+
+1. 確認 `alloc.construct(p, std​::​forward<Args>(args)...)` 是否為 well-formed（[llvm link](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_traits.h#L292)）
+
+    這會進到 allocator 提供的 construct 流程，若是保證走 Uses-allocator construction 的 allocator，則：
+
+    1. 查 `uses_allocator_v`（[llvm link](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_arg_t.h#L40)）
+    2. 選 leading / trailing / error（[llvm link](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_arg_t.h#L51)）
+2. 若不是，呼叫 `construct_at(p, std​::​forward<Args>(args)...)`（[llvm link](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_traits.h#L299)）
+
+![](image/alloc-process.png)
+
+另外，Uses-allocator construction 不只會發生在 `a.construct()` 裡面，它可以在任何需要傳遞 allocator 的地方被套用，例如前面提到的 `tuple`，其所有第一個參數是 `allocator_arg_t` 建構子，行為都等同於對應的普通建構子，只是每個元素會改用 uses-allocator construction 來建構：
+
+> [N4950（22.4.4.1 - 31~33）](https://timsong-cpp.github.io/cppwp/n4950/tuple#cnstr-33)：
+> ```cpp
+> tuple(allocator_arg_t, const Alloc& a);
+> tuple(allocator_arg_t, const Alloc& a, const Types&...);
+> tuple(allocator_arg_t, const Alloc& a, UTypes&&...);
+> tuple(allocator_arg_t, const Alloc& a, const tuple&);
+> // ... 共 12 個 overload
+> ```
+> Effects: Equivalent to the preceding constructors except that each element is constructed with uses-allocator construction.
+
+這就是 tuple 本身支援 leading-allocator convention 的原因，它有 `allocator_arg_t` 開頭的建構子，且 `uses_allocator<tuple<...>, Alloc>` 為 `true_type`。 類似的還有 `flat_map`、`flat_multimap`、`flat_set` 與 `flat_multiset`
+
+::: tip  
+`pair` 沒有這類建構子，它被單獨拎出來由 PMR、`scoped_allocator_adaptor` 與 `uses_allocator_construction_args` 的特化處理了  
+:::
+
+也因此同一套邏輯的程式碼重複被實作了很多次。 在 [P0591 R4](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2018/p0591r4.pdf)（於 C++20 引入）中提了三個 utility function 幫助各家 compiler 實作 Uses-allocator construction：
+
+- `uses_allocator_construction_args`：生成與目標類型所需的 uses-allocator construction 風格相符的參數列表
+- `make_obj_using_allocator`：透過 uses-allocator construction 建立給定類型的對象
+- `uninitialized_construct_using_allocator`：透過 uses-allocator construction 在指定的記憶體位置建立給定類型的對象
+
+這樣標準庫的作者只要呼叫這三個函式，不用再重複做複雜的判定了。 對我們來說不是很重要，可以稍微有個印象就好
 
 ### 以 `std::vector` 為例來看 STL Container 的建構
 
@@ -1930,7 +2014,7 @@ __user_alloc_construct_impl(integral_constant<int, 2>, _Tp* __storage, const _Al
 }
 ```
 
-可以看見他是以 `__uses_alloc_ctor` 的模板參數來區分要用哪種建構子的，而 `__uses_alloc_ctor` 的定義如下（[連結](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_arg_t.h#L40)）：
+可以看見它是以 `__uses_alloc_ctor` 的模板參數來區分要用哪種建構子的，而 `__uses_alloc_ctor` 的定義如下（[連結](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_arg_t.h#L40)）：
 
 ```cpp
 template <class _Tp, class _Alloc, class... _Args>
@@ -1945,7 +2029,7 @@ template <class _Tp, class _Alloc, class... _Args>
 struct __uses_alloc_ctor : integral_constant<int, __uses_alloc_ctor_imp<_Tp, _Alloc, _Args...>::value> {};
 ```
 
-可以看到他用 `uses_allocator` 偵測 `_Tp` 能不能使用 `_RawAlloc`，用 `is_constructible` 偵測 `_Tp` 是否有 leading-allocator 版本的建構子。 最後，其用 `value` 這個整數代表他會走 Uses-allocator construction 的哪條路徑
+可以看到它用 `uses_allocator` 偵測 `_Tp` 能不能使用 `_RawAlloc`，用 `is_constructible` 偵測 `_Tp` 是否有 leading-allocator 版本的建構子。 最後，其用 `value` 這個整數代表它會走 Uses-allocator construction 的哪條路徑
 
 - 0：`_Tp` 沒有 Allocator
 - 1：leading-allocator
@@ -2087,7 +2171,7 @@ protected:
 };
 ```
 
-前面都講解過了，應該不難。 接下來是使用 Allocator 的自定義 class，為了讓其可以順利地與 `pmr::vector` 相容，我一樣讓他符合 Allocator-aware type 的要求：
+前面都講解過了，應該不難。 接下來是使用 Allocator 的自定義 class，為了讓其可以順利地與 `pmr::vector` 相容，我一樣讓它符合 Allocator-aware type 的要求：
 
 ```cpp
 // Custom class using old-style allocator
