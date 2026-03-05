@@ -20,7 +20,7 @@ Allocator 與 PMR 讓你能在 stack 上開一個 memory pool，利用 STL 給�
 
 因此我認為這個東西主要還是用在一些較封閉（不會 expose 出去）且小的組件中，用來達到加速的效果，但是對於 global memory pool 這種用途來說，正規的作法應該還是要像 [jemalloc](https://github.com/jemalloc/jemalloc/blob/dev/src/jemalloc.c) 一樣透過 override `malloc` 跟 `free` 相關的函式，或是讓 linker 去用自己的實作之類的方法來達成
 
-不過無論如何，有這個東西存在，看看也是挺有趣的，上次奧義的 C++ 讀書會我就拿這篇出來報了（[PPT 檔案](./Allocator-PMR.pptx)），PPT 上的圖片有些小錯誤，本文中已經做了勘誤，因此請以本文為準  
+不過無論如何，有這個東西存在，看看也是挺有趣的，上次奧義的 C++ 讀書會我就拿這篇出來報了（[PPT 檔案](https://github.com/Mes0903/Cpp-Miner/blob/my-blog/Miner_main/Allocator_PMR/Allocator-PMR.pptx)），PPT 上的圖片有些小錯誤，本文中已經做了勘誤，因此請以本文為準  
 :::
 
 這篇文會參考 Jason Turner 的影片（應該很多人看過?），還有 C++17 Complete Guide 裡面的章節，順便再整理一下幾場 CppCon 與 [N3916](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3916.pdf) 的內容
