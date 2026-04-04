@@ -11,11 +11,7 @@ category: C++ Miner
 
 ぼっち・ざ・ろっく！ 實在太棒了，標題致敬一下ギターと孤独と蒼い惑星 XD
 
-<div class = "center-column">
-
 ![](image/botti1.png)
-
-</div>
 
 Detection Idiom 中文翻譯為偵測語意，其他的名字還有 Member Detector 和 Template type constraint 等等
 
@@ -157,11 +153,7 @@ int main()
 }
 ```
 
-<div class = "center-column">
-
 ![](image/concept_error.png)
-
-</div>
 
 可以看見錯誤訊息變得十分乾淨，debug 變的很方便
 
@@ -307,6 +299,7 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
 但那些篇幅有很大一部分都是在講解詳細的推斷細節，實際上推斷是有個大致流程的，主要分四個步驟：
 
 1. 利用 function name lookup 建立 overload set
+
     這會把所有 visible 的 function declaration 找出來，建立出一個 overload set，過程中它可能會需要 ADL，對於 function template 可能還會需要做 template argument deduction
 
     這個階段只要 function name 一樣就好，argument 沒有符合並沒有關係，舉個例子：
@@ -324,6 +317,7 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
     這裡四個 `fn` 都會被加到 overload set 內
 
 2. 建立候選人清單 (candidate set)
+
     此時 compiler 會判斷 overload set 內的 function 是否為 viable 的，viable 的[條件](https://eel.is/c++draft/over.match#viable)如下：
     1. argument 數量正確
     2. 如果呼叫的 argument 數量多於 function parameter 數量，那 function parameter 需要有 ellipsis parameter，就是 C 裡面也有的那個 `...`，像是 `int printz(...);`
@@ -332,6 +326,7 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
     5. argument 的型態要對，armument 可能有 [implicit conversion sequence](https://eel.is/c++draft/over.match#def:conversion_sequence,implicit) 存在，也就是說如果 argument 轉型可以傳進 function 那也算對
 
     沿用前面的例子：
+
     ```cpp
     void fn(int i) {}
     void fn(char i) {}
@@ -345,16 +340,14 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
     ```
 
     這裡的 candidate set 為 `void fn(int i) {}` 與 `void fn(char i) {}` 兩個
-    :::info  
-	  overload set 是一般的用語，candidate set 也是一般的用語，並非 standard 的用語，儘管 standard 有出現這些字眼，但並沒有詳細的定義，不是 C++ 內的專有名詞  
-	  :::
+    
+    ::: info  
+    overload set 是一般的用語，candidate set 也是一般的用語，並非 standard 的用語，儘管 standard 有出現這些字眼，但並沒有詳細的定義，不是 C++ 內的專有名詞
+    :::
 
 3. ranking，找 best overload
-  	如果 candidate set 只有一個 function，那麼就會直接呼叫它，如果有多個，則進行 ranking，選出一個最佳的 function 來呼叫
 
-  	若沒有 best overload，則會給出 compiled error
-
-    要注意的是這個「最佳」對你來說不一定是最佳的 function，它只不過是 compiler 依照標準訂好的選出的 function
+    如果 candidate set 只有一個 function，那麼就會直接呼叫它，如果有多個，則進行 ranking，選出一個最佳的 function 來呼叫。 若沒有 best overload，則會給出 compiled error。 要注意的是這個「最佳」對你來說不一定是最佳的 function，它只不過是 compiler 依照標準訂好的選出的 function
 
     到這裡主要的目的是從 candidate set 裡面挑一個最好的，換句話說這裡的每一個 function 都是 viable 的，所以主要用轉型來決定
 
@@ -382,14 +375,14 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
         5. [Pointer-to-member conversions](https://timsong-cpp.github.io/cppwp/n4868/conv.mem)
         6. [Boolean conversions](https://timsong-cpp.github.io/cppwp/n4868/conv.bool)
 
-  	如果此 sequenced 有 Conversion Rank argument，那麼 sequenced rank 即為 Conversion Rank；如果沒有，但有 Promotion Rank argument，那麼 sequenced rank 為 Promotion Rank；否則為 sequenced rank 為 Exact Match Rank
+    如果此 sequenced 有 Conversion Rank argument，那麼 sequenced rank 即為 Conversion Rank；如果沒有，但有 Promotion Rank argument，那麼 sequenced rank 為 Promotion Rank；否則為 sequenced rank 為 Exact Match Rank
 
     簡單來說，<span class = "yellow">以 argument 有的最低 Rank 當作 sequenced rank</span>
 
-  	如果 sequenced 的 rank 一樣，則依照 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)(基本上是照上面順序下來)，依序從 sequenced 的第一個至最後一個 parameter 開始比較 rank，從頭到尾<span class = "yellow">都沒輸過</span>，且有贏最多次的為 function 為 best overload
+    如果 sequenced 的 rank 一樣，則依照 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)(基本上是照上面順序下來)，依序從 sequenced 的第一個至最後一個 parameter 開始比較 rank，從頭到尾<span class = "yellow">都沒輸過</span>，且有贏最多次的為 function 為 best overload
 
-    舉個例子：		
-	```cpp
+    舉個例子：    
+    ```cpp
     #include <iostream>
 
     void fn(int, double, int, int) { puts("A"); } // candidate A
@@ -402,51 +395,55 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
     ```
 
     這裡 A 與 B 的 sequenced rank 都是 Conversion，平手，因此開始依序比叫參數的 rank：
-	1. 平手
-		A：1->int
-		B：1->int
-	2. 平手
-		A：1->double
-		B：1->double
-	3. A 贏
-		A：1->int
-		B：1->double
-	4. 平手
-		A：1->int
-		B：1->int
 
-	A 從來沒有輸過，且 A 贏比較多次，所以 A 為 best overload
+    4. 平手
+      A：1->int
+      B：1->int
+    5. 平手
+      A：1->double
+      B：1->double
+    6. A 贏
+      A：1->int
+      B：1->double
+    7. 平手
+      A：1->int
+      B：1->int
 
-	但我們換一下參數的順序，看另一個例子：
-	```cpp
-	#include <iostream>
+    A 從來沒有輸過，且 A 贏比較多次，所以 A 為 best overload
 
-	void fn(int, int, int, double) { puts("A"); } // candidate A
-	void fn(int, double, double, int) { puts("B"); } // candidate B
+    但我們換一下參數的順序，看另一個例子：
 
-	int main()
-	{
-	  fn(1, 2, 3, 4); // compile error: ambiguous
-	}
-	```
+    ```cpp
+    #include <iostream>
 
-	這裡 A 與 B 的 sequenced rank 一樣都是 Conversion，平手，因此開始依序比叫參數的 rank：
-	1. 平手
-		A：1->int
-		B：1->int
-	2. A 贏
-		A：1->int
-		B：1->double
-	3. A 贏
-		A：1->int
-		B：1->double
-	4. <span class = "yellow">B 贏</span>
-		A：1->double
-		B：1->int
+    void fn(int, int, int, double) { puts("A"); } // candidate A
+    void fn(int, double, double, int) { puts("B"); } // candidate B
 
-	A 有輸過一次，所以不能為 best overload，但 B 也輸過兩次，也不能為 best overload，所以這邊 Compiler 會給一個 error: call of overloaded is ambiguous，表示它找不到 best overload，哪怕 A 贏了比較多次
+    int main()
+    {
+      fn(1, 2, 3, 4); // compile error: ambiguous
+    }
+    ```
+
+    這裡 A 與 B 的 sequenced rank 一樣都是 Conversion，平手，因此開始依序比叫參數的 rank：
+
+    1. 平手
+      A：1->int
+      B：1->int
+    2. A 贏
+      A：1->int
+      B：1->double
+    3. A 贏
+      A：1->int
+      B：1->double
+    4. <span class = "yellow">B 贏</span>
+      A：1->double
+      B：1->int
+
+    A 有輸過一次，所以不能為 best overload，但 B 也輸過兩次，也不能為 best overload，所以這邊 Compiler 會給一個 error: call of overloaded is ambiguous，表示它找不到 best overload，哪怕 A 贏了比較多次
 
 建議寫到一些比較特別的例子時要去翻一下 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)，像是扯到 template 的時候：
+
 ```cpp
 #include <iostream>
 
@@ -472,6 +469,7 @@ int main()
 意即 non-specialization 的版本優於 specialization 的版本，其實一開始寫起來還挺違反直覺的
 
 我們可以透過刻意加上 ambiguous function 來查看 candidate set，以上例為例：
+
 ```cpp
 #include <iostream>
 
@@ -495,11 +493,7 @@ int main()
 
 如此一來編譯器便會給予錯誤訊息，並把 candidate set 給印出來：
 
-<div class = "center-column">
-
 ![](image/candidate_set.png)
-
-</div>
 
 可以看見 candidate set 的確有這三個函式
 
@@ -710,7 +704,7 @@ int main()
 }
 ```
 
-### std::false_type 與 std::true_type
+### std\:\:false_type 與 std\:\:true_type
 
 這兩個東西基本上就是 `false` 和 `true`，定義大概長這樣:
 ```cpp
