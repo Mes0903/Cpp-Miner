@@ -1810,7 +1810,7 @@ All point to same resource: YES
 
 1. [N3337（20.12.4-9）](https://timsong-cpp.github.io/cppwp/n3337/allocator.adaptor#members-9)：利用 `std::scoped_allocator_adaptor` 把外層 allocator 透傳給巢狀元素
 2. [N3337（20.6.7.2](https://timsong-cpp.github.io/cppwp/n3337/allocator.uses.construction#1)、[20.4.2）](https://timsong-cpp.github.io/cppwp/n3337/tuple.tuple#tuple.cnstr-27)：處理 `emplace`/`tuple`/`pair` 等參數變長的問題
-    - C++0x 起容器支援 `emplace_back(args...)`，另外 `tuple/pair` 有可變長度的建構子。 若元素型別 `T` 其實想要 `(allocator_arg, alloc, args...)` 而不是純 `(args...)`，就需要一套可檢測並自動切換的協議； 這套協議就是 `uses_allocator` trait + 三種慣例 (leading / trailing / 不用)
+    - C++0x 起容器支援 `emplace_back(args...)`，另外 `tuple/pair` 有可變長度的建構子。 若元素型別 `T` 其實想要 `(allocator_arg, alloc, args...)` 而不是純 `(args...)`，就需要一套可檢測並自動切換的協議； 這套協議就是 `uses_allocator` trait + 三種慣例（leading / trailing / 不用）
 3. 統一 AllocatorAwareContainer 內部的配置方法
    - 如當時的 `std::packaged_task`、`std::promise`、`std::tuple`、`std::pair` 等
    - 這些類別在 C++11 時代就得配置「控制區塊」或「子成員」。 N2982 把之前分散的做法統一為：

@@ -115,7 +115,7 @@ after scope
 
 讀更多：[c++经验之谈一：RAII原理介绍](https://zhuanlan.zhihu.com/p/34660259)
 
-### 模板 (Template)
+### 模板（Template）
 
 模板是 metaprogramming 的基礎之一，他可以幫助我們生成 code，看下面這個例子：
 
@@ -309,7 +309,7 @@ void count_value(const T &vec, int value)
 
 ### variadic templates
 
-variadic template 讓模板用起來更加的便利，可以讓 compiler 幫助我們展開一些 code，一個簡單的應用是傳遞不定個數的參數，看起來會像這樣：  
+variadic template 讓模板用起來更加的便利，可以讓 compiler 幫助我們展開一些 code，一個簡單的應用是傳遞不定個數的參數，看起來會像這樣：
 ```cpp
 template <typename Func, typename... T>  
 void caller(const Func &func, const T &...param)  
@@ -320,7 +320,7 @@ void caller(const Func &func, const T &...param)
 
 如此一來無論我們傳了多少參數進 `caller`，他都會幫我們轉送進我們指定的函式。
 
-### 智慧指標 (smart pointer)
+### 智慧指標（smart pointer）
 
 智慧指標可以幫助我們控制物件的資源，這邊挑了比較有代表性的 `unique_ptr` 介紹，`unique_ptr` 是一種 move only types，也就是說不能複製只能移動，用起來會像這樣：
 

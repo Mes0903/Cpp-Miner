@@ -5,17 +5,17 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-# （WIP）礦坑系列 ── std::function
+# （WIP）礦坑系列 ── std：：function
 
 ## 前言 
 
-`std::function` 是 C\+\+11 時加入的東西，它基本上是一個類型模板(Class Template)，目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用，像是函式、lambda、`std::bind`、Functor(function object) 等等
+`std::function` 是 C\+\+11 時加入的東西，它基本上是一個類型模板（Class Template），目的是對可呼叫物件進行包裝，用起來會像是函式指標那樣，但用途更為廣泛，只要是可使用複製建構的可呼叫物件都可以使用，像是函式、lambda、`std::bind`、Functor（function object） 等等
 
-包裝起來的可呼叫物件我們稱它為 `target`，如果一個 `std::function` 還沒包裝任何物件，也就是沒有 target，我們稱它為空(empty)，此時我們如果使用了 target，它會丟出一個 [std::bad_function_call](https://en.cppreference.com/w/cpp/utility/functional/bad_function_call) 的例外處理
+包裝起來的可呼叫物件我們稱它為 `target`，如果一個 `std::function` 還沒包裝任何物件，也就是沒有 target，我們稱它為空（empty），此時我們如果使用了 target，它會丟出一個 [std::bad_function_call](https://en.cppreference.com/w/cpp/utility/functional/bad_function_call) 的例外處理
 
 `std::function` 在 C\+\+17 時有做了一些修正，遺棄了一些東西，這篇文章會以新版的規則來記錄
 
-### 為什麼要有 std::function? 
+### 為什麼要有 std：：function? 
 
 也許有人想問為什麼需要有 `std::function` ? 直接用 function pointer 之類的不行嗎? 其實 `std::function` 的設計初衷就是保證泛用性，看一下這個例子：
 
@@ -246,23 +246,23 @@ int main() {
 
 讓我們回顧一下最一開始的[定義](https://timsong-cpp.github.io/cppwp/n4868/func.wrap.func#general-1)：
 
-> std::funtion 這個類別模板提供了多型的 wrapper，通常拿來包函式指標。 這個 Wrapper 可以儲存，複製，和透過 `()` 呼叫任何的可呼叫物件，並允許 function 為一級函式
+> std：：funtion 這個類別模板提供了多型的 wrapper，通常拿來包函式指標。 這個 Wrapper 可以儲存，複製，和透過 `()` 呼叫任何的可呼叫物件，並允許 function 為一級函式
 
 接下來就有個問題了，到底什麼是可呼叫物件呢? 定義如下：
 
-> 一個可呼叫物件指的是一個物件擁有可呼叫的型態 ( <a href = "" class = "pinklink">20.14.3-4</a> )
+> 一個可呼叫物件指的是一個物件擁有可呼叫的型態（ <a href = "" class = "pinklink">20.14.3-4</a> )
 
 所以接下來的問題就變成「什麼是可呼叫的型態」了，定義如下：
 
-> 可呼叫型態指的是 function object type 或是一個資料成員的指標 ( [20.14.3-3](https://timsong-cpp.github.io/cppwp/n4868/func.def#3) )
+> 可呼叫型態指的是 function object type 或是一個資料成員的指標（ [20.14.3-3](https://timsong-cpp.github.io/cppwp/n4868/func.def#3) )
 
 這樣答案就很明顯了，`&Foo::num_` 是個資料成員指標，代表他是可呼叫的物件，因此可以拿來初始化 `std::function`
 
-至於 function object type 指的則是一種在 function call 內可以是後序表達式([postfix-expression](https://timsong-cpp.github.io/cppwp/n4868/expr.post.general#nt:postfix-expression)) 的物件型態，至於什麼是後序表達式這邊就先不介紹了，再寫下去會有點偏題
+至於 function object type 指的則是一種在 function call 內可以是後序表達式（[postfix-expression](https://timsong-cpp.github.io/cppwp/n4868/expr.post.general#nt:postfix-expression)） 的物件型態，至於什麼是後序表達式這邊就先不介紹了，再寫下去會有點偏題
 
 那麼既然知道了什麼是 function object type，那麼 function object 很直覺的就是那些型態是 function object type 的物件了
 
-簡單來說，可呼叫物件(collable object) 的意思就是某個有明確定義動作的物件，對 function object 來說就是透過 `()` 來呼叫的相對應的物件，對函式指標來說就是呼叫相對應的函式，對成員指標來說就是拜訪相對應的成員
+簡單來說，可呼叫物件（collable object） 的意思就是某個有明確定義動作的物件，對 function object 來說就是透過 `()` 來呼叫的相對應的物件，對函式指標來說就是呼叫相對應的函式，對成員指標來說就是拜訪相對應的成員
 
 複雜的定義大概就這樣，那麼 `std::function` 的使用時機在前言的地方也提到了，`std::function` 主要就是為了泛用性，消除型態上面的差異而出現的東西。 代價也不大，`std::function` 並不肥，能使用的話就盡量使用吧
 
@@ -282,16 +282,16 @@ int main() {
     function() noexcept;    // 1
     function( std::nullptr_t ) noexcept;    // 2
     ```
-    上面這兩個(1、2) 會建構出空的 `std::function`
+    上面這兩個（1、2） 會建構出空的 `std::function`
 
     3、4：
     ```cpp
     function( const function& other );    // 3
     function( function&& other ) noexcept;    // 4
     ```
-    上面這兩個(3、4) 會將 other 的 target 複製(3) 或移動(4) 到 `*this`。 簡單來說就是把對象包裝起來的東西移動或複製到自己身上。如果 other 是空的，`*this` 也會是空的。 
+    上面這兩個（3、4） 會將 other 的 target 複製（3） 或移動（4） 到 `*this`。 簡單來說就是把對象包裝起來的東西移動或複製到自己身上。如果 other 是空的，`*this` 也會是空的。 
 
-    另外，移動(4) 後的 other 會處於有效但未指定的狀態
+    另外，移動（4） 後的 other 會處於有效但未指定的狀態
 
     5：
     ```cpp
@@ -303,7 +303,7 @@ int main() {
 
     基本上就是用我們給的東西來初始化內部的 target，如果想看內部的實作可以直接往下拉到內部概念那邊看，因為這扯到整個結構的問題
 
-    不過要注意的是如果 `std::function` 的回傳型態是個繫結到某個沒有 trailing-return-type 的 lambda 所回傳的 reference type，由於 auto deduction 的關係，這種 lambda 回傳的型態一定會是個 prvalue，因此 `std::function` 的回傳型態的 reference 會繫結到一個暫時物件，但這個暫時物件的生命週期會在 `std::function::operator()` 回傳時結束，因此會變一個懸掛的 reference(dangling reference)
+    不過要注意的是如果 `std::function` 的回傳型態是個繫結到某個沒有 trailing-return-type 的 lambda 所回傳的 reference type，由於 auto deduction 的關係，這種 lambda 回傳的型態一定會是個 prvalue，因此 `std::function` 的回傳型態的 reference 會繫結到一個暫時物件，但這個暫時物件的生命週期會在 `std::function::operator()` 回傳時結束，因此會變一個懸掛的 reference（dangling reference）
 
     例子：
     ```cpp
@@ -325,7 +325,7 @@ int main() {
 
     如果 `f` 是個 null 的 function pointer、member pointer 或一個由 `std::function` 特化的空值，那麼 `*this` 會是一個空的 `std::function`
 
-    這個 constructor 不會參加多載解析([Overload resolution](https://en.cppreference.com/w/cpp/language/overload_resolution))，除非 target 的 type 不是 `std::function`，而且對於那些參數的型態 Args... 來說，它的 lvalue 是可呼叫的而且回傳的型態 R 也是可呼叫的型態
+    這個 constructor 不會參加多載解析（[Overload resolution](https://en.cppreference.com/w/cpp/language/overload_resolution)），除非 target 的 type 不是 `std::function`，而且對於那些參數的型態 Args... 來說，它的 lvalue 是可呼叫的而且回傳的型態 R 也是可呼叫的型態
 
     如果 target 的 type 不能複製，或者初始化的格式不對，那麼這是個 ill-formed
 
@@ -414,7 +414,7 @@ int main() {
 
     > R operator()( Args... args ) const;
 
-    `std::function` 的 operator() 會傳入參數，呼叫儲存的 callable object
+    `std::function` 的 `operator()` 會傳入參數，呼叫儲存的 callable object
 
     例子：
     ```cpp
@@ -584,7 +584,7 @@ template<class F>
 function(F) -> function</*see below*/>;    // (2)
 ```
 
-而第二個這個，只有當 `&F::operator()` 不是拿來當計算的操作數，語法合法，且 `decltype(&F::operator())` 的形式是 `R(G::*)(A...)` (可有 cv限定詞、noexcept、lvalue reference)，用於某些 class type G 時，會進入 Overload Resolution
+而第二個這個，只有當 `&F::operator()` 不是拿來當計算的操作數，語法合法，且 `decltype(&F::operator())` 的形式是 `R(G::*)(A...)` （可有 cv限定詞、noexcept、lvalue reference），用於某些 class type G 時，會進入 Overload Resolution
 
 看起來很複雜，但簡單來說就是 `decltype(&F::operator())` 是有效的，此時的型態會被推導為 `std::function<R(A...)>`
 
@@ -784,7 +784,7 @@ int main() {
 
 而如果你已經看得很累了，那麼可以去休息一下，因為接下來的內容會比較生硬 XD
 
-看完了前面約略的概念後各位可能覺得這個東西就這樣了，其實沒那麼簡單，還有很多隱藏的問題(雖然前面可能先講了答案XD，但大家可能沒想過會有這些問題)，例如，函式不是一個固定大小的對象，但 class 是，我們用 class 來包裝不同的函式，卻要有相同的大小，不會有問題嗎? 還有其他很多的小問題，導致這個東西一直到 C\+\+23 都還拿出來被討論，前面的建構子就是其中一項，有些東西可能會牽扯到 ABI Break，蠻複雜的
+看完了前面約略的概念後各位可能覺得這個東西就這樣了，其實沒那麼簡單，還有很多隱藏的問題（雖然前面可能先講了答案XD，但大家可能沒想過會有這些問題），例如，函式不是一個固定大小的對象，但 class 是，我們用 class 來包裝不同的函式，卻要有相同的大小，不會有問題嗎? 還有其他很多的小問題，導致這個東西一直到 C\+\+23 都還拿出來被討論，前面的建構子就是其中一項，有些東西可能會牽扯到 ABI Break，蠻複雜的
 
 #### 實作前的想法
 
@@ -814,11 +814,11 @@ std::function<int(double)> f;
 
 `f` 是一個可以呼叫的對象，參數吃一個 `double`，回傳一個 `int`。 你可能會覺得奇怪，這邊這樣不就有兩個 type 了嗎? 怎麼還說是一個 type，其實 `int(double)` 自己就是一個 type，它是一種 function type，但要注意不是 function pointer
 
-接下來我會帶大家看一下 gcc 的實作 (待補，被高微殘害中QQ)
+接下來我會帶大家看一下 gcc 的實作（待補，被高微殘害中QQ）
 
 ## 參考資料 
 
-- [1. std::function](https://en.cppreference.com/w/cpp/utility/functional/function) (cppreference) (文章部分來源)
+- [1. std::function](https://en.cppreference.com/w/cpp/utility/functional/function) （cppreference） （文章部分來源）
 
 - [2. Expressions](https://timsong-cpp.github.io/cppwp/n4868/expr.post.general#nt:postfix-expression)
 
@@ -858,7 +858,7 @@ std::function<int(double)> f;
 
 - [20. Type deduction for std::function](https://stackoverflow.com/questions/42773202/type-deduction-for-stdfunction/42773516)
 
-- [21. 剖析STD::FUNCTION接口与实现](https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html) (文章部分來源)
+- [21. 剖析STD::FUNCTION接口与实现](https://www.cnblogs.com/jerry-fuyi/p/std_function_interface_implementation.html) （文章部分來源）
 
 - [22. checking invariants in C++](https://stackoverflow.com/questions/4736044/checking-invariants-in-c)
 

@@ -17,7 +17,7 @@ category: C++ Miner
 
 首先先講一下 `malloc` 在 C\+\+ 的行為，要想講這個我們最好先知道兩個東西，一個為 Aggregates，一個為 POD，全名為 Plain Old Data，這兩個東西對於 C-style coding 非常的有幫助，在某些 Modern C\+\+ 的場合也會有幫助
 
-這邊我主要翻譯一篇 stackoverflow 上的解釋，這篇寫的挺好的，大家也可以去看看原文( [連結](https://stackoverflow.com/questions/4178175/what-are-aggregates-and-pods-and-how-why-are-they-special/7189821#7189821) )
+這邊我主要翻譯一篇 stackoverflow 上的解釋，這篇寫的挺好的，大家也可以去看看原文（ [連結](https://stackoverflow.com/questions/4178175/what-are-aggregates-and-pods-and-how-why-are-they-special/7189821#7189821) )
 
 Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都有更動，但基本上都是增加了新的東西進去，因此這裡主要以 C\+\+03 為主來去解釋，幫助大家先快速理解，後面再回頭介紹 C\+\+11 後的定義
 
@@ -30,7 +30,7 @@ Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都
 > (C++03 8.5.1 §1)：  
 > An aggregate is an array or a class (clause 9) with no user-declared constructors (12.1), no private or protected non-static data members (clause 11), no base classes (clause 10), and no virtual functions (10.3).
 
-較新的定義(C\+\+17)：
+較新的定義（C\+\+17）：
 
 > [n4659(11.6.1 - 1)](https://timsong-cpp.github.io/cppwp/n4659/dcl.init.aggr#1)：
 > An aggregate is an array or a class with  
@@ -50,7 +50,7 @@ Aggregate 與 POD 的定義在 C\+\+11、C\+\+14、C\+\+17 甚至 C\+\+20 時都
 - 可以有 user-declared/user-defined 的 copy-assignment operator 或 destructor
 - 就算是 array of non-aggregate class type 也是一個 Aggregate
 - 不具有繼承關係
-用一個例子來確認一下 ([連結](https://godbolt.org/z/G1W43vcvs))：
+用一個例子來確認一下（[連結](https://godbolt.org/z/G1W43vcvs))：
 
 ```cpp
 // ensure the cpp version is C++17 or newer version
@@ -98,7 +98,7 @@ int main()
 根據 `n` 與 `m` 的不同會有幾個情況：
 
 - `m == n`
-    陣列裡的第 i 個元素 (i<sup>th</sup>) 會被初始化為 a<sub>i</sub>
+    陣列裡的第 i 個元素（i<sup>th</sup>） 會被初始化為 a<sub>i</sub>
 - `m < n`
     陣列中的前 m 個元素會被初始化為 a<sub>1</sub>, a<sub>2</sub>, …, a<sub>m</sub>，而剩下的 n-m 個元素，如果可以的話會嘗試使用 value-initialized，如果 element 是 non-Aggregate type 的話可能會失敗
 - `m > n`
@@ -199,7 +199,7 @@ POD 全名叫 Plain Old Data，一般我們理解的 POD 與 C++03 標準內的�
 - 即使術語是 POD-struct，class 也可以是 POD
 - 跟前面 Aggregate 的情況一樣，判斷標準基本上跟 class 內的 static member 無關
 
-順便看一下比較新的例子 (C++17)：
+順便看一下比較新的例子（C++17）：
 
 > [n4659 (12 - 10)](https://timsong-cpp.github.io/cppwp/n4659/class#10)：  
 > A POD struct109 is a non-union class that is both a trivial class and a standard-layout class, and has no non-static data members of type non-POD struct, non-POD union (or array of such types). Similarly, a POD union is a union that is both a trivial class and a standard-layout class, and has no non-static data members of type non-POD struct, non-POD union (or array of such types). A POD class is a class that is either a POD struct or a POD union.
@@ -366,7 +366,7 @@ POD 的好處就很多了，這邊舉幾個例子：
 
 Placement new 本身是一個能夠幫助我們使用 memory pool 的工具，它能夠在預先配置好的一段記憶體建構物件
 
-這在某些時刻特別有用，如監聽程式、伺服器程式、或是要實作如 `std::vector` 這類高效能的容器時。因為這類東西，記憶體配置與釋放的頻率很高，若此時使用傳統的 new 與 delete 來配置與釋放記憶體，可能會有效率上的疑慮(new 在申請時需要查表)，也有可能會造成 memory fragmentation 等問題
+這在某些時刻特別有用，如監聽程式、伺服器程式、或是要實作如 `std::vector` 這類高效能的容器時。因為這類東西，記憶體配置與釋放的頻率很高，若此時使用傳統的 new 與 delete 來配置與釋放記憶體，可能會有效率上的疑慮（new 在申請時需要查表），也有可能會造成 memory fragmentation 等問題
 
 甚至有時候有些核心程式不允許記憶體申請失敗，我們希望每次的記憶體申請都是成功的，這種極端的要求下，使用 memory pool 的好處就很大
 

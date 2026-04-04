@@ -47,7 +47,7 @@ int main()
 
 由於 `std::move()` 基本上是在做轉型，這會保留 const 的修飾，因此若原物件有 const 修飾，就需要使用 const rvalue reference 來做繫結，也因此他會無法去呼叫移動建構子，破壞了移動
 
-由此可知 `const` 也會破壞隱式移動(implicit move)，有關隱式移動，可以去看之前寫得值類別篇。這邊 Jason Turner 給了四個要注意不該使用 `const` 的例子：
+由此可知 `const` 也會破壞隱式移動（implicit move），有關隱式移動，可以去看之前寫得值類別篇。這邊 Jason Turner 給了四個要注意不該使用 `const` 的例子：
 
 ### 當 function 回傳 non-reference type 時，return type 不應該用 const 修飾
 寫在 return type 的 `const` 大部分的時候都會被忽略，有時候甚至會破壞效能，如這邊提到的它會破壞隱式移動，看看這段 code：
@@ -112,7 +112,7 @@ end
 ```
 這邊有兩個 function，上面那個在 return type 上有 `const` 修飾，下面的沒有。你可以看見上面那個使用的是 copy，而下面那個使用的是 move
 
-原因就如前面所述，一旦加上了 `const`，reference 要連結時就變成要使用 const rvalue reference，但通常 const rvalue reference 並不會有用處(幾乎沒意義，很多餘)，因此通常我們函式不會實作 const rvalue reference 的版本，也因此會去呼叫複製，破壞了隱式移動
+原因就如前面所述，一旦加上了 `const`，reference 要連結時就變成要使用 const rvalue reference，但通常 const rvalue reference 並不會有用處（幾乎沒意義，很多餘），因此通常我們函式不會實作 const rvalue reference 的版本，也因此會去呼叫複製，破壞了隱式移動
 
 當然，const rvalue reference 偶爾會有用就是了，真的很偶爾
 

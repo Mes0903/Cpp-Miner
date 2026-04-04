@@ -126,7 +126,7 @@ int main()
 }
 ```
 
-這是個合法的行為，但幾乎是個災難ㄏㄏ，尤其當你手殘把 `<<` 打成 `>>` 的時候，要找這個小 bug 大概會找到中風，但因為這個 conversion 是 explicit 的，所以一切安好 :D
+這是個合法的行為，但幾乎是個災難ㄏㄏ，尤其當你手殘把 `<<` 打成 `>>` 的時候，要找這個小 bug 大概會找到中風，但因為這個 conversion 是 explicit 的，所以一切安好 ：D
 
 ### 小缺點
 
@@ -179,8 +179,8 @@ int main(int argc, char *argv[])
 
 總之最後的結果就是可以用這個來測試、偵測，若要拿來<span class = "yellow">避免</span>複製還是有一些難度，但至少可以拿來避免隱式轉型，在 one single argument 的建構子前加上 `explicit` 會是個很好的習慣
 
-<div class = "center-column">
+<center-panel natural>
 
-(感謝社團內的 <em>Actual Wizard</em> wreien 提供例子)
+（感謝社團內的 <em>Actual Wizard</em> wreien 提供例子）
 
-</div>
+</center-panel>

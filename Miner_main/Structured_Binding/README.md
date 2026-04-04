@@ -35,15 +35,15 @@ Structured binding declaration 是 C++17 加入的一個新特性，它讓我們
     這裡放你要使用的變數名稱，他實際上不是變數而是標示符，它們之間需要以逗點 `,` 隔開，後方會有例子
 
 - **expression** :whale:
-    表達式，通常會放 array、tuple-like 容器或是個沒有 union 成員的 Class，語法上會是 assignment-expression，它們不能是 `throw` 表達式，並且在 top-level 不能有逗號運算符，這裡應該是指 expression 能夠有 sub-expression，而它要的是最上層的那個 (感謝marty大佬)。 另外，expression 內的變數名不能和 identifier-list 內的變數名相同，簡單來說就是不能重複宣告同樣名字的變數
+    表達式，通常會放 array、tuple-like 容器或是個沒有 union 成員的 Class，語法上會是 assignment-expression，它們不能是 `throw` 表達式，並且在 top-level 不能有逗號運算符，這裡應該是指 expression 能夠有 sub-expression，而它要的是最上層的那個（感謝marty大佬）。 另外，expression 內的變數名不能和 identifier-list 內的變數名相同，簡單來說就是不能重複宣告同樣名字的變數
 
 ## 介紹及原理 
 
-Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/language/scope) 內採用你 identifier-list 裡給的標示符，並且將其連結到你 expression 裡寫的元素或子物件。採用時它會先創造出一個特殊的變數來存取你的初始化敘述(initializer)，型態取決於你的 expression，這個變數的名稱這裡我們先取作 `__e`，由於 `__e` 可能是個容器或參考，所以我們給他取叫 initializer，沒看過這個詞的朋友不用太擔心，而 `__e` 在存取時有一些規則：
+Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/language/scope) 內採用你 identifier-list 裡給的標示符，並且將其連結到你 expression 裡寫的元素或子物件。採用時它會先創造出一個特殊的變數來存取你的初始化敘述（initializer），型態取決於你的 expression，這個變數的名稱這裡我們先取作 `__e`，由於 `__e` 可能是個容器或參考，所以我們給他取叫 initializer，沒看過這個詞的朋友不用太擔心，而 `__e` 在存取時有一些規則：
 
-- **如果 expression 是個 A型態的 array，而且你沒有使用 ref-qualifier，那麼 `__e` 會是原先 expression 計算結果的複本，型態會是 `cv A`，cv指的就是[cv-qualifier](https://en.cppreference.com/w/cpp/language/cv)。而 `__e` 內的元素會依據你使用的初始化方式(最上方寫的三種方式)來初始化。**
+- **如果 expression 是個 A型態的 array，而且你沒有使用 ref-qualifier，那麼 `__e` 會是原先 expression 計算結果的複本，型態會是 `cv A`，cv指的就是[cv-qualifier](https://en.cppreference.com/w/cpp/language/cv)。而 `__e` 內的元素會依據你使用的初始化方式（最上方寫的三種方式）來初始化。**
 
-    如果你使用的是第一種(`=`號)方式，那麼 `__e` 內的元素會使用[複製初始化](https://en.cppreference.com/w/cpp/language/copy_initialization)來初始化為你 expression 內相對應的元素；
+    如果你使用的是第一種（`=`號）方式，那麼 `__e` 內的元素會使用[複製初始化](https://en.cppreference.com/w/cpp/language/copy_initialization)來初始化為你 expression 內相對應的元素；
 
     若你使用的是第二或第三種方法，那麼 `__e` 內的元素會使用[直接初始化](https://en.cppreference.com/w/cpp/language/direct_initialization)來初始化為你 expression 內相對應的元素
 
@@ -52,11 +52,11 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
     > **2. attr(opt) cv(opt) auto ref-qualifier(opt) __e{ expression };**  
     > **3. attr(opt) cv(opt) auto ref-qualifier(opt) __e( expression );**
 
-    `__e` 會是個匿名的 tuple-like 的容器(沒ref-qualifier時) 或是 tuple-like 的容器的參考(有ref-qualifier時)，簡短來說你有寫 `&` 這個 `__e` 就會是個參考，如果沒寫就是個容器。 接著編譯器會去看它是否符合 [Tuple-Like" Binding Protoco ( tuple-like 連結協定)](https://timsong-cpp.github.io/cppwp/n4861/dcl.struct.bind#4)，簡單來說會長這樣：
+    `__e` 會是個匿名的 tuple-like 的容器（沒ref-qualifier時） 或是 tuple-like 的容器的參考（有ref-qualifier時），簡短來說你有寫 `&` 這個 `__e` 就會是個參考，如果沒寫就是個容器。 接著編譯器會去看它是否符合 [Tuple-Like" Binding Protoco ( tuple-like 連結協定)](https://timsong-cpp.github.io/cppwp/n4861/dcl.struct.bind#4)，簡單來說會長這樣：
 
-    +  `std::tuple_size<__E>::value` 必須是個格式正確的整數常量表達式 (integer constant expression)
+    +  `std::tuple_size<__E>::value` 必須是個格式正確的整數常量表達式（integer constant expression）
     +  identifier-list 內元素的數量必須與 `std::tuple_size<__E>::value` 相同
-    +  如果上面兩項有其中一項不符合，便去檢查這個 Class 的成員變數是否都為 public，如果不是(有 private 的成員變數)，則編譯錯誤
+    +  如果上面兩項有其中一項不符合，便去檢查這個 Class 的成員變數是否都為 public，如果不是（有 private 的成員變數），則編譯錯誤
 
     接著 identifier-list 內的元素便會「連結」到 `__e` 內相對應的元素，這也是你有寫 `&` 時，對 identifier-list 內的元素做改動就能改動到原容器的原因，因為 `__e` 是個參考，舉個例子：
 
@@ -67,10 +67,10 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
     auto &&[x, y] = std::make_tuple( 1, 2 ); // __e 是右邊那個 tuple 的右值參考，x 與 std::get<0>(__e) 連結，y 與 std::get<1>(__e) 連結
     ```
 
-    Code 有點長，大家可以複製下來看，在網頁上可能不太好閱讀。 可以看見內部是使用 `std::get<>()` 來存取元素的，因此你的 expression 必須是個回傳 tuple-like 容器的敘述，否則你的 `__e` 不會是個 tuple-like 的容器(或容器的參考)，那個也就無法使用 `std::get<>()` 了
+    Code 有點長，大家可以複製下來看，在網頁上可能不太好閱讀。 可以看見內部是使用 `std::get<>()` 來存取元素的，因此你的 expression 必須是個回傳 tuple-like 容器的敘述，否則你的 `__e` 不會是個 tuple-like 的容器（或容器的參考），那個也就無法使用 `std::get<>()` 了
 	
     :::info  
-    :bulb: 這邊只舉了 tuple-like 容器的例子，因為原生陣列沒有複製建構子，也就是說他不能被改寫成上面那三種樣式，也就不能用那三種方法初始化，可以看下面這個例子，它會噴錯：
+    ：bulb：這邊只舉了 tuple-like 容器的例子，因為原生陣列沒有複製建構子，也就是說他不能被改寫成上面那三種樣式，也就不能用那三種方法初始化，可以看下面這個例子，它會噴錯：
 
     ```cpp
     int a[2]{ 1, 2 };
@@ -80,21 +80,21 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
     所以會需要另外規定方式來初始化。  
     :::
 
-   「連結」這個動作無法以 C\+\+ 語言描述，你可以把他想像成參考，又或是宏定義，但要記得他不是，他是 C++ 語言的本身，沒辦法用 C++ 寫出來，已經類似語言特性的概念了，就好像我們無法自己實作 function-body 的大括號一樣 (感謝Cy解釋)
+   「連結」這個動作無法以 C\+\+ 語言描述，你可以把他想像成參考，又或是宏定義，但要記得他不是，他是 C++ 語言的本身，沒辦法用 C++ 寫出來，已經類似語言特性的概念了，就好像我們無法自己實作 function-body 的大括號一樣（感謝Cy解釋）
 
     :::danger  
-    :bulb: 官方文件是這麼寫的：Structured Binding 像是個參考，它是某個已經存在的物件的別名，但 Structured Binding 不是參考，它不需要是個引用類型。  
+    ：bulb：官方文件是這麼寫的：Structured Binding 像是個參考，它是某個已經存在的物件的別名，但 Structured Binding 不是參考，它不需要是個引用類型。  
     :::
 
     ~~挺玄學的~~，我自己是用「類似宏定義」來理解的，底下也會如此解釋，但各位要記得它不是宏定義，也許是為了確保將標示符丟進 `std::remove_reference_t<decltype((標示符))>()` 時型態要與連結到的元素丟進 `std::remove_reference_t<decltype((連結到的元素))>()` 一樣才如此設計的
 
-接下來我會詳細的講解一下內部的原理，這裡用 `__E` 來表示 `__e` 的型態，也就是說 `__E` 為初始化敘述(initializer) 的型態，另外我們也可以說 `__E` 與 `std::remove_reference_t<decltype((__e))>` 等價
+接下來我會詳細的講解一下內部的原理，這裡用 `__E` 來表示 `__e` 的型態，也就是說 `__E` 為初始化敘述（initializer） 的型態，另外我們也可以說 `__E` 與 `std::remove_reference_t<decltype((__e))>` 等價
 
 上述的初始化結束後，它會根據 `__E` 的狀況來進行連結，會有三種情況：
 
-- **如果 `__E` 是個 array 型態，那麼 identifier-list 內的元素會與初始化敘述(initializer) 內相對應的元素連結**
+- **如果 `__E` 是個 array 型態，那麼 identifier-list 內的元素會與初始化敘述（initializer） 內相對應的元素連結**
 
-    這種情況下，每個 identifier-list 內的標示符會是一個左值(lvalue)，與初始化敘述(initializer) 內相應的元素連結，也因此，identifier-list 內的標示符數量需要與 array 內的變數數量一樣多，看一下下面這個例子：
+    這種情況下，每個 identifier-list 內的標示符會是一個左值（lvalue），與初始化敘述（initializer） 內相應的元素連結，也因此，identifier-list 內的標示符數量需要與 array 內的變數數量一樣多，看一下下面這個例子：
     
     ```cpp
     int a[2] = {1,2};
@@ -137,24 +137,24 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
 
     當然上面這兩個例子都是偽代碼，內部當然不是這樣的，連結無法以 C++ 語言來描述，x 與 y 僅僅是標示符，所以不會是上面這個樣子，這只是個示意
 
-- **如果 `__E` 是個沒有 union 成員的 Class 型態，而且 [std::tuple_size\<__E>](https://en.cppreference.com/w/cpp/utility/tuple/tuple_size) 是個有成員的完全型(不用管這個成員的型態或可訪問性如何)，簡單來說就是 `__e` 能夠做成 tuple-like 的容器，符合 tuple-like 連結協定，那麼就會使用 tuple-like 連結協定來進行連結**
+- **如果 `__E` 是個沒有 union 成員的 Class 型態，而且 [std::tuple_size\<__E>](https://en.cppreference.com/w/cpp/utility/tuple/tuple_size) 是個有成員的完全型（不用管這個成員的型態或可訪問性如何），簡單來說就是 `__e` 能夠做成 tuple-like 的容器，符合 tuple-like 連結協定，那麼就會使用 tuple-like 連結協定來進行連結**
 
-    與前面提到的一樣，首先 `std::tuple_size<__E>::value` 必須是個格式正確的整數常量表達式 (integer constant expression)，並且 identifier-list 內元素的數量必須與 `std::tuple_size<__E>::value` 相同
+    與前面提到的一樣，首先 `std::tuple_size<__E>::value` 必須是個格式正確的整數常量表達式（integer constant expression），並且 identifier-list 內元素的數量必須與 `std::tuple_size<__E>::value` 相同
 
-    再來對於每個標示符，都會連結一個元素(也就是 `__e` 內的元素)，元素的型態會類似是「`std::tuple_element<i,__E>::type` 的 "引用"」，注意它是「引用」，`i` 指的是 `__e` 內第 i 個元素，如果這個型態對應的初始化敘述(initializer) 是左值，那這個變數就會是左值引用，如果是右值那就是右值引用
+    再來對於每個標示符，都會連結一個元素（也就是 `__e` 內的元素），元素的型態會類似是「`std::tuple_element<i,__E>::type` 的 "引用"」，注意它是「引用」，`i` 指的是 `__e` 內第 i 個元素，如果這個型態對應的初始化敘述（initializer） 是左值，那這個變數就會是左值引用，如果是右值那就是右值引用
 
     連結到的第 i 個元素詳細如下：
 
-    +  如果通過 [Class成員訪問](https://en.cppreference.com/w/cpp/language/operator_member_access)的方式在 `__E` 的範圍內查找到至少一個函式模板，且這個函式模板的第一個模板參數是個 [non-type參數](https://www.learncpp.com/cpp-tutorial/template-non-type-parameters/)，那麼第 i 個元素的初始化敘述(initializer) 會是 `e.get<i>()`
+    +  如果通過 [Class成員訪問](https://en.cppreference.com/w/cpp/language/operator_member_access)的方式在 `__E` 的範圍內查找到至少一個函式模板，且這個函式模板的第一個模板參數是個 [non-type參數](https://www.learncpp.com/cpp-tutorial/template-non-type-parameters/)，那麼第 i 個元素的初始化敘述（initializer） 會是 `e.get<i>()`
 
-    + 如果沒有找到符合情況的函式模板，那麼會使用 [argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl) 的方式來呼叫 `get<i>(__e)`，因此第 i 個元素的初始化敘述(initializer) 會是 `e.get<i>(__e)`
+    + 如果沒有找到符合情況的函式模板，那麼會使用 [argument-dependent lookup](https://en.cppreference.com/w/cpp/language/adl) 的方式來呼叫 `get<i>(__e)`，因此第 i 個元素的初始化敘述（initializer） 會是 `e.get<i>(__e)`
 
-    在這些初始化敘述中，如果 `__e` 是一個左值參考 (這只會發生在你的 `ref-qualifier` 是 `&`，或是你的初始化敘述是個左值而且 `ref-qualifier` 是 `&&`，簡單來說就是收合為 `&` 時)，那麼你將 expression 內相對應的元素會是一個左值 (這聽起來很廢話，但重點在下一句)
+    在這些初始化敘述中，如果 `__e` 是一個左值參考（這只會發生在你的 `ref-qualifier` 是 `&`，或是你的初始化敘述是個左值而且 `ref-qualifier` 是 `&&`，簡單來說就是收合為 `&` 時），那麼你將 expression 內相對應的元素會是一個左值（這聽起來很廢話，但重點在下一句）
 
-    否則 expression 內相對應的元素會是一個消亡值(xvalue)，因為內部實際上執行了一次完美轉發(perfect-forwarding)，而 `i` 會是個型態為 `std::size_t` 的純右值(prvalue)，因此 `<i>` 會被轉換(解釋)為[模板參數列表](https://en.cppreference.com/w/cpp/language/template_parameters)
+    否則 expression 內相對應的元素會是一個消亡值（xvalue），因為內部實際上執行了一次完美轉發（perfect-forwarding），而 `i` 會是個型態為 `std::size_t` 的純右值（prvalue），因此 `<i>` 會被轉換（解釋）為[模板參數列表](https://en.cppreference.com/w/cpp/language/template_parameters)
 
     :::info  
-    :bulb: 有三點提醒大家一下
+    ：bulb：有三點提醒大家一下
     + identifier-list 內的標示符、`__e` 內的元素與 expression 內相對應的元素，這三個會有一樣的生命週期
     + 我們通常會直接稱 identifier-list 內的標示符為「變數」，儘管它不是，但它使用上與變數基本上一樣，概念也類似
     +  identifier-list 內第i個元素型態會是 `std::tuple_element<i,E>::type`
@@ -202,7 +202,7 @@ Structed binding 會在你現在的 [scope](https://en.cppreference.com/w/cpp/la
 
 > 記得要切換成 C++17 才能夠使用
 
-現在我們舉個簡單的例子([來源](https://www.youtube.com/watch?v=eUsTO5BO3WI&ab_channel=TheCherno))，現在我要定義一個「人」的函式，人會有年齡、名字等等，因此它的回傳型態會是一個 `std::tuple<std::string, int>`：
+現在我們舉個簡單的例子（[來源](https://www.youtube.com/watch?v=eUsTO5BO3WI&ab_channel=TheCherno)），現在我要定義一個「人」的函式，人會有年齡、名字等等，因此它的回傳型態會是一個 `std::tuple<std::string, int>`：
 
 ```cpp
 std::tuple<std::string, int> CreatePerson() {
@@ -232,7 +232,7 @@ std::tie( name, age ) = CreatePerson();
 auto [name, age] = CreatePerson();
 ```
 
-而它也不只限定 tuple-like 的容器，也可以與 Struct 和原生陣列連結，看一下這個例子([來源](https://ithelp.ithome.com.tw/articles/10217358))：
+而它也不只限定 tuple-like 的容器，也可以與 Struct 和原生陣列連結，看一下這個例子（[來源](https://ithelp.ithome.com.tw/articles/10217358))：
 
 ```cpp
 struct TeaShopOwner {
@@ -317,7 +317,7 @@ for (const auto& [id, _] : owners) {
 
 ## 參考資料 
 
-- [1. Structured binding declaration (since C++17)](https://en.cppreference.com/w/cpp/language/structured_binding) (文章部分來源，例子來源)
+- [1. Structured binding declaration (since C++17)](https://en.cppreference.com/w/cpp/language/structured_binding) （文章部分來源，例子來源）
 
 - [2. C 17嚐鮮：結構化繫結宣告（Structured Binding Declaration）](https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/449584/)
 
@@ -339,7 +339,7 @@ for (const auto& [id, _] : owners) {
 
 - [11. Storage class specifiers](https://en.cppreference.com/w/cpp/language/storage_duration)
 
-- [12. STRUCTURED BINDINGS in C++ ](https://www.youtube.com/watch?v=eUsTO5BO3WI&ab_channel=TheCherno) (例子來源)
+- [12. STRUCTURED BINDINGS in C++ ](https://www.youtube.com/watch?v=eUsTO5BO3WI&ab_channel=TheCherno) （例子來源）
 
 - [13. if-with-initializer in structured binding declaration example ill formed?](https://stackoverflow.com/questions/53787312/if-with-initializer-in-structured-binding-declaration-example-ill-formed)
 
@@ -383,4 +383,4 @@ for (const auto& [id, _] : owners) {
 
 - [33. C++ primary expressions - Is it primary expression or not?](https://stackoverflow.com/questions/17259531/c-primary-expressions-is-it-primary-expression-or-not)
 
-- [34. DAY 16：Structured Bindings](https://ithelp.ithome.com.tw/articles/10217358) (例子來源)
+- [34. DAY 16：Structured Bindings](https://ithelp.ithome.com.tw/articles/10217358) （例子來源）

@@ -13,11 +13,11 @@ category: C++ Miner
 
 由於 Miner 的前置是針對新手在寫的，所以還是先來閒聊一下，在閆令琪老師的 GAMES202 的第一堂課中，老師有一段話我覺得講得蠻好的：
 
-> 我們在學 202(課名) 的過程中一定要記得這件事情，科學與技術是不等同的，當然這件事情是我個人的理解，我認為科學和技術是嚴格意義上不等同的兩樣事情。 科學代表著知識，代表你對於這個世界應當如何去運作的理解；然後技術是什麼呢? 技術更多代表的是技巧，就是所謂的 engineering skills，工程能力啊。 然後技術是用來幹什麼的呢? 是要把科學轉換為產品的這麼個意思<br><br>
+> 我們在學 202（課名） 的過程中一定要記得這件事情，科學與技術是不等同的，當然這件事情是我個人的理解，我認為科學和技術是嚴格意義上不等同的兩樣事情。 科學代表著知識，代表你對於這個世界應當如何去運作的理解；然後技術是什麼呢? 技術更多代表的是技巧，就是所謂的 engineering skills，工程能力啊。 然後技術是用來幹什麼的呢? 是要把科學轉換為產品的這麼個意思<br><br>
 >
 > 而科學和技術通常人們會簡稱科技，這是為什麼呢? 這是因為絕大多數人認為這兩件事情，反正我都不懂，所以像是一回事對吧，但對於我們來說，要區分一下 science 和 technology<br><br>
 >
-> 一個最典型的例子就是「車」對吧，大家知道汽車這個東西，大家在很久之前，就已經知道應該怎麼樣去運作了，但是直到今天，咱們國產的車子性能仍然不是特別那個對吧(XD)，所以說啊，這就是「技術」在背後起到的關鍵作用<br><br>
+> 一個最典型的例子就是「車」對吧，大家知道汽車這個東西，大家在很久之前，就已經知道應該怎麼樣去運作了，但是直到今天，咱們國產的車子性能仍然不是特別那個對吧（XD），所以說啊，這就是「技術」在背後起到的關鍵作用<br><br>
 >
 > 所以說科學和技術不等同，但我沒有說哪一項更重要，技術和科學我可以認為他們同等重要
 
@@ -33,7 +33,7 @@ category: C++ Miner
 
 然而語言是一個工程類的東西，它是有 spec 的，裡面嚴格定義了什麼樣的輸入該有什麼樣的輸出，因此學習語言的過程你應該要去讀 spec，而不是依靠「經驗」，它不是一個開放的系統，它是一個人定義出來的封閉系統
 
-換句話說學語言跟學下棋是很類似的，例如西洋棋，在學的時候你需要先理解棋子移動的規則，而且你需要去遵守這些規則，所以你會去看西洋棋的規則書/說明書(spec)，而不是找個人來告訴你棋子移動的「經驗」法則
+換句話說學語言跟學下棋是很類似的，例如西洋棋，在學的時候你需要先理解棋子移動的規則，而且你需要去遵守這些規則，所以你會去看西洋棋的規則書/說明書（spec），而不是找個人來告訴你棋子移動的「經驗」法則
 
 同樣地，你需要去遵守語言 spec 裡面的規則，而不是自己去嘗試跑一次你的 code，發現會動後就認為那樣的寫法是對的，甚至是認為不需要遵守 spec 內的規則，會動與正確是兩件事情，在工程上我們會利用 UB、IB 等規則來對這種錯誤的寫法去做規範，之後有機會的話會再講到
 
@@ -108,25 +108,17 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 畫成圖來說就是這樣：
 
-<div class = "center-column">
-
 ![](image/abstraction.png) 
 
-</div>
-
-我不在乎中間那個框框(黑箱)內做了什麼，我只在乎我的錢進去框框後，我的飯會從框框內出來
+我不在乎中間那個框框（黑箱）內做了什麼，我只在乎我的錢進去框框後，我的飯會從框框內出來
 
 ### 電路科學的抽象化
 
-學電機的人會利用 Maxwell's equations 來研究電磁現象，然後在 Maxwell's equations 之上創建一個新的抽象層，稱為集總電路(lumped circuit abstraction)，利用集總電路我們可以再增加一個新的抽象層，稱為數位層(Digital abstraction)，而利用數位電路又可以再增加一層邏輯閘層(Logic gate abstraction)：
+學電機的人會利用 Maxwell's equations 來研究電磁現象，然後在 Maxwell's equations 之上創建一個新的抽象層，稱為集總電路（lumped circuit abstraction），利用集總電路我們可以再增加一個新的抽象層，稱為數位層（Digital abstraction），而利用數位電路又可以再增加一層邏輯閘層（Logic gate abstraction）：
 
 以此類推，可以分好多好多層下去，這些不同的抽象層面就對應到電腦科學中不同的專業領域：
 
-<div class = "center-column">
-
 ![](image/abstraction-2.png) 
-
-</div>
 
 這邊的分類是我照著我電子電路學課本「foundation of analog & digital electronic circuits by anant agarwal」內的分類畫出來的，課本的分類我覺得合理。 這中間的每一層都可以再各自有其細分下去的抽象層，而 Programming language 的上方就是各式各樣的程式了
 
@@ -136,15 +128,9 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 圖靈機基本上是一系列的自動機所建構出來的理論模型，因為是計概所以我這邊就不講太多，也不寫它的數學定義，有興趣的可以看一下自動機理論和計算理論的課：
 
-<div class = "center-column">
+![（source：[Wikipedia](https://en.wikipedia.org/wiki/Combinational_logic)）](image/automata.png)
 
-![](image/automata.png) 
-
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Combinational_logic))
-
-</div>
-
-這裡可以提一下的是上圖中最內層的組合邏輯(Combinational logic)，這是一種由 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 所組成的數位邏輯，這裡的 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 是一種於計算理論中的數學模型，用來描述形式語言，所以並非真實的電路。 提這個的主要原因是，計算機內部的電路為組合邏輯與時序邏輯([Sequential logic](https://en.wikipedia.org/wiki/Sequential_logic))混合的實作，所以可以稍微知道一下有這個東西
+這裡可以提一下的是上圖中最內層的組合邏輯（Combinational logic），這是一種由 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 所組成的數位邏輯，這裡的 [Boolean Circuit](https://en.wikipedia.org/wiki/Boolean_circuit) 是一種於計算理論中的數學模型，用來描述形式語言，所以並非真實的電路。 提這個的主要原因是，計算機內部的電路為組合邏輯與時序邏輯（[Sequential logic](https://en.wikipedia.org/wiki/Sequential_logic)）混合的實作，所以可以稍微知道一下有這個東西
 
 而對於圖靈機，我覺得 wiki 上的描述寫得很好，所以讓我們看一下 [Wikipedia](https://zh.wikipedia.org/wiki/%E5%9B%BE%E7%81%B5%E6%9C%BA) 上的描述：
 
@@ -160,26 +146,22 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 為了模擬這個過程，圖靈構造出一台假想的機器，該機器由以下幾個部分組成：
 
-1. 一條無限長的紙帶(TAPE)，其被分為一個接一個的小格子，每個格子上包含一個來自有限字母表的符號，字母表中需要一個特殊的符號代表空白。 紙帶上的格子由左至右依次編號為 0, 1, 2, ...，無限伸展下去   
+1. 一條無限長的紙帶（TAPE），其被分為一個接一個的小格子，每個格子上包含一個來自有限字母表的符號，字母表中需要一個特殊的符號代表空白。 紙帶上的格子由左至右依次編號為 0, 1, 2, ...，無限伸展下去   
     :::info   
-    :bulb: 這裡的有限字母表基本上就是一個有限集合，元素是定義的符號   
+    ：bulb：這裡的有限字母表基本上就是一個有限集合，元素是定義的符號   
     :::   
-2. 一個讀寫頭(HEAD)。 它可以在紙帶上左右移動，讀出當前所指的格子上的符號，並且能改變它
+2. 一個讀寫頭（HEAD）。 它可以在紙帶上左右移動，讀出當前所指的格子上的符號，並且能改變它
 3. 一個狀態暫存器。 它用來儲存圖靈機當前所處的狀態。 圖靈機的所有可能狀態的數目是有限的，並且有一個特殊的狀態，稱為停機狀態，在這邊不是我們的重點，可以先不理他
-4. 一套控制規則數量有限的表格(TABLE)。 它根據當前機器所處的狀態以及當前讀寫頭所指的格子上的符號來決定讀寫頭下一步的動作，並改變狀態暫存器的值，讓機器進入一個新的狀態    
+4. 一套控制規則數量有限的表格（TABLE）。 它根據當前機器所處的狀態以及當前讀寫頭所指的格子上的符號來決定讀寫頭下一步的動作，並改變狀態暫存器的值，讓機器進入一個新的狀態    
     
     其會按照以下順序告知圖靈機命令：
-    1. 寫入(替換) 或擦除當前符號
+    1. 寫入（替換） 或擦除當前符號
     2. 移動讀寫頭，有三種移動方法：「L」表示向左，「R」表示向右，「N」表示不移動。 每次最多移動一格
     3. 保持當前狀態或者轉到另一狀態
 
 注意這個機器的每一部分都是有限的，但它有一個潛在的無限長的紙帶，因此這種機器只是一個理想的裝置。 圖靈認為這樣的一台機器就能類比人類所能進行的任何計算過程
 
-<div class = "center-column">
-
 ![](image/turing-machine.png) 
-
-</div>
 
 另外這篇也寫得很好，有興趣的也可以讀一下：[搞懂「通用圖靈機」的終站——它的誕生與意義](https://pansci.asia/archives/203152)
 
@@ -211,19 +193,9 @@ LLM 十分方便沒錯，是個很好的工具，能幫助你節省時間，但�
 
 RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRAM； SRAM 相對來說速度比較快，但成本比較高，我們個人電腦上的 main memory 全名為 DDR SDRAM，屬於一種 DRAM，因此相較於 SRAM 來說速度就比較慢，而 SRAM 通常我們會將其使用在 CPU 內的 cache 上。 在電腦科學中到處都有這類的 trade-off，所以要如何做取捨就是門學問了
 
-<div class = "center-column">
+![（兩支美光 Crucial 8GB DDR4-2133 ECC 1.2V RDIMM，source：[Wikipedia](https://zh.wikipedia.org/zh-tw/DDR4_SDRAM#/media/File:Two_8_GB_DDR4-2133_ECC_1.2_V_RDIMMs.jpg)）](image/ddr4.png)
 
-![](image/ddr4.png)
-
-(兩支美光 Crucial 8GB DDR4-2133 ECC 1.2V RDIMM)    
-(source：[Wikipedia](https://zh.wikipedia.org/zh-tw/DDR4_SDRAM#/media/File:Two_8_GB_DDR4-2133_ECC_1.2_V_RDIMMs.jpg))
-
-![](image/NES-SRAM.png)
-
-(任天堂 NES 內的 SRAM，容量為 2Kx8 bit)   
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg))
-
-</div>
+![（任天堂 NES 內的 SRAM，容量為 2Kx8 bit，source：[Wikipedia](https://en.wikipedia.org/wiki/Static_random-access_memory#/media/File:Hyundai_RAM_HY6116AP-10.jpg)）](image/NES-SRAM.png)
 
 而前面有提到 memory 對應到圖靈機中的紙帶的部分，因此它負責提供資料和指令的存儲空間，我們可以將紙袋上的每一個格子視為一個 Byte，並且我們會給記憶體標上位址：
 
@@ -232,36 +204,24 @@ RAM 主要有兩種：靜態 RAM 與動態 RAM，又分別被稱為 SRAM 與 DRA
 
 假設是 4G 的 memory，那它的記憶體位址就可以從 0 一路寫到 4 \* 1024 \* 1024 \* 1024，換句話說就是從 0 到 4,294,967,295（我這裡從 0 開始）。 我們通常喜歡用 16 進位表示，所以會寫成 0 ~ 0xFFFFFFFF：
 
-<div class = "center-column">
-
-![](image/memory-address.png) 
-
-(source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html))
-
-</div>
+![（source: [Integer Arithmetic and Memory Access](https://www.eecis.udel.edu/~davis/cpeg222/AssemblyTutorial/Chapter-04/ass04_5.html)）](image/memory-address.png)
 
 ### CPU (Central processing unit)
 
-CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為何，都是執行一連串被儲存的指令，這些指令會被保存在記憶體中。 而執行的步驟主要分為提取(Fetch)、解碼(Decode)、執行(Execute)和儲存(Write Back)：
+CPU 中文為中央處理器，大多數 CPU 的目的，無論 CPU 的形式為何，都是執行一連串被儲存的指令，這些指令會被保存在記憶體中。 而執行的步驟主要分為提取（Fetch）、解碼（Decode）、執行（Execute）和儲存（Write Back）：
 
-- 提取(Fetch)：從記憶體中讀取指令
-- 解碼(Decode)：解析指令，確定 operation 的類型與 operator
-- 執行(Execute)：使用 ALU 或其他執行單元進行計算或操作
-- 儲存(Write Back)：將結果存到暫存器/記憶體中
+- 提取（Fetch）：從記憶體中讀取指令
+- 解碼（Decode）：解析指令，確定 operation 的類型與 operator
+- 執行（Execute）：使用 ALU 或其他執行單元進行計算或操作
+- 儲存（Write Back）：將結果存到暫存器/記憶體中
 
 我們會針對 CPU，或更 general 的說，針對 Processor 定義軟體與硬體的介面，這個介面被我們稱為 ISA，基本上會包含 Processor 讀取和操作的指令格式、machine code、Address mode、Registers 等等
 
 因為是介面，所以 ISA 是個抽象化的過程，其將 Processor 真正的硬體實作給藏起來了，統一了一個對外的介面。 而對於 CPU 真正的硬體實作，我們稱其為 Microarchitecture，它基本上描述了一顆特定的 CPU 如何實現 ISA 的介面
 
-CPU 的內部主要可以分為三大部分：控制單元(Control unit)、暫存器(Register) 與算術邏輯單元(ALU)，下圖是一個簡單的擁有單處理器 CPU 的計算機架構示意圖，紅線表示 data flow，黑線表示 control flow：
+CPU 的內部主要可以分為三大部分：控制單元（Control unit）、暫存器（Register） 與算術邏輯單元（ALU），下圖是一個簡單的擁有單處理器 CPU 的計算機架構示意圖，紅線表示 data flow，黑線表示 control flow：
 
-<div class = "center-column">
-
-![](image/uniprocessor-CPU.png) 
-
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png))
-
-</div>
+![（source：[Wikipedia](https://en.wikipedia.org/wiki/Computer_architecture#/media/File:Computer_architecture_block_diagram.png)）](image/uniprocessor-CPU.png)
 
 暫存器負責儲存指令，operator 和計算的中間結果的數據，速度非常快。 而 ALU 則負責執行算術運算、邏輯運算和位移運算等，是 CPU 執行運算的主要元件
 
@@ -269,36 +229,21 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 因此一般來說，CPU 執行指令的方式是從記憶體中取出指令，並使用 ALU 執行運算，期間可能會將一些中間產物存到暫存器中，最後再將結果儲存到記憶體中
 
-雖然最後需要將結果儲存到記憶體中，但由於相較於和 memory 溝通的速度，CPU 內部元件的溝通速度快非常多，在程式的執行過程中，我們往往有些資料會需要重複使用，因此我們會於 CPU 內部加一些 memory 進去，這些記憶體被稱為 cache，而由於對速度的要求，因此 cache 所使用的為 SRAM，而非前面講的 DRAM，也因此 cache 的大小相較於 main memory 來說小很多(很貴)
+雖然最後需要將結果儲存到記憶體中，但由於相較於和 memory 溝通的速度，CPU 內部元件的溝通速度快非常多，在程式的執行過程中，我們往往有些資料會需要重複使用，因此我們會於 CPU 內部加一些 memory 進去，這些記憶體被稱為 cache，而由於對速度的要求，因此 cache 所使用的為 SRAM，而非前面講的 DRAM，也因此 cache 的大小相較於 main memory 來說小很多（很貴）
 
-而對於 cache 的部分，我個人覺得這部分不是我們這篇計概(了解電腦運作的 map )的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
+而對於 cache 的部分，我個人覺得這部分不是我們這篇計概（了解電腦運作的 map ）的重點，所以就先不寫了，不過 jserv 老師有翻譯一篇很好的論文，雖然難度比較高，但有興趣的可以去讀看看：[每位程式開發者都該有的記憶體知識](https://sysprog21.github.io/cpumemory-zhtw/introduction.html)
 
 ### 舊時代的南北橋
 
 當 CPU 想要讀寫 memory 時，需要傳一個訊號給記憶體控制器，這東西裡面包含了讀寫 DRAM 所需的邏輯。 因此你可以看到 CPU 上有很多針腳，它們會接到 Bus 上，讓 CPU 能夠透過 Bus 收發資料：
 
-<div class = "center-column">
+![（source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg)）](image/CPU.png)
 
-![](image/CPU.png) 
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Central_processing_unit#/media/File:Laptop-intel-core2duo-t5500.jpg))
+以前會把記憶體控制器做在北橋裡面，北橋再拉 Bus 到 memory 上，因此 CPU 想要跟 memory 溝通，就需要先到北橋，再到 memory 去。 其中 CPU 到北橋的這段 Bus 有個名字被稱為 Front-side bus（FSB），而記憶體控制器到 memory 的這段 Bus 叫 memory bus：
 
-</div>
+![（Pentium II/III 時代的典型晶片組佈局，source：[Wikipedia](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg)）](image/chipset-layout.png)
 
-以前會把記憶體控制器做在北橋裡面，北橋再拉 Bus 到 memory 上，因此 CPU 想要跟 memory 溝通，就需要先到北橋，再到 memory 去。 其中 CPU 到北橋的這段 Bus 有個名字被稱為 Front-side bus(FSB)，而記憶體控制器到 memory 的這段 Bus 叫 memory bus：
-
-<div class = "center-column">
-
-![](image/chipset-layout.png) 
-
-(Pentium II/III 時代的典型晶片組佈局)   
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Front-side_bus#/media/File:Motherboard_diagram.svg))
-
-![](image/chipset-layout-2.png) 
-
-(我覺得這張寫得更清楚一點)    
-(source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972))
-
-</div>
+![（我覺得這張寫得更清楚一點，source：[Anyone know what this part of my motherboard is?](https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fanyone-know-what-this-part-of-my-motherboard-is-v0-794wyr5ninvc1.jpeg%3Fwidth%3D498%26format%3Dpjpg%26auto%3Dwebp%26s%3D7dab33952489ae88d70d9369411c91e93845a972)）](image/chipset-layout-2.png)
 
 ### 現代 intel PCH / AMD FCH
 
@@ -308,17 +253,11 @@ Control unit 用來命令 Processor 的操作，主要負責剛剛提到的 Fetc
 
 在接顯卡時大家都會說顯卡接在直連 CPU 的通道，也是因為以前北橋上的高速 PCIe 通道被併進去了，所以才會說是「直連 CPU 的通道」。 而圖中的另一個 bridge 為南橋，負責處理與其他速度較低的外設的溝通，像是 EIOE ATA、SATA、USB、ISA slot、PCI/PCIe slot 或是 BIOS 的溝通等等
 
-在 Intel 的術語中，其以 memory controller hub(MCH) 稱呼北橋，以 I/O controller hub(ICH) 稱呼南橋，在將北橋的剩餘功能移到南橋內之後，其將 ICH 改名為了 Platform Controller Hub(PCH)；而在 AMD 的架構中，與 PCH 對應的晶片組被稱為 FCH
+在 Intel 的術語中，其以 memory controller hub（MCH） 稱呼北橋，以 I/O controller hub（ICH） 稱呼南橋，在將北橋的剩餘功能移到南橋內之後，其將 ICH 改名為了 Platform Controller Hub（PCH）；而在 AMD 的架構中，與 PCH 對應的晶片組被稱為 FCH
 
-<div class = "center-column">
+![（source：[Wikipedia](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png)）](image/pch.png)
 
-![](image/pch.png) 
-
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Platform_Controller_Hub#/media/File:Intel_5_Series_architecture.png))
-
-</div>
-
-除了南橋的所有功能之外，PCH 還合併了一些剩餘的北橋功能（例如 clock）。系統時脈以前是與專用晶片連接的，但現在被合到了 PCH 裡面。 PCH 和 CPU 之間有兩種不同的連接：Flexible Display Interface(FDI)和 Direct Media Interface(DMI)，不過這我也不熟，就不展開了
+除了南橋的所有功能之外，PCH 還合併了一些剩餘的北橋功能（例如 clock）。系統時脈以前是與專用晶片連接的，但現在被合到了 PCH 裡面。 PCH 和 CPU 之間有兩種不同的連接：Flexible Display Interface（FDI）和 Direct Media Interface（DMI），不過這我也不熟，就不展開了
 
 題外話，PCH 中的有顆東西叫 IME，其全名為 Intel Management Engine，原本在北橋內，從 Nehalem 處理器和 Intel 5-Series 系列晶片組開始改成內置在 PCH 中了。 它是一個獨立的子系統，擁有自己的 MAC 和 IP 位址，而且能夠在系統啟動前、OS 運行期間甚至是關機的情況下運行，用來為搭載 Intel 處理器的電腦系統提供各種功能與服務
 
@@ -331,7 +270,7 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 - Address Bus   
   Address Bus 用來指定 <span class = "yellow">physical address</span>，當 CPU 或傳統上支援 DMA 的裝置需要讀取或寫入某個記憶體位址時，就會透過 Address Bus 來指定該記憶體位址。 較現代的 DMA 裝置通常改成透過專用的 Bus 或 Controller，像是 PCIe、SATA Controller 等，來與 memory 溝通
   
-  Address Bus 的寬度決定了系統可以尋址的記憶體量，例如 32-bit 的 Address Bus 就可以尋址 $2^{32}$(4,294,967,295) 個位址
+  Address Bus 的寬度決定了系統可以尋址的記憶體量，例如 32-bit 的 Address Bus 就可以尋址 $2^{32}$（4,294,967,295） 個位址
 - Data Bus  
   Data Bus 用來傳送實際的資料，通常是雙向的
 - Control Bus   
@@ -341,21 +280,13 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 [How a CPU Works](https://www.youtube.com/watch?v=cNN_tTXABUA) 這部影片裏面引用了一個簡單的 CPU 模型，稱為 Scott's CPU，其 Address Bus 和 Data Bus 各有 8 個 bit，Control Bus 則有 set 與 enable 這兩個 bit，對於讀取來說就會長這樣：
 
-<div class = "center-column">
-
 ![](image/scott-read.gif) 
-
-</div>
 
 先在 Address Bus 上將要操作的 address 設為高位，接著將 Control Bus 上的 enable 設為高位，最後將資料讀進來
 
 寫入則長這樣：
 
-<div class = "center-column">
-
 ![](image/scott-write.gif) 
-
-</div>
 
 順序稍微不一樣，先將 Address Bus 設好，然後將 data 送上 Data Bus，最後將 Control Bus 的 set 設為高位
 
@@ -367,69 +298,56 @@ Bus 負責傳輸資料，傳統的 Bus 主要分成三種：Data bus、Address B
 
 ### BIOS
 
-透過上面那些知識，我們知道了 CPU 要如何與 memory 溝通，和如何運行一個程式(一系列的指令)，現在我們終於要開始看一下電腦開機後到底發生了什麼
+透過上面那些知識，我們知道了 CPU 要如何與 memory 溝通，和如何運行一個程式（一系列的指令），現在我們終於要開始看一下電腦開機後到底發生了什麼
 
 電腦上有個東西叫做 Basic Input/Output System，簡稱為 BIOS，是我們個人電腦開機時載入的第一個軟體。 BIOS 的作用是初始化和測試硬體元件
 
 早期的 BIOS 通常儲存在 BIOS ROM 裡面，廠商在寫完 BIOS 後會將其執行檔透過燒錄器或是 flash tool 燒錄到這個 ROM 內，因此在主機板出廠時 BIOS 就會預先安裝在主機板上了。 然而隨著 BIOS 的大小和複雜度增加，硬體更新的速度變快，導致現代的 BIOS 也必須能夠更新，以支援新的硬體，因此 BIOS 就改成存在 EEPROM 或是 Flash memory 中讓使用者可以更新了
 
 :::info   
-:bulb: RAM 和 ROM 的差別我這邊不細講，只要記得 RAM 內部資料可以任意讀寫；而 ROM 的內部資料寫入後需要透過特殊的方式才能修改資料    
+：bulb：RAM 和 ROM 的差別我這邊不細講，只要記得 RAM 內部資料可以任意讀寫；而 ROM 的內部資料寫入後需要透過特殊的方式才能修改資料    
 :::
 
 有關傳統 BIOS 的詳細行為，有興趣的人可以看看小華的部落格：[[我所知道的 BIOS]](https://biosengineer.blogspot.com/search?q=%5B%E6%88%91%E6%89%80%E7%9F%A5%E9%81%93%E7%9A%84BIOS%5D)
 
-我們前面有提到 CPU 會透過 memory address 來找到要執行的程式(Fetch)，因此我們需要將 BIOS 放在一開機時 CPU 就會開始讀的起始位址，這個位置通常是在 0xFFFFFFF0 這個地方，如果我沒記錯，UEFI 也是一樣的位置
+我們前面有提到 CPU 會透過 memory address 來找到要執行的程式（Fetch），因此我們需要將 BIOS 放在一開機時 CPU 就會開始讀的起始位址，這個位置通常是在 0xFFFFFFF0 這個地方，如果我沒記錯，UEFI 也是一樣的位置
 
 當 BIOS 開始執行時，會先執行[自檢(POST)](https://en.wikipedia.org/wiki/Power-on_self-test)，開始識別、測試系統設備，像是 CPU、chipset、RAM、主機板、顯卡、鍵盤滑鼠、硬碟等等的設備
 
-當 BIOS 完成 POST 後，會再去掃描 Option ROM modules，用途是識別、測試和初始化其他的設備，常見的像是 VGA card、Lan card 和 RAID card 等等。 這些 ROM 可能會直接在裝置(如網卡、RAID 控制器等)上，也有可能包在 BIOS 的 image 內
+當 BIOS 完成 POST 後，會再去掃描 Option ROM modules，用途是識別、測試和初始化其他的設備，常見的像是 VGA card、Lan card 和 RAID card 等等。 這些 ROM 可能會直接在裝置（如網卡、RAID 控制器等）上，也有可能包在 BIOS 的 image 內
 
-在 POST 與 Option ROM 的初始化都做完後，電腦所有的硬體就都被初始化完畢了，接下來 BIOS 會呼叫 interrupt 19h，嘗試從「開機裝置（像是硬碟、CD、USB 等等）」中找到並執行開機載入程式(boot loader)
+在 POST 與 Option ROM 的初始化都做完後，電腦所有的硬體就都被初始化完畢了，接下來 BIOS 會呼叫 interrupt 19h，嘗試從「開機裝置（像是硬碟、CD、USB 等等）」中找到並執行開機載入程式（boot loader）
 
-Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通常是我們的作業系統(OS)，但也有可能是其他的，像是你在重灌電腦的時候，跑的就不是你原本的 OS，而是你的重灌軟體（雖然如果我沒記錯的話，有些裡面也是有 OS）
+Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通常是我們的作業系統（OS），但也有可能是其他的，像是你在重灌電腦的時候，跑的就不是你原本的 OS，而是你的重灌軟體（雖然如果我沒記錯的話，有些裡面也是有 OS）
 
 底下是一張簡單的啟動示意圖：
 
-<div class = "center-column">
-
-![](image/boot-process.png)
-
-(source：[Wikipedia](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png))
-
-</div>
+![（source：[Wikipedia](https://en.wikipedia.org/wiki/BIOS#/media/File:Legacy_BIOS_boot_process_fixed.png)）](image/boot-process.png)
 
 另外 BIOS 會使用 CMOS 來儲存一些 BIOS 的設定，像是系統時間、硬體配置和你的開機順序等。 而 CMOS 使用的是揮發性的 SRAM，換句話說斷電後儲存的設定會消失，因此主機板上通常會配一顆小型的電池來使其不斷電，這顆電池我們叫他 CMOS 電池。 小時候在修電腦的時候，我們如果想要重置 BIOS 的設定，就會把這顆電池拔掉，如此一來存的設定消失，就會重置 BIOS 的設定了
 
-<div class = "center-column">
+![（Pico ITX 主機板中的 CMOS 電池，右邊那顆銀色圓圓的就是，source：[Wikipedia](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg)）](image/CMOS.png)
 
-![](image/CMOS.png)
+### 作業系統（OS）
 
-(Pico ITX 主機板中的 CMOS 電池，右邊那顆銀色圓圓的就是)    
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Nonvolatile_BIOS_memory#/media/File:Bottom_EPIA_PX10000G_Motherboard_new.jpg))
-
-</div>
-
-### 作業系統(OS)
-
-前面講完了 BIOS，BIOS 正常情況下最終會將作業系統(OS) 給啟動，並將電腦的控制權交給 OS，所以我們現在就來看一下什麼是 OS，這邊抄一下之前的 OS 筆記XD...
+前面講完了 BIOS，BIOS 正常情況下最終會將作業系統（OS） 給啟動，並將電腦的控制權交給 OS，所以我們現在就來看一下什麼是 OS，這邊抄一下之前的 OS 筆記XD...
 
 「作業系統（英語：Operating System，縮寫：OS）是一組主管並控制電腦操作、運用和執行硬體、軟體資源和提供公共服務來組織使用者互動的相互關聯的系統軟體程式」── [Wikipedia](https://zh.wikipedia.org/wiki/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F)
 
-簡單來說就是一個管理電腦的系統程式，其是使用者和電腦硬體的介面(interface)
+簡單來說就是一個管理電腦的系統程式，其是使用者和電腦硬體的介面（interface）
 
 整個電腦系統主要可以分成四個部分：硬體、作業系統、應用程式和使用者，這邊先對它們做個簡單的介紹，但這些不是定義，只是一個描述
 
-- 使用者(User)：   
+- 使用者（User）：
   使用者可以是人、機器或其他的電腦，只要是可以操控這台電腦的都可以算  
-- 應用程式(Application)：
+- 應用程式（Application）：
   能幫助使用者解決問題的軟體都可以算，像是 Browser、Compiler 或一般的 Text Editor 都算  
-- 作業系統(Operating System)：
-    能夠幫助我們「控制(control)」和「協調(coordinate)」資源的系統軟體
-    - 控制(control) 指的大概就是 Device Driver，能夠幫助我們去控制硬體的，重點在協調(coordinate)，怎麼樣去協調使用者，分配資源，是 OS 裡面比較複雜的部份
-    - 因此我們也可以說 OS 是幫忙分配資源的軟體(resource allocator)，像是 memory management 會幫忙分配記憶體，file system 會幫忙分配 disk block 等等
-- 硬體(Hardware)：
-    能夠拿來給我們操作，做運算的硬體，因此硬體在 OS 這邊我們習慣稱它們回資源 (resources)，我們不在意它是透過哪種硬體提供的，只在意它能夠提供哪種資源，可以怎麼運用它
+- 作業系統（Operating System）：
+    能夠幫助我們「控制（control）」和「協調（coordinate）」資源的系統軟體
+    - 控制（control） 指的大概就是 Device Driver，能夠幫助我們去控制硬體的，重點在協調（coordinate），怎麼樣去協調使用者，分配資源，是 OS 裡面比較複雜的部份
+    - 因此我們也可以說 OS 是幫忙分配資源的軟體（resource allocator），像是 memory management 會幫忙分配記憶體，file system 會幫忙分配 disk block 等等
+- 硬體（Hardware）：
+    能夠拿來給我們操作，做運算的硬體，因此硬體在 OS 這邊我們習慣稱它們回資源（resources），我們不在意它是透過哪種硬體提供的，只在意它能夠提供哪種資源，可以怎麼運用它
 
 硬體的部分我們剛剛前面都講完了，他和 OS 中間還會有一層 BIOS，或是也可以把它歸類在 OS 裡面，無論如何 BIOS 前面我們也講了，剩下的兩個部分就比較偏應用層面，我們暫時不關心
 
@@ -439,13 +357,7 @@ Boot loader 啟動後會載入並執行他找到的第一個啟動軟體，通�
 
 我們看一個例子：
 
-<div class = "center-column">
-
-![](image/General_Purpose_Operating_Systems.jpg)
-
-(source：[清大周志遠教授的 OS 講義](https://ocw.nthu.edu.tw/ocw/index.php?page=course_news_content&cid=141&id=999))
-
-</div>
+![（source：[清大周志遠教授的 OS 講義](https://ocw.nthu.edu.tw/ocw/index.php?page=course_news_content&cid=141&id=999)）](image/General_Purpose_Operating_Systems.jpg)
 
 最下面是硬體，上面則是我們寫的程式，程式大致上可以分成「和作業系統相關的」與「和作業系統無關的」，也就是圖上的 user mode 與 kernel mode，這在後面的章節會再提更多
 
@@ -461,17 +373,13 @@ Device Driver 也算 OS 的一部份，把它抽出來是因為它是可以一�
 
 現在我們有了 OS 的概念，也就可以跟硬體打交道了，所以最後我們來看一下我們到底要怎麼執行一個程式。 我們的執行檔都是一種二進制檔案，目的是使計算機根據機器碼執行指定的任務
 
-二進位檔案通常被認為是 Byte 的序列，這代表 binary digits(bit) 以八個為一組，有關計算機編碼的部分，由於已經有一篇非常棒的文章了，因此我這邊不打算詳細展開，請自行去閱讀 jserv 老師的[解讀計算機編碼](https://hackmd.io/@sysprog/binary-representation)文章
+二進位檔案通常被認為是 Byte 的序列，這代表 binary digits（bit） 以八個為一組，有關計算機編碼的部分，由於已經有一篇非常棒的文章了，因此我這邊不打算詳細展開，請自行去閱讀 jserv 老師的[解讀計算機編碼](https://hackmd.io/@sysprog/binary-representation)文章
 
 我們之後的文章都會假設你已經讀過了這篇文章，理解了計算機編碼。 這是一篇科普文，門檻不高，建議你它看完，肯定會對你理解計算機有所幫助
 
 另外這邊分享一個有趣的小故事：
 
-<div class = "center-column">
-
 ![](image/von-Neumann-machine-code.png)
-
-</div>
 
 > von Neumann 認為直接用機器碼來寫程式就好了。 von Neumann 有一個博士班學生，因為用機器碼太煩了，著手設計組合語言。 von Neumann 知道了以後大為惱火，認為他不該把寶貴的時間浪費在這種無用的工具上<br><br>
 >
@@ -489,11 +397,7 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 我們能夠使用 HxD 或是 Vscode 內的 Hex Viewer 等工具來觀察二進制檔，這些工具會將 Byte sequence 利用八進制/十六進制等方式顯示出來。 假設我們於 windows 系統上利用 HxD 打開一個會印出 "Hello World!" 字串的 `.exe` 檔，那結果會像這樣：
 
-<div class = "center-column">
-
 ![](image/binary-file.png)
-
-</div>
 
 ### 可執行檔 Executable File
 
@@ -507,19 +411,9 @@ OS 會利用副檔名來去選擇預設的對應程式來開啟該檔案，例�
 
 最後附上兩種執行檔格式的細節，我們通常會稱這個為 File ayout：
 
-<div class = "center-column">
+![（ELF File layout，source：[Wikipedia](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:ELF_Executable_and_Linkable_Format_diagram_by_Ange_Albertini.png)）](image/ELF-format.png)
 
-![](image/ELF-format.png)
-
-(ELF File layout)   
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format#/media/File:ELF_Executable_and_Linkable_Format_diagram_by_Ange_Albertini.png))
-
-![](image/PE-format.png)
-
-(PE File layout)    
-(source：[Wikipedia](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg))
-
-</div>
+![（PE File layout，source：[Wikipedia](https://en.wikipedia.org/wiki/Portable_Executable#/media/File:Portable_Executable_32_bit_Structure_in_SVG_fixed.svg)）](image/PE-format.png)
 
 ## Reference
 

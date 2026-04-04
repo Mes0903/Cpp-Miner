@@ -17,21 +17,9 @@ category: C++ Miner
 
 若能讀懂 spec，將來在一些討論區，如 Discord、Stackoverflow 與別人討論時也才能夠聽懂別人在說什麼，在回答問題時我們時常會直接將 spec 的內容搬出來，直接說因為哪個條款，所以有怎樣的結果，若看不懂 spec，很有可能連與別人討論都做不到。
 
-<div class = "center-column">
+![（熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因）](image/discussion1.png)
 
-![](image/discussion1.png)
-
-(熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因)
-
-</div>
-
-<div class = "center-column">
-
-![](image/discussion2.png)
-
-(在問問題時引用 spec 條例也能有效幫助別人理解你的疑惑點)
-
-</div>
+![（在問問題時引用 spec 條例也能有效幫助別人理解你的疑惑點）](image/discussion2.png)
 
 講義主要參考了 SICP、C++ Primer 的編排方式，並參考[語言技術：C++ Gossip](https://openhome.cc/Gossip/CppGossip/index.html)、spec 與 cppreference 來撰寫內容。
 
@@ -47,11 +35,7 @@ category: C++ Miner
 
 當我們要執行這個 Program 時，電腦會把它從硬碟搬到記憶體裡面，CPU 再去讀取指令，這樣正在執行的 Program 我們稱之為 Process。
 
-<div class = "center-column">
-
 ![](image/hello_world1.png)
-
-</div>
 
 > source：[淺談 c++ 編譯到鏈結的過程](https://medium.com/@alastor0325/https-medium-com-alastor0325-compilation-to-linking-c07121e2803)  
 
@@ -69,7 +53,7 @@ int main()
 
 前篇裡面輸出的字串是 `"test"`，這邊則是 `"Hello World"`，這是許多初學者都會學到的第一個程式，現在我們來看一下這段 code 在說什麼。
 
-首先看第一行：  
+首先看第一行：
 ```cpp
 #include <iostream>  
 ```
@@ -92,11 +76,7 @@ int main() {
 
 在 Vscode 裡面看起來像這樣：
 
-<div class = "center-column">
-
 ![](image/hello_world2.png)
-
-</div>
 
 可以看見輸出結果跟一開始的一樣。
 
@@ -104,43 +84,23 @@ int main() {
 
 對於 `<>`，前處理器會先去系統目錄找要引用的檔案，以這邊的 `<iostream>` 來說，位置就在一開始下載的 `mingw/include/c++/11.2.0/` 裡面，因為我們事先有將 `mingw/bin` 加到系統環境變數裡面了，所以它才找的到：
 
-<div class = "center-column">
-
 ![](image/hello_world3.png)
-
-</div>
 
 而對於 `""`，前處理器會先在現在檔案所處的資料夾找檔案，如果沒找到，則會去系統目錄找，所以我們可以做個測試，新建一個空的檔案叫做 `iostream`，跟 `test.cpp` 擺在同一個資料夾下：
 
-<div class = "center-column">
-
 ![](image/hello_world4.png)
-
-</div>
 
 此時我們引用的 `iostream` 會是 `test` 這個資料夾下的 `iostream`，因為是空的，沒有引用到我們真正需要使用的，在系統目錄裡的 `iostream`，所以編譯會出現錯誤：
 
-<div class = "center-column">
-
 ![](image/hello_world5.png)
-
-</div>
 
 可以看見編譯器提醒我們要 `#include <iostream>`；而如果我們把 `test/iostream` 拉到外面一層：
 
-<div class = "center-column">
-
 ![](image/hello_world6.png)
-
-</div>
 
 就能夠通過編譯，正常執行，因為當前路徑資料夾下並沒有 `iostream` 這個檔案，所以前處理器會去系統目錄下找檔案：
 
-<div class = "center-column">
-
 ![](image/hello_world7.png)
-
-</div>
 
 我們自己寫的檔案會用 `.h` 來當附檔名，並用 `""` 來引用。
 
@@ -166,7 +126,7 @@ int main() {
 
 ### Type
 
-而我們會利用型態(type) 對儲存的資料進行分類，就像一個標籤一樣，拿來形容物件、引用、函式與表達式
+而我們會利用型態（type） 對儲存的資料進行分類，就像一個標籤一樣，拿來形容物件、引用、函式與表達式
 
 > n4868(6.8.1) : [[basic.types]](https://timsong-cpp.github.io/cppwp/n4868/basic.types) and the subclauses thereof impose requirements on implementations regarding the representation of types. There are two kinds of types: fundamental types and compound types. Types describe objects, references, or functions.
 
@@ -174,9 +134,9 @@ int main() {
 註：這邊標準沒有列到 expression 是有原因的，但由於背後牽涉到 expression type 與 object type，解釋起來略為複雜，這邊就先不贅述，大家可以先忽略它  
 :::
 
-可以看見型態分兩種，fundamental types 和 compound type，[cppreference](https://en.cppreference.com/w/cpp/language/type#Type_classification) 有表可以看。而常見的原始型別，又稱為算術型別(arithemetic types)，則是 fundamental types 的一種。
+可以看見型態分兩種，fundamental types 和 compound type，[cppreference](https://en.cppreference.com/w/cpp/language/type#Type_classification) 有表可以看。而常見的原始型別，又稱為算術型別（arithemetic types），則是 fundamental types 的一種。
 
-算術型別主要有兩種，浮點數(floating-point types)與整數(integral types)，而整數型別又可再往下分 bool、character types、signed integer types、unsigned integer types。
+算術型別主要有兩種，浮點數（floating-point types）與整數（integral types），而整數型別又可再往下分 bool、character types、signed integer types、unsigned integer types。
 
 > n4868(6.8.2) : Types bool, char, wchar_t, char8_t, char16_t, char32_t, and the signed and unsigned integer types are collectively called integral types. A synonym for integral type is integer type.
 
@@ -186,13 +146,7 @@ bool 是一種特殊的型態，bool 型態的物件只能儲存兩種值：true
 
 而 character types 則是字元型態，character types 的物件所儲存的數字會被對應到字元集去解釋和實作，字元集又稱字元編碼，常見的有 ASCII、Big5、UTF-8 等等，下面這是 ASCII 字元編碼表
 
-<div class = "center-column">
-
-![](image/ascii.png)
-
-(source : http://kevin.hwai.edu.tw/~kevin/material/JAVA/Sample2016/ASCII.htm  )
-
-</div>
+![（source : http://kevin.hwai.edu.tw/~kevin/material/JAVA/Sample2016/ASCII.htm）](image/ascii.png)
 
 而 signed interger 與 unsigned integer 則都是整數，不過前者有分正負號，而後者則只有正號，
 
@@ -206,15 +160,15 @@ bool 是一種特殊的型態，bool 型態的物件只能儲存兩種值：true
 
 ### Simple-declaration
 
-而我們還可以給物件取名字，習慣上我們會稱有名字的物件為「變數 (variable)」，但 spec 裡面有寫道：
+而我們還可以給物件取名字，習慣上我們會稱有名字的物件為「變數（variable）」，但 spec 裡面有寫道：
 
 > n4868(6.1) : A *variable* is introduced by the declaration of a reference other than a non-static data member or of an object. The variable's name, if any, denotes the reference or object.
 
 所以在定義上，只要是物件或者是 static data member 的 reference 都可以稱為變數，後者大家可以先不用管他，只要知道口語上的變數指的是有名字的物件就好。
 
-延伸閱讀 : [Why is a non-static data member reference not a variable?](https://stackoverflow.com/questions/12987259/why-is-a-non-static-data-member-reference-not-a-variable)
+延伸閱讀 ：[Why is a non-static data member reference not a variable?](https://stackoverflow.com/questions/12987259/why-is-a-non-static-data-member-reference-not-a-variable)
 
-我們會通過「宣告 (declaration)」來給變數取名字，宣告的意義在告訴編譯器有某個東西的存在，長的會像這樣：
+我們會通過「宣告（declaration）」來給變數取名字，宣告的意義在告訴編譯器有某個東西的存在，長的會像這樣：
 
 ```cpp
 int main()  
@@ -258,7 +212,7 @@ int main()
 
 ### Declarator
 
-第二個部分是 init-declarator-list，由宣告器(declarators) 組成，宣告器之間以逗號分割，每個宣告器裡面可能會有初始化器(initializer)。
+第二個部分是 init-declarator-list，由宣告器（declarators） 組成，宣告器之間以逗號分割，每個宣告器裡面可能會有初始化器（initializer）。
 
 declarator 用來引入變數，最簡單的宣告器由一個變數名組成，像是 `int a` 裡面的 `a` 就是宣告器，而 `int a, b = 5` 則有兩個宣告器，引入 `a` 與 `b` 兩個變數，而後方的 `b` 還包含了一個 initializer，將 `b` 變數的值初始化為 5。
 
@@ -288,7 +242,7 @@ int main() {
 }  
 ```
 
-因此在編譯(連結)時會有錯誤顯示 "undefined reference to \`a\` "。
+因此在編譯（連結）時會有錯誤顯示 "undefined reference to \`a\` "。
 
 下面的部份可以待大家後面的章節讀熟後再回來看，因為 Declaration 其實是個很複雜的概念。
 
@@ -305,7 +259,7 @@ class T;
 
 這兩個宣告並沒有完整引入資訊，這通常會在 forward declaration 時使用，需要有對應的 definition 才可以開始使用
 
-這邊就可以代入一個觀念叫 incomplete type，他分為 `void` 與 incompletetly-defined object type，我們重點在後面這個，從名字可以看出他是有關物件型態的東西，具體指：  
+這邊就可以代入一個觀念叫 incomplete type，他分為 `void` 與 incompletetly-defined object type，我們重點在後面這個，從名字可以看出他是有關物件型態的東西，具體指：
 1. 宣告但未定義的 class  
 2. underlying type 尚未確定的 enum  
 3. 未知長度的 array  
@@ -349,9 +303,9 @@ int main() {
 
 ## Expression
 
-講完宣告了，接下來要講表達式(expression)，Expression 用來描述一段計算過程，由運算元(operand) 與運算子 (operator) 組成，Expression 會有一個計算(Evaluation) 的結果，且可能會有 side-effect。
+講完宣告了，接下來要講表達式（expression），Expression 用來描述一段計算過程，由運算元（operand） 與運算子（operator） 組成，Expression 會有一個計算（Evaluation） 的結果，且可能會有 side-effect。
 
-舉幾個簡單的例子：`2 + 5` 是一個表達式，當中 `2` 是一個運算元，`5` 是另一個運算元，`+` 是運算子；`(2 + 5) * 2` 也是一個表達式，而這個表達式擁有子表達式 `(2 + 5)`，當中 `2` 和 `5` 是運算元，`+` 是運算子，而對於表達式 `(2 + 5) * 2` 來說，`(2 + 5)` 和 `2` 是運算元，`*`是運算子，這種有兩個以上運算子的表達式我們稱之為複合表達式(compound expression)。
+舉幾個簡單的例子：`2 + 5` 是一個表達式，當中 `2` 是一個運算元，`5` 是另一個運算元，`+` 是運算子；`(2 + 5) * 2` 也是一個表達式，而這個表達式擁有子表達式 `(2 + 5)`，當中 `2` 和 `5` 是運算元，`+` 是運算子，而對於表達式 `(2 + 5) * 2` 來說，`(2 + 5)` 和 `2` 是運算元，`*`是運算子，這種有兩個以上運算子的表達式我們稱之為複合表達式（compound expression）。
 
 而所謂的 side-effect 是一種額外的操作，舉個例子，我們宣告一個整數 `int i;`，然後寫了 `i = 3`，這個運算式計算返回的結果是 `i`，但途中卻順便讓變數 `i` 儲存的值變為 `3` 了，這就是 side-effect，有時候 side-effect 才是我們操作的主要目的。
 
@@ -361,7 +315,7 @@ Expression 有兩個特性：Type 與 Value Category，Type 就是前面講的�
 
 ### 運算子
 
-根據運算元的數目，我們可以簡單將運算子區分為單元運算子(unary operator)、二元運算子(binary operator) 和三元運算子(ternary operator)。
+根據運算元的數目，我們可以簡單將運算子區分為單元運算子（unary operator）、二元運算子（binary operator） 和三元運算子（ternary operator）。
 
 而運算子在 [cppreference](https://en.cppreference.com/w/cpp/language/expressions#Operators) 上有表可以看，在複合運算式中運算子會有執行的優先順序，就像是在數學式裡面也有先乘除後加減，括號要先做等等的規則，有關順序的規則可以看[這裡](https://en.cppreference.com/w/cpp/language/eval_order)。
 
@@ -503,7 +457,7 @@ double pi = i; // pi 的值為 3.0
 
 第二行裡面我把一個型態為 bool 的物件指派給整數物件 `i`，此時如果 bool 物件的值為 `true`，計算結果就會是 1，否則為 0，因此在此例中 `i` 的值為 1。
 
-第三行內我用一個浮點數值指派給一個整數變數，此時值就會被截斷(truncated)，變數所被指派的值會變為小數點的整數部分，因此在此例中 `i` 的值為 3。
+第三行內我用一個浮點數值指派給一個整數變數，此時值就會被截斷（truncated），變數所被指派的值會變為小數點的整數部分，因此在此例中 `i` 的值為 3。
 
 第四行內我用一個整數值指派給一個浮點數變數，此時小數部分就會是 0，如果整數的位元數比浮點數物件所容納的還多，就會喪失精確度。
 
@@ -574,7 +528,7 @@ compound statement 又稱為 block，由一些小的 statement 組成，小的 s
 
 我們會利用 `{}` 來建立 block，當一個預期只能擺一個 statement 的地方，需要多個 statement 時，我們就能夠利用複合陳述句來包裝，每個複合陳述句會建立自己的 scope，變數離開 scope 時會被解構，忘記的可以回到上面複習一下。
 
-舉個例子，if-statement(一種 selection statement) 最簡單的語法長這樣：
+舉個例子，if-statement（一種 selection statement） 最簡單的語法長這樣：
 
 > if constexpr(opt) ( init-statement(opt) condition ) statement
 
@@ -591,7 +545,7 @@ int main() {
 }  
 ```
 
-當 `a == 0` 這個條件符合時(上例符合)，便會去執行 `std::cout << "in if statement";` 這個 expression statement，這邊只做了一組動作，但如果我們想要執行多組 statement，那麼就需要 compound statement 了，寫起來像這樣：
+當 `a == 0` 這個條件符合時（上例符合），便會去執行 `std::cout << "in if statement";` 這個 expression statement，這邊只做了一組動作，但如果我們想要執行多組 statement，那麼就需要 compound statement 了，寫起來像這樣：
 
 ```cpp
 int main() {  
@@ -677,7 +631,7 @@ else
 
 上例中第四行的 `else` 與第二行的 `if` 是一組的，第六行的 `else` 與第一行的 `if` 是一組的。
 
-讓我們看一個例子，假設我們紅茶的數量有兩杯以上，就跟店員要袋子，不然就不用袋子：  
+讓我們看一個例子，假設我們紅茶的數量有兩杯以上，就跟店員要袋子，不然就不用袋子：
 ```cpp
 int main() {  
     bool bag_flag;  
@@ -740,7 +694,7 @@ int main() {
 
 > while ( condition ) statement		
 
-寫起來像這樣：  
+寫起來像這樣：
 ```cpp
 while (condition)  
     statement  
@@ -968,7 +922,7 @@ Jump Statements 可以無條件的改變程式執行的順序，有 4 種：`bre
 
 ### 標記陳述句 Labeled Statements
 
-標記陳述句用來製造一個 label，label 可以拿來幫助控制程式的執行順序，label 主要是給兩種 statement 看的，一是 `goto`(一種 jump statement)，二是 `switch`(一種 selection statement)。一個 statement 裡面可能會有很多個 label。
+標記陳述句用來製造一個 label，label 可以拿來幫助控制程式的執行順序，label 主要是給兩種 statement 看的，一是 `goto`（一種 jump statement），二是 `switch`（一種 selection statement）。一個 statement 裡面可能會有很多個 label。
 
 語法有三種：
 
@@ -978,9 +932,9 @@ Jump Statements 可以無條件的改變程式執行的順序，有 4 種：`bre
 
 可以看見後面都需要接 statement，但如果在邏輯上不需要，就可以使用 null statement 來幫忙。
 
-#### goto (一種 jump statement)
+#### goto（一種 jump statement）
 
-(1) 是給 `goto` 看的，同一個 function 內的 lable `goto` 都看的到，且在宣告前也可以看的到，function 後面的章節會教到，這邊可以先當作 `main` function 裡面。
+（1） 是給 `goto` 看的，同一個 function 內的 lable `goto` 都看的到，且在宣告前也可以看的到，function 後面的章節會教到，這邊可以先當作 `main` function 裡面。
 
 舉個例子：
 
@@ -998,7 +952,7 @@ end:
 }  
 ```
 
-這裡我建了兩個標籤：`begin` 與 `end`，後面接冒號，這段是 labeld statement，而冒號後面還要再接一個 statement，我這裡兩邊都接了一個 `std::cout << ...;` (一種  expression statement)。
+這裡我建了兩個標籤：`begin` 與 `end`，後面接冒號，這段是 labeld statement，而冒號後面還要再接一個 statement，我這裡兩邊都接了一個 `std::cout << ...;` （一種  expression statement）。
 
 這個程式的輸出結果只會有一個 "end"，一開始程式是循序執行的，因此進入 main function，隨後執行到第五行時看見了 `goto` 關鍵字，`goto` 會讓程式去執行後面標籤標記的地方，以這裡來說就是 `end` 這個標籤，因此後面的 `std::cout << "begin\n";` 就被跳過了。
 
@@ -1046,9 +1000,9 @@ end:
 
 這樣就可以編譯過了。
 
-#### switch (一種 selection statement)
+#### switch（一種 selection statement）
 
-(2) 與 (3) 是給 `switch` 看的，語法是
+（2） 與（3） 是給 `switch` 看的，語法是
 
 > switch ( init-statement(opt) condition ) statement
 
@@ -1056,7 +1010,7 @@ end:
 
 而 condition 的部分則是要放一個型態是 int、enumeration 或是一個可以透過 Contextual conversions 轉換為 int、enumeration type 的 expression。
 
-statement 的部分通常會放一個 compound statement，而對於 `switch` 來說，`case:` 和 `default` 這兩個 label，還有 `break` statement(一種 jump statement) 都有特殊的意義。
+statement 的部分通常會放一個 compound statement，而對於 `switch` 來說，`case:` 和 `default` 這兩個 label，還有 `break` statement（一種 jump statement） 都有特殊的意義。
 
 switch 的 body 可以有任意數量的 `case:` 標籤，只要 `case` 後面接的 constant-expression 沒有重複就好，但最多只能有一個 `default` 標籤，
 

@@ -5,7 +5,7 @@ tag: C++ Miner-BlackMagic
 category: C++ Miner
 ---
 
-# 礦坑系列 ── Small String Optimization (SSO)
+# 礦坑系列 ── Small String Optimization（SSO）
 
 ## Small String Optimization (SSO)
 
@@ -29,13 +29,7 @@ struct basic_string {
   - 這個「不包含 `'\0'`」是一個比較巧妙的設計，編譯器會利用這點來做一些優化，後面會提
 - `capacity`：字串的容量，一樣<span class = "yellow">不包含 `'\0'`</span>
 
-<div class = "center-column">
-
-![](image/string-begin-layout.png)
-
-（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
-
-</div>
+![（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）](image/string-begin-layout.png)
 
 從這邊你會發現一個問題，也是通常我們不太喜歡 string 的原因 ── 其有 heap allocation 的操作，因此可能會造成效能上的影響
 
@@ -61,15 +55,9 @@ struct basic_string
 
 如果字串的容量小於等於我們設定的值，以這邊來說是 `8`，那就可以將 `ptr` 指向內部的 `buf`，從而省去 heap allocation，這樣有一個很大的好處是我們不需要任何的 heap allocation 就可以建立空字串了
 
-<div class = "center-column">
+![（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）](image/basic-string-layout.png)
 
-![](image/basic-string-layout.png)
-
-（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）
-
-</div>
-
-至於 buffer 的大小具體要是多少就要看你的編譯器實作了，太大會導致記憶體的浪費，太小則會增加程式碼的複雜度。 在 VS2019 的 msvc 裡是 15 個字，而在我的環境上(mingw-gcc 11.2.0) 也是 15
+至於 buffer 的大小具體要是多少就要看你的編譯器實作了，太大會導致記憶體的浪費，太小則會增加程式碼的複雜度。 在 VS2019 的 msvc 裡是 15 個字，而在我的環境上（mingw-gcc 11.2.0） 也是 15
 
 很多人可能會覺得 `std::string` 會有 heap allocation 因此不去用他：
 
@@ -231,7 +219,7 @@ struct string
 
 ### 測試 & 實例
 
-避免有人不想看內部 code，就先放例子，這裡我是用 Compiler Explorer gcc 12.1 來測的 ([網址](https://godbolt.org/z/qajh5PeKc))：
+避免有人不想看內部 code，就先放例子，這裡我是用 Compiler Explorer gcc 12.1 來測的（[網址](https://godbolt.org/z/qajh5PeKc))：
 
 ```cpp
 #include <iostream>
@@ -406,7 +394,7 @@ _CONSTEXPR20 void _Construct(const _Char_or_ptr _Arg, _CRT_GUARDOVERFLOW const s
 
 你會看見裡面有一個分支檢查 `_Count` 是否小於 `_Small_string_capacity`，如果是，那就會對 `_Buf` 賦值，然後 return，因此完全<span class = "yellow">沒有多餘的 allocation</span>
 
-而如果 `_Count` 大於於 `_Small_string_capacity`，則會利用 `_Allocate_for_capacity` 與 `_Construct_in_place` 分配記憶體空間，然後再賦值給 `_Ptr`(也就是 `_New_ptr`)
+而如果 `_Count` 大於於 `_Small_string_capacity`，則會利用 `_Allocate_for_capacity` 與 `_Construct_in_place` 分配記憶體空間，然後再賦值給 `_Ptr`（也就是 `_New_ptr`)
 
 `_Allocate_for_capacity` 內會利用 allocator 分配記憶體空間：
 

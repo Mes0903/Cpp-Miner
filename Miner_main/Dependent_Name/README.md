@@ -5,7 +5,7 @@ tag: C++ Miner-main
 category: C++ Miner
 ---
 
-# (WIP) 礦坑系列 ── Dependent Name 與 Name lookup
+# （WIP） 礦坑系列 ── Dependent Name 與 Name lookup
 
 ## 前言
 
@@ -21,11 +21,11 @@ t * f;
 
 > [n4861(6.1.8)](https://timsong-cpp.github.io/cppwp/n4861/basic.pre#8): Some names denote types or templates. In general, whenever a name is encountered it is necessary to determine whether that name denotes one of these entities before continuing to parse the program that contains it. The process that determines this is called *name lookup*.
 
-意思大概就是名字可能會是型態或是模板，因此遇到一個名字的時候需要確認先確定它是不是型態或模板，確認完才能再繼續做語法的解析。 這個過程就稱為名稱查找(name lookup)
+意思大概就是名字可能會是型態或是模板，因此遇到一個名字的時候需要確認先確定它是不是型態或模板，確認完才能再繼續做語法的解析。 這個過程就稱為名稱查找（name lookup）
 
 那如果 `T` 是個模板參數，編譯器要如何確認 `T::x` 是什麼東西呢? `x` 可以是個 `int` 成員，這樣乘法會是個合法行為；`x` 也可以是 `T` 內部的 `typedef`
 
-因此在模板（類模板和函式模板）的定義裡面，某些建構的意義可能會因實例化而異。類型和表達式的推導可能會取決於「<span class = "yellow">template parameters 的型態</span>」和「<span class = "yellow">non-type template parameters 的值</span>」。這種東西我們就將其稱為待決名(Dependent Name)，在後面我們會講得更詳細一點
+因此在模板（類模板和函式模板）的定義裡面，某些建構的意義可能會因實例化而異。類型和表達式的推導可能會取決於「<span class = "yellow">template parameters 的型態</span>」和「<span class = "yellow">non-type template parameters 的值</span>」。這種東西我們就將其稱為待決名（Dependent Name），在後面我們會講得更詳細一點
 
 而對於待決名和非待決名的名稱查找與綁定，規則是不一樣的
 
@@ -81,25 +81,17 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 所以判斷方法很直覺，前面有 `::` 的是 qualified name，沒有的就是 unqualified name
 
-這個 `::` 叫做 scope resolution operator，中文叫做範圍解析運算子，基本上就是幫忙指定名稱域的運算子。 如果 `::` 的左邊沒接上名字，那代表全域(global scope)，例如 `::x` 表示全域中的 `x`
+這個 `::` 叫做 scope resolution operator，中文叫做範圍解析運算子，基本上就是幫忙指定名稱域的運算子。 如果 `::` 的左邊沒接上名字，那代表全域（global scope），例如 `::x` 表示全域中的 `x`
 
 標準內對於 qualified name 與 unqualifed name 的定義其實也差不多：
 
 [n4861(7.5.4.1)](https://timsong-cpp.github.io/cppwp/n4861/expr.prim.id#unqual)：
 
-<div class = "center-column">
-
 ![](image/unqualified_id.png)
-
-</div>
 
 [n4861(7.5.4.2)](https://timsong-cpp.github.io/cppwp/n4861/expr.prim.id#qual)：
 
-<div class = "center-column">
-
 ![](image/qualified_id.png)
-
-</div>
 
 接下來標準內就是講講每項的細節，但重點主要放在 declaration 和 expression，跟我們在意的東西不一樣，所以有興趣的再點進去看ㄅ
 
@@ -108,12 +100,12 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 那在 C\+\+ 中，名稱查找有兩種分類方式，第一種比較正式，以 qualified 與 non qualified 來分：
 
 - Unqualified name lookup
-    - 對於函式的名稱而言還會有 Argument-dependent lookup(ADL)
+    - 對於函式的名稱而言還會有 Argument-dependent lookup（ADL）
 - Qualified name lookup
 
-第二種分法則以是不是 ADL 來分，畢竟 ADL 比較特殊(不直覺)：
+第二種分法則以是不是 ADL 來分，畢竟 ADL 比較特殊（不直覺）：
 
-- ordinary lookup (普通查找)
+- ordinary lookup（普通查找）
 - Argument-dependent lookup(ADL)
 
 在 C\+\+ 中，首先會進行 ordinary lookup，然後才會是 ADL。 但由於第一種分類比較正式，所以接下來還是以第一種分法為例，帶大家看一下這三種名稱查找
@@ -126,11 +118,11 @@ Unqualified Name 的中文叫做「非限定名稱」，而 Qualified Name 叫�
 
 ### Unqualified Name lookup
 
-接下來基本上就是一堆規則，名稱查找會按照每個對應規則中列出的順序在 scope 中尋找宣告，直到找到至少一個宣告就會停止名稱查找，如果沒有找到對應的宣告，則 program 為 ill-formed(簡單來說就是錯的)
+接下來基本上就是一堆規則，名稱查找會按照每個對應規則中列出的順序在 scope 中尋找宣告，直到找到至少一個宣告就會停止名稱查找，如果沒有找到對應的宣告，則 program 為 ill-formed（簡單來說就是錯的）
 
-#### 1. 全域/文件作用域 (Global scope/File scope)
+#### 1. 全域/文件作用域（Global scope/File scope）
 
-在全域(top-level namespace) 範圍內使用的名稱，在任何函數、類別或使用者聲明的命名空間之外，應在其在全域範圍內使用之前進行宣告
+在全域（top-level namespace） 範圍內使用的名稱，在任何函數、類別或使用者聲明的命名空間之外，應在其在全域範圍內使用之前進行宣告
 
 ```cpp
 int n = 1;    // declaration of n
@@ -140,7 +132,7 @@ int z = y - 1;    // Error: lookup fails
 int y = 2;    // declaration of y
 ```
 
-#### 2. 命名空間作用域 (Namespace scope)
+#### 2. 命名空間作用域（Namespace scope）
 
 對於在使用者宣告的命名空間內，且在任何函式或類之外所使用的名字，首先會查找該命名空間中，該次使用之前的部分，然後查找外圍命名空間在宣告該命名空間之前的部分，以此類推，直到抵達全域
 
@@ -195,7 +187,7 @@ int i = 4;
 - `X::m` 不存在，但 `::m` 存在且出現在 `X::y` 的定義之前，因此 `X::y` 為 `3`
 - `X::i` 不存在，而 `::i` 雖然存在但出現在 `X::z` 之後，因此 `X::i = i` 處名稱查找失敗
 
-#### 3. 非成員函式定義 (Non-member function definition)
+#### 3. 非成員函式定義（Non-member function definition）
 
 ```cpp
 namespace A
@@ -237,9 +229,9 @@ namespace A
 
 ### Argument-dependent lookup(ADL)
 
-## Dependent Name (待決名)
+## Dependent Name（待決名）
 
-如同前言中所說的，在模板（類模板和函式模板）的定義裡面，某些建構的意義可能會因實例化而異。類型和表達式的推導可能會取決於「<span class = "yellow">template parameters 的型態</span>」和「<span class = "yellow">non-type template parameters 的值</span>」。這種東西我們就將其稱為待決名(Dependent Name)，舉個例子：
+如同前言中所說的，在模板（類模板和函式模板）的定義裡面，某些建構的意義可能會因實例化而異。類型和表達式的推導可能會取決於「<span class = "yellow">template parameters 的型態</span>」和「<span class = "yellow">non-type template parameters 的值</span>」。這種東西我們就將其稱為待決名（Dependent Name），舉個例子：
 
 ```cpp
 template<typename T>
@@ -344,7 +336,6 @@ Compiler returned: 1
 
 對於 `T::A *a8;` 與 `B *a9` 這兩個例子，編譯器都把他們當乘法了，因此報了錯說找不到 `a8`、`B` 和 `a9` 的宣告。 
 
-
 ### 利用 template 消除歧義
 
 再來看個例子：
@@ -416,11 +407,7 @@ void f(T* p) {
 
 標準依照 types 與 expressions 的依賴對象進行了分類，其中 types 依賴於 type，而 expressions 則可依賴於 type 與 value，因此可以簡單的將分類畫成下圖：
 
-<div class = "center-column">
-
 ![](image/dependencies.png)
-
-</div>
 
 - Dependent types (e.g: a type template parameter `T`)
 - Value-dependent expressions (e.g: a non-type template parameter `N`)
@@ -430,8 +417,6 @@ void f(T* p) {
 
 詳細的內容留到後面的章節，基本上就是把 cppreference 和標準的內容拿出來翻譯和補充
 
-
-
 ### Dependent types
 ### Type-dependent expressions
 ### Value-dependent expressions
@@ -439,11 +424,4 @@ void f(T* p) {
 ## 參考資料
 
 - [Where and why do I have to put the "template" and "typename" keywords?](https://stackoverflow.com/questions/610245/where-and-why-do-i-have-to-put-the-template-and-typename-keywords)
-
-
-
-
-
-
-
 

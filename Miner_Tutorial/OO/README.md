@@ -11,15 +11,15 @@ category: C++ Miner
 
 物件導向有三個很重要的特性：資料抽象化、繼承與動態連結。資料抽象化上章有提到，就是將介面與實作分開；繼承的話則可以幫助我們建立相似模型之間的關係；動態連結則可以讓我們使用某些型態的物件時不用在意其內部細節。
 
-## 繼承(inheritance)
+## 繼承（inheritance）
 
-使用繼承的 Class 會構成一個階層架構(hierachy)，通常這個架構會有一個基類(base class)，其他類別再繼承自此基類，這些其他類別稱為衍生類(derived class)。基類會定義大家都需要的共通成員，而衍生類則會額外定義專屬於自己的成員。
+使用繼承的 Class 會構成一個階層架構（hierachy），通常這個架構會有一個基類（base class），其他類別再繼承自此基類，這些其他類別稱為衍生類（derived class）。基類會定義大家都需要的共通成員，而衍生類則會額外定義專屬於自己的成員。
 
 舉個例子，今天要實作船、汽車、飛機，這時候可能就會有個基類叫做「交通工具」，並且內部會有大家都需要的共通成員，如座位、衛星定位等等，而這三個衍生類內部則會再自定義自己需要的成員，如汽車需要輪子，船需要螺旋槳，飛機需要機翼等等。
 
 利用繼承可以避免持續撰寫重複的行為，但這不是主要的目的，濫用繼承會增加 code 之間的相依性，導致程式維護上變得更加困難，因此繼承最主要的使用時機是當兩個 class 擁有 <span class = "yellow">is-a</span> 的關係時，以上例來說，汽車「是一種」交通工具，船也「是一種」交通工具，飛機也是。
 
-但不是只有 is-a 的關係會用繼承，在某些時候，如 mixins 或 policy-based 設計，甚至是某些 has-a 關係也會用到繼承，也就是說還是要看你的實作細節來決定，但如果有用到多態繼承(polymorphic inheritance)，也就是有 `virtual` function 的，那就應該永遠都是 is-a 的關係。
+但不是只有 is-a 的關係會用繼承，在某些時候，如 mixins 或 policy-based 設計，甚至是某些 has-a 關係也會用到繼承，也就是說還是要看你的實作細節來決定，但如果有用到多態繼承（polymorphic inheritance），也就是有 `virtual` function 的，那就應該永遠都是 is-a 的關係。
 
 ## Base Class and derived class
 
@@ -114,11 +114,7 @@ int main()
 
 另外，access specifier 如果寫 public，那基類內的成員訪問許可權不會變，如果寫 protected，則原先是 public 的會變為 protected，寫 private 的話 public 與 protected 都會變為 private，因此第二層繼承的 class 將無法使用基類的 member：
 
-<div class = "center-column">
-
 ![](image/based_derived.png)
-
-</div>
 
 ```cpp
 #include <iostream>
@@ -317,9 +313,9 @@ void DerivedFriend(D d)
 }  
 ```
 
-## 建構子(Constructor)
+## 建構子（Constructor）
 
-雖然衍生類內含有基類的成員，但一般來說衍生類不應該直接初始化那些成員，需要透過基類的建構子來初始化他們，因此建構時會先呼叫基類的建構子，再呼叫衍生類的建構子：  
+雖然衍生類內含有基類的成員，但一般來說衍生類不應該直接初始化那些成員，需要透過基類的建構子來初始化他們，因此建構時會先呼叫基類的建構子，再呼叫衍生類的建構子：
 ```cpp
 #include <iostream>
 
@@ -367,7 +363,7 @@ int main()
 }    
 ```
 
-這樣比較好的原因是因為每個 Class 都會有自己的 interface，我們應該透過這些 interface 來跟 Class 互動，即使它是你的基類也是。另外一點就是 Class 有自己的 scope，在繼承底下衍生類的 scope 為巢狀的範疇(nested scope)，如果你使用衍生類的建構子來初始化基類的成員，可能讓 code 變得較為複雜。
+這樣比較好的原因是因為每個 Class 都會有自己的 interface，我們應該透過這些 interface 來跟 Class 互動，即使它是你的基類也是。另外一點就是 Class 有自己的 scope，在繼承底下衍生類的 scope 為巢狀的範疇（nested scope），如果你使用衍生類的建構子來初始化基類的成員，可能讓 code 變得較為複雜。
 
 ## Hiding Base Class Member
 
@@ -558,13 +554,7 @@ public:
 
 則其 memory layout 通常會如下圖：
 
-<div class = "center-column">
-
-![](image/memory_layout.png)
-
-(順序不一定會一樣，要看電腦的架構與編譯器，但一定會有個排列的規則)
-
-</div>
+![（順序不一定會一樣，要看電腦的架構與編譯器，但一定會有個排列的規則）](image/memory_layout.png)
 
 我們可以使用 `reinterpret_cast` 來做簡單的驗證：
 
@@ -683,7 +673,7 @@ int main()
 
 讀到這裡你應該知道基類與衍生類是不同的型態，但有轉型可以幫助它們做轉換
 
-也因為有這個特性，當我們使用一個衍生類物件賦值給基類物件時，會發生一個問題稱為物件切片(Object Slicing)
+也因為有這個特性，當我們使用一個衍生類物件賦值給基類物件時，會發生一個問題稱為物件切片（Object Slicing）
 
 這個問題是這樣的，由於衍生類可以轉行為基類，自然就可以賦值給基類物件，但是衍生類有額外的成員，如上面的 `i3` 與 `i4`，兩個型態的實例大小也不一樣
 
@@ -762,7 +752,7 @@ public:
 };  
 ```
 
-但現在問題來了，我們在設計一個函式界面時可能希望參數只要是個「交通工具」就可以傳進來，例如展示會上我們要展示各式各樣交通工具的運作(我想不到其他例子ㄌXD)：
+但現在問題來了，我們在設計一個函式界面時可能希望參數只要是個「交通工具」就可以傳進來，例如展示會上我們要展示各式各樣交通工具的運作（我想不到其他例子ㄌXD）：
 
 ```cpp
 #include <iostream>
@@ -842,7 +832,7 @@ int main()
 
 ### virtual function
 
-在基類中，我們可以在「預期會被衍生類覆寫的函式」定義為 `virtual`，這種成員函式被稱為虛擬函式(virtual function)，擁有虛擬函式的 class 被稱為 polymorphic class
+在基類中，我們可以在「預期會被衍生類覆寫的函式」定義為 `virtual`，這種成員函式被稱為虛擬函式（virtual function），擁有虛擬函式的 class 被稱為 polymorphic class
 
 > [n4659(13.3-1)](https://timsong-cpp.github.io/cppwp/n4659/class.virtual#def:class,polymorphic)：[ Note: Virtual functions support dynamic binding and object-oriented programming.  — end note ] A class that declares or inherits a virtual function is called a polymorphic class.
 
@@ -992,7 +982,7 @@ class D2 : public D1 {
 
 ## Static Type and Dynamic Type
 
-在使用有繼承關係的型態時，我們要特別注意變數，或說其 expression 的靜態型態(static type) 與動態型態(dynamic type)
+在使用有繼承關係的型態時，我們要特別注意變數，或說其 expression 的靜態型態（static type） 與動態型態（dynamic type）
 
 所謂的靜態型態指的是在編譯時期就已經知道的型態，在 C++ 中這會是一個變數所宣告的型態，或是編譯期運算式所回傳的型態
 
@@ -1066,7 +1056,7 @@ int main()
 
 > 在程式語言和類型論中，多型（英語：polymorphism）指為不同資料類型的實體提供統一的介面，或使用一個單一的符號來表示多個不同的類型。
 
-而物件導向背後的核心概念是多型(Polymorphism)，由上方的敘述我們可以得知多型的核心概念就是「統一介面」，已經讀過前面的你，應該可以理解這四個字的含意
+而物件導向背後的核心概念是多型（Polymorphism），由上方的敘述我們可以得知多型的核心概念就是「統一介面」，已經讀過前面的你，應該可以理解這四個字的含意
 
 簡單來說就是同一個 function，同一個靜態型態的參數，但依照傳入的參數，可以有不同的行為；這樣的好處是易於擴充，同時可以降低程式碼的耦合性
 
@@ -1159,11 +1149,11 @@ int main()
 
 再更嚴謹的說，我們甚至不該定義「前進」這個函式，因為我們只能確定 Transportation 這個概念所衍生出來的產品必須能夠前進，但各個衍生類的「前進」卻大相逕庭，這種情況下，「前進」這個函式不會有一個預設的行為
 
-這種時候，我們就會需要使用純虛擬函式(pure virtual function)，純虛擬函式代表「一定會有這個功能，但這個功能並沒有預設的行為」
+這種時候，我們就會需要使用純虛擬函式（pure virtual function），純虛擬函式代表「一定會有這個功能，但這個功能並沒有預設的行為」
 
-與虛擬函式不同，純虛擬函式並不需要被定義(但可以被定義)，只需要在 function body 的部分寫上 `= 0` 就可以了，衍生類的部分則不會差太多
+與虛擬函式不同，純虛擬函式並不需要被定義（但可以被定義），只需要在 function body 的部分寫上 `= 0` 就可以了，衍生類的部分則不會差太多
 
-而擁有純虛擬函式的 class 被稱為「抽象類別(abstract class)」，不能被實例化，一樣用交通工具的例子來看：
+而擁有純虛擬函式的 class 被稱為「抽象類別（abstract class）」，不能被實例化，一樣用交通工具的例子來看：
 
 ```cpp
 #include <iostream>
@@ -1320,7 +1310,7 @@ C\+\+ 透過兩個運算子來支援 RTTI：
 1. `typeid` operator，它會傳回其給定 expression 或 type 的型態  
 2. `dynamic_cast` operator，它能夠安全的將 Base Class 的指標或 reference 轉換為 Derived Class 的指標或 reference
 
-套用到有虛擬函式的型態的指標或 reference 時，這些 operator 會使用對應物件的動態型態(dynamic type)，首先看 `typeid`：
+套用到有虛擬函式的型態的指標或 reference 時，這些 operator 會使用對應物件的動態型態（dynamic type），首先看 `typeid`：
 
 ```cpp
 #include <iostream>
@@ -1492,7 +1482,7 @@ int main()
 在上例中：
 
 - 第 14 行：由於是 downcasting，因此無法直接轉換  
-- 第 15 行：由於 `B` 不是 polymorphic class(沒有虛擬函式)，因此無法執行 downcasting  
+- 第 15 行：由於 `B` 不是 polymorphic class（沒有虛擬函式），因此無法執行 downcasting  
 - 第 19 行：由於是 downcasting，因此無法直接轉換  
 - 第 20 行：由於 `B2` 是 polymorphic class，因此可以使用 `dynamic_cast` 來做 downcasting，由於 `b2` 的動態型態為 `D2`，所以可以成功地執行轉型
 
@@ -1517,11 +1507,7 @@ public:
   int i3 = 3, i4 = 4;  
 };  
 ```
-<div class = "center-column">
-
 ![](image/memory_layout.png)
-
-</div>
 
 透過下面這個 code 可以看見 `ptr` 與 `&ptr->i1` 的位址是一樣的：
 
@@ -1548,11 +1534,7 @@ int main()
 
 這裡在做的事情是將 `ptr` 與 `&ptr->i1` 這兩段記憶體上面的值以 `int` 的形式讀出來，因為我們在 `B` 內將 `i1` 初始化為 `1` 了，因此兩個顯示出來的結果都會是 `1`：
 
-<div class = "center-column">
-
 ![](image/virtual_table1.png)
-
-</div>
 
 當我們讓這個 class 變為 polymorphic class 後，由於多了一個 vtable pointer，結果就會不一樣了：
 
@@ -1581,11 +1563,7 @@ int main()
 
 這是因為多了一個 vtable pointer，導致 `ptr` 與 `&ptr->i1` 指向的位址不一樣了：
 
-<div class = "center-column">
-
 ![](image/virtual_table2.png)
-
-</div>
 
 而現在我們來看一下 virtual table 的運作模式，考慮以下範例：
 
@@ -1631,11 +1609,7 @@ int main()
 
 此例中的 virtual table 樣貌如下：
 
-<div class = "center-column">
-
 ![](image/virtual_table3.png)
-
-</div>
 
 每一個實例都擁有自己的 vtable pointer，但同一種 class type 會共用同一張 virtual table，在進行虛擬函式的呼叫時會利用自己的這張表去找對應的函式定義
 
@@ -1645,4 +1619,4 @@ int main()
 
 另外 virtual table 內並不是只存了 virtual function 的定義，其他像是動態型態的資訊、與多重繼承時用來定位 `this` 的指標也都會存在裡面，有興趣的話可以看看這篇：[c++ vtable 深入解析](https://zhuanlan.zhihu.com/p/268324735)
 
-以 virtual table 當作關鍵字的話去查應該可以查到很多利用 gdb 工具來去把整個 memory layout 印出來做驗證的文章，所以我暫時就先不寫了(好累)，之後有空的話可能會額外拉一篇出來寫，這邊我有看到一篇還不錯的，大家可以閱讀一下：[C/C++ 修道院第17篇：C++繼承中虛表的記憶體佈局](https://zhuanlan.zhihu.com/p/190169823)
+以 virtual table 當作關鍵字的話去查應該可以查到很多利用 gdb 工具來去把整個 memory layout 印出來做驗證的文章，所以我暫時就先不寫了（好累），之後有空的話可能會額外拉一篇出來寫，這邊我有看到一篇還不錯的，大家可以閱讀一下：[C/C++ 修道院第17篇：C++繼承中虛表的記憶體佈局](https://zhuanlan.zhihu.com/p/190169823)

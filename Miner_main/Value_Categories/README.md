@@ -110,11 +110,7 @@ int main() {
 
 錯誤訊息：
 
-<div class = "center-column">
-
 ![](image/image1.png)
-
-</div>
 
 原因是因為 `int b = 5` 本身就是一個 Statement 了，所以 Compiler 並不希望你把 `int b = 5` 放在 `int a = ` 的右邊，它原先預期右邊要是一個 Expression，所以就噴了這個錯
 
@@ -134,13 +130,7 @@ int main() {
 
 運算式有兩種獨立的特性，分別是「[Type](https://en.cppreference.com/w/cpp/language/type)」和「[Value Catories](https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo)」，Type 不是我們今天討論的主題，我們直接來看 Value Categories
 
-<div class = "center-column">
-
-![](image/image2.png)
-
-（[圖源](https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c)）
-
-</div>
+![（[圖源](https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c)）](image/image2.png)
 
 Value Categories 分三個大類：<strong>Lvalue</strong>、<strong>Xvalue</strong> 和 <strong>Prvalue</strong>。 如果你曾讀過值類別，可能還會聽過 glvalue 與 rvalue，那這兩個又是什麼呢？ 這其實與運算式發展的歷史有關，是一個方便記憶而創造出的名詞：
 
@@ -149,17 +139,9 @@ Value Categories 分三個大類：<strong>Lvalue</strong>、<strong>Xvalue</str
 
 我們看這兩張圖來方便自己記憶：
 
-<div class = "center-column">
+![（[圖源](https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94)）](image/image3.png)
 
-![](image/image3.png)
-
-（[圖源](https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94)）<br>
-
-![](image/image4.png)
-
-（[圖源](https://openhome.cc/Gossip/CppGossip/RvalueReference.html)）
-
-</div>
+![（[圖源](https://openhome.cc/Gossip/CppGossip/RvalueReference.html)）](image/image4.png)
 
 是不是清楚多了，那麼這邊我先將每個的翻譯名稱都給大家，以免之後在閱讀的時候搞混：
 
@@ -406,7 +388,7 @@ Lvalue Expression 有以下這些（[來源](https://en.cppreference.com/w/cpp/l
 
 - 部分利用了[成員指標訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators)的運算式，像是 `p->m`，但 `m` 不能是 `enum` 的成員或某些非靜態的成員函式
 
-- 部分利用了指向「資料成員」(物件) 的[成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators)的運算式，像是 `a.*mp`，`a` 是一個 lvalue 且 `mp` 是一個「資料成員」的指標
+- 部分利用了指向「資料成員」（物件） 的[成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators)的運算式，像是 `a.*mp`，`a` 是一個 lvalue 且 `mp` 是一個「資料成員」的指標
 
 - 部分利用了指向成員「指標」的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `p->*mp`，`mp` 是一個「資料成員」的指標
 
@@ -571,11 +553,11 @@ Xvalue Expression 的特性會與 Lvalue Expression 或 Prvalue Expression 其�
 
 - 不能擺在賦值運算子和複合賦值運算子的左邊
 
-- Xvalue Expression 和 Prvalue Expression 可以拿來初始化「唯讀」的 lvalue reference，如此一來暫時物件的生命週期會被延長，直到這個 reference 所處的範圍 (scope) 結束
+- Xvalue Expression 和 Prvalue Expression 可以拿來初始化「唯讀」的 lvalue reference，如此一來暫時物件的生命週期會被延長，直到這個 reference 所處的範圍（scope） 結束
 
-- Xvalue Expression 和 Prvalue Expression 可以拿來初始化 rvalue reference，如此一來暫時物件的生命週期會被延長，直到這個 reference 所處的範圍 (scope) 結束
+- Xvalue Expression 和 Prvalue Expression 可以拿來初始化 rvalue reference，如此一來暫時物件的生命週期會被延長，直到這個 reference 所處的範圍（scope） 結束
 
-- 當 Xvalue Expression 或 Prvalue Expression 被當作函式的參數傳入時，如果這個函式有多載(overload)，一個參數吃 rvalue reference，一個參數吃「唯讀」的 lvalue reference，那麼會調用的是吃 rvalue reference 的函式：
+- 當 Xvalue Expression 或 Prvalue Expression 被當作函式的參數傳入時，如果這個函式有多載（overload），一個參數吃 rvalue reference，一個參數吃「唯讀」的 lvalue reference，那麼會調用的是吃 rvalue reference 的函式：
 
     ```cpp
     #include <iostream>
@@ -627,7 +609,7 @@ int main () {
 
 - [字面常量](https://en.cppreference.com/w/cpp/language/expressions#Literals)，像是 `42`、`true` 或 `nullptr`
 
-- 回傳非參考類型的運算子重載運算式或函式呼叫(function call)，像是 `str.substr(1,2)` `str1 + str2` 或 `it++`，
+- 回傳非參考類型的運算子重載運算式或函式呼叫（function call），像是 `str.substr(1,2)` `str1 + str2` 或 `it++`，
 
 - 利用了[後置遞增、遞減運算子](https://en.cppreference.com/w/cpp/language/operator_incdec#Built-in_postfix_operators)的運算式，像是 `a++`、`a--`
 
@@ -639,25 +621,25 @@ int main () {
 
 - 利用了[取址運算符](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_address-of_operator)的運算式，像是 `&a` 
 
-- 某些利用了 [成員物件訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `a.m`，且 `m` 是 `enum` 的成員、某些非靜態的成員函式，或是一個 Xvalue 或 Prvalue 內的非參考類型的非靜態成員(以上例來說就是說 `a` 是 Xvalue 或 Prvalue，且 `m` 是非參考類型的非靜態成員)
+- 某些利用了 [成員物件訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `a.m`，且 `m` 是 `enum` 的成員、某些非靜態的成員函式，或是一個 Xvalue 或 Prvalue 內的非參考類型的非靜態成員（以上例來說就是說 `a` 是 Xvalue 或 Prvalue，且 `m` 是非參考類型的非靜態成員）
 
 - 某些利用了 [成員指標訪問運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_member_access_operators) 的運算式，像是 `p->m`，且 `m` 是 `enum` 的成員或非靜態的成員函式
 
-- 某些利用了指向「資料成員」(物件) 的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `a.*mp`，`mp` 是一個「成員函式」的指標，或者 `a` 是一個 Xvalue 或 Prvalue，且 `mp` 是一個「資料成員」的指標
+- 某些利用了指向「資料成員」（物件） 的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `a.*mp`，`mp` 是一個「成員函式」的指標，或者 `a` 是一個 Xvalue 或 Prvalue，且 `mp` 是一個「資料成員」的指標
 
 - 利用了指向「成員函式的指標」的 [成員指標運算子](https://en.cppreference.com/w/cpp/language/operator_member_access#Built-in_pointer-to-member_access_operators) 的運算式，像是 `p->*mp`，`mp` 是一個「成員函式」的指標
 
 - 利用了 [逗號運算子](https://en.cppreference.com/w/cpp/language/operator_other#Built-in_comma_operator) 的運算式，像是 `a, b`，`b` 要是一個 Xvalue 或 Prvalue
 
-- (待補) 部分利用了 [三元運算子](https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator) 的運算式
+- （待補） 部分利用了 [三元運算子](https://en.cppreference.com/w/cpp/language/operator_other#Conditional_operator) 的運算式
 
-- 轉型(cast)成非參考類型的運算式，像是 `static_cast<double>(x)`、`std::string{}` 或 `(int)42`
+- 轉型（cast）成非參考類型的運算式，像是 `static_cast<double>(x)`、`std::string{}` 或 `(int)42`
 
 - `this` 指標
 
 - `enumerator`
 
-- [非型別樣板參數](https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter)，除非它的型態(type) 是個 `class` 或一個 lvalue reference
+- [非型別樣板參數](https://en.cppreference.com/w/cpp/language/template_parameters#Non-type_template_parameter)，除非它的型態（type） 是個 `class` 或一個 lvalue reference
 
 - 沒有實體化的 [lmabda](https://en.cppreference.com/w/cpp/language/lambda) 運算式，像是 `[](int x){ return x*x; }`
 
@@ -667,13 +649,13 @@ int main () {
 
 #### 特性
 
-那麼 Prvalue Expression 有一些特性，有些是只有 Prvalue Expression 有的，有些是 Xvalue Expression 也有的 (換句話說就是 rvalue 有的)
+那麼 Prvalue Expression 有一些特性，有些是只有 Prvalue Expression 有的，有些是 Xvalue Expression 也有的（換句話說就是 rvalue 有的）
 
 <strong>僅限 Prvalue Expression 有的特性</strong>
 
 - Prvalue Expression 不能是多型的，它回傳的物件的動態類型永遠跟表達式的類型一樣
 
-- 一個不是 Class 或 array 的 Prvalue 不能有[cv限定詞](https://en.cppreference.com/w/cpp/language/cv)。 要注意的是函數呼叫(function call) 或轉型運算式可能會變成非 Class 的 [cv限定詞](https://en.cppreference.com/w/cpp/language/cv) 類型的Prvalue，但它的 cv限定詞會馬上被遺棄(無效)
+- 一個不是 Class 或 array 的 Prvalue 不能有[cv限定詞](https://en.cppreference.com/w/cpp/language/cv)。 要注意的是函數呼叫（function call） 或轉型運算式可能會變成非 Class 的 [cv限定詞](https://en.cppreference.com/w/cpp/language/cv) 類型的Prvalue，但它的 cv限定詞會馬上被遺棄（無效）
 
 - Prvalue Expression 不能是除了 `void` [不完全型態](https://en.cppreference.com/w/cpp/language/type#Incomplete_type)，但如果是在 `decltype()` 內就可以
 
@@ -724,7 +706,7 @@ int main () {
 
 如果你已經知道什麼是 Lvalue Reference 和 Rvalue Reference 了，那就大膽的跳過這段吧 XD
 
-### 什麼是參考 (Reference) ?
+### 什麼是參考（Reference） ?
 
 參考是一種變數，其型別（Type）是他連結到的東西的型態的引用（reference to type），這邊不講物件的原因是因為他連結到的東西不一定是個物件，也有可能是函式之類的東西，他會像是被連結到的東西的別名一樣，呼叫他，就等於呼叫被連結到的東西
 
@@ -1229,14 +1211,14 @@ cnt = 1
 
 我們來統整一下這三個例子，用個表格來看：
 
-<div class = "center-column">
+<center-panel natural>
 
 |                      |   C++14  | C++17    |
 | --------             | -------- | -------- |
 | 關掉 Copy Elision     | 3 次     | 2 次     |
 | 打開 Copy Elision     | ?        | 1 次     |
 
-</div>
+</center-panel>
 
 當關掉了 Copy Elision 並從 C\+\+14 換到 C\+\+17 時，其少呼叫了一次建構子，這證明了 C\+\+17「保證」了部分 Copy Elision 的發生，而同樣是 C\+\+17，關掉與打開 Copy Elision，也少呼叫了一次建構子，這則證明了 C\+\+17 只保證「部分」的 Copy Elision 會發生，其餘的部分則看編譯器如何處理，標準也有將這些狀況列下來，等等會談到
 
@@ -1255,14 +1237,14 @@ cnt = 1
 
 一樣只有一次! 所以表格變成了這樣：
 
-<div class = "center-column">
+<center-panel natural>
 
 |                      |   C++14  | C++17    |
 | --------             | -------- | -------- |
 | 關掉 Copy Elision     | 3 次     | 2 次     |
 | 打開 Copy Elision     | 1 次     | 1 次     |
 
-</div>
+</center-panel>
 
 可以看見編譯器一直以來其實都默默地在幫我們做事，只是你可能都沒發現 XD
 
@@ -1512,11 +1494,7 @@ Test test_fn() {
 
 注意只是這個例子剛好一樣，情況一複雜起來，他不一定會一樣。 為了方便大家理解，附上一張手寫圖：
 
-<div class = "center-column">
-
 ![](image/image6.png)
-
-</div>
 
 不會組語的朋友不用擔心，我照順序翻譯成中文敘述給你們看，`test_fn()` 回傳的物件我們暫時叫他 `X`，你可能會想說他不是 `return B` 嗎？ 怎麼會多一個 `X`？ 欸沒錯，它們其實不一樣。 如果大家想跟著確認，可以在建構子裡面，像是一開始的例子那樣把正在呼叫的建構子印出來看：
 
@@ -1693,11 +1671,7 @@ int main() {
     ```
     附上我精美的手寫圖：
 
-    <div class = "center-column">
-    
     ![](image/image7.png)
-    
-    </div>
 
     可以看見有暫時物件的產生。 我在每一個操作結束時都加上 `a = 0;`，並用粉色的螢光筆標起來了，當作區間的紀錄點，方便大家閱讀
 
@@ -1755,9 +1729,9 @@ int main() {
 
 - 利用 [braced-init-list](https://en.cppreference.com/w/cpp/language/list_initialization) 來初始化一個型態為 `std::initializer_list<T>` 的物件時
 
-- 對 Prvalue 使用 `typeid` 時 (這是一部分的[無運算表達式](https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions))
+- 對 Prvalue 使用 `typeid` 時（這是一部分的[無運算表達式](https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions))
 
-- 對 Prvalue 使用 `sizeof` 時 (這是一部分的[無運算表達式](https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions))
+- 對 Prvalue 使用 `sizeof` 時（這是一部分的[無運算表達式](https://en.cppreference.com/w/cpp/language/expressions#Unevaluated_expressions))
 
 - 當一個 Prvalue 作為 [棄值表達式](https://en.cppreference.com/w/cpp/language/expressions#Discarded-value_expressions) 出現時
 
@@ -1814,7 +1788,7 @@ int main() {
 
 main 裡面那一大串會因為 Copy Elision 的關係被簡化成 `S().c.m`，這時候 Compiler 發現 `S()` 是 Prvalue Expression，而我們訪問了一個 Prvalue 的成員 `c` 裡面的 `m`，所以此時的 `c` 必須被建構！ 但是 `S` 還沒被實例化，所以 `S` 會先被實例化，然後 `c` 在被建構
 
-所以從定義上來看，`S().c` 是一個 Xvalue，然後我們利用 TMC 評估 `S` 內的 `m`，返回一個相同型態(`int`)的暫時物件 `S().c.m`
+所以從定義上來看，`S().c` 是一個 Xvalue，然後我們利用 TMC 評估 `S` 內的 `m`，返回一個相同型態（`int`）的暫時物件 `S().c.m`
 
 ## 回傳值優化 Return value optimization（RVO）
 
@@ -1977,7 +1951,7 @@ T(T &&other)
 
 我並沒有刻意將優化關掉，環境一樣是 C\+\+17，但我們可以看見優化消失了，多了很多額外的建構出來
 
-那麼前面還有提到 NRVO 有一些條件，在這邊我也把它們寫出來給大家看看，所以下面這兩項保證不會發動。 (感謝 kris 提供例子)
+那麼前面還有提到 NRVO 有一些條件，在這邊我也把它們寫出來給大家看看，所以下面這兩項保證不會發動。 （感謝 kris 提供例子）
 
 - 發生物件切片（object slicing）時（[連結](https://godbolt.org/z/fbMe66asq)）：
 
@@ -2129,13 +2103,13 @@ T(T &&other)
 
 ## 參考資料
 
-- [1. [CppDay20] Understanding value categories in C++ (Kris van Rens)](https://www.youtube.com/watch?v=km3Urog_wzk&ab_channel=ItalianCppCommunity) (文章部分來源，感謝 kris 提供授權)
+- [1. [CppDay20] Understanding value categories in C++ (Kris van Rens)](https://www.youtube.com/watch?v=km3Urog_wzk&ab_channel=ItalianCppCommunity) （文章部分來源，感謝 kris 提供授權）
 - [2. Identifiers (cppreference)](https://en.cppreference.com/w/cpp/language/identifiers)
 - [3. Value Category（值類別）- 1 / 2](https://eopxd.com/2021/02/03/value-category-1/)
 - [4. Value Category（值類別）- 2 / 2](https://eopxd.com/2021/02/03/value-category-2/)
 - [5. C++ Type and Value Category for Expression and Variable](https://stackoverflow.com/questions/36349360/c-type-and-value-category-for-expression-and-variable)
 - [6. Lvalue to rvalue reference binding](https://stackoverflow.com/questions/20583531/lvalue-to-rvalue-reference-binding#comment-30793019)
-- [7. Value categories (cppreference)](https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo) (文章部分來源)
+- [7. Value categories (cppreference)](https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo) （文章部分來源）
 - [8. What are rvalues, lvalues, xvalues, glvalues, and prvalues?](https://stackoverflow.com/questions/3601602/what-are-rvalues-lvalues-xvalues-glvalues-and-prvalues?fbclid=IwAR1BIns58XNgIy3KmXgFuc33KHkUC1mS10nUYvQec6BqxXK5BlUXM_f9UfE)
 - [9. A Taxonomy of Expression Value Categories](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3055.pdf)
 - [10. [C++] move semantic 的誤解](https://shininglionking.blogspot.com/2018/05/c-move-semantic.html)

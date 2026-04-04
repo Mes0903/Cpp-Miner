@@ -9,7 +9,7 @@ category: C++ Miner
 
 ## 前言
 
-Class 背後最核心的概念是資料的抽象化(data abstraction)與資料封裝(data encapsulation)。這些是一種程式設計上的技巧、想法，其清楚區分了介面(interface)和實作(implementation)的不同，介面是與使用者直接互動的運算，實作則是利用了 Class 內的資料成員與成員函式來寫出的演算法，而封裝則是強制分開了介面與實作，實作會被隱藏，使用者只看的到介面，但看不到實作。
+Class 背後最核心的概念是資料的抽象化（data abstraction）與資料封裝（data encapsulation）。這些是一種程式設計上的技巧、想法，其清楚區分了介面（interface）和實作（implementation）的不同，介面是與使用者直接互動的運算，實作則是利用了 Class 內的資料成員與成員函式來寫出的演算法，而封裝則是強制分開了介面與實作，實作會被隱藏，使用者只看的到介面，但看不到實作。
 
 舉個例子，有一個肯x雞的自動販賣機，可以讓使用者購買炸雞，使用者可以利用販賣機上的按鈕來購買炸雞，但使用者不會知道炸雞是怎麼被做出來的，此時這個販賣機就是一種封裝，介面為機器上的按鈕，而實作就是製作炸雞的細節。
 
@@ -17,7 +17,7 @@ Class 背後最核心的概念是資料的抽象化(data abstraction)與資料�
 
 額外閱讀：[What is the big difference between modular and object oriented programming?](https://stackoverflow.com/questions/18034683/what-is-the-big-difference-between-modular-and-object-oriented-programming)
 
-## 類別(Class)
+## 類別（Class）
 
 因此 Class 你可以把他想像為一個設計藍圖，設計者可以利用這個藍圖來去建立物件，換句話說 Class 是一種使用者定義的型態，
 
@@ -37,13 +37,13 @@ Class Declaration 的意思為我們要引入 Class 的名字，告訴編譯器�
 class T;  
 ```
 
-這樣的話 `T` 就是一個 Class，但尚未有 Class 的定義，此時這個 `T` 是個不完整的型態(incomplete type)，如果要使其成為 complete type，就要定義 Class，要定義 Class 的話我們需要在後面接上大括號 `{}`，語法像這樣：
+這樣的話 `T` 就是一個 Class，但尚未有 Class 的定義，此時這個 `T` 是個不完整的型態（incomplete type），如果要使其成為 complete type，就要定義 Class，要定義 Class 的話我們需要在後面接上大括號 `{}`，語法像這樣：
 
 ```cpp
 class { member-specification(opt) }  
 ```
 
-大括號內填的是 Class 成員的資訊，成員的所有權與 scope 屬於這個 Class，可以有 function、object declaration、using、enum 等([一覽](https://timsong-cpp.github.io/cppwp/n4868/class#nt:member-declaration))，一樣用前面販賣機的例子：
+大括號內填的是 Class 成員的資訊，成員的所有權與 scope 屬於這個 Class，可以有 function、object declaration、using、enum 等（[一覽](https://timsong-cpp.github.io/cppwp/n4868/class#nt:member-declaration)），一樣用前面販賣機的例子：
 
 ```cpp
 #include <iostream>
@@ -66,7 +66,7 @@ private:
 };  
 ```
 
-這個 Class 叫做 Vending_machine，裡面有兩個 member function 與一個 data member，其中有兩個關鍵字 `public` 與 `private`，`public` 代表可以給使用者使用的成員，`private` 表示只有自己這個 Class type 可以使用的成員，但同一種 Class type 的不同 object 是可以使用 private 成員的：  
+這個 Class 叫做 Vending_machine，裡面有兩個 member function 與一個 data member，其中有兩個關鍵字 `public` 與 `private`，`public` 代表可以給使用者使用的成員，`private` 表示只有自己這個 Class type 可以使用的成員，但同一種 Class type 的不同 object 是可以使用 private 成員的：
 ```cpp
 #include <iostream>
 
@@ -144,13 +144,13 @@ int main()
 
 這裡我們建構了兩個販賣機出來，Class 的物件可以透過成員訪問運算子 `.` 來使用 Class 中存取權限為 `public` 的成員，以上面這個例子，我們使用了第一台機器的 `ordered_chicken()` 這個函式，又再使用了 `money()` 這個函數來確認金錢。
 
-### 建構子(Constructor) 與解構子(Destructor)
+### 建構子（Constructor） 與解構子（Destructor）
 
 在前面的章節我們很強調建構與賦值不同，大家可能沒什麼感覺，但在這裡就會很強烈的發現兩者的不同了。
 
 一個 Class type 的物件在建構時可能會有預設的狀態，以上方的販賣機為例，一開始 price 需要初始化為 0，否則可能為亂數，此時就要利用建構子來操作。
 
-建構子的語法和一般的函式不同，其沒有回傳型態，也沒有 function name，並且有一個特殊的組件叫做初始化清單(initialization list)，可以幫助我們初始化物件，速度會比較快，建構子的語法長這樣：
+建構子的語法和一般的函式不同，其沒有回傳型態，也沒有 function name，並且有一個特殊的組件叫做初始化清單（initialization list），可以幫助我們初始化物件，速度會比較快，建構子的語法長這樣：
 
 ```
 Class名() initialization_list(opt) {}  
@@ -173,7 +173,7 @@ private:
 };  
 ```
 
-Class `T` 的建構子沒有任何內容，也沒有 initialization list，這種建構子我們稱他為預設建構子(default constructor)。
+Class `T` 的建構子沒有任何內容，也沒有 initialization list，這種建構子我們稱他為預設建構子（default constructor）。
 
 而 `T2` 的建構子有 initialization list，將 `val` 初始化為 5，因此如果我們去訪問一個剛建構出來的 `T2` 的 `val`，就會得到 5：
 
@@ -196,7 +196,7 @@ int main()
 }  
 ```
 
-但要注意初始化清單並沒有指定成員初始化的順序：  
+但要注意初始化清單並沒有指定成員初始化的順序：
 ```cpp
 #include <iostream>
 
@@ -301,7 +301,7 @@ int main()
 
 `this` 是一個特殊的指標，基本上會出現在 class 的 non-static member function 內，`this` 會指向呼叫他的 member function 所屬的 class instance。
 
-舉個例子：  
+舉個例子：
 ```cpp
 #include <iostream>
 
@@ -438,7 +438,7 @@ void X::g() { return f(); } // error: 'f' was not declared in this scope
 
 > [n4659(14.3)](https://timsong-cpp.github.io/cppwp/n4659/class.friend#1)：A friend of a class is a function or class that is given permission to use the private and protected member names from the class. A class specifies its friends, if any, by way of friend declarations. Such declarations give special access rights to the friends, but they do not make the nominated friends members of the befriending class. [ Example: The following example illustrates the differences between members and friends:
 
-## 運算子重載 (operator overload)
+## 運算子重載（operator overload）
 
 當我們要定義一個運算子如何操作自定義的 class 時，我們可以使用運算子重載，在上面建構子的地方我們其實已經用過運算子重載了，那邊重載了 `=`，改變了 `=` 的行為，這邊再多舉一個例子，假設有個 2\*2 矩陣的 class，我們要定義矩陣的加法：
 
@@ -566,7 +566,7 @@ int main()
 }  
 ```
 
-這個 overload 是利用作用在 member function 的 `const` 來判斷的，也就是說上例中的第二個 `check_version` 的 return type 就算加上 `const` 也是沒問題的：  
+這個 overload 是利用作用在 member function 的 `const` 來判斷的，也就是說上例中的第二個 `check_version` 的 return type 就算加上 `const` 也是沒問題的：
 ```cpp
 // can still complete the overloading  
 const T &check_version()  
@@ -598,7 +598,7 @@ int main()
 }  
 ```
 
-## 自定義的型態轉換 (user-defined conversion)
+## 自定義的型態轉換（user-defined conversion）
 
 有時我們自己定義的 class 可以與其它的型態互相轉換，此時我們就要自定義轉型的函式，語法是這樣：
 
@@ -629,7 +629,7 @@ int main()
 
 可以看見在第 16 行的地方 `t1` 被隱式轉換為 `int` 了，因此輸出 25。
 
-如果我們不想要有隱式轉換，則需要加上 `explicit` 關鍵字在轉換函式的前方：  
+如果我們不想要有隱式轉換，則需要加上 `explicit` 關鍵字在轉換函式的前方：
 ```cpp
 #include <iostream>
 
@@ -666,7 +666,7 @@ int main()
 
 ### global variable/function 前
 
-在前面我們有提到 TU(.o 檔) 的概念，一個 TU 會有一組自己的 symbol table 來記錄哪些 symbol 需要從外部取得，這個 table、symbol 我們稱它為 ABI(Application Binary interface)。
+在前面我們有提到 TU（.o 檔） 的概念，一個 TU 會有一組自己的 symbol table 來記錄哪些 symbol 需要從外部取得，這個 table、symbol 我們稱它為 ABI（Application Binary interface）。
 
 在 global variable/function 前加上 `static` 的意義代表接下來的這個變數/函式只能在這個 TU 內使用，舉個例子：
 
@@ -701,7 +701,7 @@ g++ -c test1.cpp
 g++ -c test2.cpp  
 ```
 
-然後去 link 這兩個檔案，生成執行檔：  
+然後去 link 這兩個檔案，生成執行檔：
 ```
 gcc -o output test.o test2.o  
 ```
@@ -830,7 +830,7 @@ public:
 };  
 ```
 
-如果有建構子也去初始化了這個變數，那麼初始化器會被跳過：  
+如果有建構子也去初始化了這個變數，那麼初始化器會被跳過：
 ```cpp
 class T {  
 public:  
@@ -856,6 +856,6 @@ In a non-delegating constructor other than an implicitly-defined copy/move const
 >> (9.1.2)  
 >> the constructor's class is not a union, and, if the entity is a member of an anonymous union, no other member of that union is designated by a mem-initializer-id, the entity is initialized from its default member initializer as specified in [dcl.init];
 
-<div class = "center-column">(感謝群裡的 DXPower 幫找 ><)</div>
+<center-panel natural>（感謝群裡的 DXPower 幫找 ><)</center-panel>
 
 額外閱讀：[C++11 member initializer list vs in-class initializer?](https://stackoverflow.com/questions/27352021/c11-member-initializer-list-vs-in-class-initializer)

@@ -7,7 +7,7 @@ category: C++ Miner
 
 # C++ 教學系列 ── Array 與 Pointer
 
-## Array(陣列)
+## Array（陣列）
 
 Array 與 int、char、bool 一樣是一種型態，稱為 array type，不過 array 並不是 fundamental type，而是 compound type。
 
@@ -21,11 +21,11 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
 
 我們可以透過 simple declaration 來宣告出一個陣列型態的變數，陣列的宣告語法會長：
 
-> decl-specifier-seq(我自己加上來方便解釋的) noptr-declarator [ expr(optional) ] attr(optional)
+> decl-specifier-seq（我自己加上來方便解釋的） noptr-declarator [ expr(optional) ] attr(optional)
 
 - decl-specifier-seq
 
-    基本上跟上次講的一樣，type 的部分可以是 fundamental type(除了 void)、pointer type、pointer to member type、class、enumeration，或其他<span class = "yellow">已知元素數量的陣列型態</span>
+    基本上跟上次講的一樣，type 的部分可以是 fundamental type（除了 void）、pointer type、pointer to member type、class、enumeration，或其他<span class = "yellow">已知元素數量的陣列型態</span>
 
 後方整坨都是宣告器，attr 我們先忽略它，也就是說宣告器的部分長：
 
@@ -80,9 +80,9 @@ Array 是一段連續的記憶體空間，由許多小物件組成，這些小�
     }
     ```
 
-    上面這段 code 你可能可以編譯成功，這是因為有些編譯器有幫忙做特殊的處理，像是先在 stack 上分配一些空間之類的，但這種 code 換個編譯器可能就不會過了，這種拿非編譯時期的值拿來當作其大小的陣列叫做 VLA(variable-length array)，有興趣的可以看看。
+    上面這段 code 你可能可以編譯成功，這是因為有些編譯器有幫忙做特殊的處理，像是先在 stack 上分配一些空間之類的，但這種 code 換個編譯器可能就不會過了，這種拿非編譯時期的值拿來當作其大小的陣列叫做 VLA（variable-length array），有興趣的可以看看。
 
-    如果你沒有寫 expression，那就需要有初始化器，此時編譯器會幫忙從初始化器推算出陣列的元素個數，例如：  
+    如果你沒有寫 expression，那就需要有初始化器，此時編譯器會幫忙從初始化器推算出陣列的元素個數，例如：
     ```cpp
     int main()
     {
@@ -119,7 +119,7 @@ int main()
 
 ### 多維陣列
 
-我們一開始提到了陣列的 decl-specifier-seq，那段講的意思簡單來說就是陣列的元素可以是 fundamental type(除了 void)、pointer、pointer to member、classes、enumeration 或<span class = "yellow">已知元素數量的陣列</span>。
+我們一開始提到了陣列的 decl-specifier-seq，那段講的意思簡單來說就是陣列的元素可以是 fundamental type（除了 void）、pointer、pointer to member、classes、enumeration 或<span class = "yellow">已知元素數量的陣列</span>。
 
 最後一項我特別標成了黃色，因為這代表陣列的元素也可以是陣列，也就是說我們可以有多維陣列這種東西，舉個例子：
 
@@ -279,11 +279,7 @@ int main()
 
 圖解就會長這樣：
 
-<div class = "center-column">
-
 ![](image/pointer.png)
-
-</div>
 
 `i` 是一個整數變數，儲存的值為 20；`p1` 是個整數的指標，指向 `i`，儲存的值為 `&i`；`p2` 是個整數的指標的指標，指向 `p1`，儲存的值為 `&p1`。
 
@@ -312,7 +308,7 @@ source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Point
 
 指標的運算，如 `+`、`-` 等 operator 有自己的定義，這邊簡單講一下 `+`、`-` 與 `==`：
 
-前兩個合稱為 Additive operators，當他們的運算元為一個指標和一個整數時，會根據指標指向的型態大小來位移，舉個例子：  
+前兩個合稱為 Additive operators，當他們的運算元為一個指標和一個整數時，會根據指標指向的型態大小來位移，舉個例子：
 ```cpp
 #include <iostream>
 
@@ -331,9 +327,9 @@ int main()
 ```
 source：[C++ Gossip](https://openhome.cc/Gossip/CppGossip/PointerArithmetic.html)
 
-這個輸出的是記憶體位址，因為這邊是 `int`，在我的電腦上是 4 byte，所以每對指標加一，其值就會加上 4(位移 4)，減法同理；另外 `N + ptr` 與 `ptr + N` 等價，這邊 `N` 為整數，`ptr` 為指標變數名。
+這個輸出的是記憶體位址，因為這邊是 `int`，在我的電腦上是 4 byte，所以每對指標加一，其值就會加上 4（位移 4），減法同理；另外 `N + ptr` 與 `ptr + N` 等價，這邊 `N` 為整數，`ptr` 為指標變數名。
 
-而指標也可以與指標相減，其結果會是兩個記憶體間的差 (difference)：
+而指標也可以與指標相減，其結果會是兩個記憶體間的差（difference）：
 
 ```cpp
 #include <iostream>  
@@ -365,11 +361,11 @@ int a = *p;    // undefined behavior
 
 這樣是 UB。
 
-不管什麼型態的指標，儲存的值如果是 `null`，那麼拿去與同型態的空指標做比較運算(`==`)，出來的結果也會是 `true`。
+不管什麼型態的指標，儲存的值如果是 `null`，那麼拿去與同型態的空指標做比較運算（`==`），出來的結果也會是 `true`。
 
 `nullptr` 為 null pointer literal，`NULL` 為 null pointer constant，而 `0` 則是整數，會被隱式轉型為空指標，三者雖然出來的結果一樣，但過程有些許差異。
 
-通常一個指標被宣告出來，但不需要初始化時，我們通常會把指標初始化為 `nullptr`，又或是一個指標指向的物件已經被解構時，我們也會將其值設為 `nullptr`，這稱為指標歸位，能夠避免我們不小心用到儲存亂數的指標，後者這種指標稱為野指標(dangling pointer)
+通常一個指標被宣告出來，但不需要初始化時，我們通常會把指標初始化為 `nullptr`，又或是一個指標指向的物件已經被解構時，我們也會將其值設為 `nullptr`，這稱為指標歸位，能夠避免我們不小心用到儲存亂數的指標，後者這種指標稱為野指標（dangling pointer）
 
 ### Constness on Pointer
 
@@ -380,7 +376,7 @@ int a = *p;    // undefined behavior
 
 所以我們可以簡單寫一個表出來：
 
-<div class = "center-column">
+<center-panel natural title = "（source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Constness)）">
 
 | 語法             | 意思                                     |
 | ---------------- | ---------------------------------------- |
@@ -390,11 +386,9 @@ int a = *p;    // undefined behavior
 | `const T* const` | 指向「constant 物件」的「constant 指標」|
 | `T const* const` | 指向「constant 物件」的「constant 指標」|
 
-source：[cppreference](https://en.cppreference.com/w/cpp/language/pointer#Constness)
+</center-panel>
 
-</div>
-
-可以看見就分三種，不寫法有五種，判斷方法建議大家記一下，接下來我們簡單看個例子：
+可以看見主要分三大類，寫法有五種，判斷方法建議大家記一下，接下來我們簡單看個例子：
 
 ```cpp
 #include <iostream>
@@ -418,7 +412,7 @@ int main()
 
 延伸閱讀：[How to interpret complex C/C++ declarations](https://www.codeproject.com/Articles/7042/How-to-interpret-complex-C-C-declarations)
 
-如果想要看 pointer of pointer 的版本的話，可以看一下上面這篇，主要是有個規則叫做 RTL Rule(right-to-left rule)。
+如果想要看 pointer of pointer 的版本的話，可以看一下上面這篇，主要是有個規則叫做 RTL Rule（right-to-left rule）。
 
 ## Array to pointer decay(conversion)
 
@@ -500,6 +494,8 @@ int i2 = *(arr + 2);
 
 > [n4861(9.3.4.5)](https://timsong-cpp.github.io/cppwp/n4861/dcl.array#9)：  
 > [Example 4:  
->> int x3d[3][5][7];<br><br>
->
+> 
+> ```c
+> int x3d[3][5][7];
+> ```
 > ... The expression x3d[i] is equivalent to *(x3d + i); in that expression, x3d is subject to the array-to-pointer conversion ([conv.array]) and is first converted to a pointer to a 2-dimensional array with rank 5×7 that points to the first element of x3d. Then i is added, which on typical implementations involves multiplying i by the length of the object to which the pointer points, which is sizeof(int)×5×7. ... — end example]

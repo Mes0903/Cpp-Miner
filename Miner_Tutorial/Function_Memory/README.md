@@ -7,9 +7,9 @@ category: C++ Miner
 
 # C++ 教學系列 ── Function 與 Memory
 
-## 函式 (Function)
+## 函式（Function）
 
-函式是一個有名稱的程式碼區塊，通常拿來表示一個過程，可以接受參數並產生一個結果，我們可以透過呼叫(calling) 來使用函式。
+函式是一個有名稱的程式碼區塊，通常拿來表示一個過程，可以接受參數並產生一個結果，我們可以透過呼叫（calling） 來使用函式。
 
 ### Function Declaration
 
@@ -25,9 +25,9 @@ Function Declaration 的語法長這樣：
 T 為回傳的型別，第一個是一般的 Function 宣告形式，第二個是 C\+\+11 後出現的尾端回傳形式。
 
 - noptr-declarator  
-    跟 array 一樣，可以擺任何合法的 declarator，但如果由 `*`、`&`、`&&` 開始，那麼需要用括號括起來，這會用在 Function 回傳陣列的指標(pointer of array) 時。
+    跟 array 一樣，可以擺任何合法的 declarator，但如果由 `*`、`&`、`&&` 開始，那麼需要用括號括起來，這會用在 Function 回傳陣列的指標（pointer of array） 時。
 
-- 參數列 (parameter-list)  
+- 參數列（parameter-list）  
     參數列可以是空的，每個參數間會用逗號來隔開。
 
 看起來會長：
@@ -39,16 +39,16 @@ auto fn2() -> int;    // (2)
 int (*fn3())[3];    // function return pointer of array, which dimension is 3.  
 ```
 
-上面宣告了三個函式，第一個是正常的形式，第二個是有尾端回傳(trailing type) 的形式，如果要使用尾端回傳，於前方 `T` 的部分需要填上 `auto`，第三個是一個回傳型態為 `int(*)[3]` 的函式。
+上面宣告了三個函式，第一個是正常的形式，第二個是有尾端回傳（trailing type） 的形式，如果要使用尾端回傳，於前方 `T` 的部分需要填上 `auto`，第三個是一個回傳型態為 `int(*)[3]` 的函式。
 
-就像之前講變數一樣，我們要使用函式的話也需要先宣告它，函式的宣告可以有很多個，但定義只能有一個，我們又稱函式的宣告為<span class = "yellow">函式原型(function prototype)。</span>
+就像之前講變數一樣，我們要使用函式的話也需要先宣告它，函式的宣告可以有很多個，但定義只能有一個，我們又稱函式的宣告為<span class = "yellow">函式原型（function prototype）。</span>
 
-函式的宣告可以省略參數的名字，也就是說這樣是可以的：  
+函式的宣告可以省略參數的名字，也就是說這樣是可以的：
 ```cpp
 int fn1(int, int);    // (1)  
 ```
 
-另外我們常把函式的宣告稱為函式的<span class = "yellow">介面(interface)</span>。
+另外我們常把函式的宣告稱為函式的<span class = "yellow">介面（interface）</span>。
 
 額外閱讀：[C++ - Function declarations inside function scopes?](https://stackoverflow.com/questions/28470479/c-function-declarations-inside-function-scopes)  
 額外閱讀：[In the standard, what is "derived-declarator-type"?](https://stackoverflow.com/questions/13779273/in-the-standard-what-is-derived-declarator-type)  
@@ -76,7 +76,7 @@ int main()
 }  
 ```
 
-上面這個例子中有一個函式 `fn`，參數列是空的，也沒有回傳物件，function body 裡面只有一行字串的輸出。在 main function 裡面我透過 `()` 呼叫了 `fn`，因此這段程式的執行結果會是「get in fn()」。
+上面這個例子中有一個函式 `fn`，參數列是空的，也沒有回傳物件，function body 裡面只有一行字串的輸出。在 main function 裡面我透過 `()` 呼叫了 `fn`，因此這段程式的執行結果會是 `get in fn()`。
 
 ### return statement
 
@@ -173,13 +173,7 @@ reference 也同理。
 
 一般的 C/C++ 程式在執行時記憶體的配置會長的像下圖那樣，主要可分為 text、data、bss、stack、heap 與 system 這幾個部分。
 
-<div class = "center-column">
-
-![](image/memory_layout1.png)
-
-(source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/programming/memory-layout-of-c-program/))
-
-</div>
+![（source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/programming/memory-layout-of-c-program/)）](image/memory_layout1.png)
 
 - text 段  
     text 也被稱為 code 段，存放可執行的 cpu 指令，這裡的資料是可以共用的，並且是唯讀的。
@@ -207,7 +201,7 @@ reference 也同理。
     data 段還有分可讀寫與唯讀的部分，可讀寫的部分稱為 read-write area，拿來存放一般變數，而唯讀區則稱為 read-only area，負責存放固定的常數。
 
 - bss 段  
-    bss 段拿來存放沒有初始化的靜態變數，這些變數在程式執行前會被系統初始化為 `0` 或 `null`，舉個例子：  
+    bss 段拿來存放沒有初始化的靜態變數，這些變數在程式執行前會被系統初始化為 `0` 或 `null`，舉個例子：
     ```cpp
     int i;
 
@@ -250,11 +244,7 @@ int main()
 
 程式執行的流程會長：
 
-<div class = "center-column">
-
 ![](image/memory_layout2.png)
-
-</div>
 
 一開始先分配好 main function 需要的大小，然後將 `fn(1)` 的 frame 推到 stack 內，之後因為要回傳值，所以會將要回傳的值儲存到暫存器或 stack 中，再把 `fn(1)` 的 frame 刪除，並把剛剛儲存的值拿去給 `i1` 初始化。
 
@@ -271,7 +261,7 @@ int main()
 > ::(opt) new (placement-params) ( type ) initializer(opt)	(3)	  
 > ::(opt) new (placement-params) new-type initializer(opt)	(4)	
 
-`new` 會試著在 heap 段建構相對應型態的變數，(1) 與 (2) 的差別在於 (2) 的型態沒有包含括號，舉個例子：
+`new` 會試著在 heap 段建構相對應型態的變數，（1） 與（2） 的差別在於（2） 的型態沒有包含括號，舉個例子：
 
 ```cpp
 new int(*[10])();    // error: parsed as (new int) (*[10]) ()  
@@ -280,7 +270,7 @@ new (int (*[10])()); // okay: allocates an array of 10 pointers to functions
 
 這邊型態是 function pointer `int(*[10])()`，所以有 `()` 在裡面，導致需要使用第一種。
 
-另外，`new-type` 會把所有可以屬於 declarator 的 token 都包含近來：  
+另外，`new-type` 會把所有可以屬於 declarator 的 token 都包含近來：
 ```cpp
 new int + 1; // okay: parsed as (new int) + 1, increments a pointer returned by new int  
 new int * 1; // error: parsed as (new int*) (1)  
@@ -304,11 +294,7 @@ int main()
 
 上面這裡用 `new` 在 heap 段建構了一個整數物件，初始化為 20，並將其位址回傳給 p，圖看起來會長這樣：
 
-<div class = "center-column">
-
 ![](image/new.png)
-
-</div>
 
 而如果物件的型態為 array type，我們通常會用空括號 `()` 來進行 value initialized，在 C\+\+11 後，則可以使用 `{}` 來初始化物件，舉個例子：
 
@@ -454,16 +440,16 @@ reference 是一個很重要的東西，在近代 C\+\+ 中大量的被使用，
 
 ### Reference
 
-#### 什麼是參考 (Reference) ?
+#### 什麼是參考（Reference） ?
 
-參考是一種變數，其型別(Type) 是他連結到的東西的型態的引用(reference to type)，這邊不講物件的原因是因為他連結到的東西不一定是個物件，也有可能是函式之類的東西，語法長這樣：
+參考是一種變數，其型別（Type） 是他連結到的東西的型態的引用（reference to type），這邊不講物件的原因是因為他連結到的東西不一定是個物件，也有可能是函式之類的東西，語法長這樣：
 
 > T & attr(opt) declarator	(1)	  
 > T && attr(opt) declarator	(2)	(since C++11)
 
 第一個為 Lvalue Reference，第二個為 Rvalue Reference，後面會介紹兩者的差異。
 
-Reference 會像是被連結到的東西的別名一樣，呼叫、使用他，就等於呼叫、使用被連結到的東西。舉個例子：  
+Reference 會像是被連結到的東西的別名一樣，呼叫、使用他，就等於呼叫、使用被連結到的東西。舉個例子：
 ```cpp
 int main  
 {  
@@ -474,11 +460,7 @@ int main
 
 `i` 是一個物件，而我們最一開始有舉過一個例子說物件就像一個箱子，名字就是箱子上的標籤，而 reference 又像被連結到的東西的別名，換句話說 reference 就是另外一張標籤：
 
-<div class = "center-column">
-
 ![](image/reference1.png)
-
-</div> 
 
 直接操作 `r` 就等同於對物件 `i` 操作，所以才會說 `r` 是 `i` 的別名。
 
@@ -503,7 +485,7 @@ void f() {
 }  
 ```
 
-一但 reference 被初始化，我們就無法再對 reference 本身進行操作了。我們也不能有參考的參考(reference to reference)，參考的陣列(arrays of reference)，和參考的指標(pointer to references)，因為 reference 並不是物件(object)。
+一但 reference 被初始化，我們就無法再對 reference 本身進行操作了。我們也不能有參考的參考（reference to reference），參考的陣列（arrays of reference），和參考的指標（pointer to references），因為 reference 並不是物件（object）。
 
 > [n4868(9.3.4.3)](https://timsong-cpp.github.io/cppwp/n4868/dcl.ref#5)：There shall be no references to references, no arrays of references, and no pointers to references.
 
@@ -521,13 +503,9 @@ std::cout << std::boolalpha
 
 可以看見 Compiler 可以分出來兩者的差別，因為兩者的 type 是不同的。那麼我們來看看一個有編譯器優化的狀況：
 
-<div class = "center-column">
-
 ![](image/reference2.png)
 
-</div>
-
-[連結](https://godbolt.org/z/8KqxsKrPM)在這裡，記得要把編譯器優化打開。 我們可以看見 `std::cin >> r;` 像是被替換成 `std::cin >> a;` 了，跟 `inline` 類似。 <span class = "yellow">(感謝Cy大神補充)</span>
+[連結](https://godbolt.org/z/8KqxsKrPM)在這裡，記得要把編譯器優化打開。 我們可以看見 `std::cin >> r;` 像是被替換成 `std::cin >> a;` 了，跟 `inline` 類似。 <span class = "yellow">（感謝Cy大神補充）</span>
 
 如果對 Referecne 的定義與相關的詳細規範還有興趣，可以到[這裡](https://eel.is/c++draft/dcl.ref)看看。
 
@@ -540,7 +518,7 @@ std::cout << std::boolalpha
 
 lvalue 裡面的「l」主要的意涵是 locatable，也就是有固定位址的，因此 Lvalue Reference 會與一個有固定位址的物件連結，`int &r = a;` 這樣的話 r 就是一個 Lvalue Referecne，型態是 `int&`。那麼他有幾個用處：
 
-- Lvalue Reference 可以用來連結一個已經存在的 object，也就是 Lvalue Expression 回傳的物件：  
+- Lvalue Reference 可以用來連結一個已經存在的 object，也就是 Lvalue Expression 回傳的物件：
 	```cpp
 	#include <iostream>  
 	#include <string>
@@ -556,7 +534,7 @@ lvalue 裡面的「l」主要的意涵是 locatable，也就是有固定位址�
 	}  
 	```
 
-- 可以用來當作 pass-by-reference 的函式參數：  
+- 可以用來當作 pass-by-reference 的函式參數：
 	```cpp
 	#include <iostream>  
 	#include <string>
@@ -596,7 +574,7 @@ lvalue 裡面的「l」主要的意涵是 locatable，也就是有固定位址�
 
 在進到 Rvalue Reference 前，我們要先稍微了解一下歷史，才會知道為何要有 Rvalue Reference，所以我們先從舊的 C++ 講起。
 
-在以前，我們只擁有 Lvalue Reference，但 Lvalue Reference 沒有辦法連結到沒有 cv 限定詞的暫時物件或常量：  
+在以前，我們只擁有 Lvalue Reference，但 Lvalue Reference 沒有辦法連結到沒有 cv 限定詞的暫時物件或常量：
 ```cpp
 int main() {  
     int &r = 0;    //error: cannot bind non-const lvalue reference of type 'int&' to an rvalue of type 'int'
@@ -605,9 +583,9 @@ int main() {
 }  
 ```
 
-因為 Lvalue Reference 只能綁定到一個 Lvalue Expression 回傳的物件，從語意上來講，更改暫時物件的值不一定是合理的，而常量值更不用說了，他甚至可能不是個物件，沒有儲存位址，要怎麼改動他呢? 由於 Lvalue Refference 綁定到的物件基本上可以被更改(除非他有加上 const 限定詞)，所以我們無法綁定 Prvalue Expression 與 Xvalue Expression (統稱 Rvalue)。
+因為 Lvalue Reference 只能綁定到一個 Lvalue Expression 回傳的物件，從語意上來講，更改暫時物件的值不一定是合理的，而常量值更不用說了，他甚至可能不是個物件，沒有儲存位址，要怎麼改動他呢? 由於 Lvalue Refference 綁定到的物件基本上可以被更改（除非他有加上 const 限定詞），所以我們無法綁定 Prvalue Expression 與 Xvalue Expression（統稱 Rvalue）。
 
-那麼這會出現什麼問題呢? 最明顯的問題出在函式 call-by-reference 的身上：  
+那麼這會出現什麼問題呢? 最明顯的問題出在函式 call-by-reference 的身上：
 ```cpp
 #include <iostream>
 
@@ -642,7 +620,7 @@ int main() {
 }  
 ```
 
-我們先在這邊暫停一下，剛剛不是說了常量值可能沒有記憶體位址? 那麼就算加上了 `const` 也不該可行呀! 所以這時候出現了一個東西叫做臨時物化(TMC)，我們來看看利用 `const int&` 型態的 reference 綁定 `1` 時到底發生了什麼：  
+我們先在這邊暫停一下，剛剛不是說了常量值可能沒有記憶體位址? 那麼就算加上了 `const` 也不該可行呀! 所以這時候出現了一個東西叫做臨時物化（TMC），我們來看看利用 `const int&` 型態的 reference 綁定 `1` 時到底發生了什麼：
 ```cpp
 int main() {  
     const int &cr = 1;  
@@ -664,7 +642,7 @@ main:
         ret  
 ```
 
-不會組語的朋友沒關係，我這邊寫個偽代碼來示意：  
+不會組語的朋友沒關係，我這邊寫個偽代碼來示意：
 ```cpp
 int main() {  
     int __e = 1;    //mov     DWORD PTR [rbp-12], eax  
@@ -672,11 +650,11 @@ int main() {
 }  
 ```
 
-發現了嗎? 產生了一個新的變數! 其實他是個匿名物件，但為了方便我把它取名叫 `__e`，如此一來我們的確無法透過 `cr` 來更改到 `1`(\_\_e) 的值，卻又連結到了 `1` 這個常量，就好像替 `1` 取了一個別名叫做 `cr`。
+發現了嗎? 產生了一個新的變數! 其實他是個匿名物件，但為了方便我把它取名叫 `__e`，如此一來我們的確無法透過 `cr` 來更改到 `1`（\_\_e） 的值，卻又連結到了 `1` 這個常量，就好像替 `1` 取了一個別名叫做 `cr`。
 
 但這樣又出現了兩個問題，首先是我們無法區分 Rvalue 與 Lvalue，剛剛的例子中可以看見 `1` 和 `a`、`b` 都一樣可以傳進 `func()` 裡面。
 
-再來是既然產生了臨時物件，我們也透過 Reference 連結到它了，而且它本身也不是個不可更改的物件，因為在被 Reference 連結後，它的生命週期已經大幅增加，不再是個暫時物件了，那麼也就是說：  
+再來是既然產生了臨時物件，我們也透過 Reference 連結到它了，而且它本身也不是個不可更改的物件，因為在被 Reference 連結後，它的生命週期已經大幅增加，不再是個暫時物件了，那麼也就是說：
 ```cpp
 int main() {  
     int __e = 1;  
@@ -684,7 +662,7 @@ int main() {
     cr;    // cr 是 Lvalue Expression  
 }  
 ```
-`cr` 已經是一個 Lvalue Expression 了，既然我們都知道會有臨時物件出現，並且它的生命週期會因為 Reference 的連結而增加，那麼可以被更改也很合理吧? 但是在函式中很明顯它不這麼覺得：  
+`cr` 已經是一個 Lvalue Expression 了，既然我們都知道會有臨時物件出現，並且它的生命週期會因為 Reference 的連結而增加，那麼可以被更改也很合理吧? 但是在函式中很明顯它不這麼覺得：
 ```cpp
 #include <iostream>
 
@@ -701,7 +679,7 @@ int main() {
 }  
 ```
 
-`++a` 被擋了下來，這也很正常，因為它是唯讀的，那麼要怎麼做才可以讓它像這樣呢：  
+`++a` 被擋了下來，這也很正常，因為它是唯讀的，那麼要怎麼做才可以讓它像這樣呢：
 ```cpp
 int main() {  
     int __e = 1;  
@@ -833,7 +811,7 @@ int main()
 
 pass by reference 比較快的結果只有在一種情況下會發生，那就是接受參數的 function 內沒有發生 parameter optimization 導致 function local 必須配置記憶體給 parameter。且 pass by value 有時還有 cache-inline 的優勢。
 
-如果單純只考量速度，通常來說只要 value size < pointer size(通常是 64 bits)，那我們就會使用 pass by value，然而實際上在寫 code 的時候還要考慮維護性，此時可能會使用 const reference，這部分就要請大家自己拿捏判斷了。
+如果單純只考量速度，通常來說只要 value size < pointer size（通常是 64 bits），那我們就會使用 pass by value，然而實際上在寫 code 的時候還要考慮維護性，此時可能會使用 const reference，這部分就要請大家自己拿捏判斷了。
 
 講了這麼多，那就開始看要怎麼使用 reference parameter 吧！
 
@@ -954,9 +932,9 @@ int main() {
 }  
 ```
 
-上面有三個同樣名稱但參數不同的函式，此時編譯器就會根據你傳入的參數去找應該要呼叫哪一個 function，這個動作叫做函式匹配(Function matching)。
+上面有三個同樣名稱但參數不同的函式，此時編譯器就會根據你傳入的參數去找應該要呼叫哪一個 function，這個動作叫做函式匹配（Function matching）。
 
-在 Function matching 中，他會先去查名字(Name lookup)，如果有同名的 Function，才會去對照 parameter list，這個叫做 ADL(Argument-dependent lookup)。
+在 Function matching 中，他會先去查名字（Name lookup），如果有同名的 Function，才會去對照 parameter list，這個叫做 ADL（Argument-dependent lookup）。
 
 ### Top level const、Low level const
 
@@ -975,11 +953,11 @@ void Print(const int i) {
 
 你會發現這個編譯器報了錯，很顯然的下面那個 Function 參數列中的 `const` 並無法幫助 ADL 分辨 Function，這個概念牽扯到 const 的 level。
 
-const 是有分頂層(top-level) 與底層(low-level) 的，廣義來說，頂層的 const 代表 const 作用在物件本身，如 `const int i`、`int *const i_ptr` 等等，物件本身被賦值後就無法再做修改；底層的 const 代表 const 作用在型態上，這會出現在<span class = "yellow">複合型別</span>內，如 `const int *ptr`、`const int &r` 等等，這個 const 表示物件連結到的物件的型態有 const 修飾。
+const 是有分頂層（top-level） 與底層（low-level） 的，廣義來說，頂層的 const 代表 const 作用在物件本身，如 `const int i`、`int *const i_ptr` 等等，物件本身被賦值後就無法再做修改；底層的 const 代表 const 作用在型態上，這會出現在<span class = "yellow">複合型別</span>內，如 `const int *ptr`、`const int &r` 等等，這個 const 表示物件連結到的物件的型態有 const 修飾。
 
 而回到上面的例子，編譯器會報錯的原因很單純，因為 ADL 無法區分頂層的 const，原因是 parameter 中頂層的 const 並不會算在 function type 的裡面，而 ADL 是根據 function type 來查找的，因此其便會判斷上下兩個 `Print` 是同一個 Function，因此有兩個定義而報錯。
 
-但 low-level 的 `const` 是沒有問題的：  
+但 low-level 的 `const` 是沒有問題的：
 ```cpp
 void Print(int *i) {  
     std::cout << "without const\n";  
@@ -989,7 +967,7 @@ void Print(const int *i) {
     std::cout << "with const\n";  
 }    // okay, passed the compiled  
 ```
-## 遞迴 (Recursion)
+## 遞迴（Recursion）
 
 在函式中是可以再呼叫自己的，可以是間接呼叫或是直接呼叫，這種呼叫自己的函式我們稱為遞迴函式，一個常見的例子是費氏數列的運算：
 
@@ -1087,6 +1065,6 @@ int main(int argc, char *argv[])
 }  
 ```
 
-假設我們的執行檔名稱為 test.exe，那麼當我執行指令 `./test.exe 1 2 3` 時，argc 就為 4，第一個參數為程式的名稱，第二三四個參數則為 `1 2 3`，因此上面的例子會輸出 `4 C:\Mescpp\test\test.exe 1 2 3` (我這邊執行檔位置在 Mescpp\\test 下)
+假設我們的執行檔名稱為 test.exe，那麼當我執行指令 `./test.exe 1 2 3` 時，argc 就為 4，第一個參數為程式的名稱，第二三四個參數則為 `1 2 3`，因此上面的例子會輸出 `4 C:\Mescpp\test\test.exe 1 2 3` （我這邊執行檔位置在 Mescpp\\test 下）
 
 ![](image/main_function.png)

@@ -316,7 +316,7 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
     ```
     這裡四個 `fn` 都會被加到 overload set 內
 
-2. 建立候選人清單 (candidate set)
+2. 建立候選人清單（candidate set）
 
     此時 compiler 會判斷 overload set 內的 function 是否為 viable 的，viable 的[條件](https://eel.is/c++draft/over.match#viable)如下：
     1. argument 數量正確
@@ -379,9 +379,9 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
 
     簡單來說，<span class = "yellow">以 argument 有的最低 Rank 當作 sequenced rank</span>
 
-    如果 sequenced 的 rank 一樣，則依照 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)(基本上是照上面順序下來)，依序從 sequenced 的第一個至最後一個 parameter 開始比較 rank，從頭到尾<span class = "yellow">都沒輸過</span>，且有贏最多次的為 function 為 best overload
+    如果 sequenced 的 rank 一樣，則依照 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)（基本上是照上面順序下來），依序從 sequenced 的第一個至最後一個 parameter 開始比較 rank，從頭到尾<span class = "yellow">都沒輸過</span>，且有贏最多次的為 function 為 best overload
 
-    舉個例子：    
+    舉個例子：
     ```cpp
     #include <iostream>
 
@@ -440,7 +440,7 @@ Overload Resolution 中文叫多載解析，它還有另一個名字叫做 Funct
       A：1->double
       B：1->int
 
-    A 有輸過一次，所以不能為 best overload，但 B 也輸過兩次，也不能為 best overload，所以這邊 Compiler 會給一個 error: call of overloaded is ambiguous，表示它找不到 best overload，哪怕 A 贏了比較多次
+    A 有輸過一次，所以不能為 best overload，但 B 也輸過兩次，也不能為 best overload，所以這邊 Compiler 會給一個 error：call of overloaded is ambiguous，表示它找不到 best overload，哪怕 A 贏了比較多次
 
 建議寫到一些比較特別的例子時要去翻一下 [ranking 規則](https://timsong-cpp.github.io/cppwp/n4868/over.ics.rank)，像是扯到 template 的時候：
 
@@ -501,9 +501,9 @@ int main()
 
 而 SFINAE 的概念基本上就是對於模板的 overload 解析，在 overload resolution 第一個 name lookup 的階段，compiler 會把所有的 function template 包含進 overload set，這也包括 template specialization。但並不是所有的 function template instance 都是有意義的，有些 function 可能含有無法被 evaluated 的 expression，這時候就會需要 SFINAE
 
-SFINAE 發生的階段在 Overload 的第二個建立 candidate set 的階段，核心的概念是 template 參數在替換 explicitly specified 或 deduced type 的時候，如果失敗的並不會給出 error，而是不將其從 overload set 移除(不加入 candidate set)
+SFINAE 發生的階段在 Overload 的第二個建立 candidate set 的階段，核心的概念是 template 參數在替換 explicitly specified 或 deduced type 的時候，如果失敗的並不會給出 error，而是不將其從 overload set 移除（不加入 candidate set）
 
-而所謂的替換(Substitution)，簡單來說就是把函式模板裡面的 parameter，替換成 argument 的過程
+而所謂的替換（Substitution），簡單來說就是把函式模板裡面的 parameter，替換成 argument 的過程
 
 我們看個例子：
 
@@ -533,7 +533,7 @@ void callFoo() {
 
 ### std::enable_if
 
-`std::enable_if` 是個 template struct，可能的定義如下(一種實作方式)：
+`std::enable_if` 是個 template struct，可能的定義如下（一種實作方式）：
 ```cpp
 template<bool B, class T = void>
 struct enable_if {};
@@ -599,18 +599,18 @@ int main()
 
 第一段的 `is_int_or_double_v<T>` 是一個樣版變數，根據給定的型別是否是 `int` 或 `double`，他就是 `true` 或 `false`
 
-然後兩個 `func()` 其實就只是長相比較複雜的函式重載 (function overloading)，差別在 `is_int_or_double<T>` 前面有沒有 `!` 做 not 的反向邏輯。當我們在 `main` 寫下呼叫 `func('a')`，此時編譯器看到的兩個 `func()` 是：
+然後兩個 `func()` 其實就只是長相比較複雜的函式重載（function overloading），差別在 `is_int_or_double<T>` 前面有沒有 `!` 做 not 的反向邏輯。當我們在 `main` 寫下呼叫 `func('a')`，此時編譯器看到的兩個 `func()` 是：
 
 ```cpp
 void func(char t, void* = nullptr); // A
 void func(char t, /* ill-formed expression */); // B
 ```
 
-根據 SFINAE，第一個 `func` 會被加入 candidate set，第二個由於 expression 無法被 evaluated(struct 內部沒有 type 成員)，所以不會被加入 candidate set。因此編譯器會去呼叫 A，印出 `General`
+根據 SFINAE，第一個 `func` 會被加入 candidate set，第二個由於 expression 無法被 evaluated（struct 內部沒有 type 成員），所以不會被加入 candidate set。因此編譯器會去呼叫 A，印出 `General`
 
 在這裡的例子我們使用的是 `std::is_same_v` 來幫助我們製作 `std::enable_if` 的參數，若想要處理更複雜的狀況，往往需要 `decltype` 與 `std::declval` 來幫助我們
 
-### decltype 與 std::declval
+### decltype 與 std：：declval
 
 `decltype` 可以幫助我們獲得某個 entity 的 type，或是某個 expression 的 type 與 value category，用法大致上如下：
 ```cpp
@@ -704,9 +704,9 @@ int main()
 }
 ```
 
-### std\:\:false_type 與 std\:\:true_type
+### std\：\：false_type 與 std\：\：true_type
 
-這兩個東西基本上就是 `false` 和 `true`，定義大概長這樣:
+這兩個東西基本上就是 `false` 和 `true`，定義大概長這樣：
 ```cpp
 template <bool _Val>
 using bool_constant = integral_constant<bool, _Val>;
@@ -828,7 +828,7 @@ TJSW 舉了一個很棒的[例子](https://tjsw.medium.com/%E6%BD%AE-c-detection
 
 我們用一個 `ToString` 來封裝，而邏輯大概是這樣的：
 
-- 當傳入 ToString(t) 且呼叫 `t.ToString()` 合法，那便利用這個型別去特化一個 function template，在裡面呼叫 `t.ToString()`
+- 當傳入 `ToString(t)` 且呼叫 `t.ToString()` 合法，那便利用這個型別去特化一個 function template，在裡面呼叫 `t.ToString()`
 - 否則檢查 `std::to_string(t)` 是否合法，合法的話便呼叫 `std::to_string(t)`
 
 重點是要怎麼知道 `t.ToString()` 合法呢? 方法也很簡單，嘗試利用 `std::declval` 去呼叫就可以了：
@@ -964,7 +964,7 @@ int main()
 }
 ```
 
-這邊我們一樣利用了模板偏特化的技巧來包裝這個 traits class，首先我們有個基本模板類(primary template class) 繼承 `std::false_type`，之後有個偏特化類繼承 `std::is_convertible<decltype(std::declval<T>().ToString()), std::string>`，當 SFINAE 在看這段時，若 `T` 沒有 member `ToString()`，推斷便會失敗，因此不會實例化此特化，而是實例化基本類，也因此 `has_ToString::value` 為 `false`；若有 `ToString()`，但回傳型態不能轉換為 `std::string`，那雖然會實例化此特化類，但 `has_ToString::value` 仍為 `false`
+這邊我們一樣利用了模板偏特化的技巧來包裝這個 traits class，首先我們有個基本模板類（primary template class） 繼承 `std::false_type`，之後有個偏特化類繼承 `std::is_convertible<decltype(std::declval<T>().ToString()), std::string>`，當 SFINAE 在看這段時，若 `T` 沒有 member `ToString()`，推斷便會失敗，因此不會實例化此特化，而是實例化基本類，也因此 `has_ToString::value` 為 `false`；若有 `ToString()`，但回傳型態不能轉換為 `std::string`，那雖然會實例化此特化類，但 `has_ToString::value` 仍為 `false`
 
 這裡的 `decltype(T::ToString, void())` 是為了滿足偏特化條件，因為我們基本模板類的模板參數是 `<typename, typename = void>`，為了進行偏特化，我們的第二個模板參數也必須為 `void`，因此 `decltype` 內加上了 `void()`
 
@@ -1065,7 +1065,7 @@ int main()
 }
 ```
 
-### 例 4: 檢查是否含有指定的 member function
+### 例 4：檢查是否含有指定的 member function
 
 這是一個 stackoverflow 上的[例子](https://stackoverflow.com/questions/87372/check-if-a-class-has-a-member-function-of-a-given-signature)，寫得很漂亮，所以這邊也拿過來講解一下：
 ```cpp
@@ -1187,7 +1187,7 @@ int main()
 }
 ```
 
-可以發現 `ToString` 變得簡潔許多，可以避免我們寫很多 `std::enable_if_t` 去做樣板特化 (雖然我還是比較習慣用 `std::enable_if` 啦)
+可以發現 `ToString` 變得簡潔許多，可以避免我們寫很多 `std::enable_if_t` 去做樣板特化（雖然我還是比較習慣用 `std::enable_if` 啦）
 
 ## 自己做一個簡單的 concept
 
@@ -1577,7 +1577,7 @@ using detected_or = detail::detector<Default, void, Op, Args...>;
 
 可以看見它實際上就只是另一種包裝的方法，內部就是個 traits class，只是做了一點調整變得更 general 了
 
-## 古典 C\+\+ 的做法(C\+\+11 以前)
+## 古典 C\+\+ 的做法（C\+\+11 以前）
 
 如果你有嘗試找過 Detected Idiom 相關的東西，像是 google 搜尋「C\+\+ check if template class has member」之類的，你可能會發現還有另一種神奇的作法，用了兩個 char array，並以 array 大小判斷是否有指定 member，這其實是 C\+\+11 前還沒有 `std::enable_if` 的精典做法，我們通常稱之為 Member Detector
 
@@ -1657,7 +1657,7 @@ static char (&f(...))[2];
 static bool const value = sizeof(f<Derived>(0)) == 2;
 ```
 
-這段 SFINAE 進行的邏輯是這樣的，因為 `Derived` 繼承了 `T`，若 `T` 裡面也有成員 `x`，那麼在實例化 `f(ChT<int Fallback::*, &C::x>*)` 時，由於 `Derived` 內有兩個 `x` (分別為 `Fallback` 內的 `x` 與 `T` 內的 `x`)，因此會造成 ambiguous，進而導致替換失敗，因此呼叫時使用的是第二個 `f`，換句話說 `sizeof(f<Derived>(0))` 為「2」
+這段 SFINAE 進行的邏輯是這樣的，因為 `Derived` 繼承了 `T`，若 `T` 裡面也有成員 `x`，那麼在實例化 `f(ChT<int Fallback::*, &C::x>*)` 時，由於 `Derived` 內有兩個 `x` （分別為 `Fallback` 內的 `x` 與 `T` 內的 `x`），因此會造成 ambiguous，進而導致替換失敗，因此呼叫時使用的是第二個 `f`，換句話說 `sizeof(f<Derived>(0))` 為「2」
 
 而若 `T` 內沒有成員 `x`，則根據 overload resolution，會呼叫到上面的 `f`，換句話說就是 `sizeof(f<Derived>(0))` 為「1」
 
@@ -1742,15 +1742,15 @@ int main()
 1. Overload Resolution
 2. SFINAE
 3. std::enable_if
-4. decltype 與 std::declval
-5. std::false_type 與 std::true_type
+4. decltype 與 std：：declval
+5. std：：false_type 與 std：：true_type
 6. std::void_t
 
 之後舉了幾個例子，並利用這些東西實作出了一個簡化版的 concept
 
 文末提及了尚未納入標準庫的 `std::is_detected` 的實作，與如何在古典 C++ 中實作 Detection Idiom
 
-目前實務上常常有在使用 template 但升級不上 C\+\+20 時的狀況 (我最近就遇到了 ROS1 僅支援到 C\+\+17 的問題)，因此很建議大家熟悉各版本的實作，這也可以幫助你在寫 template 的時候更好的理解你自己到底在幹嘛，畢竟這頓操作下來大概也很熟 SFINAE 了，蠻建議大家自己實作一次看看的
+目前實務上常常有在使用 template 但升級不上 C\+\+20 時的狀況（我最近就遇到了 ROS1 僅支援到 C\+\+17 的問題），因此很建議大家熟悉各版本的實作，這也可以幫助你在寫 template 的時候更好的理解你自己到底在幹嘛，畢竟這頓操作下來大概也很熟 SFINAE 了，蠻建議大家自己實作一次看看的
 
 template 真的是個大坑，畢竟~~實作泛型就是為了接受更多的苦難~~，沒有啦是更多型態啦ㄏㄏ
 

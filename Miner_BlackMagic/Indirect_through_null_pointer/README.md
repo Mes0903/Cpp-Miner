@@ -9,7 +9,7 @@ category: C++ Miner
 
 ## 前言
 
-事情起於 jserv 的講義裡面有個 `&((data*)0)->c)` 這樣的操作，作用是求 `c` 在 `data` 這個 struct 中的偏移量，但那個 `0` 實在是讓我覺得很不順眼，為了確定他到底是不是 UB，我翻了一個多禮拜的 standard 與 committee paper，甚至翻了 CWG issue 和 Standard Defect Report，才總算是有個結果 (翻到快吐了)
+事情起於 jserv 的講義裡面有個 `&((data*)0)->c)` 這樣的操作，作用是求 `c` 在 `data` 這個 struct 中的偏移量，但那個 `0` 實在是讓我覺得很不順眼，為了確定他到底是不是 UB，我翻了一個多禮拜的 standard 與 committee paper，甚至翻了 CWG issue 和 Standard Defect Report，才總算是有個結果（翻到快吐了）
 
 雖然問題本身莫名其妙變得很複雜，但其實結論很簡單：因為 standard 沒有要求，所以是 UB
 
@@ -21,7 +21,7 @@ category: C++ Miner
 
 不過在翻的過程，找到了一些有趣的討論，所以這邊就記錄一下為何 `&((data*)0)->c)` 是 UB，與為何 *Indirect through null pointer* 會有是不是 UB 的疑慮
 
-註：本文的標準將以 n4861(C++20) 內的定義為主  
+註：本文的標準將以 n4861（C++20） 內的定義為主  
 註2：本文討論的內容都假設 class type 為 standard layout type，非 standard layout type 不在本文討論範圍內，相關內容詳見 [offsetof](https://en.cppreference.com/w/cpp/types/offsetof?fbclid=IwAR0qW2nZ1MX3ZPlmDXROTMNxB4fY_1Ba637-j_6ew_RAU2-T7HyshlQ-QQs#:~:text=offsetof%20cannot%20be%20implemented%20in,specified%20by%20C%20DR%20496)
 
 ## Implicit Undefined Behavior?
@@ -56,7 +56,7 @@ C 和 C++ 都有於 standard 內列下這個規則，下面是 C 與 C++ 對於 
 
 1. pointer arithmetic 的路徑
 2. standard 內對於 `*` 與 `->` operator 操作定義的路徑
-3. 找不到所以 UB (Implicit Undefined Behavior)
+3. 找不到所以 UB（Implicit Undefined Behavior）
 
 看了非常多篇的 stackoverflow，這三條都有人用
 
@@ -83,7 +83,7 @@ p2 += 1;    // p2 = &NULL[1]; invalid, NULL is not an object
 
 而通常 compiler 會利用 `pointer arithmetic` 的操作來實作 `->`，<span class = "yellow">然而這並沒有在標準內被 specified</span>，因此以語言面來說，這個理由並不能套用到 `((T*)NULL)->member` 上
 
-但對於實務層面(compiler 的視角) 來說，這是一個說明它 *invalid* 的好原因。 另外因為還有一個 address-of operator 在外面，編譯器產生的代碼通常不會有 dereference 的步驟，所以這是一個經典的 *"Technically UB but it’ll always do what you expect"* 的情況
+但對於實務層面（compiler 的視角） 來說，這是一個說明它 *invalid* 的好原因。 另外因為還有一個 address-of operator 在外面，編譯器產生的代碼通常不會有 dereference 的步驟，所以這是一個經典的 *"Technically UB but it’ll always do what you expect"* 的情況
 
 #### `*` 與 `->` 的路徑
 
@@ -115,7 +115,7 @@ C++ 中有個條款明確定義了 `->` 與 `*` 在語言上的等價性：
 
 ## Indirect through null pointer?
 
-去年(2022) 12 月，又有人在 CWG 的 github 發了 [issue](https://github.com/cplusplus/CWG/issues/198)  問 [CWG issue #232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 的結果，可見 _Indirect through null pointer_ 為 UB 的原因時至今日都還未被完全解決
+去年（2022） 12 月，又有人在 CWG 的 github 發了 [issue](https://github.com/cplusplus/CWG/issues/198)  問 [CWG issue #232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 的結果，可見 _Indirect through null pointer_ 為 UB 的原因時至今日都還未被完全解決
 
 個人推測是因為在實務上不是那麼重要，但在 standard 中卻是類似於憲法的存在，所以雖然有 issue，但改起來麻煩，一開始改就會有一大串的東西被牽動，所以才從 2004 年到現在都還沒有個結論
 
@@ -165,10 +165,9 @@ int main()
 
 所以接下來 `d->fun()` 我都會將其寫成 `(*d).fun()`，因此關鍵的部分在前面的 `(*d)`，因為這邊的 `d` 是個 `nullptr`
 
-
 這邊複習一下，expression 通常有兩個特性
 1. evaluated
-    可能有 return 值，可能會被丟棄(如棄值表達式 Discarded-value expressions)
+    可能有 return 值，可能會被丟棄（如棄值表達式 Discarded-value expressions）
 2. side-effect
     可能有，可能沒有
 
@@ -232,7 +231,7 @@ int main()
 
 > [n4868(expr.typeid#3)](https://timsong-cpp.github.io/cppwp/n4861/expr.typeid#3)：<span class = "yellow">When typeid is applied to an expression other than a glvalue of a polymorphic class type, the result refers to a std​::​type_­info object representing the static type of the expression.</span> Lvalue-to-rvalue, array-to-pointer, and function-to-pointer conversions are not applied to the expression. If the expression is a prvalue, the temporary materialization conversion is applied. The expression is an unevaluated operand.
 
-## CWG issue\#232 的結論 (C++ 26 前)
+## CWG issue\#232 的結論（C++ 26 前）
 
 最後這個 issue 討論的結果為
 
@@ -256,7 +255,7 @@ int* q = &(*p);
 
 但在 C++26 後為 UB，等等會提及為什麼
 
-然而在 C++23 的期間(2023-05-10 以前)，[CWG issue#232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 的結果仍<span class = "yellow">未被整入標準</span>，雖有[論文](http://arcoth.github.io/Proposals/EmptyLvalues.html)在進行中，裡面更嚴謹的討論了除了這個 issue 以外的狀況(issue 內提出了一個稱為 `empty lvalue` 的概念，但還未加進標準)，但終究是進行中(那篇論文也有一段時間了，過了那麼久感覺是沒審過)，因此雖然我們知道應該要是可行的，但目前仍是 UB(一樣 by Implicit Undefined Behavior)
+然而在 C++23 的期間（2023-05-10 以前），[CWG issue#232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 的結果仍<span class = "yellow">未被整入標準</span>，雖有[論文](http://arcoth.github.io/Proposals/EmptyLvalues.html)在進行中，裡面更嚴謹的討論了除了這個 issue 以外的狀況（issue 內提出了一個稱為 `empty lvalue` 的概念，但還未加進標準），但終究是進行中（那篇論文也有一段時間了，過了那麼久感覺是沒審過），因此雖然我們知道應該要是可行的，但目前仍是 UB（一樣 by Implicit Undefined Behavior）
 
 [CWG issue#232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 還提到 null reference 是 UB：
 
@@ -284,19 +283,19 @@ issue#1102 中給的理由是
 
 > The operator yields an lvalue of type T <span class = "deletion">~~denoting the object or function to which the operand points~~</span>. <span class = "addition">If the operand points to an object or function, the result denotes that object or function; otherwise, the behavior is undefined except as specified in 7.6.1.8 [expr.typeid].</span>
 
-很清楚的直接寫說不是 object 或 function 的情況是 UB 了(除了 typeid 的情況)
+很清楚的直接寫說不是 object 或 function 的情況是 UB 了（除了 typeid 的情況）
 
-目前官方態度是以此更動為準，一切對 null pointer 的 dereference 都是 UB (除了提到的 `expr.typeid`)，在 [Mq 白於「360 安全规则集合」建立的 issue 中](https://github.com/Qihoo360/safe-rules/issues/52)，有人直接到 std-discussion 問了(讓你寄信問 committee 的平台)，回復如下：
+目前官方態度是以此更動為準，一切對 null pointer 的 dereference 都是 UB（除了提到的 `expr.typeid`），在 [Mq 白於「360 安全规则集合」建立的 issue 中](https://github.com/Qihoo360/safe-rules/issues/52)，有人直接到 std-discussion 問了（讓你寄信問 committee 的平台），回復如下：
 
 > That issue is more than 20 years old.  
 > Meanwhile, the direction of CWG has changed towards a uniform treatment of null pointer values.
 
 我還把他的信挖出來了，[連結在這](https://lists.isocpp.org/std-discussion/2024/06/2558.php)
 
-而 [CWG issue#232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 和 [CWG issue#315](http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#315) 的狀態都變為 NAD 了(關閉了)，至此事件基本上就有個結果啦~~
+而 [CWG issue#232](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#232) 和 [CWG issue#315](http://www.open-std.org/jtc1/sc22/wg21/docs/cwg_closed.html#315) 的狀態都變為 NAD 了（關閉了），至此事件基本上就有個結果啦~~
 
 :::info  
-如果你仔細看 [CWG issue#2823](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#2823) 的狀態，其為 DRWP，意思是僅供參考，不能將其當作標準。 因此最後我們還是要來看標準，而 spec 已經在 [2023-11-14 的 PR](https://github.com/cplusplus/draft/pull/6684) 中將其合入了(`Fixes cplusplus/CWG#198` 那行)
+如果你仔細看 [CWG issue#2823](https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_defects.html#2823) 的狀態，其為 DRWP，意思是僅供參考，不能將其當作標準。 因此最後我們還是要來看標準，而 spec 已經在 [2023-11-14 的 PR](https://github.com/cplusplus/draft/pull/6684) 中將其合入了（`Fixes cplusplus/CWG#198` 那行）
 
 只是因為 C++23 的 draft 最後一更是在 2023-05-10，因此這要等到 C++26 的 spec 發布後才可以看見了，目前可以在[最新的 draft](https://eel.is/c++draft/expr.unary.op#1.sentence-4)看見該片段，沒意外的話就會變標準了  
 :::
