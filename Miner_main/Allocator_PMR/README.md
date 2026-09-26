@@ -9,7 +9,7 @@ category: C++ Miner
 
 ## 前言
 
-![（ろあ 快回歸了，悠針れい 昨天宣布出道，感覺整個日子又都好起來了）](image/roa.png)
+![（ろあ 快回歸了，悠針れい 昨天宣布出道，感覺整個日子又都好起來了）](./image/roa.png)
 
 原本會有這篇是因為 MISRA C/C++ spec 內規定不能用 heap allocation，朋朋剛好遇到了這個需求，所以來問了一下能不能把 data 全部放在 stack 段上的 memory pool，剛好要讀書會了，就拿這個主題來寫一篇
 
@@ -54,7 +54,7 @@ BENCHMARK(PmrList);
 
 輸出結果：
 
-![](image/quick_bench.png)
+![](./image/quick_bench.png)
 
 你可以看到，由於不需要 heap allocation，因此效能提升了許多。 那我們就先講如何使用，後面再來談談一些標準內的內容
 
@@ -273,7 +273,7 @@ Allocator 能<span class = "yellow">將 allocation 與 construction 分開</span
 
 因此流程基本上長這樣：
 
-![（此圖是簡化過的流程，標準中有提供非常詳細的流程敘述，後面我們會再詳細展開）](image/STL_container.png)
+![（此圖是簡化過的流程，標準中有提供非常詳細的流程敘述，後面我們會再詳細展開）](./image/STL_container.png)
 
 對於 STL 容器，我們可以使用 `std::allocator` 與 `allocate` 來配置記憶體：
 
@@ -882,7 +882,7 @@ private:
 
 如前所述，`polymorphic_allocator` 是一個 `memory_resource` 的包裝，用以符合 Allocator 的要求。 其內的 `allocate` 會去直接/間接呼叫 `memory_resource->allocate`，其裡面會再去呼叫 `do_allocate`，如同前面看到的，這是一個純虛擬函式，每個子類都需要實作，利用這個達到動態多型的效果。 在實作上通常會有個型態為 `memory_resource*` 的指標指向實際使用的 `memory_resource`，幫助 `polymorphic_allocator` 與 `memory_resource` 溝通
 
-![（一個簡化的架構圖）](image/pmr-arch.png)
+![（一個簡化的架構圖）](./image/pmr-arch.png)
 
 ::: tip  
 可以搭配上方 llvm frontend 的例子觀看，有實際的 code 應該一看就懂
@@ -1141,7 +1141,7 @@ bool find_hello(std::pmr::string const s1, std::pmr::string const s2)
 
 提案中的描述是，pool resource 由一組 pools 組成，用來處理不同區塊大小的配置請求，每個 pool 各自管理若干個 chunks，每個 chunks 會再被切分成固定大小的 blocks，並透過 `do_allocate` 返還給呼叫端：
 
-![](image/pool_resource.png)
+![](./image/pool_resource.png)
 
 每一次呼叫 `do_allocate(size, alignment)` 時，實作會將請求派送到「可容納至少 size 位元組」的最小區塊大小池。 當某一個 pool 用盡可用 block 時，若再次從該 pool 配置 block，會導致其向上游配置器（於建構時提供）再申請一個新的 chunk，以補充該 pool。 之後每次補充時，取得的 chunk 大小將以幾何級數增加。 
 透過以 chunk 為單位申請記憶體，池化策略提高了「連續兩次配置彼此在記憶體中相鄰」的機率
@@ -1865,7 +1865,7 @@ All point to same resource: YES
     2. 選 leading / trailing / error（[llvm link](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_arg_t.h#L51)）
 2. 若不是，呼叫 `construct_at(p, std​::​forward<Args>(args)...)`（[llvm link](https://github.com/llvm/llvm-project/blob/d59e0ba80b85b5b74995ee441b681d51b2a5d1b0/libcxx/include/__memory/allocator_traits.h#L299)）
 
-![](image/alloc-process.png)
+![](./image/alloc-process.png)
 
 另外，Uses-allocator construction 不只會發生在 `a.construct()` 裡面，它可以在任何需要傳遞 allocator 的地方被套用，例如前面提到的 `tuple`，其所有第一個參數是 `allocator_arg_t` 建構子，行為都等同於對應的普通建構子，只是每個元素會改用 uses-allocator construction 來建構：
 

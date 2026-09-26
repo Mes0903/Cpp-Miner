@@ -110,7 +110,7 @@ int main() {
 
 錯誤訊息：
 
-![](image/image1.png)
+![](./image/image1.png)
 
 原因是因為 `int b = 5` 本身就是一個 Statement 了，所以 Compiler 並不希望你把 `int b = 5` 放在 `int a = ` 的右邊，它原先預期右邊要是一個 Expression，所以就噴了這個錯
 
@@ -130,7 +130,7 @@ int main() {
 
 運算式有兩種獨立的特性，分別是「[Type](https://en.cppreference.com/w/cpp/language/type)」和「[Value Catories](https://en.cppreference.com/w/cpp/language/value_category?fbclid=IwAR0MGKszwMzsKrkc-OHb5cHIUrF5hTWelt1xzqBrCoooXCGKhrsSkqEycWo)」，Type 不是我們今天討論的主題，我們直接來看 Value Categories
 
-![（[圖源](https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c)）](image/image2.png)
+![（[圖源](https://krisvanrens.github.io/slides/value-categories-talk-cpp-it/talk.html#/expressions-in-c)）](./image/image2.png)
 
 Value Categories 分三個大類：<strong>Lvalue</strong>、<strong>Xvalue</strong> 和 <strong>Prvalue</strong>。 如果你曾讀過值類別，可能還會聽過 glvalue 與 rvalue，那這兩個又是什麼呢？ 這其實與運算式發展的歷史有關，是一個方便記憶而創造出的名詞：
 
@@ -139,9 +139,9 @@ Value Categories 分三個大類：<strong>Lvalue</strong>、<strong>Xvalue</str
 
 我們看這兩張圖來方便自己記憶：
 
-![（[圖源](https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94)）](image/image3.png)
+![（[圖源](https://docs.microsoft.com/zh-tw/windows/uwp/cpp-and-winrt-apis/cpp-value-categories?fbclid=IwAR0pCGputntm0KZ1AgDiysUB4m8HNjRQqgNUeCao8mhYLec9i3nFDZMst94)）](./image/image3.png)
 
-![（[圖源](https://openhome.cc/Gossip/CppGossip/RvalueReference.html)）](image/image4.png)
+![（[圖源](https://openhome.cc/Gossip/CppGossip/RvalueReference.html)）](./image/image4.png)
 
 是不是清楚多了，那麼這邊我先將每個的翻譯名稱都給大家，以免之後在閱讀的時候搞混：
 
@@ -1494,7 +1494,7 @@ Test test_fn() {
 
 注意只是這個例子剛好一樣，情況一複雜起來，他不一定會一樣。 為了方便大家理解，附上一張手寫圖：
 
-![](image/image6.png)
+![](./image/image6.png)
 
 不會組語的朋友不用擔心，我照順序翻譯成中文敘述給你們看，`test_fn()` 回傳的物件我們暫時叫他 `X`，你可能會想說他不是 `return B` 嗎？ 怎麼會多一個 `X`？ 欸沒錯，它們其實不一樣。 如果大家想跟著確認，可以在建構子裡面，像是一開始的例子那樣把正在呼叫的建構子印出來看：
 
@@ -1671,7 +1671,7 @@ int main() {
     ```
     附上我精美的手寫圖：
 
-    ![](image/image7.png)
+    ![](./image/image7.png)
 
     可以看見有暫時物件的產生。 我在每一個操作結束時都加上 `a = 0;`，並用粉色的螢光筆標起來了，當作區間的紀錄點，方便大家閱讀
 

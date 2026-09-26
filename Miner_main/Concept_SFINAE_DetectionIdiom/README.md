@@ -11,7 +11,7 @@ category: C++ Miner
 
 ぼっち・ざ・ろっく！ 實在太棒了，標題致敬一下ギターと孤独と蒼い惑星 XD
 
-![](image/botti1.png)
+![](./image/botti1.png)
 
 Detection Idiom 中文翻譯為偵測語意，其他的名字還有 Member Detector 和 Template type constraint 等等
 
@@ -153,7 +153,7 @@ int main()
 }
 ```
 
-![](image/concept_error.png)
+![](./image/concept_error.png)
 
 可以看見錯誤訊息變得十分乾淨，debug 變的很方便
 
@@ -493,7 +493,7 @@ int main()
 
 如此一來編譯器便會給予錯誤訊息，並把 candidate set 給印出來：
 
-![](image/candidate_set.png)
+![](./image/candidate_set.png)
 
 可以看見 candidate set 的確有這三個函式
 
@@ -1754,7 +1754,7 @@ int main()
 
 template 真的是個大坑，畢竟~~實作泛型就是為了接受更多的苦難~~，沒有啦是更多型態啦ㄏㄏ
 
-![](image/botti2.png)
+![](./image/botti2.png)
 
 ## 參考資料
 

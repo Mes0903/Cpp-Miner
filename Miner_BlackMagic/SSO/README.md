@@ -29,7 +29,7 @@ struct basic_string {
   - 這個「不包含 `'\0'`」是一個比較巧妙的設計，編譯器會利用這點來做一些優化，後面會提
 - `capacity`：字串的容量，一樣<span class = "yellow">不包含 `'\0'`</span>
 
-![（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）](image/string-begin-layout.png)
+![（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）](./image/string-begin-layout.png)
 
 從這邊你會發現一個問題，也是通常我們不太喜歡 string 的原因 ── 其有 heap allocation 的操作，因此可能會造成效能上的影響
 
@@ -55,7 +55,7 @@ struct basic_string
 
 如果字串的容量小於等於我們設定的值，以這邊來說是 `8`，那就可以將 `ptr` 指向內部的 `buf`，從而省去 heap allocation，這樣有一個很大的好處是我們不需要任何的 heap allocation 就可以建立空字串了
 
-![（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）](image/basic-string-layout.png)
+![（layout 示意圖，[img src](https://devblogs.microsoft.com/oldnewthing/20230803-00/?p=108532)）](./image/basic-string-layout.png)
 
 至於 buffer 的大小具體要是多少就要看你的編譯器實作了，太大會導致記憶體的浪費，太小則會增加程式碼的複雜度。 在 VS2019 的 msvc 裡是 15 個字，而在我的環境上（mingw-gcc 11.2.0） 也是 15
 

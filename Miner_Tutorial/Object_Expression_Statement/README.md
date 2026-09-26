@@ -17,9 +17,9 @@ category: C++ Miner
 
 若能讀懂 spec，將來在一些討論區，如 Discord、Stackoverflow 與別人討論時也才能夠聽懂別人在說什麼，在回答問題時我們時常會直接將 spec 的內容搬出來，直接說因為哪個條款，所以有怎樣的結果，若看不懂 spec，很有可能連與別人討論都做不到。
 
-![（熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因）](image/discussion1.png)
+![（熟悉 C 與 C++ 的人在回答問題時通常會直接將 spec 內容列出來闡述原因）](./image/discussion1.png)
 
-![（在問問題時引用 spec 條例也能有效幫助別人理解你的疑惑點）](image/discussion2.png)
+![（在問問題時引用 spec 條例也能有效幫助別人理解你的疑惑點）](./image/discussion2.png)
 
 講義主要參考了 SICP、C++ Primer 的編排方式，並參考[語言技術：C++ Gossip](https://openhome.cc/Gossip/CppGossip/index.html)、spec 與 cppreference 來撰寫內容。
 
@@ -35,7 +35,7 @@ category: C++ Miner
 
 當我們要執行這個 Program 時，電腦會把它從硬碟搬到記憶體裡面，CPU 再去讀取指令，這樣正在執行的 Program 我們稱之為 Process。
 
-![](image/hello_world1.png)
+![](./image/hello_world1.png)
 
 > source：[淺談 c++ 編譯到鏈結的過程](https://medium.com/@alastor0325/https-medium-com-alastor0325-compilation-to-linking-c07121e2803)  
 
@@ -76,7 +76,7 @@ int main() {
 
 在 Vscode 裡面看起來像這樣：
 
-![](image/hello_world2.png)
+![](./image/hello_world2.png)
 
 可以看見輸出結果跟一開始的一樣。
 
@@ -84,23 +84,23 @@ int main() {
 
 對於 `<>`，前處理器會先去系統目錄找要引用的檔案，以這邊的 `<iostream>` 來說，位置就在一開始下載的 `mingw/include/c++/11.2.0/` 裡面，因為我們事先有將 `mingw/bin` 加到系統環境變數裡面了，所以它才找的到：
 
-![](image/hello_world3.png)
+![](./image/hello_world3.png)
 
 而對於 `""`，前處理器會先在現在檔案所處的資料夾找檔案，如果沒找到，則會去系統目錄找，所以我們可以做個測試，新建一個空的檔案叫做 `iostream`，跟 `test.cpp` 擺在同一個資料夾下：
 
-![](image/hello_world4.png)
+![](./image/hello_world4.png)
 
 此時我們引用的 `iostream` 會是 `test` 這個資料夾下的 `iostream`，因為是空的，沒有引用到我們真正需要使用的，在系統目錄裡的 `iostream`，所以編譯會出現錯誤：
 
-![](image/hello_world5.png)
+![](./image/hello_world5.png)
 
 可以看見編譯器提醒我們要 `#include <iostream>`；而如果我們把 `test/iostream` 拉到外面一層：
 
-![](image/hello_world6.png)
+![](./image/hello_world6.png)
 
 就能夠通過編譯，正常執行，因為當前路徑資料夾下並沒有 `iostream` 這個檔案，所以前處理器會去系統目錄下找檔案：
 
-![](image/hello_world7.png)
+![](./image/hello_world7.png)
 
 我們自己寫的檔案會用 `.h` 來當附檔名，並用 `""` 來引用。
 
@@ -146,7 +146,7 @@ bool 是一種特殊的型態，bool 型態的物件只能儲存兩種值：true
 
 而 character types 則是字元型態，character types 的物件所儲存的數字會被對應到字元集去解釋和實作，字元集又稱字元編碼，常見的有 ASCII、Big5、UTF-8 等等，下面這是 ASCII 字元編碼表
 
-![（source : http://kevin.hwai.edu.tw/~kevin/material/JAVA/Sample2016/ASCII.htm）](image/ascii.png)
+![（source : http://kevin.hwai.edu.tw/~kevin/material/JAVA/Sample2016/ASCII.htm）](./image/ascii.png)
 
 而 signed interger 與 unsigned integer 則都是整數，不過前者有分正負號，而後者則只有正號，
 

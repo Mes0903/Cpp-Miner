@@ -173,7 +173,7 @@ reference 也同理。
 
 一般的 C/C++ 程式在執行時記憶體的配置會長的像下圖那樣，主要可分為 text、data、bss、stack、heap 與 system 這幾個部分。
 
-![（source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/programming/memory-layout-of-c-program/)）](image/memory_layout1.png)
+![（source：[C 語言程式的記憶體配置概念教學](https://blog.gtwang.org/programming/memory-layout-of-c-program/)）](./image/memory_layout1.png)
 
 - text 段  
     text 也被稱為 code 段，存放可執行的 cpu 指令，這裡的資料是可以共用的，並且是唯讀的。
@@ -244,7 +244,7 @@ int main()
 
 程式執行的流程會長：
 
-![](image/memory_layout2.png)
+![](./image/memory_layout2.png)
 
 一開始先分配好 main function 需要的大小，然後將 `fn(1)` 的 frame 推到 stack 內，之後因為要回傳值，所以會將要回傳的值儲存到暫存器或 stack 中，再把 `fn(1)` 的 frame 刪除，並把剛剛儲存的值拿去給 `i1` 初始化。
 
@@ -294,7 +294,7 @@ int main()
 
 上面這裡用 `new` 在 heap 段建構了一個整數物件，初始化為 20，並將其位址回傳給 p，圖看起來會長這樣：
 
-![](image/new.png)
+![](./image/new.png)
 
 而如果物件的型態為 array type，我們通常會用空括號 `()` 來進行 value initialized，在 C\+\+11 後，則可以使用 `{}` 來初始化物件，舉個例子：
 
@@ -460,7 +460,7 @@ int main
 
 `i` 是一個物件，而我們最一開始有舉過一個例子說物件就像一個箱子，名字就是箱子上的標籤，而 reference 又像被連結到的東西的別名，換句話說 reference 就是另外一張標籤：
 
-![](image/reference1.png)
+![](./image/reference1.png)
 
 直接操作 `r` 就等同於對物件 `i` 操作，所以才會說 `r` 是 `i` 的別名。
 
@@ -503,7 +503,7 @@ std::cout << std::boolalpha
 
 可以看見 Compiler 可以分出來兩者的差別，因為兩者的 type 是不同的。那麼我們來看看一個有編譯器優化的狀況：
 
-![](image/reference2.png)
+![](./image/reference2.png)
 
 [連結](https://godbolt.org/z/8KqxsKrPM)在這裡，記得要把編譯器優化打開。 我們可以看見 `std::cin >> r;` 像是被替換成 `std::cin >> a;` 了，跟 `inline` 類似。 <span class = "yellow">（感謝Cy大神補充）</span>
 
@@ -791,7 +791,7 @@ int main()
 
 圖解起來長這樣：
 
-![](image/reference3.png)
+![](./image/reference3.png)
 
 整體步驟大概是：
 
@@ -995,7 +995,7 @@ int main()
 
 我們可以把樹畫出來看，以 `fib(4)` 為例，會長的像這樣：
 
-![](image/main_function.png)
+![](./image/main_function.png)
 
 額外閱讀：[Tail recursion in C++](https://stackoverflow.com/questions/2693683/tail-recursion-in-c)
 
@@ -1067,4 +1067,4 @@ int main(int argc, char *argv[])
 
 假設我們的執行檔名稱為 test.exe，那麼當我執行指令 `./test.exe 1 2 3` 時，argc 就為 4，第一個參數為程式的名稱，第二三四個參數則為 `1 2 3`，因此上面的例子會輸出 `4 C:\Mescpp\test\test.exe 1 2 3` （我這邊執行檔位置在 Mescpp\\test 下）
 
-![](image/main_function.png)
+![](./image/main_function.png)
